@@ -26,7 +26,7 @@
 <meta name="author" content="James Solomon-Rounce">
 
 
-<meta name="date" content="2017-04-09">
+<meta name="date" content="2017-04-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -68,7 +68,9 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>1</b> Foundations of Inference</a></li>
+<li class="chapter" data-level="1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>1</b> Foundations of Inference</a><ul>
+<li class="chapter" data-level="1.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>1.1</b> Introduction to Inference</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -91,7 +93,32 @@
             <section class="normal" id="section-">
 <div id="foundations-of-inference" class="section level1">
 <h1><span class="header-section-number">1</span> Foundations of Inference</h1>
+<hr />
+<p>By Jo Hardin. Collaborators; Nick Carchedi and Tom Jeon.</p>
+<div id="introduction-to-inference" class="section level2">
+<h2><span class="header-section-number">1.1</span> Introduction to Inference</h2>
+<p>Classical statistical inference is the process of making claims about a population based on a sample of information. We are making an inference from a small group (sample) to a much larger one (population). We typically have:</p>
+<ul>
+<li><strong>Null Hypothesis <span class="math inline">\(H_{0}\)</span></strong>: What we are researching has no effect</li>
+<li><strong>Alternate Hypothesis <span class="math inline">\(H_{A}\)</span></strong>: What we are researching does have an effect</li>
+</ul>
+<p>Under the null hypthesis, chance alone is responsible for the results. Under the alternate hypothesis, we reject the null hypthesis, by using statisitcal techniques that indicate that chance is not responsible for our findings. The following summarises the history of significance testing succinctly:</p>
+<blockquote>
+<p><em>“Significance testing is largely the product of Karl Pearson (p-value, Pearson’s chi-squared test), William Sealy Gosset (Student’s t-distribution), and Ronald Fisher (”null hypothesis“, analysis of variance,”significance test“), while hypothesis testing was developed by Jerzy Neyman and Egon Pearson (son of Karl)…Modern hypothesis testing is an inconsistent hybrid of the Fisher vs Neyman/Pearson formulation, methods and terminology developed in the early 20th century. While hypothesis testing was popularized early in the 20th century, evidence of its use can be found much earlier [Such as Laplace in the 1770s]”</em>. <span class="citation">(Wikipedia <a href="#ref-wiki:HypothesisTesting">2017</a>)</span></p>
+</blockquote>
 
+<div id="refs" class="references">
+<div>
+<p>Wikipedia. 2017. “Statistical Hypothesis Testing - Wikipedia, the Free Encyclopedia.” <a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing" class="uri">https://en.wikipedia.org/wiki/Statistical_hypothesis_testing</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-wiki:HypothesisTesting">
+<p>Wikipedia. 2017. “Statistical Hypothesis Testing - Wikipedia, the Free Encyclopedia.” <a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_testing" class="uri">https://en.wikipedia.org/wiki/Statistical_hypothesis_testing</a>.</p>
+</div>
 </div>
             </section>
 
@@ -138,6 +165,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
