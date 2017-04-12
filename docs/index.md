@@ -1,7 +1,7 @@
 --- 
 title: "Study notes"
 author: "James Solomon-Rounce"
-date: 'Last updated:2017-04-11'
+date: 'Last updated:2017-04-12'
 bibliography: book.bib
 description: Study notes taken from courses and self learning.
 documentclass: book
