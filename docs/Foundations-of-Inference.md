@@ -9,7 +9,21 @@ Classical statistical inference is the process of making claims about a populati
 * **Null Hypothesis $H_{0}$**: What we are researching has no effect
 * **Alternate Hypothesis $H_{A}$**: What we are researching does have an effect
 
-Under the null hypothesis, chance alone is responsible for the results.  Under the alternate hypothesis, we reject the null hypothesis, by using statistical techniques that indicate that chance is not responsible for our findings.  Statistical inference largely grew out of the work by Pearson and Fisher, the following summarises the history of significance testing succinctly:
+Under the null hypothesis, chance alone is responsible for the results.  Under the alternate hypothesis, we reject the null hypothesis, by using statistical techniques that indicate that chance is not responsible for our findings.  Hypothesis or statistical testing goes back over 300 years, with the first recorded use by John Arbuthnot [@Huberty1993].  
+
+Table: Statistical Testing Applications 
+
+ Year     Person        Context   
+--------  ------------  -------------  
+1710      Arbuthnot     Sex ratio at birth          
+1767      Michelle      Distribution of  stars 
+1823      Laplace       Moon phase and barometric changes 
+1900      K. Pearson    Goodness of  fit 
+1908      Gosset        A single mean 
+
+Source: [@Huberty1993, pp 318]
+
+Statistical inference largely grew out of the work by Pearson and Fisher, the following summarises the history of significance testing succinctly:
 
 >*"Significance testing is largely the product of Karl Pearson (p-value, Pearson's chi-squared test), William Sealy Gosset (Student's t-distribution), and Ronald Fisher ("null hypothesis", analysis of variance, "significance test"), while hypothesis testing was developed by Jerzy Neyman and Egon Pearson (son of Karl)...Modern hypothesis testing is an inconsistent hybrid of the Fisher vs Neyman/Pearson formulation, methods and terminology developed in the early 20th century. While hypothesis testing was popularized early in the 20th century, evidence of its use can be found much earlier [Such as Laplace in the 1770s]"*. [@wiki:HypothesisTesting]
 
