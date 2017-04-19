@@ -1,6 +1,6 @@
 # Foundations of Inference
 ***
-By Jo Hardin. Collaborators; Nick Carchedi and Tom Jeon.
+Notes taken during/inspired by the Datacamp course 'Foundations of Inference' by Jo Hardin, collaborators; Nick Carchedi and Tom Jeon.
 
 ## Introduction to Inference
 
@@ -9,9 +9,9 @@ Classical statistical inference is the process of making claims about a populati
 * **Null Hypothesis $H_{0}$**: What we are researching has no effect
 * **Alternate Hypothesis $H_{A}$**: What we are researching does have an effect
 
-Under the null hypothesis, chance alone is responsible for the results.  Under the alternate hypothesis, we reject the null hypothesis, by using statistical techniques that indicate that chance is not responsible for our findings.  Hypothesis or statistical testing goes back over 300 years, with the first recorded use by John Arbuthnot [@Huberty1993].  
+Under the null hypothesis, chance alone is responsible for the results.  Under the alternate hypothesis, we reject the null hypothesis, by using statistical techniques that indicate that chance is not responsible for our findings.  Hypothesis or statistical testing goes back over 300 years, with the first recorded use by John Arbuthnot: 
 
-Table: Statistical Testing Applications 
+Table: (\#tab:simple-table) Statistical Testing Applications 
 
  Year     Person        Context   
 --------  ------------  -------------  
@@ -21,12 +21,10 @@ Table: Statistical Testing Applications
 1900      K. Pearson    Goodness of  fit 
 1908      Gosset        A single mean 
 
-Source: [@Huberty1993, pp 318]
+Source: [@Huberty1993, pg 318]
 
-Statistical inference largely grew out of the work by Pearson and Fisher, the following summarises the history of significance testing succinctly:
+Contemporary statistical testing is a usually that of either Fisher or Neyman-Pearson approaches. Fisher tends to use a single hypothesis test and a p-value strength of evidence test, where as the Neyman-Pearson test will set a critical alpha value and compare the null hypothesis against an alternative hypothesis, rejecting the null if the test statistic is high enough [@Huberty1993, pg 318]. 
 
->*"Significance testing is largely the product of Karl Pearson (p-value, Pearson's chi-squared test), William Sealy Gosset (Student's t-distribution), and Ronald Fisher ("null hypothesis", analysis of variance, "significance test"), while hypothesis testing was developed by Jerzy Neyman and Egon Pearson (son of Karl)...Modern hypothesis testing is an inconsistent hybrid of the Fisher vs Neyman/Pearson formulation, methods and terminology developed in the early 20th century. While hypothesis testing was popularized early in the 20th century, evidence of its use can be found much earlier [Such as Laplace in the 1770s]"*. [@wiki:HypothesisTesting]
+The course goes on to say that idea behind statistical inference is to understand samples from a hypothetical population, where the null hypothesis is true - there is no difference between two groups. We can do this by calculating one statistic - for instance the proportion (mean) of a test group who show a positive response when testing a new drug, compared to a placebo control group - for each repeated sample from a population, then work out the difference between these two groups means. With each sample, the mean will change, resulting in a changing difference for each sample.
 
-The idea behind statistical inference is to understand samples from a hypothetical population, where the null hypothesis is true - there is no difference between two groups. We can do this by calculating one statistic - for instance the proportion (mean) of a test group who show a positive response when testing a new drug, compared to a placebo control group - for each repeated sample from a population, then work out the difference between these two groups means. With each sample, the mean will change, resulting in a changing difference for each sample.
-
-We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. *"Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis"*. That is to say, by taking repeated samples creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don't have any dependency between the two groups and effectiveness. 
+We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. *"Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis"*. That is to say, by taking repeated samples and creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don't have any dependency between the two groups and effectiveness. 
