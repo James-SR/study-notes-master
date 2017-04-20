@@ -29,7 +29,7 @@ The course goes on to say that idea behind statistical inference is to understan
 
 We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. *"Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis"*. That is to say, by taking repeated samples and creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don't have any dependency between the two groups and effectiveness. 
 
-##Section 1 Exercises
+##Home Ownership by Gender
 
 Data used in the exercises are from NHANES 2009-2012 With Adjusted Weighting.
 
@@ -43,6 +43,7 @@ The NHANES target population is "the non-institutionalized civilian resident pop
 library("dplyr")
 library("ggplot2")
 library("NHANES")
+library("oilabs")
 ```
 
 
@@ -58,7 +59,7 @@ ggplot(NHANES, aes(x = Gender, fill = HomeOwn)) +
 
 
 ```r
-# Density for SleepHrsNight colored by SleepTrouble, faceted by HealthGen
+# Density for SleepHrsNight coloured by SleepTrouble, faceted by HealthGen
 ggplot(NHANES, aes(x = SleepHrsNight, col = SleepTrouble)) + 
   geom_density(adjust = 2) + 
   facet_wrap(~ HealthGen)
@@ -66,8 +67,7 @@ ggplot(NHANES, aes(x = SleepHrsNight, col = SleepTrouble)) +
 
 <img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
-
-
+Next we want to create a selection for just our variables of interest - rent and owner occupation.
 
 
 ```r
@@ -79,8 +79,7 @@ homes <- NHANES %>%
 
 We build a distribution of differences assuming the null hypothesis - that there is no link between gender and home ownership - is true. 
 
-In this first step, we just do a single iteration, or permutation from the true values.  The null (permuted) version here will create a randomly shuffled home ownership variable, so that the permuted version does not have any dependency between gender and homeownership.  We effectively have the same gender split variables as per the original, with the same owned and rented proportions, but disassociated from the gender variable - just randomly perturbed.
-
+In this first step, we just do a single iteration, or permutation from the true values.  The null (permuted) version here will create a randomly shuffled home ownership variable, so that the permuted version does not have any dependency between gender and homeownership.  We effectively have the same gender split variables as per the original, with the same owned and rented proportions, but disassociated from the gender variable - just randomly shuffled.
 
 
 ```r
@@ -96,10 +95,144 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 0.006999022
+##      diff_perm     diff_orig
+##          <dbl>         <dbl>
+## 1 -0.007828723 -0.0004148505
 ```
 
+It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
 
 
+```r
+head(homes)
+```
+
+```
+## # A tibble: 6 × 2
+##   Gender HomeOwn
+##   <fctr>  <fctr>
+## 1   male     Own
+## 2   male     Own
+## 3   male     Own
+## 4   male     Own
+## 5 female    Rent
+## 6   male    Rent
+```
+
+Next we shuffle this data, let's call it homes 2. we can then check the total number of owns and rents are the same using the summary function, which confirms the data is just randomly shuffled.
+
+
+```r
+homes2 <- homes %>%
+  mutate(HomeOwn_perm = sample(HomeOwn)) %>%
+  group_by(Gender)
+tail(homes2)
+```
+
+```
+## Source: local data frame [6 x 3]
+## Groups: Gender [2]
+## 
+##   Gender HomeOwn HomeOwn_perm
+##   <fctr>  <fctr>       <fctr>
+## 1   male    Rent          Own
+## 2   male    Rent          Own
+## 3 female     Own          Own
+## 4   male     Own         Rent
+## 5   male     Own         Rent
+## 6   male     Own          Own
+```
+
+```r
+summary(homes2)
+```
+
+```
+##     Gender      HomeOwn     HomeOwn_perm
+##  female:4890   Own  :6425   Own  :6425  
+##  male  :4822   Rent :3287   Rent :3287  
+##                Other:   0   Other:   0
+```
+
+Then we calculate the mean value of home ownership (Own) across our original and shuffled (permutated) data
+
+
+```r
+homes3 <- homes2 %>% 
+  summarize(prop_own_perm = mean(HomeOwn_perm == "Own"), 
+             prop_own = mean(HomeOwn == "Own"))
+homes3
+```
+
+```
+## # A tibble: 2 × 3
+##   Gender prop_own_perm  prop_own
+##   <fctr>         <dbl>     <dbl>
+## 1 female     0.6705521 0.6654397
+## 2   male     0.6524264 0.6576109
+```
+
+FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
+
+
+```r
+homes4 <- homes3 %>% 
+  summarize(diff_perm = diff(prop_own),
+  diff_orig = diff(prop_own_perm))
+homes4
+```
+
+```
+## # A tibble: 1 × 2
+##      diff_perm   diff_orig
+##          <dbl>       <dbl>
+## 1 -0.007828723 -0.01812577
+```
+
+Next we can make multiple permutations using the rep_sample_n from the oilabs package.  We specify  the data (tbl), the sample size, the number of samples to take (reps), and whether sampling should be done with or without replacement (replace). The output includes a new column, replicate, which indicates the sample number. We can create 100 permutations and create a dot plot of the results.
+
+
+```r
+# Perform 100 permutations
+homeown_perm <- homes %>%
+  rep_sample_n(size = nrow(homes), reps = 100) %>%
+  mutate(HomeOwn_perm = sample(HomeOwn)) %>%
+  group_by(replicate, Gender) %>%
+  summarize(prop_own_perm = mean(HomeOwn_perm == "Own"), 
+            prop_own = mean(HomeOwn == "Own")) %>%
+  summarize(diff_perm = diff(prop_own_perm),
+            diff_orig = diff(prop_own)) # male - female
+
+# Dotplot of 100 permuted differences in proportions
+ggplot(homeown_perm, aes(x = diff_perm)) + 
+  geom_dotplot(binwidth = .001)
+```
+
+<img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+We can go further and run 1000 permutations and create a density chart.
+
+
+```r
+# Perform 1000 permutations
+homeown_perm <- homes %>%
+  rep_sample_n(size = nrow(homes), reps = 1000) %>%
+  mutate(HomeOwn_perm = sample(HomeOwn)) %>%
+  group_by(replicate, Gender) %>%
+  summarize(prop_own_perm = mean(HomeOwn_perm == "Own"), 
+            prop_own = mean(HomeOwn == "Own")) %>%
+  summarize(diff_perm = diff(prop_own_perm),
+            diff_orig = diff(prop_own)) # male - female
+
+# Density plot of 1000 permuted differences in proportions
+ggplot(homeown_perm, aes(x = diff_perm)) + 
+  geom_density()
+```
+
+<img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+
+
+
+
+
+# References {-}

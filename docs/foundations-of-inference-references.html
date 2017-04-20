@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="index.html">
-<link rel="next" href="references.html">
+
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -104,11 +104,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>1</b> Foundations of Inference</a><ul>
-<li class="chapter" data-level="1.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>1.1</b> Introduction to Inference</a></li>
-<li class="chapter" data-level="1.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>1.2</b> Home Ownership by Gender</a></li>
+<li class="chapter" data-level="" data-path="foundations-of-inference-references.html"><a href="foundations-of-inference-references.html"><i class="fa fa-check"></i>Foundations of Inference # References</a><ul>
+<li class="chapter" data-level="0.1" data-path="foundations-of-inference-references.html"><a href="foundations-of-inference-references.html#introduction-to-inference"><i class="fa fa-check"></i><b>0.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="0.2" data-path="foundations-of-inference-references.html"><a href="foundations-of-inference-references.html#section-1-exercises"><i class="fa fa-check"></i><b>0.2</b> Section 1 Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -129,12 +128,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="foundations-of-inference" class="section level1">
-<h1><span class="header-section-number">1</span> Foundations of Inference</h1>
+<div id="foundations-of-inference-references" class="section level1 unnumbered">
+<h1>Foundations of Inference # References</h1>
 <hr />
 <p>Notes taken during/inspired by the Datacamp course ‘Foundations of Inference’ by Jo Hardin, collaborators; Nick Carchedi and Tom Jeon.</p>
 <div id="introduction-to-inference" class="section level2">
-<h2><span class="header-section-number">1.1</span> Introduction to Inference</h2>
+<h2><span class="header-section-number">0.1</span> Introduction to Inference</h2>
 <p>Classical statistical inference is the process of making claims about a population based on a sample of information. We are making an inference from a small group (sample) to a much larger one (population). We typically have:</p>
 <ul>
 <li><strong>Null Hypothesis <span class="math inline">\(H_{0}\)</span></strong>: What we are researching has no effect</li>
@@ -142,7 +141,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>Under the null hypothesis, chance alone is responsible for the results. Under the alternate hypothesis, we reject the null hypothesis, by using statistical techniques that indicate that chance is not responsible for our findings. Hypothesis or statistical testing goes back over 300 years, with the first recorded use by John Arbuthnot:</p>
 <table>
-<caption><span id="tab:simple-table">Table 1.1: </span> Statistical Testing Applications</caption>
+<caption><span id="tab:simple-table">Table 1: </span> Statistical Testing Applications</caption>
 <thead>
 <tr class="header">
 <th align="center">Year</th>
@@ -183,8 +182,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The course goes on to say that idea behind statistical inference is to understand samples from a hypothetical population, where the null hypothesis is true - there is no difference between two groups. We can do this by calculating one statistic - for instance the proportion (mean) of a test group who show a positive response when testing a new drug, compared to a placebo control group - for each repeated sample from a population, then work out the difference between these two groups means. With each sample, the mean will change, resulting in a changing difference for each sample.</p>
 <p>We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. <em>“Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis”</em>. That is to say, by taking repeated samples and creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don’t have any dependency between the two groups and effectiveness.</p>
 </div>
-<div id="home-ownership-by-gender" class="section level2">
-<h2><span class="header-section-number">1.2</span> Home Ownership by Gender</h2>
+<div id="section-1-exercises" class="section level2">
+<h2><span class="header-section-number">0.2</span> Section 1 Exercises</h2>
 <p>Data used in the exercises are from NHANES 2009-2012 With Adjusted Weighting.</p>
 <p>This is survey data collected by the US National Center for Health Statistics (NCHS) which has conducted a series of health and nutrition surveys since the early 1960’s. Since 1999 approximately 5,000 individuals of all ages are interviewed in their homes every year and complete the health examination component of the survey. The health examination is conducted in a mobile examination centre (MEC).</p>
 <p>The NHANES target population is “the non-institutionalized civilian resident population of the United States”. NHANES, (American National Health and Nutrition Examination surveys), use complex survey designs (see <a href="http://www.cdc.gov/nchs/data/series/sr_02/sr02_162.pdf" class="uri">http://www.cdc.gov/nchs/data/series/sr_02/sr02_162.pdf</a>) that oversample certain subpopulations like racial minorities.</p>
@@ -219,9 +218,9 @@ homes %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
             <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm     diff_orig
-##          &lt;dbl&gt;         &lt;dbl&gt;
-## 1 -0.007828723 -0.0004148505</code></pre>
+##      diff_perm  diff_orig
+##          &lt;dbl&gt;      &lt;dbl&gt;
+## 1 -0.007828723 -0.0107119</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -245,9 +244,9 @@ homes %&gt;%
 ##   &lt;fctr&gt;  &lt;fctr&gt;       &lt;fctr&gt;
 ## 1   male    Rent          Own
 ## 2   male    Rent          Own
-## 3 female     Own          Own
-## 4   male     Own         Rent
-## 5   male     Own         Rent
+## 3 female     Own         Rent
+## 4   male     Own          Own
+## 5   male     Own          Own
 ## 6   male     Own          Own</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
@@ -262,17 +261,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6705521 0.6654397
-## 2   male     0.6524264 0.6576109</code></pre>
+## 1 female     0.6533742 0.6654397
+## 2   male     0.6698465 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 -0.01812577</code></pre>
+##      diff_perm diff_orig
+##          &lt;dbl&gt;     &lt;dbl&gt;
+## 1 -0.007828723 0.0164723</code></pre>
 <p>Next we can make multiple permutations using the rep_sample_n from the oilabs package. We specify the data (tbl), the sample size, the number of samples to take (reps), and whether sampling should be done with or without replacement (replace). The output includes a new column, replicate, which indicates the sample number. We can create 100 permutations and create a dot plot of the results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform 100 permutations</span>
 homeown_perm &lt;-<span class="st"> </span>homes %&gt;%
@@ -303,6 +302,12 @@ homeown_perm &lt;-<span class="st"> </span>homes %&gt;%
 <span class="kw">ggplot</span>(homeown_perm, <span class="kw">aes</span>(<span class="dt">x =</span> diff_perm)) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
 <p><img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+
+<div id="refs" class="references">
+<div>
+<p>Huberty, Carl J. 1993. “Historical Origins of Statistical Testing Practices.” <em>The Journal of Experimental Education</em> 61 (4): 317–33.</p>
+</div>
+</div>
 </div>
 </div>
 <h3>References</h3>
@@ -316,8 +321,8 @@ homeown_perm &lt;-<span class="st"> </span>homes %&gt;%
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
