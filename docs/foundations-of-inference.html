@@ -50,6 +50,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -69,6 +106,7 @@
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>1</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="1.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>1.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="1.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#section-1-exercises"><i class="fa fa-check"></i><b>1.2</b> Section 1 Exercises</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -143,6 +181,44 @@
 <p>Contemporary statistical testing is a usually that of either Fisher or Neyman-Pearson approaches. Fisher tends to use a single hypothesis test and a p-value strength of evidence test, where as the Neyman-Pearson test will set a critical alpha value and compare the null hypothesis against an alternative hypothesis, rejecting the null if the test statistic is high enough <span class="citation">(Huberty <a href="#ref-Huberty1993">1993</a>, pg 318)</span>.</p>
 <p>The course goes on to say that idea behind statistical inference is to understand samples from a hypothetical population, where the null hypothesis is true - there is no difference between two groups. We can do this by calculating one statistic - for instance the proportion (mean) of a test group who show a positive response when testing a new drug, compared to a placebo control group - for each repeated sample from a population, then work out the difference between these two groups means. With each sample, the mean will change, resulting in a changing difference for each sample.</p>
 <p>We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. <em>“Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis”</em>. That is to say, by taking repeated samples and creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don’t have any dependency between the two groups and effectiveness.</p>
+</div>
+<div id="section-1-exercises" class="section level2">
+<h2><span class="header-section-number">1.2</span> Section 1 Exercises</h2>
+<p>Data used in the exercises are from NHANES 2009-2012 With Adjusted Weighting.</p>
+<p>This is survey data collected by the US National Center for Health Statistics (NCHS) which has conducted a series of health and nutrition surveys since the early 1960’s. Since 1999 approximately 5,000 individuals of all ages are interviewed in their homes every year and complete the health examination component of the survey. The health examination is conducted in a mobile examination centre (MEC).</p>
+<p>The NHANES target population is “the non-institutionalized civilian resident population of the United States”. NHANES, (American National Health and Nutrition Examination surveys), use complex survey designs (see <a href="http://www.cdc.gov/nchs/data/series/sr_02/sr02_162.pdf" class="uri">http://www.cdc.gov/nchs/data/series/sr_02/sr02_162.pdf</a>) that oversample certain subpopulations like racial minorities.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
+<span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;NHANES&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create bar plot for Home Ownership by Gender</span>
+<span class="kw">ggplot</span>(NHANES, <span class="kw">aes</span>(<span class="dt">x =</span> Gender, <span class="dt">fill =</span> HomeOwn)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) +
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative frequencies&quot;</span>)</code></pre></div>
+<p><img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Density for SleepHrsNight colored by SleepTrouble, faceted by HealthGen</span>
+<span class="kw">ggplot</span>(NHANES, <span class="kw">aes</span>(<span class="dt">x =</span> SleepHrsNight, <span class="dt">col =</span> SleepTrouble)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">adjust =</span> <span class="dv">2</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>HealthGen)</code></pre></div>
+<p><img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Subset the data: homes</span>
+homes &lt;-<span class="st"> </span>NHANES %&gt;%
+<span class="st">  </span><span class="kw">select</span>(Gender, HomeOwn) %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(HomeOwn %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Own&quot;</span>, <span class="st">&quot;Rent&quot;</span>))</code></pre></div>
+<p>We build a distribution of differences assuming the null hypothesis - that there is no link between gender and home ownership - is true.</p>
+<p>In this first step, we just do a single iteration, or permutation from the true values. The null (permuted) version here will create a randomly shuffled home ownership variable, so that the permuted version does not have any dependency between gender and homeownership. We effectively have the same gender split variables as per the original, with the same owned and rented proportions, but disassociated from the gender variable - just randomly perturbed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform one permutation </span>
+homes %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">HomeOwn_perm =</span> <span class="kw">sample</span>(HomeOwn)) %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(Gender) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">prop_own_perm =</span> <span class="kw">mean</span>(HomeOwn_perm ==<span class="st"> &quot;Own&quot;</span>), 
+            <span class="dt">prop_own =</span> <span class="kw">mean</span>(HomeOwn ==<span class="st"> &quot;Own&quot;</span>)) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
+            <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
+<pre><code>## # A tibble: 1 × 2
+##      diff_perm   diff_orig
+##          &lt;dbl&gt;       &lt;dbl&gt;
+## 1 -0.007828723 0.006999022</code></pre>
 
 <div id="refs" class="references">
 <div>
