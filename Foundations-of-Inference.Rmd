@@ -170,8 +170,16 @@ homeown_perm %>%
   summarize(sum(diff_orig >= diff_perm)) /1000 * 100
 ```
 
-So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.
+So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.  Or put more formally
 
+>__We fail to reject the null hypothesis:__
+> There is no evidence that our data are inconsistent with the null hypothesis
 
+##Gender Discrimination
+
+In this example we use data from @Rosen1974, where 48 male bank supervisors were given personal files and asked if they should be promoted to Branch Manager. All files were identical, but half (24) were named as female, and the other half (24) were named male.  The results showed 21 males were promoted and 14 females, meaning 35  of the total 48 were promoted. Do we know statistically if there is significant?  
+
+* **Null Hypothesis $H_{0}$**: Gender and promotion are unrelated variables
+* **Alternate Hypothesis $H_{A}$**: Men are more likely to be promoted
 
 `r if (knitr:::is_html_output()) '# References {-}'`

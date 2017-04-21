@@ -97,7 +97,7 @@ homes %>%
 ## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          <dbl>        <dbl>
-## 1 -0.007828723 0.0008207949
+## 1 -0.007828723 -0.002062378
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -135,9 +135,9 @@ tail(homes2)
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
-## 1   male    Rent         Rent
-## 2   male    Rent         Rent
-## 3 female     Own          Own
+## 1   male    Rent          Own
+## 2   male    Rent          Own
+## 3 female     Own         Rent
 ## 4   male     Own          Own
 ## 5   male     Own          Own
 ## 6   male     Own          Own
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6627812 0.6654397
-## 2   male     0.6603069 0.6576109
+## 1 female     0.6660532 0.6654397
+## 2   male     0.6569888 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 -0.00247426
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 -0.009064368
 ```
 
 ##Density Plots
@@ -257,8 +257,16 @@ homeown_perm %>%
 ## 1                        20.5
 ```
 
-So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.
+So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.  Or put more formally
 
+>__We fail to reject the null hypothesis:__
+> There is no evidence that our data are inconsistent with the null hypothesis
 
+##Gender Discrimination
+
+In this example we use data from @Rosen1974, where 48 male bank supervisors were given personal files and asked if they should be promoted to Branch Manager. All files were identical, but half (24) were named as female, and the other half (24) were named male.  The results showed 21 males were promoted and 14 females, meaning 35  of the total 48 were promoted. Do we know statistically if there is significant?  
+
+* **Null Hypothesis $H_{0}$**: Gender and promotion are unrelated variables
+* **Alternate Hypothesis $H_{A}$**: Men are more likely to be promoted
 
 # References {-}
