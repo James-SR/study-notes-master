@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm     diff_orig
-##          <dbl>         <dbl>
-## 1 -0.007828723 -0.0004148505
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 0.0008207949
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -135,11 +135,11 @@ tail(homes2)
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
-## 1   male    Rent          Own
-## 2   male    Rent          Own
+## 1   male    Rent         Rent
+## 2   male    Rent         Rent
 ## 3 female     Own          Own
-## 4   male     Own         Rent
-## 5   male     Own         Rent
+## 4   male     Own          Own
+## 5   male     Own          Own
 ## 6   male     Own          Own
 ```
 
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6705521 0.6654397
-## 2   male     0.6524264 0.6576109
+## 1 female     0.6627812 0.6654397
+## 2   male     0.6603069 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -186,9 +186,10 @@ homes4
 ## # A tibble: 1 × 2
 ##      diff_perm   diff_orig
 ##          <dbl>       <dbl>
-## 1 -0.007828723 -0.01812577
+## 1 -0.007828723 -0.00247426
 ```
 
+##Density Plots
 Next we can make multiple permutations using the rep_sample_n from the oilabs package.  We specify  the data (tbl), the sample size, the number of samples to take (reps), and whether sampling should be done with or without replacement (replace). The output includes a new column, replicate, which indicates the sample number. We can create 100 permutations and create a dot plot of the results.
 
 
@@ -214,6 +215,7 @@ We can go further and run 1000 permutations and create a density chart.
 
 
 ```r
+set.seed(666)
 # Perform 1000 permutations
 homeown_perm <- homes %>%
   rep_sample_n(size = nrow(homes), reps = 1000) %>%
@@ -231,7 +233,31 @@ ggplot(homeown_perm, aes(x = diff_perm)) +
 
 <img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
+Now we have our density plot of the null hypothesis - randomly permuted samples - we can see where our actual observed difference lies, plus how many other randomly permuted differences were less than the observed difference.
 
+
+```r
+  # Plot permuted differences
+ggplot(homeown_perm, aes(x = diff_perm)) + 
+  geom_density() +
+  geom_vline(aes(xintercept = diff_orig),
+          col = "red")
+```
+
+<img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+
+```r
+# Compare permuted differences to observed difference and calculate the percent of differences
+homeown_perm %>%
+  summarize(sum(diff_orig >= diff_perm)) /1000 * 100
+```
+
+```
+##   sum(diff_orig >= diff_perm)
+## 1                        20.5
+```
+
+So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.
 
 
 

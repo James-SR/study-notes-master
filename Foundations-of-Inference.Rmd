@@ -118,6 +118,7 @@ homes4 <- homes3 %>%
 homes4
 ```
 
+##Density Plots
 Next we can make multiple permutations using the rep_sample_n from the oilabs package.  We specify  the data (tbl), the sample size, the number of samples to take (reps), and whether sampling should be done with or without replacement (replace). The output includes a new column, replicate, which indicates the sample number. We can create 100 permutations and create a dot plot of the results.
 
 ```{r}
@@ -139,6 +140,7 @@ ggplot(homeown_perm, aes(x = diff_perm)) +
 We can go further and run 1000 permutations and create a density chart.
 
 ```{r}
+set.seed(666)
 # Perform 1000 permutations
 homeown_perm <- homes %>%
   rep_sample_n(size = nrow(homes), reps = 1000) %>%
@@ -154,7 +156,21 @@ ggplot(homeown_perm, aes(x = diff_perm)) +
   geom_density()
 ```
 
+Now we have our density plot of the null hypothesis - randomly permuted samples - we can see where our actual observed difference lies, plus how many other randomly permuted differences were less than the observed difference.
 
+```{r}
+  # Plot permuted differences
+ggplot(homeown_perm, aes(x = diff_perm)) + 
+  geom_density() +
+  geom_vline(aes(xintercept = diff_orig),
+          col = "red")
+
+# Compare permuted differences to observed difference and calculate the percent of differences
+homeown_perm %>%
+  summarize(sum(diff_orig >= diff_perm)) /1000 * 100
+```
+
+So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.
 
 
 
