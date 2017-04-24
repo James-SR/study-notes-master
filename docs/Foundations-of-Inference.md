@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.002062378
+##      diff_perm   diff_orig
+##          <dbl>       <dbl>
+## 1 -0.007828723 0.008646549
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -135,12 +135,12 @@ tail(homes2)
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
-## 1   male    Rent          Own
-## 2   male    Rent          Own
-## 3 female     Own         Rent
+## 1   male    Rent         Rent
+## 2   male    Rent         Rent
+## 3 female     Own          Own
 ## 4   male     Own          Own
 ## 5   male     Own          Own
-## 6   male     Own          Own
+## 6   male     Own         Rent
 ```
 
 ```r
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6660532 0.6654397
-## 2   male     0.6569888 0.6576109
+## 1 female     0.6609407 0.6654397
+## 2   male     0.6621734 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.009064368
+##      diff_perm   diff_orig
+##          <dbl>       <dbl>
+## 1 -0.007828723 0.001232677
 ```
 
 ##Density Plots
@@ -233,7 +233,7 @@ ggplot(homeown_perm, aes(x = diff_perm)) +
 
 <img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
-Now we have our density plot of the null hypothesis - randomly permuted samples - we can see where our actual observed difference lies, plus how many other randomly permuted differences were less than the observed difference.
+Now we have our density plot of the null hypothesis - randomly permuted samples - we can see where our actual observed difference lies, plus how many randomly permuted differences were less than the observed difference.
 
 
 ```r
@@ -262,11 +262,140 @@ So in this instance, when we set the seed of 666 we end up with 20.5% of randoml
 >__We fail to reject the null hypothesis:__
 > There is no evidence that our data are inconsistent with the null hypothesis
 
-##Gender Discrimination
+##Gender Discrimination (p-values)
 
-In this example we use data from @Rosen1974, where 48 male bank supervisors were given personal files and asked if they should be promoted to Branch Manager. All files were identical, but half (24) were named as female, and the other half (24) were named male.  The results showed 21 males were promoted and 14 females, meaning 35  of the total 48 were promoted. Do we know statistically if there is significant?  
+In this section we use data from @Rosen1974, where 48 male bank supervisors were given personnel files and asked if they should be promoted to Branch Manager. All files were identical, but half (24) were named as female, and the other half (24) were named male.  The results showed 21 males were promoted and 14 females, meaning 35  of the total 48 were promoted. In @Rosen1974 sex was given along with an indication of the difficulty - routine or complex - here we only look at the routine promotion candidates.  Do we know if gender is a statistically significant factor?  
 
 * **Null Hypothesis $H_{0}$**: Gender and promotion are unrelated variables
 * **Alternate Hypothesis $H_{A}$**: Men are more likely to be promoted
+
+First, we create the data frame disc
+
+
+```r
+disc <- data.frame(
+  promote = c(rep("promoted", 35), rep("not_promoted", 13)),
+  sex = c(rep("male", 21), rep("female", 14), rep("male", 3), rep("female", 10))
+)
+```
+
+Then let's see the resulting table and proportion who were promoted
+
+
+```r
+table(disc)
+```
+
+```
+##               sex
+## promote        female male
+##   not_promoted     10    3
+##   promoted         14   21
+```
+
+```r
+disc %>%
+  group_by(sex) %>%
+  summarise(promoted_prop = mean(promote == "promoted"))
+```
+
+```
+## # A tibble: 2 × 2
+##      sex promoted_prop
+##   <fctr>         <dbl>
+## 1 female     0.5833333
+## 2   male     0.8750000
+```
+
+So there difference in promotions by gender is around 0.3 or around 30%, but could this be due to chance?  We can create 1000 permutations and compare our observed diffrence to the distribution, plus how many randomly permuted differences were less than the observed difference.
+
+
+```r
+# Create a data frame of differences in promotion rates
+set.seed(42)
+disc_perm <- disc %>%
+  rep_sample_n(size = nrow(disc), reps = 1000) %>%
+  mutate(prom_perm = sample(promote)) %>%
+  group_by(replicate, sex) %>%
+  summarize(prop_prom_perm = mean(prom_perm == "promoted"),
+            prop_prom = mean(promote == "promoted"))   %>%
+  summarize(diff_perm = diff(prop_prom_perm),
+            diff_orig = diff(prop_prom))  # male - female
+
+# Histogram of permuted differences
+ggplot(disc_perm, aes(x = diff_perm)) + 
+  geom_density() +
+  geom_vline(aes(xintercept = diff_orig), col = "red")
+```
+
+<img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+
+```r
+# Compare permuted differences to observed difference and calculate the percent of differences
+disc_perm %>%
+  summarize(sum(diff_orig >= diff_perm)) /1000 * 100
+```
+
+```
+##   sum(diff_orig >= diff_perm)
+## 1                        99.3
+```
+
+So here, just 0.5% of the randomly permuted/shuffled results are greater than our observed promotion differences, or 99.5% are lower, so our results are definitely quite extreme.  We typically use a 5% cut off, which the course mentions is arbitrary and historic, being attributed to Fisher.  So we can say at 0.5% our value is within this critical region, meaning the results are statistically significant - we should not ignore them.  We can calculate quantiles of the null statistic using our randomly generated shuffles.
+
+
+```r
+disc_perm %>% 
+  summarize(q.90 = quantile(diff_perm, p = 0.90),
+            q.95 = quantile(diff_perm, p = 0.95),
+            q.99 = quantile(diff_perm, p = 0.99))
+```
+
+```
+## # A tibble: 1 × 3
+##    q.90      q.95      q.99
+##   <dbl>     <dbl>     <dbl>
+## 1 0.125 0.2083333 0.2916667
+```
+
+So here, 95% of our null differences are 0.208 or lower, indeed 99% are 0.292 or lower, so our observed difference of 0.3 is quite extreme - it is in the critical region of the distribution.  We can go one step further by calculating the p-value.
+
+> __The p-value is__: the probability of observing data as or more extreme than what we actually got given that the null hypothesis is true.
+
+
+```r
+disc_perm %>%
+  summarize(mean(diff_orig <= diff_perm))
+```
+
+```
+## # A tibble: 1 × 1
+##   `mean(diff_orig <= diff_perm)`
+##                            <dbl>
+## 1                          0.028
+```
+
+So the p-value here is 0.028 (less than 3 %).  If repeat the exercise with smaller and larger number of shuffles we would get different p-values.
+
+
+```
+## # A tibble: 1 × 1
+##   `mean(diff_orig <= diff_perm)`
+##                            <dbl>
+## 1                           0.03
+```
+
+```
+## # A tibble: 1 × 1
+##   `mean(diff_orig <= diff_perm)`
+##                            <dbl>
+## 1                         0.0235
+```
+
+With 100 shuffles our p-value is 0.03, and with 10,000 shuffles our p-value is 0.0235.  If we had a two-tailed test - for instance if we said the original research hypothesis had focused on any difference in promotion rates between men and women instead of focusing on whether men are more likely to be promoted than women - we could simple double the p-value.  
+
+>__In both cases, the p-value is below or close to the 0.05 (5%) critical value, meaning we can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis.  However, as both values are close to the critical value, we should indicate that more work should be done__.  
+
+Indeed since the @Rosen1974 study, many further studies have been undertaken and found a similar pattern of discrimination.
 
 # References {-}
