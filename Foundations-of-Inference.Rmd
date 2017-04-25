@@ -282,4 +282,61 @@ With 100 shuffles our p-value is 0.03, and with 10,000 shuffles our p-value is 0
 
 Indeed since the @Rosen1974 study, many further studies have been undertaken and found a similar pattern of discrimination.
 
+##Opportunity Cost
+
+In @Frederick2009 their study showed that when potential purchasers were reminded that if they did not buy a particular DVD they could instead save the money, when compared to a control group who were just told they could not buy the DVD, those being reminded of the saving appeared to be more inclined not to make the purchase - 34 in the treatment group did not buy compared to 19 in the control.  So our test is setup as:
+
+* **Null Hypothesis $H_{0}$**: Reminding students will have no impact on their spending decisions 
+* **Alternate Hypothesis $H_{A}$**: Reminding students will reduce the chance they continue with a purchase
+
+We can create a data frame containing the results and find the initial proportions.
+
+```{r}
+#create the data frame
+opportunity <- data.frame(
+  decision = c(rep("buyDVD", 97), rep("nobuyDVD", 53)),
+  group = c(rep("control", 56), rep("treatment", 41), rep("control", 19), rep("treatment", 34))
+)
+```
+
+```{r}
+# Tabulate the data
+opportunity %>%
+  select(decision, group) %>%
+  table()
+
+# Find the proportion who bought the DVD in each group
+opportunity %>%
+  group_by(group) %>%
+  summarize(buy_prop = mean(decision == "buyDVD"))
+```
+
+So around 55% of the treatment group  - those who were reminded they could save the money - bought the DVD, comapred to 75% of the control group.  We can represent this with a bar plot.
+
+```{r, echo = FALSE}
+#Bar plot of results
+ggplot(opportunity, aes(x = group, fill = decision)) + 
+  geom_bar(position = "fill")
+```
+
+
+```{r}
+# Data frame of differences in purchase rates after permuting
+opp_perm <- opportunity %>%
+  rep_sample_n(size = nrow(opportunity), reps = 1000) %>%
+  mutate(dec_perm = sample(decision)) %>%
+  group_by(replicate, group) %>%
+  summarize(prop_buy_perm = mean(dec_perm == "buyDVD"),
+            prop_buy = mean(decision == "buyDVD")) %>%
+  summarize(diff_perm = diff(prop_buy_perm),
+            diff_orig = diff(prop_buy))  # treatment - control
+
+
+# Histogram of permuted differences
+ggplot(opp_perm, aes(x = diff_perm)) + 
+  geom_density() +
+  geom_vline(aes(xintercept = diff_orig), col = "red")
+```
+
+
 `r if (knitr:::is_html_output()) '# References {-}'`

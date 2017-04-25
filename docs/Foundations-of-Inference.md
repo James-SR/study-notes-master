@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 0.008646549
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 -0.002062378
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -135,12 +135,12 @@ tail(homes2)
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
-## 1   male    Rent         Rent
+## 1   male    Rent          Own
 ## 2   male    Rent         Rent
 ## 3 female     Own          Own
 ## 4   male     Own          Own
 ## 5   male     Own          Own
-## 6   male     Own         Rent
+## 6   male     Own          Own
 ```
 
 ```r
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6609407 0.6654397
-## 2   male     0.6621734 0.6576109
+## 1 female     0.6642127 0.6654397
+## 2   male     0.6588552 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 0.001232677
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 -0.005357432
 ```
 
 ##Density Plots
@@ -397,5 +397,58 @@ With 100 shuffles our p-value is 0.03, and with 10,000 shuffles our p-value is 0
 >__In both cases, the p-value is below or close to the 0.05 (5%) critical value, meaning we can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis.  However, as both values are close to the critical value, we should indicate that more work should be done__.  
 
 Indeed since the @Rosen1974 study, many further studies have been undertaken and found a similar pattern of discrimination.
+
+##Opportunity Cost
+
+In @Frederick2009 their study showed that when potential purchasers were reminded that if they did not buy a particular DVD they could instead save the money, when compared to a control group who were just told they could not buy the DVD, those being reminded of the saving appeared to be more inclined not to make the purchase - 34 in the treatment group did not buy compared to 19 in the control.  So our test is setup as:
+
+* **Null Hypothesis $H_{0}$**: Reminding students will have no impact on their spending decisions 
+* **Alternate Hypothesis $H_{A}$**: Reminding students will reduce the chance they continue with a purchase
+
+We can create a data frame containing the results and find the initial proportions
+
+
+```r
+#create the data frame
+opportunity <- data.frame(
+  decision = c(rep("buyDVD", 97), rep("nobuyDVD", 53)),
+  group = c(rep("control", 56), rep("treatment", 41), rep("control", 19), rep("treatment", 34))
+)
+```
+
+
+```r
+# Tabulate the data
+opportunity %>%
+  select(decision, group) %>%
+  table()
+```
+
+```
+##           group
+## decision   control treatment
+##   buyDVD        56        41
+##   nobuyDVD      19        34
+```
+
+```r
+# Find the proportion who bought the DVD in each group
+opportunity %>%
+  group_by(group) %>%
+  summarize(buy_prop = mean(decision == "buyDVD"))
+```
+
+```
+## # A tibble: 2 × 2
+##       group  buy_prop
+##      <fctr>     <dbl>
+## 1   control 0.7466667
+## 2 treatment 0.5466667
+```
+
+So around 55% of the treatment group (those who were reminded they could save the momey) bought the DVD, comapred to 75% of the control group.  We can represent this with a bar plot.
+
+<img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+
 
 # References {-}

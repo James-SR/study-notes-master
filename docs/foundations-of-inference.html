@@ -109,6 +109,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>1.2</b> Home Ownership by Gender</a></li>
 <li class="chapter" data-level="1.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots"><i class="fa fa-check"></i><b>1.3</b> Density Plots</a></li>
 <li class="chapter" data-level="1.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>1.4</b> Gender Discrimination (p-values)</a></li>
+<li class="chapter" data-level="1.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>1.5</b> Opportunity Cost</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -221,9 +222,9 @@ homes %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
             <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 0.008646549</code></pre>
+##      diff_perm    diff_orig
+##          &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.007828723 -0.002062378</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -245,12 +246,12 @@ homes %&gt;%
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   &lt;fctr&gt;  &lt;fctr&gt;       &lt;fctr&gt;
-## 1   male    Rent         Rent
+## 1   male    Rent          Own
 ## 2   male    Rent         Rent
 ## 3 female     Own          Own
 ## 4   male     Own          Own
 ## 5   male     Own          Own
-## 6   male     Own         Rent</code></pre>
+## 6   male     Own          Own</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
 ##  female:4890   Own  :6425   Own  :6425  
@@ -264,17 +265,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6609407 0.6654397
-## 2   male     0.6621734 0.6576109</code></pre>
+## 1 female     0.6642127 0.6654397
+## 2   male     0.6588552 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 0.001232677</code></pre>
+##      diff_perm    diff_orig
+##          &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.007828723 -0.005357432</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">1.3</span> Density Plots</h2>
@@ -408,6 +409,39 @@ disc_perm %&gt;%
 </blockquote>
 <p>Indeed since the <span class="citation">Rosen and Jerdee (<a href="#ref-Rosen1974">1974</a>)</span> study, many further studies have been undertaken and found a similar pattern of discrimination.</p>
 </div>
+<div id="opportunity-cost" class="section level2">
+<h2><span class="header-section-number">1.5</span> Opportunity Cost</h2>
+<p>In <span class="citation">Frederick et al. (<a href="#ref-Frederick2009">2009</a>)</span> their study showed that when potential purchasers were reminded that if they did not buy a particular DVD they could instead save the money, when compared to a control group who were just told they could not buy the DVD, those being reminded of the saving appeared to be more inclined not to make the purchase - 34 in the treatment group did not buy compared to 19 in the control. So our test is setup as:</p>
+<ul>
+<li><strong>Null Hypothesis <span class="math inline">\(H_{0}\)</span></strong>: Reminding students will have no impact on their spending decisions</li>
+<li><strong>Alternate Hypothesis <span class="math inline">\(H_{A}\)</span></strong>: Reminding students will reduce the chance they continue with a purchase</li>
+</ul>
+<p>We can create a data frame containing the results and find the initial proportions</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#create the data frame</span>
+opportunity &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">decision =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;buyDVD&quot;</span>, <span class="dv">97</span>), <span class="kw">rep</span>(<span class="st">&quot;nobuyDVD&quot;</span>, <span class="dv">53</span>)),
+  <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;control&quot;</span>, <span class="dv">56</span>), <span class="kw">rep</span>(<span class="st">&quot;treatment&quot;</span>, <span class="dv">41</span>), <span class="kw">rep</span>(<span class="st">&quot;control&quot;</span>, <span class="dv">19</span>), <span class="kw">rep</span>(<span class="st">&quot;treatment&quot;</span>, <span class="dv">34</span>))
+)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Tabulate the data</span>
+opportunity %&gt;%
+<span class="st">  </span><span class="kw">select</span>(decision, group) %&gt;%
+<span class="st">  </span><span class="kw">table</span>()</code></pre></div>
+<pre><code>##           group
+## decision   control treatment
+##   buyDVD        56        41
+##   nobuyDVD      19        34</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Find the proportion who bought the DVD in each group</span>
+opportunity %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(group) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">buy_prop =</span> <span class="kw">mean</span>(decision ==<span class="st"> &quot;buyDVD&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##       group  buy_prop
+##      &lt;fctr&gt;     &lt;dbl&gt;
+## 1   control 0.7466667
+## 2 treatment 0.5466667</code></pre>
+<p>So around 55% of the treatment group (those who were reminded they could save the momey) bought the DVD, comapred to 75% of the control group. We can represent this with a bar plot.</p>
+<p><img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
@@ -416,6 +450,9 @@ disc_perm %&gt;%
 </div>
 <div id="ref-Rosen1974">
 <p>Rosen, B., and T. Jerdee. 1974. “Influence of Sex Role Stereotypes on Personnel Decisions.” <em>Journal of Applied Psychology</em> 59 (1): 9–14.</p>
+</div>
+<div id="ref-Frederick2009">
+<p>Frederick, S., N. Novemsky, J. Wang, R. Dhar, and S. Nowlis. 2009. “Opportunity Cost Neglect.” <em>Journal of Consumer Research</em> 36 (4): 553–61.</p>
 </div>
 </div>
             </section>
