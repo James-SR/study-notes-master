@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 -0.00247426
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 -0.007004959
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -140,7 +140,7 @@ tail(homes2)
 ## 3 female     Own          Own
 ## 4   male     Own          Own
 ## 5   male     Own          Own
-## 6   male     Own         Rent
+## 6   male     Own          Own
 ```
 
 ```r
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6574642 0.6654397
-## 2   male     0.6656989 0.6576109
+## 1 female     0.6519427 0.6654397
+## 2   male     0.6712982 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 0.008234667
+##      diff_perm  diff_orig
+##          <dbl>      <dbl>
+## 1 -0.007828723 0.01935548
 ```
 
 ##Density Plots
@@ -479,5 +479,19 @@ If we return to our previous example, our associated errors would be
 Type I: There is not a difference in proportions, but the observed difference is big enough to indicate that the proportions are different.
 
 Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.
+
+##Bootstrapping
+
+When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from samples from our population vary around the parameter of interest.  Bootstrapping is a process for calculating the distance from our statistic to our parameter.
+
+Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability, the bootstrap statistic is $\hat{p}*$ and is the proportion of successes in each resample. 
+
+
+```r
+# Setup our single poll example
+one_poll <- sample(rep(c(0, 1), times = c(9,21)))
+```
+
+
 
 # References {-}

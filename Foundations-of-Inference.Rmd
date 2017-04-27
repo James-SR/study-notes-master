@@ -364,4 +364,17 @@ Type I: There is not a difference in proportions, but the observed difference is
 
 Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.
 
+##Bootstrapping
+
+When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from samples from our population vary around the parameter of interest.  Bootstrapping is a process for calculating the distance from our statistic to our parameter.
+
+Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability, the bootstrap statistic is $\hat{p}*$ and is the proportion of successes in each resample. 
+
+```{r}
+# Setup our single poll example
+one_poll <- sample(rep(c(0, 1), times = c(9,21)))
+```
+
+
+
 `r if (knitr:::is_html_output()) '# References {-}'`

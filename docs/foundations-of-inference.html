@@ -111,6 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>1.4</b> Gender Discrimination (p-values)</a></li>
 <li class="chapter" data-level="1.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>1.5</b> Opportunity Cost</a></li>
 <li class="chapter" data-level="1.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>1.6</b> Type I and Type II errors</a></li>
+<li class="chapter" data-level="1.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>1.7</b> Bootstrapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -223,9 +224,9 @@ homes %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
             <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 -0.00247426</code></pre>
+##      diff_perm    diff_orig
+##          &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.007828723 -0.007004959</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -252,7 +253,7 @@ homes %&gt;%
 ## 3 female     Own          Own
 ## 4   male     Own          Own
 ## 5   male     Own          Own
-## 6   male     Own         Rent</code></pre>
+## 6   male     Own          Own</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
 ##  female:4890   Own  :6425   Own  :6425  
@@ -266,17 +267,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6574642 0.6654397
-## 2   male     0.6656989 0.6576109</code></pre>
+## 1 female     0.6519427 0.6654397
+## 2   male     0.6712982 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm   diff_orig
-##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 0.008234667</code></pre>
+##      diff_perm  diff_orig
+##          &lt;dbl&gt;      &lt;dbl&gt;
+## 1 -0.007828723 0.01935548</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">1.3</span> Density Plots</h2>
@@ -463,6 +464,13 @@ opportunity %&gt;%
 <p>If we return to our previous example, our associated errors would be</p>
 <p>Type I: There is not a difference in proportions, but the observed difference is big enough to indicate that the proportions are different.</p>
 <p>Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.</p>
+</div>
+<div id="bootstrapping" class="section level2">
+<h2><span class="header-section-number">1.7</span> Bootstrapping</h2>
+<p>When calculating confidence intervals there is no null hypothesis like in hypothesis testing. We need to understand how samples from samples from our population vary around the parameter of interest. Bootstrapping is a process for calculating the distance from our statistic to our parameter.</p>
+<p>Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability, the bootstrap statistic is <span class="math inline">\(\hat{p}*\)</span> and is the proportion of successes in each resample.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Setup our single poll example</span>
+one_poll &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">times =</span> <span class="kw">c</span>(<span class="dv">9</span>,<span class="dv">21</span>)))</code></pre></div>
 </div>
 </div>
 <h3>References</h3>
