@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.002062378
+##      diff_perm   diff_orig
+##          <dbl>       <dbl>
+## 1 -0.007828723 -0.00247426
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -136,11 +136,11 @@ tail(homes2)
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
 ## 1   male    Rent          Own
-## 2   male    Rent         Rent
+## 2   male    Rent          Own
 ## 3 female     Own          Own
 ## 4   male     Own          Own
 ## 5   male     Own          Own
-## 6   male     Own          Own
+## 6   male     Own         Rent
 ```
 
 ```r
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6642127 0.6654397
-## 2   male     0.6588552 0.6576109
+## 1 female     0.6574642 0.6654397
+## 2   male     0.6656989 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.005357432
+##      diff_perm   diff_orig
+##          <dbl>       <dbl>
+## 1 -0.007828723 0.008234667
 ```
 
 ##Density Plots
@@ -405,7 +405,7 @@ In @Frederick2009 their study showed that when potential purchasers were reminde
 * **Null Hypothesis $H_{0}$**: Reminding students will have no impact on their spending decisions 
 * **Alternate Hypothesis $H_{A}$**: Reminding students will reduce the chance they continue with a purchase
 
-We can create a data frame containing the results and find the initial proportions
+We can create a data frame containing the results and find the initial proportions.
 
 
 ```r
@@ -446,9 +446,38 @@ opportunity %>%
 ## 2 treatment 0.5466667
 ```
 
-So around 55% of the treatment group (those who were reminded they could save the momey) bought the DVD, comapred to 75% of the control group.  We can represent this with a bar plot.
+So around 55% of the treatment group  - those who were reminded they could save the money - bought the DVD, comapred to 75% of the control group.  We can represent this with a bar plot.
 
 <img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
+As before, we can calculate 1000 random shuffles and then compare our difference in proportions, to the distribution of those 1000 samples.  
+
+<img src="Foundations-of-Inference_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+
+And finally, we can calculate the p-value
+
+
+```
+## # A tibble: 1 × 1
+##   `mean(diff_perm <= diff_orig)`
+##                            <dbl>
+## 1                          0.008
+```
+
+In this instance, of p-value is substantially less than the usual critical value - 0.8% versus the usual value of 5% - so we can can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis.  Our results would only occur 8 times in 1000 by chance.  We can therefore accept the alternative hypothesis ($H_{A}$) that reminding students does cause them to be less likely to buy a DVD, as they were randomly assigned to the treatment and control groups, therefore any difference is due to the reminder to save.  Who can we therefore make the inference to?  Our sample was drawn from the student population for the @Frederick2009 study, so we would be able to generalise to that student population however defined, but not to another wider population.
+
+##Type I and Type II errors
+
+In our research and conslusions there is a risk that we will be incorrect, we will make an error.  The two errors are:
+
+>__Type I error__ : The null hypothesis ($H_{0}$) is true, but is rejected.  On the basis of the evidence, we have decided to erroneously accept the alternative hypothesis ($H_{A}$) when in fact the null hypothesis is correct. It is sometimes called a false positive.
+
+>__Type II error__ : the null hypothesis is false, but erroneously fails to be rejected.  On the basis of the evidence, we have failed to accept the alternative hypothesis despite it being correct - an effect that exists in the population. It is sometimes called a false negative.
+
+If we return to our previous example, our associated errors would be
+
+Type I: There is not a difference in proportions, but the observed difference is big enough to indicate that the proportions are different.
+
+Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.
 
 # References {-}

@@ -319,9 +319,11 @@ ggplot(opportunity, aes(x = group, fill = decision)) +
   geom_bar(position = "fill")
 ```
 
+As before, we can calculate 1000 random shuffles and then compare our difference in proportions, to the distribution of those 1000 samples.  
 
-```{r}
+```{r, echo = FALSE}
 # Data frame of differences in purchase rates after permuting
+set.seed(42)
 opp_perm <- opportunity %>%
   rep_sample_n(size = nrow(opportunity), reps = 1000) %>%
   mutate(dec_perm = sample(decision)) %>%
@@ -338,5 +340,28 @@ ggplot(opp_perm, aes(x = diff_perm)) +
   geom_vline(aes(xintercept = diff_orig), col = "red")
 ```
 
+And finally, we can calculate the p-value
+
+```{r, echo=FALSE}
+# Calculate the p-value
+opp_perm %>%
+  summarize(mean(diff_perm <= diff_orig))
+```
+
+In this instance, of p-value is substantially less than the usual critical value - 0.8% versus the usual value of 5% - so we can can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis.  Our results would only occur 8 times in 1000 by chance.  We can therefore accept the alternative hypothesis ($H_{A}$) that reminding students does cause them to be less likely to buy a DVD, as they were randomly assigned to the treatment and control groups, therefore any difference is due to the reminder to save.  Who can we therefore make the inference to?  Our sample was drawn from the student population for the @Frederick2009 study, so we would be able to generalise to that student population however defined, but not to another wider population.
+
+##Type I and Type II errors
+
+In our research and conslusions there is a risk that we will be incorrect, we will make an error.  The two errors are:
+
+>__Type I error__ : The null hypothesis ($H_{0}$) is true, but is rejected.  On the basis of the evidence, we have decided to erroneously accept the alternative hypothesis ($H_{A}$) when in fact the null hypothesis is correct. It is sometimes called a false positive.
+
+>__Type II error__ : the null hypothesis is false, but erroneously fails to be rejected.  On the basis of the evidence, we have failed to accept the alternative hypothesis despite it being correct - an effect that exists in the population. It is sometimes called a false negative.
+
+If we return to our previous example, our associated errors would be
+
+Type I: There is not a difference in proportions, but the observed difference is big enough to indicate that the proportions are different.
+
+Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.
 
 `r if (knitr:::is_html_output()) '# References {-}'`
