@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.007004959
+##      diff_perm  diff_orig
+##          <dbl>      <dbl>
+## 1 -0.007828723 0.01152972
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6519427 0.6654397
-## 2   male     0.6712982 0.6576109
+## 1 female     0.6613497 0.6654397
+## 2   male     0.6617586 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm  diff_orig
-##          <dbl>      <dbl>
-## 1 -0.007828723 0.01935548
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 0.0004089131
 ```
 
 ##Density Plots
@@ -482,9 +482,17 @@ Type II: There is a difference in proportions, but the observed difference is no
 
 ##Bootstrapping
 
-When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from samples from our population vary around the parameter of interest.  Bootstrapping is a process for calculating the distance from our statistic to our parameter.
+Sometimes we are not neccessarily interested in testing a hypothesis, we are instead interested in making a claim about how our sample can be inferred to a large population.  To do so we use confidece intervals.  When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from our population vary around the parameter of interest.  In an ideal world we would take many samples from the population or know what the true value is in the population, but realistically this is not possible, so we use booststrapping.
 
-Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability, the bootstrap statistic is $\hat{p}*$ and is the proportion of successes in each resample. 
+Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability.  As our population parameters are not known, we can use our sample to estimate a simulated population parameter ($\hat{p}*$) by repeated sampling.  We can then estimate other parameters such as the standard deviation, s.e. and the confidence interval.  Instead of taking repeated samples from our population, we take repeated samples from our data, with replacement, each bootstrap sample is the same size as the original sample.
+
+
+
+<div class="figure">
+<img src="images/bootstrap.png" alt="Illustration of the bootstrap approach on a small sample containing n = 3 observations [@ISLR2013, pg 190]"  />
+<p class="caption">(\#fig:bootstrap)Illustration of the bootstrap approach on a small sample containing n = 3 observations [@ISLR2013, pg 190]</p>
+</div>
+
 
 
 ```r

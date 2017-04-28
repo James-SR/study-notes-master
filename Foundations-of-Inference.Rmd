@@ -366,9 +366,16 @@ Type II: There is a difference in proportions, but the observed difference is no
 
 ##Bootstrapping
 
-When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from samples from our population vary around the parameter of interest.  Bootstrapping is a process for calculating the distance from our statistic to our parameter.
+Sometimes we are not neccessarily interested in testing a hypothesis, we are instead interested in making a claim about how our sample can be inferred to a large population.  To do so we use confidece intervals.  When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from our population vary around the parameter of interest.  In an ideal world we would take many samples from the population or know what the true value is in the population, but realistically this is not possible, so we use booststrapping.
 
-Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability, the bootstrap statistic is $\hat{p}*$ and is the proportion of successes in each resample. 
+Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability.  As our population parameters are not known, we can use our sample to estimate a simulated population parameter ($\hat{p}*$) by repeated sampling.  We can then estimate other parameters such as the standard deviation, s.e. and the confidence interval.  Instead of taking repeated samples from our population, we take repeated samples from our data, with replacement, each bootstrap sample is the same size as the original sample.
+
+
+
+```{r bootstrap, echo = FALSE, fig.cap='Illustration of the bootstrap approach on a small sample containing n = 3 observations [@ISLR2013, pg 190]'}
+knitr::include_graphics("images/bootstrap.png")
+```
+
 
 ```{r}
 # Setup our single poll example
