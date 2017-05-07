@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm  diff_orig
-##          <dbl>      <dbl>
-## 1 -0.007828723 0.01152972
+##      diff_perm     diff_orig
+##          <dbl>         <dbl>
+## 1 -0.007828723 -0.0008267323
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -137,9 +137,9 @@ tail(homes2)
 ##   <fctr>  <fctr>       <fctr>
 ## 1   male    Rent          Own
 ## 2   male    Rent          Own
-## 3 female     Own          Own
-## 4   male     Own          Own
-## 5   male     Own          Own
+## 3 female     Own         Rent
+## 4   male     Own         Rent
+## 5   male     Own         Rent
 ## 6   male     Own          Own
 ```
 
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6613497 0.6654397
-## 2   male     0.6617586 0.6576109
+## 1 female     0.6621677 0.6654397
+## 2   male     0.6609291 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -186,7 +186,7 @@ homes4
 ## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          <dbl>        <dbl>
-## 1 -0.007828723 0.0004089131
+## 1 -0.007828723 -0.001238614
 ```
 
 ##Density Plots
@@ -486,20 +486,34 @@ Sometimes we are not neccessarily interested in testing a hypothesis, we are ins
 
 Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability.  As our population parameters are not known, we can use our sample to estimate a simulated population parameter ($\hat{p}*$) by repeated sampling.  We can then estimate other parameters such as the standard deviation, s.e. and the confidence interval.  Instead of taking repeated samples from our population, we take repeated samples from our data, with replacement, each bootstrap sample is the same size as the original sample.
 
-
-
 <div class="figure">
 <img src="images/bootstrap.png" alt="Illustration of the bootstrap approach on a small sample containing n = 3 observations [@ISLR2013, pg 190]"  />
 <p class="caption">(\#fig:bootstrap)Illustration of the bootstrap approach on a small sample containing n = 3 observations [@ISLR2013, pg 190]</p>
 </div>
 
+Firstly we setup our single poll, where 70% (21/30) are intended to vote for a particular candidate
 
 
 ```r
 # Setup our single poll example
 one_poll <- sample(rep(c(0, 1), times = c(9,21)))
+one_poll <- tbl_df(one_poll)
+colnames(one_poll) <- "vote"
 ```
 
+Next we can create 1000 bootstrap samples from this original poll, then calculate the variability
+
+
+```r
+# Generate 1000 resamples of one_poll: one_poll_boot_30
+one_poll_boot_30 <- one_poll %>%
+  rep_sample_n(size = 30, replace = TRUE, reps = 1000)
+
+# Compute p-hat* for each resampled poll
+ex1_props <- one_poll_boot_30 %>%
+  summarize(prop_yes = mean(vote)) %>%
+  summarize(sd(prop_yes))
+```
 
 
 # References {-}
