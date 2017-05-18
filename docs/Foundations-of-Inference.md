@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm     diff_orig
-##          <dbl>         <dbl>
-## 1 -0.007828723 -0.0008267323
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 -0.005357432
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -137,8 +137,8 @@ tail(homes2)
 ##   <fctr>  <fctr>       <fctr>
 ## 1   male    Rent          Own
 ## 2   male    Rent          Own
-## 3 female     Own         Rent
-## 4   male     Own         Rent
+## 3 female     Own          Own
+## 4   male     Own          Own
 ## 5   male     Own         Rent
 ## 6   male     Own          Own
 ```
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6621677 0.6654397
-## 2   male     0.6609291 0.6576109
+## 1 female     0.6631902 0.6654397
+## 2   male     0.6598922 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -186,7 +186,7 @@ homes4
 ## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          <dbl>        <dbl>
-## 1 -0.007828723 -0.001238614
+## 1 -0.007828723 -0.003298023
 ```
 
 ##Density Plots
@@ -505,6 +505,7 @@ Next we can create 1000 bootstrap samples from this original poll, then calculat
 
 
 ```r
+set.seed(42)
 # Generate 1000 resamples of one_poll: one_poll_boot_30
 one_poll_boot_30 <- one_poll %>%
   rep_sample_n(size = 30, replace = TRUE, reps = 1000)
@@ -512,8 +513,43 @@ one_poll_boot_30 <- one_poll %>%
 # Compute p-hat* for each resampled poll
 ex1_props <- one_poll_boot_30 %>%
   summarize(prop_yes = mean(vote)) %>%
-  summarize(sd(prop_yes))
+  summarize(sd(prop_yes)) #compute variability p-hat*
+ex1_props
 ```
 
+```
+## # A tibble: 1 × 1
+##   `sd(prop_yes)`
+##            <dbl>
+## 1       0.085741
+```
+
+So the variability - the standard error or SE - of $\hat{p}*$ is 0.0841.  We can now use this SE to calculate a confidence interval, since 95% of samples will be within +/- 1.96 standard errors of the centre of the distribution assuming a normal distribution $N(\mu, \sigma ^2)$.  We also use the bootstrap to calculate our bootstrap confidence interval, to give a range of possible values.
+
+
+```r
+# Compute p-hat for one poll
+p_hat <- mean(one_poll$vote)
+
+set.seed(42)
+# Bootstrap to find the SE of p-hat: one_poll_boot
+one_poll_boot <- one_poll %>%
+  rep_sample_n(30, replace = TRUE, reps = 1000) %>%
+  summarize(prop_yes_boot = mean(vote))
+
+# Create an interval of possible values
+one_poll_boot %>%
+  summarize(lower = p_hat - 1.96 * sd(prop_yes_boot),
+            upper = p_hat + 1.96 * sd(prop_yes_boot))
+```
+
+```
+## # A tibble: 1 × 2
+##       lower     upper
+##       <dbl>     <dbl>
+## 1 0.5319476 0.8680524
+```
+
+So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%.  Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate.  We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to cote for the candidate is between 53% and 87%.  We are assuming that the distribution is normally distributed $N(\mu, \sigma ^2)$.
 
 # References {-}

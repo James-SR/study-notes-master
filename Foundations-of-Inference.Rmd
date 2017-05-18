@@ -398,6 +398,24 @@ ex1_props <- one_poll_boot_30 %>%
 ex1_props
 ```
 
-So the variability - the standard error or SE - of $\hat{p}*$ is 0.0841.  We can now use this SE to calculate 
+So the variability - the standard error or SE - of $\hat{p}*$ is 0.0841.  We can now use this SE to calculate a confidence interval, since 95% of samples will be within +/- 1.96 standard errors of the centre of the distribution assuming a normal distribution $N(\mu, \sigma ^2)$.  We also use the bootstrap to calculate our bootstrap confidence interval, to give a range of possible values.
+
+```{r}
+# Compute p-hat for one poll
+p_hat <- mean(one_poll$vote)
+
+set.seed(42)
+# Bootstrap to find the SE of p-hat: one_poll_boot
+one_poll_boot <- one_poll %>%
+  rep_sample_n(30, replace = TRUE, reps = 1000) %>%
+  summarize(prop_yes_boot = mean(vote))
+
+# Create an interval of possible values
+one_poll_boot %>%
+  summarize(lower = p_hat - 1.96 * sd(prop_yes_boot),
+            upper = p_hat + 1.96 * sd(prop_yes_boot))
+```
+
+So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%.  Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate.  We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to cote for the candidate is between 53% and 87%.  We are assuming that the distribution is normally distributed $N(\mu, \sigma ^2)$.
 
 `r if (knitr:::is_html_output()) '# References {-}'`
