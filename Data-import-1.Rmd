@@ -1,0 +1,36 @@
+# Importing data - Part 1
+***
+Notes taken during/inspired by the Datacamp course 'Importing Data in R (Part 1)' by Filip Schouwenaars.
+
+## Introduction 
+
+Data often comes from many different sources and formats, including
+
+*Flat files - simple tables e.g. csv
+*Excel
+*Databases - MySQL, Postgres
+*Websites - APIs, JSON, scraping
+*Other statistical software - SPSS, STATA, SAS
+
+## Reading CSV files
+
+Reading csv files can be achived with simple code like
+
+```{r eval=FALSE}
+read.csv("file.csv", stringsAsFactors = FALSE)
+```
+
+We may want to import strings as categorical variables, in which case we would set stringsAsFactors = TRUE which is also the default option, if not stated.
+
+When working across different machines or operating systems, problems can arise due to different ways of addressing file locations and differing file locations.  Therefore, it can be easier to set a relative path to the users home directory, which would be achieved with the following code.
+
+```{r}
+path <- file.path("~", "datasets", "file.csv")
+path
+```
+
+Then use the file path as before, assigning to a dataframe.
+
+```{r eval=FALSE}
+df <- read.csv(path, stringsAsFactors = FALSE)
+```

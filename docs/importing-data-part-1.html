@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="foundations-of-inference.html">
-
+<link rel="prev" href="index.html">
+<link rel="next" href="foundations-of-inference.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -138,22 +138,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="importing-data---part-1" class="section level1">
+<h1><span class="header-section-number">1</span> Importing data - Part 1</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Importing Data in R (Part 1)’ by Filip Schouwenaars.</p>
+<div id="introduction" class="section level2">
+<h2><span class="header-section-number">1.1</span> Introduction</h2>
+<p>Data often comes from many different sources and formats, including</p>
+<p><em>Flat files - simple tables e.g. csv </em>Excel <em>Databases - MySQL, Postgres </em>Websites - APIs, JSON, scraping *Other statistical software - SPSS, STATA, SAS</p>
+</div>
+<div id="reading-csv-files" class="section level2">
+<h2><span class="header-section-number">1.2</span> Reading CSV files</h2>
+<p>Reading csv files can be achived with simple code like</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&quot;file.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>We may want to import strings as categorical variables, in which case we would set stringsAsFactors = TRUE which is also the default option, if not stated.</p>
+<p>When working across different machines or operating systems, problems can arise due to different ways of addressing file locations and differing file locations. Therefore, it can be easier to set a relative path to the users home directory, which would be achieved with the following code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;~&quot;</span>, <span class="st">&quot;datasets&quot;</span>, <span class="st">&quot;file.csv&quot;</span>)
+path</code></pre></div>
+<pre><code>## [1] &quot;~/datasets/file.csv&quot;</code></pre>
+<p>Then use the file path as before, assigning to a dataframe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(path, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
 
-<div id="refs" class="references">
-<div>
-<p>Frederick, S., N. Novemsky, J. Wang, R. Dhar, and S. Nowlis. 2009. “Opportunity Cost Neglect.” <em>Journal of Consumer Research</em> 36 (4): 553–61.</p>
-</div>
-<div>
-<p>Huberty, Carl J. 1993. “Historical Origins of Statistical Testing Practices.” <em>The Journal of Experimental Education</em> 61 (4): 317–33.</p>
-</div>
-<div>
-<p>James, G., D. Witten, T. Hastie, and R. Tibshirani. 2013. <em>An Introduction to Statistical Learning</em>. 6th Printing. London: Springer. <a href="http://www-bcf.usc.edu/~gareth/ISL/" class="uri">http://www-bcf.usc.edu/~gareth/ISL/</a>.</p>
-</div>
-<div>
-<p>Rosen, B., and T. Jerdee. 1974. “Influence of Sex Role Stereotypes on Personnel Decisions.” <em>Journal of Applied Psychology</em> 59 (1): 9–14.</p>
-</div>
 </div>
 </div>
             </section>
@@ -161,8 +166,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="foundations-of-inference.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="foundations-of-inference.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

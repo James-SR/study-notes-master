@@ -32,7 +32,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
+<link rel="prev" href="importing-data-part-1.html">
 <link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -104,14 +104,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>1</b> Foundations of Inference</a><ul>
-<li class="chapter" data-level="1.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>1.1</b> Introduction to Inference</a></li>
-<li class="chapter" data-level="1.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>1.2</b> Home Ownership by Gender</a></li>
-<li class="chapter" data-level="1.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots"><i class="fa fa-check"></i><b>1.3</b> Density Plots</a></li>
-<li class="chapter" data-level="1.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>1.4</b> Gender Discrimination (p-values)</a></li>
-<li class="chapter" data-level="1.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>1.5</b> Opportunity Cost</a></li>
-<li class="chapter" data-level="1.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>1.6</b> Type I and Type II errors</a></li>
-<li class="chapter" data-level="1.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>1.7</b> Bootstrapping</a></li>
+<li class="chapter" data-level="1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html"><i class="fa fa-check"></i><b>1</b> Importing data - Part 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
+<li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="2.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>2.2</b> Home Ownership by Gender</a></li>
+<li class="chapter" data-level="2.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots"><i class="fa fa-check"></i><b>2.3</b> Density Plots</a></li>
+<li class="chapter" data-level="2.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>2.4</b> Gender Discrimination (p-values)</a></li>
+<li class="chapter" data-level="2.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>2.5</b> Opportunity Cost</a></li>
+<li class="chapter" data-level="2.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>2.6</b> Type I and Type II errors</a></li>
+<li class="chapter" data-level="2.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>2.7</b> Bootstrapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -135,11 +139,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="foundations-of-inference" class="section level1">
-<h1><span class="header-section-number">1</span> Foundations of Inference</h1>
+<h1><span class="header-section-number">2</span> Foundations of Inference</h1>
 <hr />
 <p>Notes taken during/inspired by the Datacamp course ‘Foundations of Inference’ by Jo Hardin, collaborators; Nick Carchedi and Tom Jeon.</p>
 <div id="introduction-to-inference" class="section level2">
-<h2><span class="header-section-number">1.1</span> Introduction to Inference</h2>
+<h2><span class="header-section-number">2.1</span> Introduction to Inference</h2>
 <p>Classical statistical inference is the process of making claims about a population based on a sample of information. We are making an inference from a small group (sample) to a much larger one (population). We typically have:</p>
 <ul>
 <li><strong>Null Hypothesis <span class="math inline">\(H_{0}\)</span></strong>: What we are researching has no effect</li>
@@ -147,7 +151,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>Under the null hypothesis, chance alone is responsible for the results. Under the alternate hypothesis, we reject the null hypothesis, by using statistical techniques that indicate that chance is not responsible for our findings. Hypothesis or statistical testing goes back over 300 years, with the first recorded use by John Arbuthnot:</p>
 <table>
-<caption><span id="tab:simple-table">Table 1.1: </span> Statistical Testing Applications</caption>
+<caption><span id="tab:simple-table">Table 2.1: </span> Statistical Testing Applications</caption>
 <thead>
 <tr class="header">
 <th align="center">Year</th>
@@ -189,7 +193,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. <em>“Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis”</em>. That is to say, by taking repeated samples and creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don’t have any dependency between the two groups and effectiveness.</p>
 </div>
 <div id="home-ownership-by-gender" class="section level2">
-<h2><span class="header-section-number">1.2</span> Home Ownership by Gender</h2>
+<h2><span class="header-section-number">2.2</span> Home Ownership by Gender</h2>
 <p>Data used in the exercises are from NHANES 2009-2012 With Adjusted Weighting.</p>
 <p>This is survey data collected by the US National Center for Health Statistics (NCHS) which has conducted a series of health and nutrition surveys since the early 1960’s. Since 1999 approximately 5,000 individuals of all ages are interviewed in their homes every year and complete the health examination component of the survey. The health examination is conducted in a mobile examination centre (MEC).</p>
 <p>The NHANES target population is “the non-institutionalized civilian resident population of the United States”. NHANES, (American National Health and Nutrition Examination surveys), use complex survey designs (see <a href="http://www.cdc.gov/nchs/data/series/sr_02/sr02_162.pdf" class="uri">http://www.cdc.gov/nchs/data/series/sr_02/sr02_162.pdf</a>) that oversample certain subpopulations like racial minorities.</p>
@@ -226,7 +230,7 @@ homes %&gt;%
 <pre><code>## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.005357432</code></pre>
+## 1 -0.007828723 -0.004533669</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -267,8 +271,8 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6631902 0.6654397
-## 2   male     0.6598922 0.6576109</code></pre>
+## 1 female     0.6611452 0.6654397
+## 2   male     0.6619660 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
@@ -277,10 +281,10 @@ homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.003298023</code></pre>
+## 1 -0.007828723 0.0008207949</code></pre>
 </div>
 <div id="density-plots" class="section level2">
-<h2><span class="header-section-number">1.3</span> Density Plots</h2>
+<h2><span class="header-section-number">2.3</span> Density Plots</h2>
 <p>Next we can make multiple permutations using the rep_sample_n from the oilabs package. We specify the data (tbl), the sample size, the number of samples to take (reps), and whether sampling should be done with or without replacement (replace). The output includes a new column, replicate, which indicates the sample number. We can create 100 permutations and create a dot plot of the results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform 100 permutations</span>
 homeown_perm &lt;-<span class="st"> </span>homes %&gt;%
@@ -330,7 +334,7 @@ homeown_perm %&gt;%
 </blockquote>
 </div>
 <div id="gender-discrimination-p-values" class="section level2">
-<h2><span class="header-section-number">1.4</span> Gender Discrimination (p-values)</h2>
+<h2><span class="header-section-number">2.4</span> Gender Discrimination (p-values)</h2>
 <p>In this section we use data from <span class="citation">Rosen and Jerdee (<a href="#ref-Rosen1974">1974</a>)</span>, where 48 male bank supervisors were given personnel files and asked if they should be promoted to Branch Manager. All files were identical, but half (24) were named as female, and the other half (24) were named male. The results showed 21 males were promoted and 14 females, meaning 35 of the total 48 were promoted. In <span class="citation">Rosen and Jerdee (<a href="#ref-Rosen1974">1974</a>)</span> sex was given along with an indication of the difficulty - routine or complex - here we only look at the routine promotion candidates. Do we know if gender is a statistically significant factor?</p>
 <ul>
 <li><strong>Null Hypothesis <span class="math inline">\(H_{0}\)</span></strong>: Gender and promotion are unrelated variables</li>
@@ -412,7 +416,7 @@ disc_perm %&gt;%
 <p>Indeed since the <span class="citation">Rosen and Jerdee (<a href="#ref-Rosen1974">1974</a>)</span> study, many further studies have been undertaken and found a similar pattern of discrimination.</p>
 </div>
 <div id="opportunity-cost" class="section level2">
-<h2><span class="header-section-number">1.5</span> Opportunity Cost</h2>
+<h2><span class="header-section-number">2.5</span> Opportunity Cost</h2>
 <p>In <span class="citation">Frederick et al. (<a href="#ref-Frederick2009">2009</a>)</span> their study showed that when potential purchasers were reminded that if they did not buy a particular DVD they could instead save the money, when compared to a control group who were just told they could not buy the DVD, those being reminded of the saving appeared to be more inclined not to make the purchase - 34 in the treatment group did not buy compared to 19 in the control. So our test is setup as:</p>
 <ul>
 <li><strong>Null Hypothesis <span class="math inline">\(H_{0}\)</span></strong>: Reminding students will have no impact on their spending decisions</li>
@@ -453,7 +457,7 @@ opportunity %&gt;%
 <p>In this instance, of p-value is substantially less than the usual critical value - 0.8% versus the usual value of 5% - so we can can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis. Our results would only occur 8 times in 1000 by chance. We can therefore accept the alternative hypothesis (<span class="math inline">\(H_{A}\)</span>) that reminding students does cause them to be less likely to buy a DVD, as they were randomly assigned to the treatment and control groups, therefore any difference is due to the reminder to save. Who can we therefore make the inference to? Our sample was drawn from the student population for the <span class="citation">Frederick et al. (<a href="#ref-Frederick2009">2009</a>)</span> study, so we would be able to generalise to that student population however defined, but not to another wider population.</p>
 </div>
 <div id="type-i-and-type-ii-errors" class="section level2">
-<h2><span class="header-section-number">1.6</span> Type I and Type II errors</h2>
+<h2><span class="header-section-number">2.6</span> Type I and Type II errors</h2>
 <p>In our research and conslusions there is a risk that we will be incorrect, we will make an error. The two errors are:</p>
 <blockquote>
 <p><strong>Type I error</strong> : The null hypothesis (<span class="math inline">\(H_{0}\)</span>) is true, but is rejected. On the basis of the evidence, we have decided to erroneously accept the alternative hypothesis (<span class="math inline">\(H_{A}\)</span>) when in fact the null hypothesis is correct. It is sometimes called a false positive.</p>
@@ -466,13 +470,13 @@ opportunity %&gt;%
 <p>Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.</p>
 </div>
 <div id="bootstrapping" class="section level2">
-<h2><span class="header-section-number">1.7</span> Bootstrapping</h2>
+<h2><span class="header-section-number">2.7</span> Bootstrapping</h2>
 <p>Sometimes we are not neccessarily interested in testing a hypothesis, we are instead interested in making a claim about how our sample can be inferred to a large population. To do so we use confidece intervals. When calculating confidence intervals there is no null hypothesis like in hypothesis testing. We need to understand how samples from our population vary around the parameter of interest. In an ideal world we would take many samples from the population or know what the true value is in the population, but realistically this is not possible, so we use booststrapping.</p>
 <p>Bootstrapping is the process of taking repeated samples from the same sample, to estimate the variability. As our population parameters are not known, we can use our sample to estimate a simulated population parameter (<span class="math inline">\(\hat{p}*\)</span>) by repeated sampling. We can then estimate other parameters such as the standard deviation, s.e. and the confidence interval. Instead of taking repeated samples from our population, we take repeated samples from our data, with replacement, each bootstrap sample is the same size as the original sample.</p>
 <div class="figure"><span id="fig:bootstrap"></span>
 <img src="images/bootstrap.png" alt="Illustration of the bootstrap approach on a small sample containing n = 3 observations [@ISLR2013, pg 190]"  />
 <p class="caption">
-Figure 1.1: Illustration of the bootstrap approach on a small sample containing n = 3 observations <span class="citation">(James et al. <a href="#ref-ISLR2013">2013</a>, pg 190)</span>
+Figure 2.1: Illustration of the bootstrap approach on a small sample containing n = 3 observations <span class="citation">(James et al. <a href="#ref-ISLR2013">2013</a>, pg 190)</span>
 </p>
 </div>
 <p>Firstly we setup our single poll, where 70% (21/30) are intended to vote for a particular candidate</p>
@@ -513,7 +517,7 @@ one_poll_boot %&gt;%
 ##       lower     upper
 ##       &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 0.5319476 0.8680524</code></pre>
-<p>So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%. Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate. We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to cote for the candidate is between 53% and 87%. We are assuming that the distribution is normally distributed <span class="math inline">\(N(\mu, \sigma ^2)\)</span>.</p>
+<p>So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%. Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate. We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to vote for the candidate is between 53% and 87%. We are assuming that the distribution is normally distributed <span class="math inline">\(N(\mu, \sigma ^2)\)</span>.</p>
 </div>
 </div>
 <h3>References</h3>
@@ -536,7 +540,7 @@ one_poll_boot %&gt;%
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="importing-data-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

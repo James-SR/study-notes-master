@@ -1,6 +1,6 @@
 book_filename: "Study-Notes"
 repo: https://github.com/James-SR/study-notes-master
 output_dir: docs
-rmd_files: ["index.Rmd", "Foundations-of-Inference.Rmd"]
+rmd_files: ["index.Rmd", "Data-import-1.Rmd", "Foundations-of-Inference.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

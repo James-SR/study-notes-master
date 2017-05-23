@@ -97,7 +97,7 @@ homes %>%
 ## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          <dbl>        <dbl>
-## 1 -0.007828723 -0.005357432
+## 1 -0.007828723 -0.004533669
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6631902 0.6654397
-## 2   male     0.6598922 0.6576109
+## 1 female     0.6611452 0.6654397
+## 2   male     0.6619660 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -186,7 +186,7 @@ homes4
 ## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          <dbl>        <dbl>
-## 1 -0.007828723 -0.003298023
+## 1 -0.007828723 0.0008207949
 ```
 
 ##Density Plots
@@ -550,6 +550,6 @@ one_poll_boot %>%
 ## 1 0.5319476 0.8680524
 ```
 
-So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%.  Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate.  We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to cote for the candidate is between 53% and 87%.  We are assuming that the distribution is normally distributed $N(\mu, \sigma ^2)$.
+So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%.  Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate.  We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to vote for the candidate is between 53% and 87%.  We are assuming that the distribution is normally distributed $N(\mu, \sigma ^2)$.
 
 # References {-}
