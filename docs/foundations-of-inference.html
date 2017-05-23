@@ -230,7 +230,7 @@ homes %&gt;%
 <pre><code>## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.004533669</code></pre>
+## 1 -0.007828723 -0.004121787</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -253,11 +253,11 @@ homes %&gt;%
 ##   Gender HomeOwn HomeOwn_perm
 ##   &lt;fctr&gt;  &lt;fctr&gt;       &lt;fctr&gt;
 ## 1   male    Rent          Own
-## 2   male    Rent          Own
-## 3 female     Own          Own
+## 2   male    Rent         Rent
+## 3 female     Own         Rent
 ## 4   male     Own          Own
 ## 5   male     Own         Rent
-## 6   male     Own          Own</code></pre>
+## 6   male     Own         Rent</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
 ##  female:4890   Own  :6425   Own  :6425  
@@ -271,8 +271,8 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6611452 0.6654397
-## 2   male     0.6619660 0.6576109</code></pre>
+## 1 female     0.6660532 0.6654397
+## 2   male     0.6569888 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
@@ -281,7 +281,7 @@ homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 0.0008207949</code></pre>
+## 1 -0.007828723 -0.009064368</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">2.3</span> Density Plots</h2>

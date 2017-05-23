@@ -6,11 +6,11 @@ Notes taken during/inspired by the Datacamp course 'Importing Data in R (Part 1)
 
 Data often comes from many different sources and formats, including
 
-*Flat files - simple tables e.g. csv
-*Excel
-*Databases - MySQL, Postgres
-*Websites - APIs, JSON, scraping
-*Other statistical software - SPSS, STATA, SAS
+* Flat files - simple tables e.g. csv
+* Excel
+* Databases - MySQL, Postgres
+* Websites - APIs, JSON, scraping
+* Other statistical software - SPSS, STATA, SAS
 
 ## Reading CSV files
 
