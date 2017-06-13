@@ -41,3 +41,39 @@ Then use the file path as before, assigning to a dataframe.
 ```r
 df <- read.csv(path, stringsAsFactors = FALSE)
 ```
+
+## Reading tab deliminated files or other table formats
+
+In a similar way to before, we add the path to the file and if we want strings as strings, for instance
+
+
+```r
+read.delim("file.csv", stringsAsFactors = FALSE)
+```
+
+However, if the file comes in another format perhaps due to the system encoding or setup, it is still possible to try and read the file as a tabular formating convering it to a data frame.  To do so, we use the read.table() command which has a lot of arguments that can be customised.  You can specifiy column names and types for instance.  If for instance we have a file format where the objects are seperated by a / rather than a comma or tab as before, we could use
+
+
+```r
+read.table("file.txt",
+           header = TRUE,
+           sep = "/",
+           stringsAsFactors = FALSE)
+```
+
+Or, if you have a file which has no column/variable names and tabs as spaces, you would read the file as:
+
+
+```r
+# Path to the file.txt file: path
+path <- file.path("data", "file.txt")
+
+# Import the file.txt file: hotdogs
+file <- read.table(path, 
+                      sep = "\t",                                        # specify seperator - tab in this instance
+                      col.names = c("VarName1", "VarName2", "VarName3"), # specifiy variable names
+                      colClasses = c("factor", "NULL", "numeric"))       # specify the column/variable classes
+```
+
+Both read.csv and read.delim are wrapper functions of read.table, both use read.table but have different default options depending on the file type.  There are two further wrapper functions - read.csv2 and read.delim2 - which deal with regional differences in formatting, notably that some areas use full stops as decimal places, whereas other areas use commas for decimal places.
+

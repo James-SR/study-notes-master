@@ -107,6 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html"><i class="fa fa-check"></i><b>1</b> Importing data - Part 1</a><ul>
 <li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
 <li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
+<li class="chapter" data-level="1.3" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-tab-deliminated-files-or-other-table-formats"><i class="fa fa-check"></i><b>1.3</b> Reading tab deliminated files or other table formats</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -164,6 +165,26 @@ path</code></pre></div>
 <pre><code>## [1] &quot;~/datasets/file.csv&quot;</code></pre>
 <p>Then use the file path as before, assigning to a dataframe.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(path, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+</div>
+<div id="reading-tab-deliminated-files-or-other-table-formats" class="section level2">
+<h2><span class="header-section-number">1.3</span> Reading tab deliminated files or other table formats</h2>
+<p>In a similar way to before, we add the path to the file and if we want strings as strings, for instance</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.delim</span>(<span class="st">&quot;file.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>However, if the file comes in another format perhaps due to the system encoding or setup, it is still possible to try and read the file as a tabular formating convering it to a data frame. To do so, we use the read.table() command which has a lot of arguments that can be customised. You can specifiy column names and types for instance. If for instance we have a file format where the objects are seperated by a / rather than a comma or tab as before, we could use</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;file.txt&quot;</span>,
+           <span class="dt">header =</span> <span class="ot">TRUE</span>,
+           <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>,
+           <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Or, if you have a file which has no column/variable names and tabs as spaces, you would read the file as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Path to the file.txt file: path</span>
+path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;file.txt&quot;</span>)
+
+<span class="co"># Import the file.txt file: hotdogs</span>
+file &lt;-<span class="st"> </span><span class="kw">read.table</span>(path, 
+                      <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>,                                        <span class="co"># specify seperator - tab in this instance</span>
+                      <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;VarName1&quot;</span>, <span class="st">&quot;VarName2&quot;</span>, <span class="st">&quot;VarName3&quot;</span>), <span class="co"># specifiy variable names</span>
+                      <span class="dt">colClasses =</span> <span class="kw">c</span>(<span class="st">&quot;factor&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;numeric&quot;</span>))       <span class="co"># specify the column/variable classes</span></code></pre></div>
+<p>Both read.csv and read.delim are wrapper functions of read.table, both use read.table but have different default options depending on the file type. There are two further wrapper functions - read.csv2 and read.delim2 - which deal with regional differences in formatting, notably that some areas use full stops as decimal places, whereas other areas use commas for decimal places.</p>
 
 </div>
 </div>
