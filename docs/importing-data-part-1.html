@@ -108,6 +108,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
 <li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
 <li class="chapter" data-level="1.3" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-tab-deliminated-files-or-other-table-formats"><i class="fa fa-check"></i><b>1.3</b> Reading tab deliminated files or other table formats</a></li>
+<li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -184,7 +185,22 @@ file &lt;-<span class="st"> </span><span class="kw">read.table</span>(path,
                       <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>,                                        <span class="co"># specify seperator - tab in this instance</span>
                       <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;VarName1&quot;</span>, <span class="st">&quot;VarName2&quot;</span>, <span class="st">&quot;VarName3&quot;</span>), <span class="co"># specifiy variable names</span>
                       <span class="dt">colClasses =</span> <span class="kw">c</span>(<span class="st">&quot;factor&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;numeric&quot;</span>))       <span class="co"># specify the column/variable classes</span></code></pre></div>
-<p>Both read.csv and read.delim are wrapper functions of read.table, both use read.table but have different default options depending on the file type. There are two further wrapper functions - read.csv2 and read.delim2 - which deal with regional differences in formatting, notably that some areas use full stops as decimal places, whereas other areas use commas for decimal places.</p>
+<p>Both read.csv and read.delim are wrapper functions of read.table(), both use read.table but have different default options depending on the file type. There are two further wrapper functions - read.csv2 and read.delim2 - which deal with regional differences in formatting, notably that some areas use full stops as decimal places, whereas other areas use commas for decimal places.</p>
+</div>
+<div id="readr-and-data.table" class="section level2">
+<h2><span class="header-section-number">1.4</span> Readr and data.table</h2>
+<p>These two packages are other ways of reading in files. Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr. It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE. Like the utils package, these are wrapper functions, with the base function being read_delim().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+<span class="kw">read_csv</span>(<span class="st">&quot;file.csv&quot;</span>)    <span class="co">#read comma seperated</span>
+<span class="kw">read_tsv</span>(<span class="st">&quot;file2.txt&quot;</span>)   <span class="co">#read tab seperated files</span>
+
+<span class="co">#If there are no row heards, you can create a vector then read it in using the col_names argument</span>
+
+<span class="co">#specify the vector for column names</span>
+properties &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;area&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;size&quot;</span>, <span class="st">&quot;storage&quot;</span>, <span class="st">&quot;method&quot;</span>,
+                <span class="st">&quot;texture&quot;</span>, <span class="st">&quot;flavor&quot;</span>, <span class="st">&quot;moistness&quot;</span>)
+<span class="co">#read in the vector</span>
+potatoes &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;potatoes.txt&quot;</span>, <span class="dt">col_names =</span> properties)</code></pre></div>
 
 </div>
 </div>

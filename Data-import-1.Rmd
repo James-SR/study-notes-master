@@ -66,5 +66,24 @@ file <- read.table(path,
                       colClasses = c("factor", "NULL", "numeric"))       # specify the column/variable classes
 ```
 
-Both read.csv and read.delim are wrapper functions of read.table, both use read.table but have different default options depending on the file type.  There are two further wrapper functions - read.csv2 and read.delim2 - which deal with regional differences in formatting, notably that some areas use full stops as decimal places, whereas other areas use commas for decimal places.
+Both read.csv and read.delim are wrapper functions of read.table(), both use read.table but have different default options depending on the file type.  There are two further wrapper functions - read.csv2 and read.delim2 - which deal with regional differences in formatting, notably that some areas use full stops as decimal places, whereas other areas use commas for decimal places.
+
+## Readr and data.table
+
+These two packages are other ways of reading in files.  Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr.  It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE.  Like the utils package, these are wrapper functions, with the base function being read_delim().
+
+```{r eval = FALSE}
+library(readr)
+read_csv("file.csv")    #read comma seperated
+read_tsv("file2.txt")   #read tab seperated files
+
+#If there are no row heards, you can create a vector then read it in using the col_names argument
+
+#specify the vector for column names
+properties <- c("area", "temp", "size", "storage", "method",
+                "texture", "flavor", "moistness")
+#read in the vector
+potatoes <- read_tsv("potatoes.txt", col_names = properties)
+
+```
 
