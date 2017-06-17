@@ -189,7 +189,7 @@ file &lt;-<span class="st"> </span><span class="kw">read.table</span>(path,
 </div>
 <div id="readr-and-data.table" class="section level2">
 <h2><span class="header-section-number">1.4</span> Readr and data.table</h2>
-<p>These two packages are other ways of reading in files. Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr. It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE. Like the utils package, these are wrapper functions, with the base function being read_delim().</p>
+<p>These two packages are other ways of reading in files. Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr. It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="kw">read_csv</span>(<span class="st">&quot;file.csv&quot;</span>)    <span class="co">#read comma seperated</span>
 <span class="kw">read_tsv</span>(<span class="st">&quot;file2.txt&quot;</span>)   <span class="co">#read tab seperated files</span>
@@ -200,7 +200,36 @@ file &lt;-<span class="st"> </span><span class="kw">read.table</span>(path,
 properties &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;area&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;size&quot;</span>, <span class="st">&quot;storage&quot;</span>, <span class="st">&quot;method&quot;</span>,
                 <span class="st">&quot;texture&quot;</span>, <span class="st">&quot;flavor&quot;</span>, <span class="st">&quot;moistness&quot;</span>)
 <span class="co">#read in the vector</span>
-potatoes &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;potatoes.txt&quot;</span>, <span class="dt">col_names =</span> properties)</code></pre></div>
+df &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;file3.txt&quot;</span>, <span class="dt">col_names =</span> properties)</code></pre></div>
+<p>Like the utils package, these are wrapper functions, with the base function being read_delim(). Unlike the utils package, read_delim() expects the first row to contain headers, so this doesn’t need to be explicit. As mentioned previously, it is also not neccessary to specify the we don’t want strings as factors. You can specify col_names using a vector as before, or we can read them directly at the time. If we also want to explicity state the column types, perahps because the automatically assigned variable is not correct, we can do so with col_type using abreviations:</p>
+<ul>
+<li>c = character</li>
+<li>d = double</li>
+<li>i = integer</li>
+<li>n = number</li>
+<li>l = logical</li>
+<li>D = date</li>
+<li>T = date time</li>
+<li>t = time</li>
+<li>? = guess</li>
+<li>_ = skip column (underscore)</li>
+</ul>
+<p>Finally, we can use skip and n_max to specify how many rows to skip at the beggining of a file, perhaps due to a large header, and the maximum now of rows to read, perhaps due to a very large file with many rows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_delim</span>(<span class="st">&quot;file4.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;/&quot;</span>, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;var1&quot;</span>, <span class="st">&quot;var2&quot;</span>, <span class="st">&quot;var3&quot;</span>))
+
+<span class="kw">read_delim</span>(<span class="st">&quot;file5.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;/&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;ccid&quot;</span>)
+
+<span class="kw">read_delim</span>(<span class="st">&quot;file6.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;var1&quot;</span>, <span class="st">&quot;var2&quot;</span>, <span class="st">&quot;var3&quot;</span>), 
+           <span class="dt">skip =</span> <span class="dv">12</span>, <span class="dt">n_max =</span> <span class="dv">50000</span>)</code></pre></div>
+<p>Another way of setting the types of the imported columns is using collectors. Collector functions can be passed in a list() to the col_types argument of read_ functions to tell them how to interpret values in a column. Look at the collector documentation for more details. Two examples are shown below, one for columns to be interpreted as integers and one for a column with factors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The collectors needed for importing</span>
+fac &lt;-<span class="st"> </span><span class="kw">col_factor</span>(<span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Beef&quot;</span>, <span class="st">&quot;Meat&quot;</span>, <span class="st">&quot;Poultry&quot;</span>))
+int &lt;-<span class="st"> </span><span class="kw">col_integer</span>()
+
+<span class="co"># Edit the col_types argument with the specified collectors</span>
+hotdogs_factor &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;hotdogs.txt&quot;</span>,
+                           <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;type&quot;</span>, <span class="st">&quot;calories&quot;</span>, <span class="st">&quot;sodium&quot;</span>),
+                           <span class="dt">col_types =</span> <span class="kw">list</span>(fac, int, int))</code></pre></div>
 
 </div>
 </div>

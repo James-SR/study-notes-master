@@ -79,7 +79,7 @@ Both read.csv and read.delim are wrapper functions of read.table(), both use rea
 
 ## Readr and data.table
 
-These two packages are other ways of reading in files.  Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr.  It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE.  Like the utils package, these are wrapper functions, with the base function being read_delim().
+These two packages are other ways of reading in files.  Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr.  It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE.  
 
 
 ```r
@@ -93,6 +93,45 @@ read_tsv("file2.txt")   #read tab seperated files
 properties <- c("area", "temp", "size", "storage", "method",
                 "texture", "flavor", "moistness")
 #read in the vector
-potatoes <- read_tsv("potatoes.txt", col_names = properties)
+df <- read_tsv("file3.txt", col_names = properties)
+```
+
+Like the utils package, these are wrapper functions, with the base function being read_delim().  Unlike the utils package, read_delim() expects the first row to contain headers, so this doesn't need to be explicit.  As mentioned previously, it is also not neccessary to specify the we don't want strings as factors.  You can specify col_names using a vector as before, or we can read them directly at the time.  If we also want to explicity state the column types, perahps because the automatically assigned variable is not correct, we can do so with col_type using abreviations:
+
+* c = character
+* d = double
+* i = integer
+* n = number
+* l = logical
+* D = date
+* T = date time
+* t = time
+* ? = guess
+* _ = skip column (underscore)
+
+Finally, we can use skip and n_max to specify how many rows to skip at the beggining of a file, perhaps due to a large header, and the maximum now of rows to read, perhaps due to a very large file with many rows. 
+
+
+```r
+read_delim("file4.txt", delim = "/", col_names = c("var1", "var2", "var3"))
+
+read_delim("file5.txt", delim = "/", col_types = "ccid")
+
+read_delim("file6.txt", delim = "\t", col_names = c("var1", "var2", "var3"), 
+           skip = 12, n_max = 50000)
+```
+
+Another way of setting the types of the imported columns is using collectors. Collector functions can be passed in a list() to the col_types argument of read_ functions to tell them how to interpret values in a column.  Look at the collector documentation for more details.  Two examples are shown below, one for columns to be interpreted as integers and one for a column with factors.
+
+
+```r
+# The collectors needed for importing
+fac <- col_factor(levels = c("Beef", "Meat", "Poultry"))
+int <- col_integer()
+
+# Edit the col_types argument with the specified collectors
+hotdogs_factor <- read_tsv("hotdogs.txt",
+                           col_names = c("type", "calories", "sodium"),
+                           col_types = list(fac, int, int))
 ```
 
