@@ -135,3 +135,13 @@ hotdogs_factor <- read_tsv("hotdogs.txt",
                            col_types = list(fac, int, int))
 ```
 
+### data.table fread
+
+data.table is a tool for doing [fast data analysis](https://github.com/Rdatatable/data.table/wiki/Benchmarks-%3A-Grouping), particularly on large datasets.  It also has a function to read data using the fread() command.  It can autmoatically infer column names, types and seperators.  You can also drop or select columns at read time.
+
+
+```r
+df <- fread("file7.csv", select = c("colname1", "colname2"))
+```
+
+The readr package fill create different dataframe types or object classes - 'tbl_df', 'tbl' and 'data.frame' - which can be useful for different purposes, such as for use in dplyr.  Fread creates a data.table object class.
