@@ -111,6 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#data.table-fread"><i class="fa fa-check"></i><b>1.4.1</b> data.table fread</a></li>
 </ul></li>
+<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -237,8 +238,54 @@ hotdogs_factor &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<s
 <p>data.table is a tool for doing <a href="https://github.com/Rdatatable/data.table/wiki/Benchmarks-%3A-Grouping">fast data analysis</a>, particularly on large datasets. It also has a function to read data using the fread() command. It can autmoatically infer column names, types and seperators. You can also drop or select columns at read time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="st">&quot;file7.csv&quot;</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;colname1&quot;</span>, <span class="st">&quot;colname2&quot;</span>))</code></pre></div>
 <p>The readr package fill create different dataframe types or object classes - ‘tbl_df’, ‘tbl’ and ‘data.frame’ - which can be useful for different purposes, such as for use in dplyr. Fread creates a data.table object class.</p>
-
 </div>
+</div>
+<div id="reading-excel-files" class="section level2">
+<h2><span class="header-section-number">1.5</span> Reading Excel files</h2>
+<p>There are many packages for reading Excel files, one package is the readxl package by Hadley Wickham. There are to main functions</p>
+<ul>
+<li><strong>excel_sheets()</strong>: lists the sheets within an excel file or workbook</li>
+<li><strong>read_excel()</strong>: import the data, unless specified the first sheet is read, this can either be done with sheet = 7, or sheet = “name”.</li>
+</ul>
+<p>So to read an urbanpop.xlsx file containing three sheets of urban populations, for different time frames, our code would look similar to that below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+
+<span class="co">#list the sheerts in the file</span>
+<span class="kw">excel_sheets</span>(<span class="st">&quot;urbanpop.xlsx&quot;</span>)
+
+<span class="co"># Read the sheets, one by one</span>
+pop_1 &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;urbanpop.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">1</span>)
+pop_2 &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;urbanpop.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">2</span>)
+pop_3 &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;urbanpop.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">3</span>)
+
+<span class="co"># Put pop_1, pop_2 and pop_3 in a list: pop_list</span>
+pop_list &lt;-<span class="st"> </span><span class="kw">list</span>(pop_1, pop_2, pop_3)
+
+<span class="co"># IF we want to read all the files, a more efficient way to read all the files in the file uses lapply</span>
+pop_list &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">excel_sheets</span>(<span class="st">&quot;urbanpop.xlsx&quot;</span>),
+  read_excel,
+  <span class="dt">path =</span> <span class="st">&quot;urbanpop.xlsx&quot;</span>)</code></pre></div>
+<p>There are other arguments that can be used with the read_excel() function:</p>
+<ul>
+<li><strong>col_names</strong>: If true, the first row is read, if false R will assign it’s own names or you specify a charecter vector manually</li>
+<li><strong>col_types</strong>: If NULL, R gueses the data types of the columns. Alternatively, they can be specified e.g. text, numeric, date, blank (which ignores the col)</li>
+<li><strong>skip</strong>: Speficies the number of rows to ignore</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Some examples</span>
+
+<span class="co"># Import the the first Excel sheet of urbanpop_nonames.xlsx (R gives names): pop_a</span>
+pop_a &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;urbanpop_nonames.xlsx&quot;</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># Import the the first Excel sheet of urbanpop_nonames.xlsx (specify col_names): pop_b</span>
+cols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;country&quot;</span>, <span class="kw">paste0</span>(<span class="st">&quot;year_&quot;</span>, <span class="dv">1960</span>:<span class="dv">1966</span>))
+pop_b &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;urbanpop_nonames.xlsx&quot;</span>, <span class="dt">col_names =</span> cols)
+
+<span class="co"># Import the second sheet of urbanpop.xlsx, skipping the first 21 rows: urbanpop_sel</span>
+urbanpop_sel &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;urbanpop.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">skip =</span> <span class="dv">21</span>)
+
+<span class="co"># Print out the first observation from urbanpop_sel</span>
+urbanpop_sel[<span class="dv">1</span>,]</code></pre></div>
+
 </div>
 </div>
             </section>
