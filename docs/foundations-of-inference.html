@@ -111,7 +111,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#data.table-fread"><i class="fa fa-check"></i><b>1.4.1</b> data.table fread</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a></li>
+<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -235,7 +237,7 @@ homes %&gt;%
 <pre><code>## # A tibble: 1 × 2
 ##      diff_perm   diff_orig
 ##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 -0.01689012</code></pre>
+## 1 -0.007828723 -0.01112378</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -257,12 +259,12 @@ homes %&gt;%
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   &lt;fctr&gt;  &lt;fctr&gt;       &lt;fctr&gt;
-## 1   male    Rent         Rent
+## 1   male    Rent          Own
 ## 2   male    Rent          Own
-## 3 female     Own         Rent
-## 4   male     Own          Own
+## 3 female     Own          Own
+## 4   male     Own         Rent
 ## 5   male     Own          Own
-## 6   male     Own         Rent</code></pre>
+## 6   male     Own          Own</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
 ##  female:4890   Own  :6425   Own  :6425  
@@ -276,17 +278,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6646217 0.6654397
-## 2   male     0.6584405 0.6576109</code></pre>
+## 1 female     0.6695297 0.6654397
+## 2   male     0.6534633 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.006181196</code></pre>
+##      diff_perm   diff_orig
+##          &lt;dbl&gt;       &lt;dbl&gt;
+## 1 -0.007828723 -0.01606636</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">2.3</span> Density Plots</h2>

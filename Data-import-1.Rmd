@@ -190,3 +190,6 @@ urbanpop_sel[1,]
 
 ```
 
+### Alternatives for importing Excel files
+
+One alternative is the gdata package, which is a suite of tools for data.  There is a read.xls() function which only, currently, supports XLS files although xlsx could be supported with a driver.  The data is interpreted by the read.xls file using perl into a csv file, which is then read using the read.csv function - itself a offshoot of read.table, in to an R data frame. Hadley's readxl package is faster, but is quite early in it's development so some of the functions may change.  For gdata, as it is an offshoot of read.table(), all of the same arguments can be used by read.xls().
