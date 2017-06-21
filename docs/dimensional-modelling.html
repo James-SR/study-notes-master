@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="importing-data-part-1.html">
+<link rel="prev" href="references.html">
+<link rel="next" href="references-1.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -151,25 +151,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Study notes</h1>
-<h4 class="author"><em>James Solomon-Rounce</em></h4>
-<h4 class="date"><em>Last updated:2017-06-21</em></h4>
+<div id="dimensional-modelling" class="section level1">
+<h1><span class="header-section-number">3</span> Dimensional Modelling</h1>
+<hr />
+<div id="kimball-approach" class="section level2">
+<h2><span class="header-section-number">3.1</span> Kimball Approach</h2>
+<p>Before work begins of the data modelling, it is neccessary to understand the needs of the business and the underlying data <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 37)</span>. The business needs arise out of meetings with manangers, decision makers and other representatives of the business. Kimball also recommends meetings with <em>‘source system experts and doing high-level data profiling to assess data feasibilities’</em> <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 38)</span>. Whilst the data modeller is ‘in charge’ the actual model should unfold via a series of interactive workshops with those business representatives. Data governance reps should also be involved to obtain buy-in.</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>The following notes were taken by me for educational, non-commercial, purposes. If you find the information useful, buy the material/take the course.</p>
-<p>Thank you to the original content providers. Additional ramblings are my own.</p>
-<p><img src="images/standing.jpg" width="100%" /></p>
-
+<div id="four-step-dimensional-design-process" class="section level2">
+<h2><span class="header-section-number">3.2</span> Four-Step Dimensional Design Process</h2>
+<p>Kimball outlines four key decisions that are to be made during the design of a dimensional model include:</p>
+<ol style="list-style-type: decimal">
+<li><p>Select the business process - the operational activities done by the business, these activities create the facts</p></li>
+<li><p>Declare the grain - what a single row represents. The <em>atomic grain</em> is the lowest data captured by the business, which is the ideal and can be aggregared (rolled-up) to other levels. Different grains must not be mixed in the same fact table</p></li>
+<li><p>Identify the dimensions - the descriptive attributes about the facts, to be used for analysis. Provide the “who, what, where, when, why, and how” (6W) context</p></li>
+<li><p>Identify the facts - the measurements (how many) from the business process, it should relate to a physical observable event, rather than reporting needs</p></li>
+</ol>
+<p>Typicall the output of this process is a star schema, with a fact table at the centre supported by the associated dimension tables, with primary/forenigh key relationships. This is often then structured into a online analytical processing (OLAP) cube, which contains the facts and dimensions appropriate to the analysis, but allows for more detailed analytical capabilities than SQL. Sometimes aggregated fact tables are built to speed up query performance, as are aggregated OLAP cubes which are typically designed for users.</p>
+<p>A key advantage of the dimensional model approach is that new dimensions can be added to an existing fact table by adding a new foreign key column.</p>
+</div>
+<div id="graphical-representations" class="section level2">
+<h2><span class="header-section-number">3.3</span> Graphical Representations</h2>
+<div class="figure"><span id="fig:StarOLAP"></span>
+<img src="images/StarAndOLAP.png" alt="Star schema versus OLAP cube [@Kimball2013, pg 9]"  />
+<p class="caption">
+Figure 3.1: Star schema versus OLAP cube <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 9)</span>
+</p>
+</div>
+<div class="figure"><span id="fig:starexample"></span>
+<img src="images/FactWithDims.png" alt="Star schema example [@Kimball2013, pg 16]"  />
+<p class="caption">
+Figure 3.2: Star schema example <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 16)</span>
+</p>
+</div>
+<div class="figure"><span id="fig:starreport"></span>
+<img src="images/FactWithDimsReport.png" alt="Star schema reporting [@Kimball2013, pg 17]"  />
+<p class="caption">
+Figure 3.3: Star schema reporting <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 17)</span>
+</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Kimball2013">
+<p>Kimball, R., and M. Ross. 2013. <em>Data Warehouse Toolkit, the: The Definitive Guide to Dimensional Modeling</em>. 3rd Edition. Indianapolis: John Wiley &amp; Sons, Inc.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="importing-data-part-1.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references-1.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
