@@ -126,9 +126,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>3</b> Dimensional Modelling</a><ul>
-<li class="chapter" data-level="3.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>3.1</b> Kimball Approach</a></li>
-<li class="chapter" data-level="3.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>3.2</b> Four-Step Dimensional Design Process</a></li>
-<li class="chapter" data-level="3.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>3.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="3.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>3.1</b> Introduction to Dimensional Data</a></li>
+<li class="chapter" data-level="3.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>3.2</b> Kimball Approach</a></li>
+<li class="chapter" data-level="3.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>3.3</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="3.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>3.4</b> Graphical Representations</a></li>
+<li class="chapter" data-level="3.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>3.5</b> Tips</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -154,12 +156,86 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="dimensional-modelling" class="section level1">
 <h1><span class="header-section-number">3</span> Dimensional Modelling</h1>
 <hr />
+<div id="introduction-to-dimensional-data" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction to Dimensional Data</h2>
+<p>Dimensional modelling helps to build the ability for users to query the information, for instance analysing results by a geographic region. Multi-dimensional modelling is an extension to allowing multiple ways to analsye the information, by geographic region but also over time, by product or service, by store or office and so on. It provides a way for a system user, manager or analyst to navigate what information - the ‘information space’ - is available in a database or data warehouse, but at a more intuitive level <span class="citation">(see Meridith <a href="#ref-FIT5195">2017</a>, lecture 4)</span>. The goal is to help understanding, exploration and to make better decisions. A dimension is simply a direction, usually query or analytically based, in which you can move.</p>
+<p>The dimensions used therefore become the ways in which the end user wants to query the information.</p>
+<p>Typical terms used in the BI arena for helping to navigate this ‘information space’ include; ‘slice and dice’ meaning to make a large data space in to a smaller one (you are making a selection or subset of all the available data), ‘drill down’ meaning to go in to a lower level of a hierachy (moving from a geographic region to a particular store), ‘drill up’ meaning to go in to a higher level (sometimes called rolling-up) and ‘drill across’ meaning adding more data (or facts) about something, typically from another source (a different fact table).</p>
+<p>There are three aspects of information with a Business Intelligence system - conceptual, logical and physical - which exist on a spectrum.</p>
+<ul>
+<li>Conceptual - The business needs are usually the high level conceptual solution, what things we want to include at a more abstract level</li>
+<li>Logical - We start thinking about what data to include in the model and what data is available, it starts giving something which can be implemented in to a warehouse</li>
+<li>Physical - The final solution which is usually then what is implemented in the data warehouse. It is the more technical/IT solution and may include normalisation (3NF or higher) and perhaps other database optimisations to improve performance of the system.</li>
+</ul>
+<p>In some instances, the conceptual and logical can become one and the same thing.</p>
+<table>
+<caption><span id="tab:simple-table">Table 2.1: </span> The three levels of data modelling</caption>
+<thead>
+<tr class="header">
+<th align="left">Feature</th>
+<th align="center">Conceptual</th>
+<th align="center">Logical</th>
+<th align="center">Logical</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Entity Names</td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Entity Relationships</td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Attributes</td>
+<td align="center"></td>
+<td align="center">Y</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Primary Keys</td>
+<td align="center"></td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">Foreign Keys</td>
+<td align="center"></td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+</tr>
+<tr class="even">
+<td align="left">Table Names</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">Y</td>
+</tr>
+<tr class="odd">
+<td align="left">Column Names</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">Y</td>
+</tr>
+<tr class="even">
+<td align="left">Column Data Types</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">Y</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="kimball-approach" class="section level2">
-<h2><span class="header-section-number">3.1</span> Kimball Approach</h2>
-<p>Before work begins of the data modelling, it is neccessary to understand the needs of the business and the underlying data <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 37)</span>. The business needs arise out of meetings with manangers, decision makers and other representatives of the business. Kimball also recommends meetings with <em>‘source system experts and doing high-level data profiling to assess data feasibilities’</em> <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 38)</span>. Whilst the data modeller is ‘in charge’ the actual model should unfold via a series of interactive workshops with those business representatives. Data governance reps should also be involved to obtain buy-in.</p>
+<h2><span class="header-section-number">3.2</span> Kimball Approach</h2>
+<p>Before work begins of the data modelling, it is neccessary to understand the needs of the business and the underlying data <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 37)</span>. The business needs arise out of meetings with manangers, decision makers and other representatives of the business. Kimball also recommends meetings with <em>‘source system experts and doing high-level data profiling to assess data feasibilities’</em> <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 38)</span>. Whilst the data modeller is ‘in charge’ the actual model should unfold via a series of interactive workshops with those business representatives. Data governance reps should also be involved to obtain buy-in. In this sense, the Kimball approach covers both the conceptual and physical, it may also include some considerations of physical level at initiation.</p>
 </div>
 <div id="four-step-dimensional-design-process" class="section level2">
-<h2><span class="header-section-number">3.2</span> Four-Step Dimensional Design Process</h2>
+<h2><span class="header-section-number">3.3</span> Four-Step Dimensional Design Process</h2>
 <p>Kimball outlines four key decisions that are to be made during the design of a dimensional model include:</p>
 <ol style="list-style-type: decimal">
 <li><p>Select the business process - the operational activities done by the business, these activities create the facts</p></li>
@@ -171,7 +247,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>A key advantage of the dimensional model approach is that new dimensions can be added to an existing fact table by adding a new foreign key column.</p>
 </div>
 <div id="graphical-representations" class="section level2">
-<h2><span class="header-section-number">3.3</span> Graphical Representations</h2>
+<h2><span class="header-section-number">3.4</span> Graphical Representations</h2>
 <div class="figure"><span id="fig:StarOLAP"></span>
 <img src="images/StarAndOLAP.png" alt="Star schema versus OLAP cube [@Kimball2013, pg 9]"  />
 <p class="caption">
@@ -191,9 +267,18 @@ Figure 3.3: Star schema reporting <span class="citation">(Kimball and Ross <a hr
 </p>
 </div>
 </div>
+<div id="tips" class="section level2">
+<h2><span class="header-section-number">3.5</span> Tips</h2>
+<ul>
+<li>Just because something exists in the organisation it does not mean it has to be included. You need to think about that to include and what not to include.</li>
+</ul>
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-FIT5195">
+<p>Meridith, R. 2017. “FIT5195 - Business Intelligence and Data Warehousing.” Melbourne: Monash University. <a href="http://podcast.infotech.monash.edu.au/fit5195/" class="uri">http://podcast.infotech.monash.edu.au/fit5195/</a>.</p>
+</div>
 <div id="ref-Kimball2013">
 <p>Kimball, R., and M. Ross. 2013. <em>Data Warehouse Toolkit, the: The Definitive Guide to Dimensional Modeling</em>. 3rd Edition. Indianapolis: John Wiley &amp; Sons, Inc.</p>
 </div>
