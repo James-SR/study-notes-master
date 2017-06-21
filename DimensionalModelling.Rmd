@@ -55,14 +55,21 @@ There are a number of different approaches to implementing a data warehouse, or 
 * **Data Vault** - 
 
 
-In the Kimball approach when attributes in separate dimension tables have the
-same column names and domain contents. 
+In the Kimball approach when attributes in separate dimension tables have the same column names and domain contents. 
 
 > _After validating the data for conformance with the defined one-to-one and many-to-one business rules [as part of the ETL processs], it may be pointless to
 take the final step of building a 3NF physical database, just before transforming the data once again into denormalized structures for the BI presentation area._
 [@Kimball2013, pg 20]
 
 For the kimball approach to work, so called 'conformed dimensions' must be developed which are said to conform _when attributes in separate dimension tables have the same column names and domain contents_ [@Kimball2013, pg 51].  
+
+Inmon sees that the dimensional modelling technique can cause problems when teams need different star schemas - dimensional models - which then lead to a need to combine the different joins together, or lead to issues of duplication and inconsistencies.  
+
+> simply doing dimensional modeling as a basis for data warehouse design leads down a dark path when multiple star joins are considered. It is never apparent that there is 
+a problem with star joins when you are looking at just one star join. But when you look at multiple star joins, the limitations of dimensional modeling become apparent. 
+[@Inmon2000]
+
+Inmon concludes that dimensional modelling is only really suitable for data marts (ibid).
 
 ## Kimball Approach
 
