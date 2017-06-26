@@ -114,6 +114,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
 </ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -256,7 +257,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <blockquote>
 <p><em>After validating the data for conformance with the defined one-to-one and many-to-one business rules [as part of the ETL processs], it may be pointless to take the final step of building a 3NF physical database, just before transforming the data once again into denormalized structures for the BI presentation area.</em> <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 20)</span></p>
 </blockquote>
-<p>For the kimball approach to work, so called ‘conformed dimensions’ must be developed which are said to conform <em>when attributes in separate dimension tables have the same column names and domain contents</em><span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 51)</span>.</p>
+<p>For the kimball approach to work, so called ‘conformed dimensions’ must be developed which are said to conform <em>when attributes in separate dimension tables have the same column names and domain contents</em> <span class="citation">(Kimball and Ross <a href="#ref-Kimball2013">2013</a>, pg 51)</span>.</p>
+<p>Inmon sees that the dimensional modelling technique can cause problems when teams need different star schemas - dimensional models - which then lead to a need to combine the different joins together, or lead to issues of duplication and inconsistencies.</p>
+<blockquote>
+<p>simply doing dimensional modeling as a basis for data warehouse design leads down a dark path when multiple star joins are considered. It is never apparent that there is a problem with star joins when you are looking at just one star join. But when you look at multiple star joins, the limitations of dimensional modeling become apparent. <span class="citation">(INMON <a href="#ref-Inmon2000">2000</a>)</span></p>
+</blockquote>
+<p>Inmon concludes that dimensional modelling is only really suitable for data marts (ibid).</p>
 </div>
 <div id="kimball-approach" class="section level2">
 <h2><span class="header-section-number">3.3</span> Kimball Approach</h2>
@@ -309,6 +315,9 @@ Figure 3.3: Star schema reporting <span class="citation">(Kimball and Ross <a hr
 </div>
 <div id="ref-Kimball2013">
 <p>Kimball, R., and M. Ross. 2013. <em>Data Warehouse Toolkit, the: The Definitive Guide to Dimensional Modeling</em>. 3rd Edition. Indianapolis: John Wiley &amp; Sons, Inc.</p>
+</div>
+<div id="ref-Inmon2000">
+<p>INMON, W. 2000. “The Problem with Dimensional Modeling.” <em>DM Review</em>. <a href="http://www.information-management.com/issues/20000501/2184-1.html" class="uri">http://www.information-management.com/issues/20000501/2184-1.html</a>.</p>
 </div>
 </div>
             </section>

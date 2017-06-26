@@ -203,3 +203,26 @@ urbanpop_sel[1,]
 ### Alternatives for importing Excel files
 
 One alternative is the gdata package, which is a suite of tools for data.  There is a read.xls() function which only, currently, supports XLS files although xlsx could be supported with a driver.  The data is interpreted by the read.xls file using perl into a csv file, which is then read using the read.csv function - itself a offshoot of read.table, in to an R data frame. Hadley's readxl package is faster, but is quite early in it's development so some of the functions may change.  For gdata, as it is an offshoot of read.table(), all of the same arguments can be used by read.xls().
+
+## XLConnect - read and write to excel
+
+Most of the Excel tools can become accesible but inside R, using XLConnect.  It is possible to use XLS and XLSX and it will create a 'workbook' object in R, but it does require Java to work.
+
+
+```r
+library(XLConnect)
+
+#read a file in and list the sheets
+book <- loadWorkbook("file.xlsx")
+getSheets(book)
+
+#read in the specific sheet but only the columns we are interested in
+wardData <- readWorksheet(book, sheet = "sheet_1", startCol = 3, endCol = 5)
+
+# read in the names column, previoulsy excluded
+wardNames <- readWorksheet(my_book, sheet = 2, startCol = 1, endCol = 1)
+
+#cbind the data and names together
+selection <- cbind(wardNames, wardData)
+```
+

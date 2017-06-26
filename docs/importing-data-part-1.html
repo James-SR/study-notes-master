@@ -114,6 +114,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
 </ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -301,8 +302,26 @@ urbanpop_sel[<span class="dv">1</span>,]</code></pre></div>
 <div id="alternatives-for-importing-excel-files" class="section level3">
 <h3><span class="header-section-number">1.5.1</span> Alternatives for importing Excel files</h3>
 <p>One alternative is the gdata package, which is a suite of tools for data. There is a read.xls() function which only, currently, supports XLS files although xlsx could be supported with a driver. The data is interpreted by the read.xls file using perl into a csv file, which is then read using the read.csv function - itself a offshoot of read.table, in to an R data frame. Hadley’s readxl package is faster, but is quite early in it’s development so some of the functions may change. For gdata, as it is an offshoot of read.table(), all of the same arguments can be used by read.xls().</p>
-
 </div>
+</div>
+<div id="xlconnect---read-and-write-to-excel" class="section level2">
+<h2><span class="header-section-number">1.6</span> XLConnect - read and write to excel</h2>
+<p>Most of the Excel tools can become accesible but inside R, using XLConnect. It is possible to use XLS and XLSX and it will create a ‘workbook’ object in R, but it does require Java to work.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(XLConnect)
+
+<span class="co">#read a file in and list the sheets</span>
+book &lt;-<span class="st"> </span><span class="kw">loadWorkbook</span>(<span class="st">&quot;file.xlsx&quot;</span>)
+<span class="kw">getSheets</span>(book)
+
+<span class="co">#read in the specific sheet but only the columns we are interested in</span>
+wardData &lt;-<span class="st"> </span><span class="kw">readWorksheet</span>(book, <span class="dt">sheet =</span> <span class="st">&quot;sheet_1&quot;</span>, <span class="dt">startCol =</span> <span class="dv">3</span>, <span class="dt">endCol =</span> <span class="dv">5</span>)
+
+<span class="co"># read in the names column, previoulsy excluded</span>
+wardNames &lt;-<span class="st"> </span><span class="kw">readWorksheet</span>(my_book, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">startCol =</span> <span class="dv">1</span>, <span class="dt">endCol =</span> <span class="dv">1</span>)
+
+<span class="co">#cbind the data and names together</span>
+selection &lt;-<span class="st"> </span><span class="kw">cbind</span>(wardNames, wardData)</code></pre></div>
+
 </div>
 </div>
             </section>

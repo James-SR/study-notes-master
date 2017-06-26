@@ -114,6 +114,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
 </ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>2</b> Foundations of Inference</a><ul>
 <li class="chapter" data-level="2.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>2.1</b> Introduction to Inference</a></li>
@@ -246,9 +247,9 @@ homes %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
             <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
-##      diff_perm diff_orig
-##          &lt;dbl&gt;     &lt;dbl&gt;
-## 1 -0.007828723 0.0164723</code></pre>
+##      diff_perm    diff_orig
+##          &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.007828723 -0.005769314</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 × 2
@@ -289,8 +290,8 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6621677 0.6654397
-## 2   male     0.6609291 0.6576109</code></pre>
+## 1 female     0.6629857 0.6654397
+## 2   male     0.6600995 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
@@ -299,7 +300,7 @@ homes4</code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##      diff_perm    diff_orig
 ##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.001238614</code></pre>
+## 1 -0.007828723 -0.002886141</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">2.3</span> Density Plots</h2>
