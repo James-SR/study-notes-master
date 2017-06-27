@@ -43,7 +43,7 @@ In a similar way to before, we add the path to the file and if we want strings a
 read.delim("file.csv", stringsAsFactors = FALSE)
 ```
 
-However, if the file comes in another format perhaps due to the system encoding or setup, it is still possible to try and read the file as a tabular formating convering it to a data frame.  To do so, we use the read.table() command which has a lot of arguments that can be customised.  You can specifiy column names and types for instance.  If for instance we have a file format where the objects are seperated by a / rather than a comma or tab as before, we could use
+However, if the file comes in another format perhaps due to the system encoding or setup, it is still possible to try and read the file as a tabular formatting converting it to a data frame.  To do so, we use the read.table() command which has a lot of arguments that can be customised.  You can specify column names and types for instance.  If for instance we have a file format where the objects are separated by a / rather than a comma or tab as before, we could use
 
 ```{r eval = FALSE}
 read.table("file.txt",
@@ -70,14 +70,14 @@ Both read.csv and read.delim are wrapper functions of read.table(), both use rea
 
 ## Readr and data.table
 
-These two packages are other ways of reading in files.  Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr.  It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE.  
+These two packages are other ways of reading in files.  Readr uses the tibble, so will be compatible with other tidyverse packages such as dplyr.  It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not necessary to specify stringsAsFactors = FALSE.  
 
 ```{r eval = FALSE}
 library(readr)
 read_csv("file.csv")    #read comma seperated
 read_tsv("file2.txt")   #read tab seperated files
 
-#If there are no row heards, you can create a vector then read it in using the col_names argument
+#If there are no row heads, you can create a vector then read it in using the col_names argument
 
 #specify the vector for column names
 properties <- c("area", "temp", "size", "storage", "method",
@@ -87,7 +87,7 @@ df <- read_tsv("file3.txt", col_names = properties)
 
 ```
 
-Like the utils package, these are wrapper functions, with the base function being read_delim().  Unlike the utils package, read_delim() expects the first row to contain headers, so this doesn't need to be explicit.  As mentioned previously, it is also not neccessary to specify the we don't want strings as factors.  You can specify col_names using a vector as before, or we can read them directly at the time.  If we also want to explicity state the column types, perahps because the automatically assigned variable is not correct, we can do so with col_type using abreviations:
+Like the utils package, these are wrapper functions, with the base function being read_delim().  Unlike the utils package, read_delim() expects the first row to contain headers, so this doesn't need to be explicit.  As mentioned previously, it is also not necessary to specify the we don't want strings as factors.  You can specify col_names using a vector as before, or we can read them directly at the time.  If we also want to explicitly state the column types, perahps because the automatically assigned variable is not correct, we can do so with col_type using abbreviations:
 
 * c = character
 * d = double
@@ -100,7 +100,7 @@ Like the utils package, these are wrapper functions, with the base function bein
 * ? = guess
 * _ = skip column (underscore)
 
-Finally, we can use skip and n_max to specify how many rows to skip at the beggining of a file, perhaps due to a large header, and the maximum now of rows to read, perhaps due to a very large file with many rows. 
+Finally, we can use skip and n_max to specify how many rows to skip at the beginning of a file, perhaps due to a large header, and the maximum now of rows to read, perhaps due to a very large file with many rows. 
 
 ```{r eval = FALSE}
 
@@ -128,7 +128,7 @@ hotdogs_factor <- read_tsv("hotdogs.txt",
 
 ### data.table fread
 
-data.table is a tool for doing [fast data analysis](https://github.com/Rdatatable/data.table/wiki/Benchmarks-%3A-Grouping), particularly on large datasets.  It also has a function to read data using the fread() command.  It can autmoatically infer column names, types and seperators.  You can also drop or select columns at read time.
+data.table is a tool for doing [fast data analysis](https://github.com/Rdatatable/data.table/wiki/Benchmarks-%3A-Grouping), particularly on large datasets.  It also has a function to read data using the fread() command.  It can automatically infer column names, types and separators.  You can also drop or select columns at read time.
 
 ```{r eval = FALSE}
 df <- fread("file7.csv", select = c("colname1", "colname2"))
@@ -196,12 +196,12 @@ One alternative is the gdata package, which is a suite of tools for data.  There
 
 ## XLConnect - read and write to excel
 
-Most of the Excel tools can become accesible but inside R, using XLConnect.  It is possible to use XLS and XLSX and it will create a 'workbook' object in R, but it does require Java to work.
+Most of the Excel tools can become accessible but inside R, using XLConnect.  It is possible to use XLS and XLSX and it will create a 'workbook' object in R, but it does require Java to work.
 
 ```{r eval = FALSE}
 library(XLConnect)
 
-#read a file in and list the sheets
+#create a connect to a file and list the sheets
 book <- loadWorkbook("file.xlsx")
 getSheets(book)
 
@@ -214,5 +214,26 @@ wardNames <- readWorksheet(my_book, sheet = 2, startCol = 1, endCol = 1)
 #cbind the data and names together
 selection <- cbind(wardNames, wardData)
   
+```
+
+XLConnect has more features than simply reading sheets.  It is possible to write data back to the Excel file also.  We can add sheets, write or add data to sheets, rename and remove sheets.
+
+```{r eval = FALSE}
+
+# Add a worksheet to my_book, named "summary"
+createSheet(my_book, "summary")
+
+# Add data in summ to "data_summary" sheet
+writeWorksheet(my_book, summ, "summary")
+
+# Save workbook as summary.xlsx
+saveWorkbook(my_book, "summary.xlsx")
+
+# Rename "summary" sheet to "data_summary"
+renameSheet(my_book, sheet = 4, "data_summary")
+
+# Remove the third sheet
+removeSheet(my_book, sheet = 3)
+
 ```
 

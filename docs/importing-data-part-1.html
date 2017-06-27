@@ -188,7 +188,7 @@ path</code></pre></div>
 <h2><span class="header-section-number">1.3</span> Reading tab deliminated files or other table formats</h2>
 <p>In a similar way to before, we add the path to the file and if we want strings as strings, for instance</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.delim</span>(<span class="st">&quot;file.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p>However, if the file comes in another format perhaps due to the system encoding or setup, it is still possible to try and read the file as a tabular formating convering it to a data frame. To do so, we use the read.table() command which has a lot of arguments that can be customised. You can specifiy column names and types for instance. If for instance we have a file format where the objects are seperated by a / rather than a comma or tab as before, we could use</p>
+<p>However, if the file comes in another format perhaps due to the system encoding or setup, it is still possible to try and read the file as a tabular formatting converting it to a data frame. To do so, we use the read.table() command which has a lot of arguments that can be customised. You can specify column names and types for instance. If for instance we have a file format where the objects are separated by a / rather than a comma or tab as before, we could use</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.table</span>(<span class="st">&quot;file.txt&quot;</span>,
            <span class="dt">header =</span> <span class="ot">TRUE</span>,
            <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>,
@@ -206,19 +206,19 @@ file &lt;-<span class="st"> </span><span class="kw">read.table</span>(path,
 </div>
 <div id="readr-and-data.table" class="section level2">
 <h2><span class="header-section-number">1.4</span> Readr and data.table</h2>
-<p>These two packages are other ways of reading in files. Readr uses the tibble, so will be compatable with other tidyverse packages such as dplyr. It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not neccessary to specifiy stringsAsFactors = FALSE.</p>
+<p>These two packages are other ways of reading in files. Readr uses the tibble, so will be compatible with other tidyverse packages such as dplyr. It is faster than utils, the r default and also prints out the column classes, depending on what other packages are loaded. It is not necessary to specify stringsAsFactors = FALSE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
 <span class="kw">read_csv</span>(<span class="st">&quot;file.csv&quot;</span>)    <span class="co">#read comma seperated</span>
 <span class="kw">read_tsv</span>(<span class="st">&quot;file2.txt&quot;</span>)   <span class="co">#read tab seperated files</span>
 
-<span class="co">#If there are no row heards, you can create a vector then read it in using the col_names argument</span>
+<span class="co">#If there are no row heads, you can create a vector then read it in using the col_names argument</span>
 
 <span class="co">#specify the vector for column names</span>
 properties &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;area&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;size&quot;</span>, <span class="st">&quot;storage&quot;</span>, <span class="st">&quot;method&quot;</span>,
                 <span class="st">&quot;texture&quot;</span>, <span class="st">&quot;flavor&quot;</span>, <span class="st">&quot;moistness&quot;</span>)
 <span class="co">#read in the vector</span>
 df &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;file3.txt&quot;</span>, <span class="dt">col_names =</span> properties)</code></pre></div>
-<p>Like the utils package, these are wrapper functions, with the base function being read_delim(). Unlike the utils package, read_delim() expects the first row to contain headers, so this doesn’t need to be explicit. As mentioned previously, it is also not neccessary to specify the we don’t want strings as factors. You can specify col_names using a vector as before, or we can read them directly at the time. If we also want to explicity state the column types, perahps because the automatically assigned variable is not correct, we can do so with col_type using abreviations:</p>
+<p>Like the utils package, these are wrapper functions, with the base function being read_delim(). Unlike the utils package, read_delim() expects the first row to contain headers, so this doesn’t need to be explicit. As mentioned previously, it is also not necessary to specify the we don’t want strings as factors. You can specify col_names using a vector as before, or we can read them directly at the time. If we also want to explicitly state the column types, perahps because the automatically assigned variable is not correct, we can do so with col_type using abbreviations:</p>
 <ul>
 <li>c = character</li>
 <li>d = double</li>
@@ -231,7 +231,7 @@ df &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="s
 <li>? = guess</li>
 <li>_ = skip column (underscore)</li>
 </ul>
-<p>Finally, we can use skip and n_max to specify how many rows to skip at the beggining of a file, perhaps due to a large header, and the maximum now of rows to read, perhaps due to a very large file with many rows.</p>
+<p>Finally, we can use skip and n_max to specify how many rows to skip at the beginning of a file, perhaps due to a large header, and the maximum now of rows to read, perhaps due to a very large file with many rows.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_delim</span>(<span class="st">&quot;file4.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;/&quot;</span>, <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;var1&quot;</span>, <span class="st">&quot;var2&quot;</span>, <span class="st">&quot;var3&quot;</span>))
 
 <span class="kw">read_delim</span>(<span class="st">&quot;file5.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;/&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;ccid&quot;</span>)
@@ -249,7 +249,7 @@ hotdogs_factor &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<s
                            <span class="dt">col_types =</span> <span class="kw">list</span>(fac, int, int))</code></pre></div>
 <div id="data.table-fread" class="section level3">
 <h3><span class="header-section-number">1.4.1</span> data.table fread</h3>
-<p>data.table is a tool for doing <a href="https://github.com/Rdatatable/data.table/wiki/Benchmarks-%3A-Grouping">fast data analysis</a>, particularly on large datasets. It also has a function to read data using the fread() command. It can autmoatically infer column names, types and seperators. You can also drop or select columns at read time.</p>
+<p>data.table is a tool for doing <a href="https://github.com/Rdatatable/data.table/wiki/Benchmarks-%3A-Grouping">fast data analysis</a>, particularly on large datasets. It also has a function to read data using the fread() command. It can automatically infer column names, types and separators. You can also drop or select columns at read time.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="st">&quot;file7.csv&quot;</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;colname1&quot;</span>, <span class="st">&quot;colname2&quot;</span>))</code></pre></div>
 <p>The readr package fill create different dataframe types or object classes - ‘tbl_df’, ‘tbl’ and ‘data.frame’ - which can be useful for different purposes, such as for use in dplyr. Fread creates a data.table object class.</p>
 </div>
@@ -306,10 +306,10 @@ urbanpop_sel[<span class="dv">1</span>,]</code></pre></div>
 </div>
 <div id="xlconnect---read-and-write-to-excel" class="section level2">
 <h2><span class="header-section-number">1.6</span> XLConnect - read and write to excel</h2>
-<p>Most of the Excel tools can become accesible but inside R, using XLConnect. It is possible to use XLS and XLSX and it will create a ‘workbook’ object in R, but it does require Java to work.</p>
+<p>Most of the Excel tools can become accessible but inside R, using XLConnect. It is possible to use XLS and XLSX and it will create a ‘workbook’ object in R, but it does require Java to work.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(XLConnect)
 
-<span class="co">#read a file in and list the sheets</span>
+<span class="co">#create a connect to a file and list the sheets</span>
 book &lt;-<span class="st"> </span><span class="kw">loadWorkbook</span>(<span class="st">&quot;file.xlsx&quot;</span>)
 <span class="kw">getSheets</span>(book)
 
@@ -321,6 +321,21 @@ wardNames &lt;-<span class="st"> </span><span class="kw">readWorksheet</span>(my
 
 <span class="co">#cbind the data and names together</span>
 selection &lt;-<span class="st"> </span><span class="kw">cbind</span>(wardNames, wardData)</code></pre></div>
+<p>XLConnect has more features than simply reading sheets. It is possible to write data back to the Excel file also. We can add sheets, write or add data to sheets, rename and remove sheets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a worksheet to my_book, named &quot;summary&quot;</span>
+<span class="kw">createSheet</span>(my_book, <span class="st">&quot;summary&quot;</span>)
+
+<span class="co"># Add data in summ to &quot;data_summary&quot; sheet</span>
+<span class="kw">writeWorksheet</span>(my_book, summ, <span class="st">&quot;summary&quot;</span>)
+
+<span class="co"># Save workbook as summary.xlsx</span>
+<span class="kw">saveWorkbook</span>(my_book, <span class="st">&quot;summary.xlsx&quot;</span>)
+
+<span class="co"># Rename &quot;summary&quot; sheet to &quot;data_summary&quot;</span>
+<span class="kw">renameSheet</span>(my_book, <span class="dt">sheet =</span> <span class="dv">4</span>, <span class="st">&quot;data_summary&quot;</span>)
+
+<span class="co"># Remove the third sheet</span>
+<span class="kw">removeSheet</span>(my_book, <span class="dt">sheet =</span> <span class="dv">3</span>)</code></pre></div>
 
 </div>
 </div>
