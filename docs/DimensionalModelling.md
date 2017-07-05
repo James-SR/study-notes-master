@@ -3,27 +3,30 @@
 
 ## Introduction to Dimensional Data
 
-Dimensional modelling helps to build the ability for users to query the information, for instance analysing results by a geographic region.  Multi-dimensional modelling is an extension to allowing multiple ways to analsye the information, by geographic region but also over time, by product or service, by store or office and so on. It provides a way for a system user, manager or analyst to navigate what information - the 'information space' - is available in a database or data warehouse, but at a more intuitive level [see @FIT5195, lecture 4].  The goal is to help understanding, exploration and to make better decisions.   A dimension is simply a direction, usually query or analytically based, in which you can move.  
+Dimensional modelling helps to build the ability for users to query the information, for instance analysing results by a geographic region.  Multi-dimensional modelling is an extension to allowing multiple ways to analsye the information, by geographic region but also over time, by product or service, by store or office and so on. It provides a way for a system user, manager or analyst to navigate what information - the 'information space' - is available in a database or data warehouse, but at a more intuitive level [see @FIT5195, lecture 4].  The goal is to help understanding, exploration and to make better decisions.   A dimension is simply a direction, usually query or analytically based, in which you can move.  Dimensional modelling is different from Entity Relationship diagrams which are more typically used for database design, however they do share some similarities and are sometimes used for dimensional modelling particuarly by those from a database or IT background.
 
 The dimensions used therefore become the ways in which the end user wants to query the information.
 
 Typical terms used in the BI arena for helping to navigate this 'information space' include; 'slice and dice' meaning to make a large data space in to a smaller one (you are making a selection or subset of all the available data), 'drill down' meaning to go in to a lower level of a hierachy (moving from a geographic region to a particular store), 'drill up' meaning to go in to a higher level (sometimes called rolling-up) and 'drill across' meaning adding more data (or facts) about something, typically from another source (a different fact table).
 
-There are two slightly different interpretations of a dimensional model:
+There are two slightly different interpretations of a dimensional model [@FIT5195, lecture 4]:
 
 * **OLAP**: A dimension is a structural attribute of a data cube.  A dimension acts as an index for identifying values in a multi-dimensional array
-* **Kimball**:  A dimension table are where the textual descriptions which relate to aspects of the business are stored 
-[@FIT5195, lecture 4]
+* **Kimball**: A dimension table are where the textual descriptions which relate to aspects of the business are stored 
 
-In both instances however, they provide ways to interact and understand our information.
+
+In both instances however, they provide ways to interact and understand our information.  There are two things we are typically trying to map:
+
+* **Facts**: Data itself, values, sales and so on e.g. a sales transaction number and the products sold
+* **Dimensions**: Different ways of presenting or quering the information, this is often in the form of attributes about the fact e.g. product specific and store details
 
 ### Data Modelling levels
 
 There are three aspects of information with a Business Intelligence system - conceptual, logical and physical - which exist on a spectrum.  
 
-* Conceptual - The business needs are usually the high level conceptual solution, what things we want to include at a more abstract level
-* Logical - We start thinking about what data to include in the model and what data is available, it starts giving something which can be implemented in to a warehouse
-* Physical - The final solution which is usually then what is implemented in the data warehouse. It is the more technical/IT solution and may include normalisation (3NF or higher) and perhaps other database optimisations to improve performance of the system.
+* **Conceptual**: The business needs are usually the high level conceptual solution, what things we want to include at a more abstract level
+* **Logical**: We start thinking about what data to include in the model and what data is available, it starts giving something which can be implemented in to a warehouse
+* **Physical**: The final solution which is usually then what is implemented in the data warehouse. It is the more technical/IT solution and may include normalisation (3NF or higher) and perhaps other database optimisations to improve performance of the system.
 
 In some instances, the conceptual and logical can become one and the same thing.    
 
@@ -42,18 +45,17 @@ Column Data Types
 
 ## Architecture considerations
 
-There are a number of different approaches to implementing a data warehouse, or Enterprise Data Warehouse (EDW) from the IT or technical perspective.  However, all approaches use the dimensional data modelling technique.  A full detailed explanation of all possible architecture approaches, including hybrid approaches, is not included here.  Instead we discuss at a high level the three main approaches. Where they differ in terms of data modelling in part depends on the location of the dimensional model.
+There are a number of different approaches to implementing a data warehouse, or Enterprise Data Warehouse (EDW) from the IT or technical perspective.  However, all approaches use the dimensional data modelling technique.  A full detailed explanation of all possible architecture approaches, including hybrid approaches, is not included here.  Instead we discuss at a high level the three main approaches - Kimball Inmon and Data Valut - and touch on a couple of others. Where they differ in terms of data modelling in part depends on the location of the dimensional model.
 
 * **Kimball** - as the last part of the Extract Transform and Load (ETL) process the data is structured and loaded in to the desired dimensional model(s).  There is no EDW in the Kimball approach, instead the presentation area is where data is organized, stored, and made available for direct querying by users, report writers, and other analytical BI applications.  Data is stored in the multi-dimensional views as different data marts, which are typically subsets of all the data originally extracted, perhaps for different business users or services 
 
 * **Inmon** -  suggests that the data should be relationally designed.  The data is stored in an EDW in third normal form (3NF).  The dimensional model then transates the data from the EDW in to something for an end user, visualisation tool or other such BI tool, potentially including data marts. A Hub and Spoke system is often used to describe the approach, with the EDW being the hub and the spokes being the depdendent data marts.  This helps to ensure a 'single verison of the truth'
 
-* **Centralised approach** - similar to Inmon but without the dependent data marts (spokes).  Users directly target the EDW and there may be many different dimensional data models
-
-* **Hybrid** - there are various different ways this could be setup, however one way would be that data is still stored in the EDW, but the dimensional model is used to help structure the data in the EDW.  Therefore the extra translation required from the EDW to a BI tool is reduced
-
 * **Data Vault** - 
 
+* **Centralised approach** - similar to Inmon but without the dependent data marts (spokes).  Users directly target the EDW and there may be many different dimensional data models
+
+* **Hybrid** - there are various different ways this could be setup, however one way would be that data is still stored in the EDW, but the dimensional model is used to help structure the data in the EDW.  Therefore the extra translation required from the EDW to a BI tool is reduced.
 
 In the Kimball approach when attributes in separate dimension tables have the same column names and domain contents. 
 
@@ -70,6 +72,45 @@ a problem with star joins when you are looking at just one star join. But when y
 [@Inmon2000]
 
 Inmon concludes that dimensional modelling is only really suitable for data marts (ibid).
+
+## Graphical Representations
+
+
+<div class="figure">
+<img src="images/DW.png" alt="High Level Overview of a Data Warehouse [@Trivadis2014, pg 3]"  />
+<p class="caption">(\#fig:DW)High Level Overview of a Data Warehouse [@Trivadis2014, pg 3]</p>
+</div>
+
+
+<div class="figure">
+<img src="images/StarAndOLAP.png" alt="Star schema versus OLAP cube [@Kimball2013, pg 9]"  />
+<p class="caption">(\#fig:StarOLAP)Star schema versus OLAP cube [@Kimball2013, pg 9]</p>
+</div>
+
+
+<div class="figure">
+<img src="images/FactWithDims.png" alt="Star schema example [@Kimball2013, pg 16]"  />
+<p class="caption">(\#fig:starexample)Star schema example [@Kimball2013, pg 16]</p>
+</div>
+
+
+<div class="figure">
+<img src="images/StarandSnowflake.png" alt="Star and Snowflake Schemas [@BIA2014, pg 139]"  />
+<p class="caption">(\#fig:starandsnow)Star and Snowflake Schemas [@BIA2014, pg 139]</p>
+</div>
+
+
+<div class="figure">
+<img src="images/DetailedOLAP.png" alt="Example slices from a OLAP data cube [@BIA2014, pg 141]"  />
+<p class="caption">(\#fig:detailedOLAP)Example slices from a OLAP data cube [@BIA2014, pg 141]</p>
+</div>
+
+
+<div class="figure">
+<img src="images/FactWithDimsReport.png" alt="Star schema reporting [@Kimball2013, pg 17]"  />
+<p class="caption">(\#fig:starreport)Star schema reporting [@Kimball2013, pg 17]</p>
+</div>
+
 
 ## Kimball Approach
 
@@ -89,31 +130,18 @@ Kimball outlines four key decisions that are to be made during the design of a d
 
 4. Identify the facts - the measurements (how many) from the business process, it should relate to a physical observable event, rather than reporting needs
 
-Typicall the output of this process is a star schema, with a fact table at the centre supported by the associated dimension tables, with primary/forenigh key relationships.  This is often then structured into a online analytical processing (OLAP) cube, which contains the facts and dimensions appropriate to the analysis, but allows for more detailed analytical capabilities than SQL.  Sometimes aggregated fact tables are built to speed up query performance, as are aggregated OLAP cubes which are typically designed for users.
+Typically the output of this process is a star schema, with a fact table at the centre supported by the associated dimension tables, with primary/forenigh key relationships.  This is often then structured into a online analytical processing (OLAP) cube, which contains the facts and dimensions appropriate to the analysis, but allows for more detailed analytical capabilities than SQL.  Sometimes aggregated fact tables are built to speed up query performance, as are aggregated OLAP cubes which are typically designed for users.
 
 A key advantage of the dimensional model approach is that new dimensions can be added to an existing fact table by adding a new foreign key column. 
 
-## Graphical Representations
-
-<div class="figure">
-<img src="images/StarAndOLAP.png" alt="Star schema versus OLAP cube [@Kimball2013, pg 9]"  />
-<p class="caption">(\#fig:StarOLAP)Star schema versus OLAP cube [@Kimball2013, pg 9]</p>
-</div>
-
-<div class="figure">
-<img src="images/FactWithDims.png" alt="Star schema example [@Kimball2013, pg 16]"  />
-<p class="caption">(\#fig:starexample)Star schema example [@Kimball2013, pg 16]</p>
-</div>
-
-<div class="figure">
-<img src="images/FactWithDimsReport.png" alt="Star schema reporting [@Kimball2013, pg 17]"  />
-<p class="caption">(\#fig:starreport)Star schema reporting [@Kimball2013, pg 17]</p>
-</div>
 
 
 
 ## Tips
 
-* Just because something exists in the organisation or in a data source does not mean it has to be included.  You need to think about that to include and what to exclude.
+* Think about the types of analysis or questions that the user or manager may want to ask.  This will help structure the data and help to ensure nothing is missing
+* At the same time, just because something exists in the organisation or in a data source does not mean it has to be included.  You need to think about that to include and what to exclude
+* Equally, there may be instances where there is a desire to add something in to the model but it does not currently exist.  This should be flagged and discussed with those intending to use the BI tool / output 
+* What are the end uses of the system or systems?  If there are potentially multiple systems, multiple teams and multiple views on the data, it may make sense to store the data in its original state (3NF) in the EDW or similar store, then do the dimensional mapping in the BI tool, so it can be customised to the audience [@FIT5195, lecture 4].  This can lead to some duplication, however an option might be to share the dimensional models in some central repository, allowing users to customise for their use, whilst still being able to share the same source data and the benefits this brings. Evidently this lends itself to an Inmon or other such approach and less so the Kimball approach
 
 # References {-}
