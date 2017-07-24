@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="importing-data-part-1.html">
+<link rel="prev" href="importing-data-part-1.html">
+<link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -161,25 +161,56 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Study notes</h1>
-<h4 class="author"><em>James Solomon-Rounce</em></h4>
-<h4 class="date"><em>Last updated:2017-07-24</em></h4>
+<div id="introduction-to-data" class="section level1">
+<h1><span class="header-section-number">2</span> Introduction to Data</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Introduction to Data’ by Mine Cetinkaya-Rundel. The supporting textbook is <span class="citation">Diez, Barr, and Cetinkaya-Rundel (<a href="#ref-OS3">2015</a>)</span>.</p>
+<div id="language-of-data" class="section level2">
+<h2><span class="header-section-number">2.1</span> Language of Data</h2>
+<p>The course makes use of the openintro package, accompanying the textbook. LEt’s load the package and our first dataset, email50.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
+<span class="kw">library</span>(<span class="st">&quot;openintro&quot;</span>)
+<span class="co"># Load data</span>
+<span class="kw">data</span>(email50)
+<span class="co"># View its structure</span>
+<span class="kw">str</span>(email50)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  21 variables:
+##  $ spam        : num  0 0 1 0 0 0 0 0 0 0 ...
+##  $ to_multiple : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ from        : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ cc          : int  0 0 4 0 0 0 0 0 1 0 ...
+##  $ sent_email  : num  1 0 0 0 0 0 0 1 1 0 ...
+##  $ time        : POSIXct, format: &quot;2012-01-04 13:19:16&quot; &quot;2012-02-16 20:10:06&quot; ...
+##  $ image       : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ attach      : num  0 0 2 0 0 0 0 0 0 0 ...
+##  $ dollar      : num  0 0 0 0 9 0 0 0 0 23 ...
+##  $ winner      : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ inherit     : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ viagra      : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ password    : num  0 0 0 0 1 0 0 0 0 0 ...
+##  $ num_char    : num  21.705 7.011 0.631 2.454 41.623 ...
+##  $ line_breaks : int  551 183 28 61 1088 5 17 88 242 578 ...
+##  $ format      : num  1 1 0 0 1 0 0 1 1 1 ...
+##  $ re_subj     : num  1 0 0 0 0 0 0 1 1 0 ...
+##  $ exclaim_subj: num  0 0 0 0 0 0 0 0 1 0 ...
+##  $ urgent_subj : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ exclaim_mess: num  8 1 2 1 43 0 0 2 22 3 ...
+##  $ number      : Factor w/ 3 levels &quot;none&quot;,&quot;small&quot;,..: 2 3 1 2 2 2 2 2 2 2 ...</code></pre>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>The following notes were taken by me for educational, non-commercial, purposes. If you find the information useful, buy the material/take the course.</p>
-<p>Thank you to the original content providers. Additional ramblings are my own.</p>
-<p><img src="images/standing.jpg" width="100%" /></p>
-
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-OS3">
+<p>Diez, D., C. Barr, and M. Cetinkaya-Rundel. 2015. <em>OpenIntro Statistics</em>. 3rd Edition. <a href="www.openintro.org" class="uri">www.openintro.org</a>.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="importing-data-part-1.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="importing-data-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

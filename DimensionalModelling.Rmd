@@ -128,7 +128,12 @@ Typically the output of this process is a star schema, with a fact table at the 
 
 A key advantage of the dimensional model approach is that new dimensions can be added to an existing fact table by adding a new foreign key column. 
 
+Discussion then of
+* Thomsen diagrams OLAP Solutions (2nd ed) 2002, an abstract, but can be a little simple
+* ADAPT Diagrams, White Paper Bulos and Foresman - included in some Microsoft products such as Visio and SQL Server, a bit too technical but good for communicating to IT
+* BEAM/Agile approach
 
+8 mins
 
 
 ## Tips

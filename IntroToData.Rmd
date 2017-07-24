@@ -1,0 +1,29 @@
+# Introduction to Data
+***
+Notes taken during/inspired by the Datacamp course 'Introduction to Data' by Mine Cetinkaya-Rundel.  The supporting textbook is @OS3.
+
+## Language of Data
+
+The course makes use of the openintro package, accompanying the textbook.  LEt's load the package and our first dataset, email50.
+
+```{r, message = FALSE}
+# Load packages
+library("openintro")
+# Load data
+data(email50)
+# View its structure
+str(email50)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+`r if (knitr:::is_html_output()) '# References {-}'`
