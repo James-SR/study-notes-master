@@ -4,26 +4,57 @@ Notes taken during/inspired by the Datacamp course 'Introduction to Data' by Min
 
 ## Language of Data
 
-The course makes use of the openintro package, accompanying the textbook.  LEt's load the package and our first dataset, email50.
+The course makes use of the openintro package, accompanying the textbook.  Let's load the package and our first dataset, email50.
 
 ```{r, message = FALSE}
 # Load packages
 library("openintro")
+library("dplyr")
+
 # Load data
 data(email50)
 # View its structure
 str(email50)
+#glimpse the first few items using dplyr
+glimpse(email50)
+
 ```
 
+When using certain functions, such as filters on categorical variables, the way R handles the filtered out variables is to leave the items in as place holders (empty containers), even though the place holder is empty.  This can have undesirable effects, particularly if using the filtered object for modelling.  We then end up with zero values which are actually filtered out factors.
+```{r}
+# Subset of emails with big numbers: email50_big
+email50_big <- email50 %>%
+  filter(number == "big")
 
+# Glimpse the subset
+glimpse(email50_big)
 
+# Table of number variable - now we have just 7 values
+table(email50_big$number)
 
+# Drop levels
+email50_big$number <- droplevels(email50_big$number)
 
+# Another table of number variable
+table(email50_big$number)
+```
 
+In some instance you want to create a discreet function from a numeric value.  That is to say we want to create a categorical value based on some groups of numbers.  This can be achived as shown below. Note that when calculating a function R will typically either:
 
+* Assign a value e.g. med_num_char <- median(email50$num_char)
+* Print a result e.g. median(email50$num_char)
+* But we can do both by adding brackets (med_num_char <- median(email50$num_char))
 
+```{r}
+# Calculate median number of characters: med_num_char
+(med_num_char <- median(email50$num_char))
 
-
-
+# Create num_char_cat variable in email50
+email50 <- email50 %>%
+  mutate(num_char_cat = ifelse(num_char < med_num_char, "below median", "at or above median"))
+  
+# Count emails in each category
+table(email50$num_char_cat)
+```
 
 `r if (knitr:::is_html_output()) '# References {-}'`
