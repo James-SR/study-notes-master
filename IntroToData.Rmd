@@ -81,5 +81,19 @@ ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
   geom_point()
 ```
 
+## Observational Studies and Experiments
+
+Typically there are two types of study, if we are interested in whether variable Y is caused by some factors (X) we could have two types of studies.
+ 
+* **Observational Study**: We are observing, rather than specifically interfere or direct how the data is collected - only correlation can be inferred.  In this case, we might survey people and look for patterns in their characteristics (X) and the outcome variable (Y)
+* **Experimental Study**: We randomly assign subjects to various treatments - causation can be inferred. In this case, we would get a group of individuals together then randomly assign them to a group of interest (X), removing the decision from the subjects of the study, we often have a control group also.
+
+Another differentiation to be aware of is between 
+
+* **Random sampling**: We select our subjects at random in order that we can make inferences from our sample, to the wider population
+* **Random assignment**: Subjects are randomly assigned to various treatments and helps us to make causal conclusions
+
+We can therefore combine random sampling with random assignment, to allow causal and generalisable conclusions, however in practice we typically have one or the other - random sampling only (not causal but generalisable), or random assignment (causal but not generalisable) - the negation of both leads to results that are neither causal nor generalisable, but may highlight a need for further research.
+
 
 `r if (knitr:::is_html_output()) '# References {-}'`

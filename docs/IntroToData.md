@@ -194,5 +194,14 @@ ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
 
 <img src="IntroToData_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
+## Observational studies and Experiments
+
+Typically there are two types of study, if we are interested in whether variable Y is caused by some factors (X) we could have two types of studies.
+ 
+* **Observational Study**: We are observing, rather than specifically interfere or direct how the data is collected - only correlation can be inferred.  In this case, we might survey people and look for patterns in their characteristics (X) and the outcome variable (Y)
+* **Experimental Study**: We randomly assign subjects to various treatments - causation can be inferred. In this case, we would get a group of individuals together then randomly assign them to a group of interest (X), removing the decision from the subjects of the study, we often have a control group also.
+
+
+
 
 # References {-}
