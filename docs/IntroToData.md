@@ -167,4 +167,32 @@ table(email50$num_char_cat)
 ##                 25                 25
 ```
 
+We can also use the mutate function from dplyr to create a new variable from categorical variables
+
+
+```r
+# Create number_yn column in email50
+email50 <- email50 %>%
+  mutate(number_yn, ifelse(number == "none", "no", "yes"))
+
+# Visualize number_yn
+ggplot(email50, aes(x = number_yn)) +
+  geom_bar()
+```
+
+We often want to compare two or three variables, which is most easily done using the ggplot package
+
+
+```r
+# Load ggplot2
+library(ggplot2)
+
+# Scatterplot of exclaim_mess vs. num_char
+ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
+  geom_point()
+```
+
+<img src="IntroToData_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+
 # References {-}
