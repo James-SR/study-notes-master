@@ -95,5 +95,50 @@ Another differentiation to be aware of is between
 
 We can therefore combine random sampling with random assignment, to allow causal and generalisable conclusions, however in practice we typically have one or the other - random sampling only (not causal but generalisable), or random assignment (causal but not generalisable) - the negation of both leads to results that are neither causal nor generalisable, but may highlight a need for further research.
 
+Sometimes when there are looking for associations between variables, it is possible to omit variables of interest, which may be confounding variables.  For instance, we may have two variables (x) that appear to show a relationship with another (y) but the inclusion of a third variable (x') causes the apparent relationship to breakdown.  If we fail to consider other associated variables, we may fall in to a **Simpsons Paradox** in which a trend appears in different groups, but disappears when the groups are combined together.  Simpsons paradox is a form of **Ecological Fallacy**.  One of the best known examples of Simpsons Paradox comes from admissions data for University of California, Berkeley.
+
+```{r}
+library(tidyr)
+data("UCBAdmissions")
+ucb_admit <- as.data.frame(UCBAdmissions)
+# Restrucutre data - this is to follow the example provided, it takes the aggregated data from the original data frame and disaggregates 
+# it using indexing by repeating the row indices Freq times for each row - see https://stackoverflow.com/questions/45445919/convert-wide-to-long-with-frequency-column
+ucb_admit_disagg = ucb_admit[rep(1:nrow(ucb_admit), ucb_admit$Freq), 
+                             -grep("Freq", names(ucb_admit))]
+
+
+# Count number of male and female applicants admitted
+ucb_counts <- ucb_admit_disagg %>%
+  count(Gender, Admit)
+
+# View result
+ucb_counts
+  
+# Spread the output across columns and calculate percentages
+ucb_counts %>%
+  spread(Admit, n) %>%
+  mutate(Perc_Admit = Admitted / (Admitted + Rejected))
+
+```
+
+So far, it seems that the results suggest females are less likely to be admitted, but what if we look at the results by department?
+
+```{r}
+# Table of counts of admission status and gender for each department
+admit_by_dept <- ucb_admit_disagg %>%
+  count(Dept, Gender, Admit) %>%
+  spread(Admit, n)
+
+# View result
+admit_by_dept
+
+# Percentage of those admitted to each department
+admit_by_dept %>%
+  mutate(Perc_Admit = Admitted / (Admitted + Rejected))
+```
+
+Now we begin to see that for some departments, there is a higher proportion of females being accpeted than males.  Equally for some departments, the rejection rate is very high for both males and females e.g. Dept F. In 4 of the 6 departments, females have a higher proportion of applications being admitted than males.  Males tended to apply to less competitive departments than females, the less competitive departments had higher admission rates.
+
+## Sampling strategies and experimental design
 
 `r if (knitr:::is_html_output()) '# References {-}'`

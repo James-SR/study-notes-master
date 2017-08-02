@@ -194,14 +194,131 @@ ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
 
 <img src="IntroToData_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
-## Observational studies and Experiments
+## Observational Studies and Experiments
 
 Typically there are two types of study, if we are interested in whether variable Y is caused by some factors (X) we could have two types of studies.
  
 * **Observational Study**: We are observing, rather than specifically interfere or direct how the data is collected - only correlation can be inferred.  In this case, we might survey people and look for patterns in their characteristics (X) and the outcome variable (Y)
 * **Experimental Study**: We randomly assign subjects to various treatments - causation can be inferred. In this case, we would get a group of individuals together then randomly assign them to a group of interest (X), removing the decision from the subjects of the study, we often have a control group also.
 
+Another differentiation to be aware of is between 
+
+* **Random sampling**: We select our subjects at random in order that we can make inferences from our sample, to the wider population
+* **Random assignment**: Subjects are randomly assigned to various treatments and helps us to make causal conclusions
+
+We can therefore combine random sampling with random assignment, to allow causal and generalisable conclusions, however in practice we typically have one or the other - random sampling only (not causal but generalisable), or random assignment (causal but not generalisable) - the negation of both leads to results that are neither causal nor generalisable, but may highlight a need for further research.
+
+Sometimes when there are looking for associations between variables, it is possible to omit variables of interest, which may be confounding variables.  For instance, we may have two variables (x) that appear to show a relationship with another (y) but the inclusion of a third variable (x') causes the apparent relationship to breakdown.  If we fail to consider other associated variables, we may fall in to a **Simpsons Paradox** in which a trend appears in different groups, but disappears when the groups are combined together.  Simpsons paradox is a form of **Ecological Fallacy**.  One of the best known examples of Simpsons Paradox comes from admissions data for University of California, Berkeley.
 
 
+```r
+library(tidyr)
+data("UCBAdmissions")
+ucb_admit <- as.data.frame(UCBAdmissions)
+# Restrucutre data - this is to follow the example provided, it takes the aggregated data from the original data frame and disaggregates 
+# it using indexing by repeating the row indices Freq times for each row - see https://stackoverflow.com/questions/45445919/convert-wide-to-long-with-frequency-column
+ucb_admit_disagg = ucb_admit[rep(1:nrow(ucb_admit), ucb_admit$Freq), 
+                             -grep("Freq", names(ucb_admit))]
+
+
+# Count number of male and female applicants admitted
+ucb_counts <- ucb_admit_disagg %>%
+  count(Gender, Admit)
+
+# View result
+ucb_counts
+```
+
+```
+## Source: local data frame [4 x 3]
+## Groups: Gender [?]
+## 
+##   Gender    Admit     n
+##   <fctr>   <fctr> <int>
+## 1   Male Admitted  1198
+## 2   Male Rejected  1493
+## 3 Female Admitted   557
+## 4 Female Rejected  1278
+```
+
+```r
+# Spread the output across columns and calculate percentages
+ucb_counts %>%
+  spread(Admit, n) %>%
+  mutate(Perc_Admit = Admitted / (Admitted + Rejected))
+```
+
+```
+## Source: local data frame [2 x 4]
+## Groups: Gender [2]
+## 
+##   Gender Admitted Rejected Perc_Admit
+##   <fctr>    <int>    <int>      <dbl>
+## 1   Male     1198     1493  0.4451877
+## 2 Female      557     1278  0.3035422
+```
+
+So far, it seems that the results suggest females are less likely to be admitted, but what if we look at the results by department?
+
+
+```r
+# Table of counts of admission status and gender for each department
+admit_by_dept <- ucb_admit_disagg %>%
+  count(Dept, Gender, Admit) %>%
+  spread(Admit, n)
+
+# View result
+admit_by_dept
+```
+
+```
+## Source: local data frame [12 x 4]
+## Groups: Dept, Gender [12]
+## 
+##      Dept Gender Admitted Rejected
+## *  <fctr> <fctr>    <int>    <int>
+## 1       A   Male      512      313
+## 2       A Female       89       19
+## 3       B   Male      353      207
+## 4       B Female       17        8
+## 5       C   Male      120      205
+## 6       C Female      202      391
+## 7       D   Male      138      279
+## 8       D Female      131      244
+## 9       E   Male       53      138
+## 10      E Female       94      299
+## 11      F   Male       22      351
+## 12      F Female       24      317
+```
+
+```r
+# Percentage of those admitted to each department
+admit_by_dept %>%
+  mutate(Perc_Admit = Admitted / (Admitted + Rejected))
+```
+
+```
+## Source: local data frame [12 x 5]
+## Groups: Dept, Gender [12]
+## 
+##      Dept Gender Admitted Rejected Perc_Admit
+##    <fctr> <fctr>    <int>    <int>      <dbl>
+## 1       A   Male      512      313 0.62060606
+## 2       A Female       89       19 0.82407407
+## 3       B   Male      353      207 0.63035714
+## 4       B Female       17        8 0.68000000
+## 5       C   Male      120      205 0.36923077
+## 6       C Female      202      391 0.34064081
+## 7       D   Male      138      279 0.33093525
+## 8       D Female      131      244 0.34933333
+## 9       E   Male       53      138 0.27748691
+## 10      E Female       94      299 0.23918575
+## 11      F   Male       22      351 0.05898123
+## 12      F Female       24      317 0.07038123
+```
+
+Now we begin to see that for some departments, there is a higher proportion of females being accpeted than males.  Equally for some departments, the rejection rate is very high for both males and females e.g. Dept F. In 4 of the 6 departments, females have a higher proportion of applications being admitted than males.  Males tended to apply to less competitive departments than females, the less competitive departments had higher admission rates.
+
+## Sampling strategies and experimental design
 
 # References {-}

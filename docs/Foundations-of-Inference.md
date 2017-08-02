@@ -97,7 +97,7 @@ homes %>%
 ## # A tibble: 1 × 2
 ##      diff_perm   diff_orig
 ##          <dbl>       <dbl>
-## 1 -0.007828723 0.004527731
+## 1 -0.007828723 0.001644559
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -135,11 +135,11 @@ tail(homes2)
 ## 
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
-## 1   male    Rent         Rent
-## 2   male    Rent          Own
+## 1   male    Rent          Own
+## 2   male    Rent         Rent
 ## 3 female     Own         Rent
 ## 4   male     Own          Own
-## 5   male     Own         Rent
+## 5   male     Own          Own
 ## 6   male     Own         Rent
 ```
 
@@ -168,8 +168,8 @@ homes3
 ## # A tibble: 2 × 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6652352 0.6654397
-## 2   male     0.6578183 0.6576109
+## 1 female     0.6588957 0.6654397
+## 2   male     0.6642472 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -184,9 +184,9 @@ homes4
 
 ```
 ## # A tibble: 1 × 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.007416841
+##      diff_perm   diff_orig
+##          <dbl>       <dbl>
+## 1 -0.007828723 0.005351495
 ```
 
 ##Density Plots
