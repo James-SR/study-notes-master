@@ -321,4 +321,70 @@ Now we begin to see that for some departments, there is a higher proportion of f
 
 ## Sampling strategies and experimental design
 
+We use sampling when we do not want, for whatever reason, to conduct a full Census.  A simple random sample is usually the most basic method.  We can also use stratified sampling to ensure representation from certain groups.  Or we use cluster sampling usually for economic reasons.  Or some combination in multistage sampling.
+
+
+```r
+data(county)
+# Simple random sample: county_srs
+county_srs <- county %>%
+  sample_n(size = 20)
+
+# Count counties by state
+county_srs %>%
+  group_by(state) %>%
+  count()
+```
+
+```
+## # A tibble: 15 × 2
+##             state     n
+##            <fctr> <int>
+## 1        Arkansas     1
+## 2      California     1
+## 3         Georgia     2
+## 4           Idaho     1
+## 5        Illinois     1
+## 6         Indiana     1
+## 7       Louisiana     1
+## 8       Minnesota     1
+## 9            Ohio     2
+## 10         Oregon     1
+## 11 South Carolina     2
+## 12      Tennessee     3
+## 13          Texas     1
+## 14           Utah     1
+## 15       Virginia     1
+```
+
+For a stratified sample we would do something similar.
+
+
+```r
+# Stratified sample
+states_str <- us_regions %>%
+  group_by(region) %>%
+  sample_n(size = 2)
+
+# Count states by region
+states_str %>%
+  group_by(region) %>%
+  count()
+```
+
+
+
+The principles of experimental design include 4 key components:
+
+* **Control**: compare treatment of interest to a control group
+* **Randomise**: randomly assign subjects to treatments
+* **Replicate**: collect a sufficiently large sample within a study, or replicate the entire study
+* **Block**: account for the potential effect of confounding variables
+
+We group subjects into blocks based on these confounding variables, then randomise within each block to treatment groups.  So for instance, if we were testing whether an online or classroom R course was more effective using an experiment, one possible confounding variable would be previous programming experience.  Therefore we would seperate out - block - those with and those without previous programming experience, ensuring we have an equal number in each treatment group (online vs classroom) of those with and without previous experience.
+
+In random sampling, you use stratifying to control for a variable. In random assignment, you use blocking to achieve the same goal.
+
+## Case Study
+
 # References {-}

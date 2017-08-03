@@ -120,6 +120,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.1" data-path="introduction-to-data.html"><a href="introduction-to-data.html#language-of-data"><i class="fa fa-check"></i><b>2.1</b> Language of Data</a></li>
 <li class="chapter" data-level="2.2" data-path="introduction-to-data.html"><a href="introduction-to-data.html#observational-studies-and-experiments"><i class="fa fa-check"></i><b>2.2</b> Observational Studies and Experiments</a></li>
 <li class="chapter" data-level="2.3" data-path="introduction-to-data.html"><a href="introduction-to-data.html#sampling-strategies-and-experimental-design"><i class="fa fa-check"></i><b>2.3</b> Sampling strategies and experimental design</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-data.html"><a href="introduction-to-data.html#case-study"><i class="fa fa-check"></i><b>2.4</b> Case Study</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>3</b> Foundations of Inference</a><ul>
@@ -401,6 +402,56 @@ admit_by_dept %&gt;%
 </div>
 <div id="sampling-strategies-and-experimental-design" class="section level2">
 <h2><span class="header-section-number">2.3</span> Sampling strategies and experimental design</h2>
+<p>We use sampling when we do not want, for whatever reason, to conduct a full Census. A simple random sample is usually the most basic method. We can also use stratified sampling to ensure representation from certain groups. Or we use cluster sampling usually for economic reasons. Or some combination in multistage sampling.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(county)
+<span class="co"># Simple random sample: county_srs</span>
+county_srs &lt;-<span class="st"> </span>county %&gt;%
+<span class="st">  </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="dv">20</span>)
+
+<span class="co"># Count counties by state</span>
+county_srs %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(state) %&gt;%
+<span class="st">  </span><span class="kw">count</span>()</code></pre></div>
+<pre><code>## # A tibble: 15 × 2
+##             state     n
+##            &lt;fctr&gt; &lt;int&gt;
+## 1        Arkansas     1
+## 2      California     1
+## 3         Georgia     2
+## 4           Idaho     1
+## 5        Illinois     1
+## 6         Indiana     1
+## 7       Louisiana     1
+## 8       Minnesota     1
+## 9            Ohio     2
+## 10         Oregon     1
+## 11 South Carolina     2
+## 12      Tennessee     3
+## 13          Texas     1
+## 14           Utah     1
+## 15       Virginia     1</code></pre>
+<p>For a stratified sample we would do something similar.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sample</span>
+states_str &lt;-<span class="st"> </span>us_regions %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(region) %&gt;%
+<span class="st">  </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="dv">2</span>)
+
+<span class="co"># Count states by region</span>
+states_str %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(region) %&gt;%
+<span class="st">  </span><span class="kw">count</span>()</code></pre></div>
+<p>The principles of experimental design include 4 key components:</p>
+<ul>
+<li><strong>Control</strong>: compare treatment of interest to a control group</li>
+<li><strong>Randomise</strong>: randomly assign subjects to treatments</li>
+<li><strong>Replicate</strong>: collect a sufficiently large sample within a study, or replicate the entire study</li>
+<li><strong>Block</strong>: account for the potential effect of confounding variables</li>
+</ul>
+<p>We group subjects into blocks based on these confounding variables, then randomise within each block to treatment groups. So for instance, if we were testing whether an online or classroom R course was more effective using an experiment, one possible confounding variable would be previous programming experience. Therefore we would seperate out - block - those with and those without previous programming experience, ensuring we have an equal number in each treatment group (online vs classroom) of those with and without previous experience.</p>
+<p>In random sampling, you use stratifying to control for a variable. In random assignment, you use blocking to achieve the same goal.</p>
+</div>
+<div id="case-study" class="section level2">
+<h2><span class="header-section-number">2.4</span> Case Study</h2>
 </div>
 </div>
 <h3>References</h3>
