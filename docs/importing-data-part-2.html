@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="importing-data-part-1.html">
+<link rel="prev" href="importing-data-part-1.html">
+<link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -167,25 +167,110 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Study notes</h1>
-<h4 class="author"><em>James Solomon-Rounce</em></h4>
-<h4 class="date"><em>Last updated:2017-08-05</em></h4>
-</div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>The following notes were taken by me for educational, non-commercial, purposes. If you find the information useful, buy the material/take the course.</p>
-<p>Thank you to the original content providers. Additional ramblings are my own.</p>
-<p><img src="images/standing.jpg" width="100%" /></p>
+<div id="importing-data---part-2" class="section level1">
+<h1><span class="header-section-number">2</span> Importing data - Part 2</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Importing Data in R (Part 2)’ by Filip Schouwenaars.</p>
+<div id="importing-from-databases---1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Importing from Databases - 1</h2>
+<p>In a professional or commercial setting, you often deal with more complicated file structures and source systems that simple flat files. Often the data is stored in a DBMS or Database Management System and SQL is the usual way of quering the DBMS. As there can be slight differences, you are likely to need different packages, some include:</p>
+<ul>
+<li><strong>MySQL</strong>: Use the RMySQL package</li>
+<li><strong>PostgresSQL</strong>: Use the RPostgresSQL package</li>
+<li><strong>Oracle</strong>: Use the ROracle (etc…)</li>
+</ul>
+<p>Conventions are specified in the DBI - another R package, DBI is the interface and the other packages are the implentation. Some of the packages will automaticlaly install the DBI package as well. To connect to a database we would so something like the following.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the DBI package</span>
+<span class="kw">library</span>(DBI)</code></pre></div>
+<pre><code>## Loading required package: methods</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Edit dbConnect() call - the first part specifies how connections are map to the database</span>
+con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(RMySQL::<span class="kw">MySQL</span>(), 
+                 <span class="dt">dbname =</span> <span class="st">&quot;tweater&quot;</span>, 
+                 <span class="dt">host =</span> <span class="st">&quot;courses.csrrinzqubik.us-east-1.rds.amazonaws.com&quot;</span>, 
+                 <span class="dt">port =</span> <span class="dv">3306</span>,
+                 <span class="dt">user =</span> <span class="st">&quot;student&quot;</span>,
+                 <span class="dt">password =</span> <span class="st">&quot;datacamp&quot;</span>)
 
+<span class="co"># Build a vector of table names: tables</span>
+tables &lt;-<span class="st"> </span><span class="kw">dbListTables</span>(con)
+
+<span class="co"># Display structure of tables</span>
+<span class="kw">str</span>(tables)</code></pre></div>
+<pre><code>##  chr [1:3] &quot;comments&quot; &quot;tweats&quot; &quot;users&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Import the users table from tweater: users</span>
+users &lt;-<span class="st"> </span><span class="kw">dbReadTable</span>(con, <span class="st">&quot;users&quot;</span>)
+
+<span class="co"># Print users</span>
+users</code></pre></div>
+<pre><code>##   id      name     login
+## 1  1 elisabeth  elismith
+## 2  2      mike     mikey
+## 3  3      thea   teatime
+## 4  4    thomas tomatotom
+## 5  5    oliver olivander
+## 6  6      kate  katebenn
+## 7  7    anjali    lianja</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Or we can import all tables using lapply</span>
+tables &lt;-<span class="st"> </span><span class="kw">lapply</span>(tables, dbReadTable, <span class="dt">conn =</span> con)
+
+<span class="co"># Print out tables</span>
+tables</code></pre></div>
+<pre><code>## [[1]]
+##      id tweat_id user_id            message
+## 1  1022       87       7              nice!
+## 2  1000       77       7             great!
+## 3  1011       49       5            love it
+## 4  1012       87       1   awesome! thanks!
+## 5  1010       88       6              yuck!
+## 6  1026       77       4      not my thing!
+## 7  1004       49       1  this is fabulous!
+## 8  1030       75       6           so easy!
+## 9  1025       88       2             oh yes
+## 10 1007       49       3           serious?
+## 11 1020       77       1 couldn&#39;t be better
+## 12 1014       77       1       saved my day
+## 
+## [[2]]
+##   id user_id
+## 1 75       3
+## 2 88       4
+## 3 77       6
+## 4 87       5
+## 5 49       1
+## 6 24       7
+##                                                                  post
+## 1                                       break egg. bake egg. eat egg.
+## 2                           wash strawberries. add ice. blend. enjoy.
+## 3                       2 slices of bread. add cheese. grill. heaven.
+## 4               open and crush avocado. add shrimps. perfect starter.
+## 5 nachos. add tomato sauce, minced meat and cheese. oven for 10 mins.
+## 6                              just eat an apple. simply and healthy.
+##         date
+## 1 2015-09-05
+## 2 2015-09-14
+## 3 2015-09-21
+## 4 2015-09-22
+## 5 2015-09-22
+## 6 2015-09-24
+## 
+## [[3]]
+##   id      name     login
+## 1  1 elisabeth  elismith
+## 2  2      mike     mikey
+## 3  3      thea   teatime
+## 4  4    thomas tomatotom
+## 5  5    oliver olivander
+## 6  6      kate  katebenn
+## 7  7    anjali    lianja</code></pre>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="importing-data-part-1.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="importing-data-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

@@ -183,6 +183,5 @@ We group subjects into blocks based on these confounding variables, then randomi
 
 In random sampling, you use stratifying to control for a variable. In random assignment, you use blocking to achieve the same goal.
 
-## Case Study
 
 `r if (knitr:::is_html_output()) '# References {-}'`

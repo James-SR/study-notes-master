@@ -337,24 +337,25 @@ county_srs %>%
 ```
 
 ```
-## # A tibble: 15 × 2
+## # A tibble: 16 × 2
 ##             state     n
 ##            <fctr> <int>
-## 1        Arkansas     1
-## 2      California     1
-## 3         Georgia     2
-## 4           Idaho     1
-## 5        Illinois     1
-## 6         Indiana     1
-## 7       Louisiana     1
-## 8       Minnesota     1
-## 9            Ohio     2
-## 10         Oregon     1
-## 11 South Carolina     2
-## 12      Tennessee     3
-## 13          Texas     1
-## 14           Utah     1
-## 15       Virginia     1
+## 1         Arizona     1
+## 2         Florida     1
+## 3           Idaho     1
+## 4         Indiana     1
+## 5          Kansas     2
+## 6        Kentucky     1
+## 7       Minnesota     2
+## 8         Montana     1
+## 9        Nebraska     1
+## 10 North Carolina     1
+## 11           Ohio     1
+## 12   Pennsylvania     1
+## 13   South Dakota     1
+## 14          Texas     2
+## 15       Virginia     2
+## 16      Wisconsin     1
 ```
 
 For a stratified sample we would do something similar.
@@ -385,6 +386,5 @@ We group subjects into blocks based on these confounding variables, then randomi
 
 In random sampling, you use stratifying to control for a variable. In random assignment, you use blocking to achieve the same goal.
 
-## Case Study
 
 # References {-}
