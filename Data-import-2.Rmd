@@ -126,6 +126,51 @@ dbDisconnect(con)
 
 ```
 
+## Web Data
+
+HyperText Transfer Protocol (HTTP) is the 'language of the web' and consists of a set of rules about data exchange between computers.  If the file is a csv file, we can use functions like read.csv() and add in the url in quotations marks, read.csv will recognise this is a URL and will issue a HTTP GET command to download the file.  This will also work on https sites on newer versions of R.  We can also use the readr package and other packages.
+
+```{r}
+# Load the readr package
+library(readr)
+
+# Import the csv file: pools
+url_csv <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/swimming_pools.csv"
+pools <- read_csv(url_csv)
+
+# Import the txt file: potatoes
+url_delim <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/potatoes.txt"
+potatoes <- read_tsv(url_delim)
+
+# Print pools and potatoes
+pools
+potatoes
+
+# https URL to the swimming_pools csv file.
+url_csv <- "https://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/swimming_pools.csv"
+
+# Import the file using read.csv(): pools1
+pools1 <- read.csv(url_csv)
+
+str(pools1)
+```
+
+Some packages, like the readxl package, do not currently recognise urls.  However, we can use the donwload.file() or other command to download the file and then read it in locally.  This process can be much quicker that browsing the internet then downloading the file.
+
+```{r}
+library(readxl)
+
+# Specification of url: url_xls
+url_xls <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/latitude.xls"
+
+# Download file behind URL, name it local_latitude.xls
+download.file(url_xls, destfile = "local_latitude.xls")
+
+# Import the local .xls file with readxl: excel_readxl
+excel_readxl <- read_excel("local_latitude.xls")
+
+```
+
 
 
 `r if (knitr:::is_html_output()) '# References {-}'`
