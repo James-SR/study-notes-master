@@ -118,6 +118,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html"><i class="fa fa-check"></i><b>2</b> Importing data - Part 2</a><ul>
 <li class="chapter" data-level="2.1" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-databases---1"><i class="fa fa-check"></i><b>2.1</b> Importing from Databases - 1</a></li>
+<li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="3" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>3</b> Introduction to Data</a><ul>
@@ -262,6 +263,106 @@ tables</code></pre></div>
 ## 5  5    oliver olivander
 ## 6  6      kate  katebenn
 ## 7  7    anjali    lianja</code></pre>
+</div>
+<div id="sql-queries-inside-r" class="section level2">
+<h2><span class="header-section-number">2.2</span> SQL Queries Inside R</h2>
+<p>OFten you don’t want an entire tabel from a database, but a selection from the table. You can use SQL queries from inside R to extract only what you are interested in. You can alternatively use subset on the imported table, but often it is easier to extract only what you need first, particularly when working with large databases. The SQL goes inside e.g. dbGetQuery(con, “SQL QUERY”).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Connect to the database</span>
+<span class="kw">library</span>(DBI)
+con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(RMySQL::<span class="kw">MySQL</span>(),
+                 <span class="dt">dbname =</span> <span class="st">&quot;tweater&quot;</span>,
+                 <span class="dt">host =</span> <span class="st">&quot;courses.csrrinzqubik.us-east-1.rds.amazonaws.com&quot;</span>,
+                 <span class="dt">port =</span> <span class="dv">3306</span>,
+                 <span class="dt">user =</span> <span class="st">&quot;student&quot;</span>,
+                 <span class="dt">password =</span> <span class="st">&quot;datacamp&quot;</span>)
+
+<span class="co"># Import tweat_id column of comments where user_id is 1: elisabeth</span>
+elisabeth &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT tweat_id FROM comments WHERE user_id = 1&quot;</span>)
+
+<span class="co"># Print elisabeth</span>
+elisabeth</code></pre></div>
+<pre><code>##   tweat_id
+## 1       87
+## 2       49
+## 3       77
+## 4       77</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Import post column of tweats where date is higher than &#39;2015-09-21&#39;: latest</span>
+latest &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT post FROM tweats WHERE date &gt; &#39;2015-09-21&#39;&quot;</span>)
+
+<span class="co"># Print latest</span>
+latest</code></pre></div>
+<pre><code>##                                                                  post
+## 1               open and crush avocado. add shrimps. perfect starter.
+## 2 nachos. add tomato sauce, minced meat and cheese. oven for 10 mins.
+## 3                              just eat an apple. simply and healthy.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create data frame specific using boolean</span>
+specific &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT message FROM comments WHERE tweat_id = 77 AND user_id &gt; 4&quot;</span>)
+
+<span class="co"># Print specific</span>
+specific</code></pre></div>
+<pre><code>##   message
+## 1  great!</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create data frame short selecting two columns</span>
+short &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT id, name FROM users WHERE CHAR_LENGTH(name) &lt; 5&quot;</span>)
+
+<span class="co"># Print short</span>
+short</code></pre></div>
+<pre><code>##   id name
+## 1  2 mike
+## 2  3 thea
+## 3  6 kate</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We can also join elements from different tables using the same id/key</span>
+
+<span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT post, message</span>
+<span class="st">  FROM tweats INNER JOIN comments on tweats.id = tweat_id</span>
+<span class="st">    WHERE tweat_id = 77&quot;</span>)</code></pre></div>
+<pre><code>##                                            post            message
+## 1 2 slices of bread. add cheese. grill. heaven.             great!
+## 2 2 slices of bread. add cheese. grill. heaven.      not my thing!
+## 3 2 slices of bread. add cheese. grill. heaven. couldn&#39;t be better
+## 4 2 slices of bread. add cheese. grill. heaven.       saved my day</code></pre>
+<p>You’ve used dbGetQuery() multiple times now. This is a virtual function from the DBI package, but is actually implemented by the RMySQL package. Behind the scenes, the following steps are performed:</p>
+<ul>
+<li>Sending the specified query with dbSendQuery();</li>
+<li>Fetching the result of executing the query on the database with dbFetch();</li>
+<li>Clearing the result with dbClearResult().</li>
+</ul>
+<p>Let’s not use dbGetQuery() this time and implement the steps above. This is tedious to write, but it gives you the ability to fetch the query’s result in chunks rather than all at once. You can do this by specifying the n argument inside dbFetch().</p>
+<p><strong>It is important to close the connection to the database once complete using the dbDisconnect() function</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Send query to the database</span>
+res &lt;-<span class="st"> </span><span class="kw">dbSendQuery</span>(con, <span class="st">&quot;SELECT * FROM comments WHERE user_id &gt; 4&quot;</span>)
+
+<span class="co"># Use dbFetch() twice</span>
+<span class="kw">dbFetch</span>(res, <span class="dt">n =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>##     id tweat_id user_id message
+## 1 1022       87       7   nice!
+## 2 1000       77       7  great!</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbFetch</span>(res) <span class="co"># imports all</span></code></pre></div>
+<pre><code>##     id tweat_id user_id  message
+## 1 1011       49       5  love it
+## 2 1010       88       6    yuck!
+## 3 1030       75       6 so easy!</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Clear res</span>
+<span class="kw">dbClearResult</span>(res)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the data frame  long_tweats</span>
+long_tweats &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(con, <span class="st">&quot;SELECT post, date FROM tweats WHERE CHAR_LENGTH(post) &gt; 40&quot;</span>)
+
+<span class="co"># Print long_tweats</span>
+<span class="kw">print</span>(long_tweats)</code></pre></div>
+<pre><code>##                                                                  post
+## 1                           wash strawberries. add ice. blend. enjoy.
+## 2                       2 slices of bread. add cheese. grill. heaven.
+## 3               open and crush avocado. add shrimps. perfect starter.
+## 4 nachos. add tomato sauce, minced meat and cheese. oven for 10 mins.
+##         date
+## 1 2015-09-14
+## 2 2015-09-21
+## 3 2015-09-22
+## 4 2015-09-22</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Disconnect from the database</span>
+<span class="kw">dbDisconnect</span>(con)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
 </div>
 </div>
             </section>
