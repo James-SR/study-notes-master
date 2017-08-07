@@ -119,6 +119,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html"><i class="fa fa-check"></i><b>2</b> Importing data - Part 2</a><ul>
 <li class="chapter" data-level="2.1" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-databases---1"><i class="fa fa-check"></i><b>2.1</b> Importing from Databases - 1</a></li>
 <li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
+<li class="chapter" data-level="2.3" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#web-data"><i class="fa fa-check"></i><b>2.3</b> Web Data</a></li>
+<li class="chapter" data-level="2.4" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#json-and-apis"><i class="fa fa-check"></i><b>2.4</b> JSON and APIs</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="3" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>3</b> Introduction to Data</a><ul>
@@ -363,6 +365,812 @@ long_tweats &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(con
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Disconnect from the database</span>
 <span class="kw">dbDisconnect</span>(con)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="web-data" class="section level2">
+<h2><span class="header-section-number">2.3</span> Web Data</h2>
+<p>HyperText Transfer Protocol (HTTP) is the ‘language of the web’ and consists of a set of rules about data exchange between computers. If the file is a csv file, we can use functions like read.csv() and add in the url in quotations marks, read.csv will recognise this is a URL and will issue a HTTP GET command to download the file. This will also work on https sites on newer versions of R. We can also use the readr package and other packages.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the readr package</span>
+<span class="kw">library</span>(readr)
+
+<span class="co"># Import the csv file: pools</span>
+url_csv &lt;-<span class="st"> &quot;http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/swimming_pools.csv&quot;</span>
+pools &lt;-<span class="st"> </span><span class="kw">read_csv</span>(url_csv)</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Name = col_character(),
+##   Address = col_character(),
+##   Latitude = col_double(),
+##   Longitude = col_double()
+## )</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Import the txt file: potatoes</span>
+url_delim &lt;-<span class="st"> &quot;http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/potatoes.txt&quot;</span>
+potatoes &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(url_delim)</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   area = col_integer(),
+##   temp = col_integer(),
+##   size = col_integer(),
+##   storage = col_integer(),
+##   method = col_integer(),
+##   texture = col_double(),
+##   flavor = col_double(),
+##   moistness = col_double()
+## )</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print pools and potatoes</span>
+pools</code></pre></div>
+<pre><code>## # A tibble: 20 × 4
+##                                         Name
+##                                        &lt;chr&gt;
+## 1                Acacia Ridge Leisure Centre
+## 2                            Bellbowrie Pool
+## 3                                Carole Park
+## 4                Centenary Pool (inner City)
+## 5                             Chermside Pool
+## 6                Colmslie Pool (Morningside)
+## 7             Spring Hill Baths (inner City)
+## 8                 Dunlop Park Pool (Corinda)
+## 9                      Fortitude Valley Pool
+## 10 Hibiscus Sports Complex (upper MtGravatt)
+## 11                 Ithaca Pool ( Paddington)
+## 12                             Jindalee Pool
+## 13                                Manly Pool
+## 14            Mt Gravatt East Aquatic Centre
+## 15       Musgrave Park Pool (South Brisbane)
+## 16                            Newmarket Pool
+## 17                              Runcorn Pool
+## 18                             Sandgate Pool
+## 19      Langlands Parks Pool (Stones Corner)
+## 20                         Yeronga Park Pool
+## # ... with 3 more variables: Address &lt;chr&gt;, Latitude &lt;dbl&gt;,
+## #   Longitude &lt;dbl&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">potatoes</code></pre></div>
+<pre><code>## # A tibble: 160 × 8
+##     area  temp  size storage method texture flavor moistness
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;  &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+## 1      1     1     1       1      1     2.9    3.2       3.0
+## 2      1     1     1       1      2     2.3    2.5       2.6
+## 3      1     1     1       1      3     2.5    2.8       2.8
+## 4      1     1     1       1      4     2.1    2.9       2.4
+## 5      1     1     1       1      5     1.9    2.8       2.2
+## 6      1     1     1       2      1     1.8    3.0       1.7
+## 7      1     1     1       2      2     2.6    3.1       2.4
+## 8      1     1     1       2      3     3.0    3.0       2.9
+## 9      1     1     1       2      4     2.2    3.2       2.5
+## 10     1     1     1       2      5     2.0    2.8       1.9
+## # ... with 150 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># https URL to the swimming_pools csv file.</span>
+url_csv &lt;-<span class="st"> &quot;https://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/swimming_pools.csv&quot;</span>
+
+<span class="co"># Import the file using read.csv(): pools1</span>
+pools1 &lt;-<span class="st"> </span><span class="kw">read.csv</span>(url_csv)
+
+<span class="kw">str</span>(pools1)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    20 obs. of  4 variables:
+##  $ Name     : Factor w/ 20 levels &quot;Acacia Ridge Leisure Centre&quot;,..: 1 2 3 4 5 6 19 7 8 9 ...
+##  $ Address  : Factor w/ 20 levels &quot;1 Fairlead Crescent, Manly&quot;,..: 5 20 18 10 9 11 6 15 12 17 ...
+##  $ Latitude : num  -27.6 -27.6 -27.6 -27.5 -27.4 ...
+##  $ Longitude: num  153 153 153 153 153 ...</code></pre>
+<p>Some packages, like the readxl package, do not currently recognise urls. However, we can use the donwload.file() or other command to download the file and then read it in locally. This process can be much quicker that browsing the internet then downloading the file.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readxl)
+
+<span class="co"># Specification of url: url_xls</span>
+url_xls &lt;-<span class="st"> &quot;http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/latitude.xls&quot;</span>
+
+<span class="co"># Download file behind URL, name it local_latitude.xls</span>
+<span class="kw">download.file</span>(url_xls, <span class="dt">destfile =</span> <span class="st">&quot;local_latitude.xls&quot;</span>)
+
+<span class="co"># Import the local .xls file with readxl: excel_readxl</span>
+excel_readxl &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;local_latitude.xls&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># https URL to the wine RData file.</span>
+url_rdata &lt;-<span class="st"> &quot;https://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/wine.RData&quot;</span>
+
+<span class="co"># Download the wine file to your working directory</span>
+<span class="kw">download.file</span>(url_rdata, <span class="dt">destfile =</span> <span class="st">&quot;wine_local.RData&quot;</span>)
+
+<span class="co"># Load the wine data into your workspace using load()</span>
+<span class="kw">load</span>(<span class="st">&quot;wine_local.RData&quot;</span>)
+
+<span class="co"># Print out the summary of the wine data</span>
+<span class="kw">summary</span>(wine)</code></pre></div>
+<pre><code>##     Alcohol        Malic acid        Ash        Alcalinity of ash
+##  Min.   :11.03   Min.   :0.74   Min.   :1.360   Min.   :10.60    
+##  1st Qu.:12.36   1st Qu.:1.60   1st Qu.:2.210   1st Qu.:17.20    
+##  Median :13.05   Median :1.87   Median :2.360   Median :19.50    
+##  Mean   :12.99   Mean   :2.34   Mean   :2.366   Mean   :19.52    
+##  3rd Qu.:13.67   3rd Qu.:3.10   3rd Qu.:2.560   3rd Qu.:21.50    
+##  Max.   :14.83   Max.   :5.80   Max.   :3.230   Max.   :30.00    
+##    Magnesium      Total phenols     Flavanoids    Nonflavanoid phenols
+##  Min.   : 70.00   Min.   :0.980   Min.   :0.340   Min.   :0.1300      
+##  1st Qu.: 88.00   1st Qu.:1.740   1st Qu.:1.200   1st Qu.:0.2700      
+##  Median : 98.00   Median :2.350   Median :2.130   Median :0.3400      
+##  Mean   : 99.59   Mean   :2.292   Mean   :2.023   Mean   :0.3623      
+##  3rd Qu.:107.00   3rd Qu.:2.800   3rd Qu.:2.860   3rd Qu.:0.4400      
+##  Max.   :162.00   Max.   :3.880   Max.   :5.080   Max.   :0.6600      
+##  Proanthocyanins Color intensity       Hue           Proline      
+##  Min.   :0.410   Min.   : 1.280   Min.   :1.270   Min.   : 278.0  
+##  1st Qu.:1.250   1st Qu.: 3.210   1st Qu.:1.930   1st Qu.: 500.0  
+##  Median :1.550   Median : 4.680   Median :2.780   Median : 672.0  
+##  Mean   :1.587   Mean   : 5.055   Mean   :2.604   Mean   : 745.1  
+##  3rd Qu.:1.950   3rd Qu.: 6.200   3rd Qu.:3.170   3rd Qu.: 985.0  
+##  Max.   :3.580   Max.   :13.000   Max.   :4.000   Max.   :1680.0</code></pre>
+<p>We can also read http content using the httr package. This includes JSON formatted text, which httr will convert to a named list.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the httr package</span>
+<span class="kw">library</span>(httr)
+
+<span class="co"># Get the url, save response to resp</span>
+url &lt;-<span class="st"> &quot;http://www.example.com/&quot;</span>
+resp &lt;-<span class="st"> </span><span class="kw">GET</span>(url)
+
+<span class="co"># Print resp</span>
+resp</code></pre></div>
+<pre><code>## Response [http://www.example.com/]
+##   Date: 2017-08-07 19:08
+##   Status: 200
+##   Content-Type: text/html
+##   Size: 1.27 kB
+## &lt;!doctype html&gt;
+## &lt;html&gt;
+## &lt;head&gt;
+##     &lt;title&gt;Example Domain&lt;/title&gt;
+## 
+##     &lt;meta charset=&quot;utf-8&quot; /&gt;
+##     &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+##     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+##     &lt;style type=&quot;text/css&quot;&gt;
+##     body {
+## ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the raw content of resp: raw_content</span>
+raw_content &lt;-<span class="st"> </span><span class="kw">content</span>(resp, <span class="dt">as =</span> <span class="st">&quot;raw&quot;</span>)
+
+<span class="co"># Print the head of raw_content</span>
+<span class="kw">head</span>(raw_content)</code></pre></div>
+<pre><code>## [1] 3c 21 64 6f 63 74</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># JSON formatted</span>
+
+<span class="co"># Get the url</span>
+url &lt;-<span class="st"> &quot;http://www.omdbapi.com/?apikey=ff21610b&amp;t=Annie+Hall&amp;y=&amp;plot=short&amp;r=json&quot;</span>
+resp &lt;-<span class="st"> </span><span class="kw">GET</span>(url)
+
+<span class="co"># Print resp</span>
+resp</code></pre></div>
+<pre><code>## Response [http://www.omdbapi.com/?apikey=ff21610b&amp;t=Annie+Hall&amp;y=&amp;plot=short&amp;r=json]
+##   Date: 2017-08-07 19:08
+##   Status: 200
+##   Content-Type: application/json; charset=utf-8
+##   Size: 902 B</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print content of resp as text</span>
+<span class="kw">content</span>(resp, <span class="dt">as =</span> <span class="st">&quot;text&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;{\&quot;Title\&quot;:\&quot;Annie Hall\&quot;,\&quot;Year\&quot;:\&quot;1977\&quot;,\&quot;Rated\&quot;:\&quot;PG\&quot;,\&quot;Released\&quot;:\&quot;20 Apr 1977\&quot;,\&quot;Runtime\&quot;:\&quot;93 min\&quot;,\&quot;Genre\&quot;:\&quot;Comedy, Romance\&quot;,\&quot;Director\&quot;:\&quot;Woody Allen\&quot;,\&quot;Writer\&quot;:\&quot;Woody Allen, Marshall Brickman\&quot;,\&quot;Actors\&quot;:\&quot;Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\&quot;,\&quot;Plot\&quot;:\&quot;Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\&quot;,\&quot;Language\&quot;:\&quot;English, German\&quot;,\&quot;Country\&quot;:\&quot;USA\&quot;,\&quot;Awards\&quot;:\&quot;Won 4 Oscars. Another 26 wins &amp; 8 nominations.\&quot;,\&quot;Poster\&quot;:\&quot;https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\&quot;,\&quot;Ratings\&quot;:[{\&quot;Source\&quot;:\&quot;Internet Movie Database\&quot;,\&quot;Value\&quot;:\&quot;8.1/10\&quot;},{\&quot;Source\&quot;:\&quot;Rotten Tomatoes\&quot;,\&quot;Value\&quot;:\&quot;97%\&quot;}],\&quot;Metascore\&quot;:\&quot;N/A\&quot;,\&quot;imdbRating\&quot;:\&quot;8.1\&quot;,\&quot;imdbVotes\&quot;:\&quot;210,152\&quot;,\&quot;imdbID\&quot;:\&quot;tt0075686\&quot;,\&quot;Type\&quot;:\&quot;movie\&quot;,\&quot;DVD\&quot;:\&quot;28 Apr 1998\&quot;,\&quot;BoxOffice\&quot;:\&quot;N/A\&quot;,\&quot;Production\&quot;:\&quot;United Artists\&quot;,\&quot;Website\&quot;:\&quot;N/A\&quot;,\&quot;Response\&quot;:\&quot;True\&quot;}&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print content of resp</span>
+<span class="kw">content</span>(resp)</code></pre></div>
+<pre><code>## $Title
+## [1] &quot;Annie Hall&quot;
+## 
+## $Year
+## [1] &quot;1977&quot;
+## 
+## $Rated
+## [1] &quot;PG&quot;
+## 
+## $Released
+## [1] &quot;20 Apr 1977&quot;
+## 
+## $Runtime
+## [1] &quot;93 min&quot;
+## 
+## $Genre
+## [1] &quot;Comedy, Romance&quot;
+## 
+## $Director
+## [1] &quot;Woody Allen&quot;
+## 
+## $Writer
+## [1] &quot;Woody Allen, Marshall Brickman&quot;
+## 
+## $Actors
+## [1] &quot;Woody Allen, Diane Keaton, Tony Roberts, Carol Kane&quot;
+## 
+## $Plot
+## [1] &quot;Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.&quot;
+## 
+## $Language
+## [1] &quot;English, German&quot;
+## 
+## $Country
+## [1] &quot;USA&quot;
+## 
+## $Awards
+## [1] &quot;Won 4 Oscars. Another 26 wins &amp; 8 nominations.&quot;
+## 
+## $Poster
+## [1] &quot;https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg&quot;
+## 
+## $Ratings
+## $Ratings[[1]]
+## $Ratings[[1]]$Source
+## [1] &quot;Internet Movie Database&quot;
+## 
+## $Ratings[[1]]$Value
+## [1] &quot;8.1/10&quot;
+## 
+## 
+## $Ratings[[2]]
+## $Ratings[[2]]$Source
+## [1] &quot;Rotten Tomatoes&quot;
+## 
+## $Ratings[[2]]$Value
+## [1] &quot;97%&quot;
+## 
+## 
+## 
+## $Metascore
+## [1] &quot;N/A&quot;
+## 
+## $imdbRating
+## [1] &quot;8.1&quot;
+## 
+## $imdbVotes
+## [1] &quot;210,152&quot;
+## 
+## $imdbID
+## [1] &quot;tt0075686&quot;
+## 
+## $Type
+## [1] &quot;movie&quot;
+## 
+## $DVD
+## [1] &quot;28 Apr 1998&quot;
+## 
+## $BoxOffice
+## [1] &quot;N/A&quot;
+## 
+## $Production
+## [1] &quot;United Artists&quot;
+## 
+## $Website
+## [1] &quot;N/A&quot;
+## 
+## $Response
+## [1] &quot;True&quot;</code></pre>
+</div>
+<div id="json-and-apis" class="section level2">
+<h2><span class="header-section-number">2.4</span> JSON and APIs</h2>
+<p>JSON is both easy for machines to parse and generate and is human readable. APIs are programtical ways of getting data, consisting of a set of protocols to interact with some other system or database. JSON can be useful since it is often well structured and can save time over, say, parsing a html page. So for instance, you can use the OMDb API to return JSON formatted text about a movie, rather than parse an IMDB html page entry. One package for handling JSON in R is jsonlite.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(jsonlite)
+
+<span class="co"># wine_json is a JSON</span>
+wine_json &lt;-<span class="st"> &#39;{&quot;name&quot;:&quot;Chateau Migraine&quot;, &quot;year&quot;:1997, &quot;alcohol_pct&quot;:12.4, &quot;color&quot;:&quot;red&quot;, &quot;awarded&quot;:false}&#39;</span>
+
+<span class="co"># Convert wine_json into a list: wine</span>
+wine &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(wine_json)
+
+<span class="co"># Print structure of wine</span>
+<span class="kw">str</span>(wine)</code></pre></div>
+<pre><code>## List of 5
+##  $ name       : chr &quot;Chateau Migraine&quot;
+##  $ year       : int 1997
+##  $ alcohol_pct: num 12.4
+##  $ color      : chr &quot;red&quot;
+##  $ awarded    : logi FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Definition of quandl_url</span>
+quandl_url &lt;-<span class="st"> &quot;http://www.quandl.com/api/v1/datasets/IWS/INTERNET_INDIA.json?auth_token=i83asDsiWUUyfoypkgMz&quot;</span>
+
+<span class="co"># Import Quandl data: quandl_data</span>
+quandl_data &lt;-<span class="st"> </span><span class="kw">fromJSON</span>(quandl_url)
+
+<span class="co"># Print structure of quandl_data</span>
+<span class="kw">str</span>(quandl_data)</code></pre></div>
+<pre><code>## List of 17
+##  $ errors      : Named list()
+##  $ id          : int 2351831
+##  $ source_name : chr &quot;Internet World Stats&quot;
+##  $ source_code : chr &quot;IWS&quot;
+##  $ code        : chr &quot;INTERNET_INDIA&quot;
+##  $ name        : chr &quot;India Internet Usage&quot;
+##  $ urlize_name : chr &quot;India-Internet-Usage&quot;
+##  $ display_url : chr &quot;http://www.internetworldstats.com/asia/in.htm&quot;
+##  $ description : chr &quot;Internet Usage and Population Statistics&quot;
+##  $ updated_at  : chr &quot;2016-01-01T04:23:55.235Z&quot;
+##  $ frequency   : chr &quot;annual&quot;
+##  $ from_date   : chr &quot;1998-12-31&quot;
+##  $ to_date     : chr &quot;2012-12-31&quot;
+##  $ column_names: chr [1:4] &quot;YEAR&quot; &quot;Users&quot; &quot;Population&quot; &quot;% Pen.&quot;
+##  $ premium     : logi FALSE
+##  $ data        : chr [1:13, 1:4] &quot;2012-12-31&quot; &quot;2010-12-31&quot; &quot;2009-12-31&quot; &quot;2007-12-31&quot; ...
+##  $ type        : chr &quot;Time Series&quot;</code></pre>
+<p>There are two types of JSON structures</p>
+<ul>
+<li>JSON objects - has key value pairs e.g. name:James, age:21 etc</li>
+<li>JSON arrays - a sequence of values, numbers, nulls e.g. 4, “a”, 10, false, null etc</li>
+</ul>
+<p>You can also nest JSON objects or arrays within each other. Some examples are below. YOu can also use the minify and prettify functions to convert a JSON string to a more compact of easier to read version. Similar functions can also be used inside the toJSON() function e.g. toJSON(x, pretty = TRUE)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Challenge 1</span>
+json1 &lt;-<span class="st"> &#39;[1, 2, 3, 4, 5, 6]&#39;</span>
+<span class="kw">fromJSON</span>(json1)</code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Challenge 2</span>
+json2 &lt;-<span class="st"> &#39;{&quot;a&quot;: [1, 2, 3], &quot;b&quot;: [4, 5, 6]}&#39;</span>
+<span class="kw">fromJSON</span>(json2)</code></pre></div>
+<pre><code>## $a
+## [1] 1 2 3
+## 
+## $b
+## [1] 4 5 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># You can also convert data to JSON from other formats.  Here we take a csv and format it into a JSON array</span>
+
+<span class="co"># URL pointing to the .csv file</span>
+url_csv &lt;-<span class="st"> &quot;http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/water.csv&quot;</span>
+
+<span class="co"># Import the .csv file located at url_csv</span>
+water &lt;-<span class="st"> </span><span class="kw">read.csv</span>(url_csv, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># Convert the data file according to the requirements</span>
+water_json &lt;-<span class="st"> </span><span class="kw">toJSON</span>(water)
+
+<span class="co"># Print out water_json</span>
+water_json</code></pre></div>
+<pre><code>## [{&quot;water&quot;:&quot;Algeria&quot;,&quot;X1992&quot;:0.064,&quot;X2002&quot;:0.017},{&quot;water&quot;:&quot;American Samoa&quot;},{&quot;water&quot;:&quot;Angola&quot;,&quot;X1992&quot;:0.0001,&quot;X2002&quot;:0.0001},{&quot;water&quot;:&quot;Antigua and Barbuda&quot;,&quot;X1992&quot;:0.0033},{&quot;water&quot;:&quot;Argentina&quot;,&quot;X1992&quot;:0.0007,&quot;X1997&quot;:0.0007,&quot;X2002&quot;:0.0007},{&quot;water&quot;:&quot;Australia&quot;,&quot;X1992&quot;:0.0298,&quot;X2002&quot;:0.0298},{&quot;water&quot;:&quot;Austria&quot;,&quot;X1992&quot;:0.0022,&quot;X2002&quot;:0.0022},{&quot;water&quot;:&quot;Bahamas&quot;,&quot;X1992&quot;:0.0013,&quot;X2002&quot;:0.0074},{&quot;water&quot;:&quot;Bahrain&quot;,&quot;X1992&quot;:0.0441,&quot;X2002&quot;:0.0441,&quot;X2007&quot;:0.1024},{&quot;water&quot;:&quot;Barbados&quot;,&quot;X2007&quot;:0.0146},{&quot;water&quot;:&quot;British Virgin Islands&quot;,&quot;X2007&quot;:0.0042},{&quot;water&quot;:&quot;Canada&quot;,&quot;X1992&quot;:0.0027,&quot;X2002&quot;:0.0027},{&quot;water&quot;:&quot;Cape Verde&quot;,&quot;X1992&quot;:0.002,&quot;X1997&quot;:0.0017},{&quot;water&quot;:&quot;Cayman Islands&quot;,&quot;X1992&quot;:0.0033},{&quot;water&quot;:&quot;Central African Rep.&quot;},{&quot;water&quot;:&quot;Chile&quot;,&quot;X1992&quot;:0.0048,&quot;X2002&quot;:0.0048},{&quot;water&quot;:&quot;Colombia&quot;,&quot;X1992&quot;:0.0027,&quot;X2002&quot;:0.0027},{&quot;water&quot;:&quot;Cuba&quot;,&quot;X1992&quot;:0.0069,&quot;X1997&quot;:0.0069,&quot;X2002&quot;:0.0069},{&quot;water&quot;:&quot;Cyprus&quot;,&quot;X1992&quot;:0.003,&quot;X1997&quot;:0.003,&quot;X2002&quot;:0.0335},{&quot;water&quot;:&quot;Czech Rep.&quot;,&quot;X1992&quot;:0.0002,&quot;X2002&quot;:0.0002},{&quot;water&quot;:&quot;Denmark&quot;,&quot;X1992&quot;:0.015,&quot;X2002&quot;:0.015},{&quot;water&quot;:&quot;Djibouti&quot;,&quot;X1992&quot;:0.0001,&quot;X2002&quot;:0.0001},{&quot;water&quot;:&quot;Ecuador&quot;,&quot;X1992&quot;:0.0022,&quot;X1997&quot;:0.0022,&quot;X2002&quot;:0.0022},{&quot;water&quot;:&quot;Egypt&quot;,&quot;X1992&quot;:0.025,&quot;X1997&quot;:0.025,&quot;X2002&quot;:0.1},{&quot;water&quot;:&quot;El Salvador&quot;,&quot;X1992&quot;:0.0001,&quot;X2002&quot;:0.0001},{&quot;water&quot;:&quot;Finland&quot;,&quot;X1992&quot;:0.0001,&quot;X2002&quot;:0.0001},{&quot;water&quot;:&quot;France&quot;,&quot;X1992&quot;:0.0117,&quot;X2002&quot;:0.0117},{&quot;water&quot;:&quot;Gibraltar&quot;,&quot;X1992&quot;:0.0077},{&quot;water&quot;:&quot;Greece&quot;,&quot;X1992&quot;:0.01,&quot;X2002&quot;:0.01},{&quot;water&quot;:&quot;Honduras&quot;,&quot;X1992&quot;:0.0002,&quot;X2002&quot;:0.0002},{&quot;water&quot;:&quot;Hungary&quot;,&quot;X1992&quot;:0.0002,&quot;X2002&quot;:0.0002},{&quot;water&quot;:&quot;India&quot;,&quot;X1997&quot;:0.0005,&quot;X2002&quot;:0.0005},{&quot;water&quot;:&quot;Indonesia&quot;,&quot;X1992&quot;:0.0187,&quot;X2002&quot;:0.0187},{&quot;water&quot;:&quot;Iran&quot;,&quot;X1992&quot;:0.003,&quot;X1997&quot;:0.003,&quot;X2002&quot;:0.003,&quot;X2007&quot;:0.2},{&quot;water&quot;:&quot;Iraq&quot;,&quot;X1997&quot;:0.0074,&quot;X2002&quot;:0.0074},{&quot;water&quot;:&quot;Ireland&quot;,&quot;X1992&quot;:0.0002,&quot;X2002&quot;:0.0002},{&quot;water&quot;:&quot;Israel&quot;,&quot;X1992&quot;:0.0256,&quot;X2002&quot;:0.0256,&quot;X2007&quot;:0.14},{&quot;water&quot;:&quot;Italy&quot;,&quot;X1992&quot;:0.0973,&quot;X2002&quot;:0.0973},{&quot;water&quot;:&quot;Jamaica&quot;,&quot;X1992&quot;:0.0005,&quot;X1997&quot;:0.0005,&quot;X2002&quot;:0.0005},{&quot;water&quot;:&quot;Japan&quot;,&quot;X1997&quot;:0.04,&quot;X2002&quot;:0.04},{&quot;water&quot;:&quot;Jordan&quot;,&quot;X1997&quot;:0.002,&quot;X2007&quot;:0.0098},{&quot;water&quot;:&quot;Kazakhstan&quot;,&quot;X1997&quot;:1.328,&quot;X2002&quot;:1.328},{&quot;water&quot;:&quot;Kuwait&quot;,&quot;X1992&quot;:0.507,&quot;X1997&quot;:0.231,&quot;X2002&quot;:0.4202},{&quot;water&quot;:&quot;Lebanon&quot;,&quot;X2007&quot;:0.0473},{&quot;water&quot;:&quot;Libya&quot;,&quot;X2002&quot;:0.018},{&quot;water&quot;:&quot;Malaysia&quot;,&quot;X1992&quot;:0.0043,&quot;X2002&quot;:0.0043},{&quot;water&quot;:&quot;Maldives&quot;,&quot;X1992&quot;:0.0004},{&quot;water&quot;:&quot;Malta&quot;,&quot;X1992&quot;:0.024,&quot;X1997&quot;:0.031,&quot;X2002&quot;:0.031},{&quot;water&quot;:&quot;Marshall Islands&quot;,&quot;X1992&quot;:0.0007},{&quot;water&quot;:&quot;Mauritania&quot;,&quot;X1992&quot;:0.002,&quot;X2002&quot;:0.002},{&quot;water&quot;:&quot;Mexico&quot;,&quot;X1992&quot;:0.0307,&quot;X2002&quot;:0.0307},{&quot;water&quot;:&quot;Morocco&quot;,&quot;X1992&quot;:0.0034,&quot;X1997&quot;:0.0034,&quot;X2002&quot;:0.007},{&quot;water&quot;:&quot;Namibia&quot;,&quot;X1992&quot;:0.0003,&quot;X2002&quot;:0.0003},{&quot;water&quot;:&quot;Netherlands Antilles&quot;,&quot;X1992&quot;:0.063},{&quot;water&quot;:&quot;Nicaragua&quot;,&quot;X1992&quot;:0.0002,&quot;X2002&quot;:0.0002},{&quot;water&quot;:&quot;Nigeria&quot;,&quot;X1992&quot;:0.003,&quot;X2002&quot;:0.003},{&quot;water&quot;:&quot;Norway&quot;,&quot;X1992&quot;:0.0001,&quot;X2002&quot;:0.0001},{&quot;water&quot;:&quot;Oman&quot;,&quot;X1997&quot;:0.034,&quot;X2002&quot;:0.034,&quot;X2007&quot;:0.109},{&quot;water&quot;:&quot;Peru&quot;,&quot;X1992&quot;:0.0054,&quot;X2002&quot;:0.0054},{&quot;water&quot;:&quot;Poland&quot;,&quot;X1992&quot;:0.007,&quot;X2002&quot;:0.007},{&quot;water&quot;:&quot;Portugal&quot;,&quot;X1992&quot;:0.0016,&quot;X2002&quot;:0.0016},{&quot;water&quot;:&quot;Qatar&quot;,&quot;X1992&quot;:0.065,&quot;X1997&quot;:0.099,&quot;X2002&quot;:0.099,&quot;X2007&quot;:0.18},{&quot;water&quot;:&quot;Saudi Arabia&quot;,&quot;X1992&quot;:0.683,&quot;X1997&quot;:0.727,&quot;X2002&quot;:0.863,&quot;X2007&quot;:1.033},{&quot;water&quot;:&quot;Senegal&quot;,&quot;X1992&quot;:0,&quot;X2002&quot;:0},{&quot;water&quot;:&quot;Somalia&quot;,&quot;X1992&quot;:0.0001,&quot;X2002&quot;:0.0001},{&quot;water&quot;:&quot;South Africa&quot;,&quot;X1992&quot;:0.018,&quot;X2002&quot;:0.018},{&quot;water&quot;:&quot;Spain&quot;,&quot;X1992&quot;:0.1002,&quot;X2002&quot;:0.1002},{&quot;water&quot;:&quot;Sudan&quot;,&quot;X1992&quot;:0.0004,&quot;X1997&quot;:0.0004,&quot;X2002&quot;:0.0004},{&quot;water&quot;:&quot;Sweden&quot;,&quot;X1992&quot;:0.0002,&quot;X2002&quot;:0.0002},{&quot;water&quot;:&quot;Trinidad and Tobago&quot;,&quot;X2007&quot;:0.036},{&quot;water&quot;:&quot;Tunisia&quot;,&quot;X1992&quot;:0.008,&quot;X2002&quot;:0.013},{&quot;water&quot;:&quot;Turkey&quot;,&quot;X1992&quot;:0.0005,&quot;X2002&quot;:0.0005,&quot;X2007&quot;:0.0005},{&quot;water&quot;:&quot;United Arab Emirates&quot;,&quot;X1992&quot;:0.163,&quot;X1997&quot;:0.385,&quot;X2007&quot;:0.95},{&quot;water&quot;:&quot;United Kingdom&quot;,&quot;X1992&quot;:0.0333,&quot;X2002&quot;:0.0333},{&quot;water&quot;:&quot;United States&quot;,&quot;X1992&quot;:0.58,&quot;X2002&quot;:0.58},{&quot;water&quot;:&quot;Venezuela&quot;,&quot;X1992&quot;:0.0052,&quot;X2002&quot;:0.0052},{&quot;water&quot;:&quot;Yemen, Rep.&quot;,&quot;X1992&quot;:0.01,&quot;X2002&quot;:0.01}]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert mtcars to a pretty JSON: pretty_json</span>
+pretty_json &lt;-<span class="st"> </span><span class="kw">toJSON</span>(mtcars, <span class="dt">pretty =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># Print pretty_json</span>
+pretty_json</code></pre></div>
+<pre><code>## [
+##   {
+##     &quot;mpg&quot;: 21,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 160,
+##     &quot;hp&quot;: 110,
+##     &quot;drat&quot;: 3.9,
+##     &quot;wt&quot;: 2.62,
+##     &quot;qsec&quot;: 16.46,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Mazda RX4&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 21,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 160,
+##     &quot;hp&quot;: 110,
+##     &quot;drat&quot;: 3.9,
+##     &quot;wt&quot;: 2.875,
+##     &quot;qsec&quot;: 17.02,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Mazda RX4 Wag&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 22.8,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 108,
+##     &quot;hp&quot;: 93,
+##     &quot;drat&quot;: 3.85,
+##     &quot;wt&quot;: 2.32,
+##     &quot;qsec&quot;: 18.61,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Datsun 710&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 21.4,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 258,
+##     &quot;hp&quot;: 110,
+##     &quot;drat&quot;: 3.08,
+##     &quot;wt&quot;: 3.215,
+##     &quot;qsec&quot;: 19.44,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Hornet 4 Drive&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 18.7,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 360,
+##     &quot;hp&quot;: 175,
+##     &quot;drat&quot;: 3.15,
+##     &quot;wt&quot;: 3.44,
+##     &quot;qsec&quot;: 17.02,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Hornet Sportabout&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 18.1,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 225,
+##     &quot;hp&quot;: 105,
+##     &quot;drat&quot;: 2.76,
+##     &quot;wt&quot;: 3.46,
+##     &quot;qsec&quot;: 20.22,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Valiant&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 14.3,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 360,
+##     &quot;hp&quot;: 245,
+##     &quot;drat&quot;: 3.21,
+##     &quot;wt&quot;: 3.57,
+##     &quot;qsec&quot;: 15.84,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Duster 360&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 24.4,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 146.7,
+##     &quot;hp&quot;: 62,
+##     &quot;drat&quot;: 3.69,
+##     &quot;wt&quot;: 3.19,
+##     &quot;qsec&quot;: 20,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Merc 240D&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 22.8,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 140.8,
+##     &quot;hp&quot;: 95,
+##     &quot;drat&quot;: 3.92,
+##     &quot;wt&quot;: 3.15,
+##     &quot;qsec&quot;: 22.9,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Merc 230&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 19.2,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 167.6,
+##     &quot;hp&quot;: 123,
+##     &quot;drat&quot;: 3.92,
+##     &quot;wt&quot;: 3.44,
+##     &quot;qsec&quot;: 18.3,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Merc 280&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 17.8,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 167.6,
+##     &quot;hp&quot;: 123,
+##     &quot;drat&quot;: 3.92,
+##     &quot;wt&quot;: 3.44,
+##     &quot;qsec&quot;: 18.9,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Merc 280C&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 16.4,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 275.8,
+##     &quot;hp&quot;: 180,
+##     &quot;drat&quot;: 3.07,
+##     &quot;wt&quot;: 4.07,
+##     &quot;qsec&quot;: 17.4,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 3,
+##     &quot;_row&quot;: &quot;Merc 450SE&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 17.3,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 275.8,
+##     &quot;hp&quot;: 180,
+##     &quot;drat&quot;: 3.07,
+##     &quot;wt&quot;: 3.73,
+##     &quot;qsec&quot;: 17.6,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 3,
+##     &quot;_row&quot;: &quot;Merc 450SL&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 15.2,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 275.8,
+##     &quot;hp&quot;: 180,
+##     &quot;drat&quot;: 3.07,
+##     &quot;wt&quot;: 3.78,
+##     &quot;qsec&quot;: 18,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 3,
+##     &quot;_row&quot;: &quot;Merc 450SLC&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 10.4,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 472,
+##     &quot;hp&quot;: 205,
+##     &quot;drat&quot;: 2.93,
+##     &quot;wt&quot;: 5.25,
+##     &quot;qsec&quot;: 17.98,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Cadillac Fleetwood&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 10.4,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 460,
+##     &quot;hp&quot;: 215,
+##     &quot;drat&quot;: 3,
+##     &quot;wt&quot;: 5.424,
+##     &quot;qsec&quot;: 17.82,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Lincoln Continental&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 14.7,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 440,
+##     &quot;hp&quot;: 230,
+##     &quot;drat&quot;: 3.23,
+##     &quot;wt&quot;: 5.345,
+##     &quot;qsec&quot;: 17.42,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Chrysler Imperial&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 32.4,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 78.7,
+##     &quot;hp&quot;: 66,
+##     &quot;drat&quot;: 4.08,
+##     &quot;wt&quot;: 2.2,
+##     &quot;qsec&quot;: 19.47,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Fiat 128&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 30.4,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 75.7,
+##     &quot;hp&quot;: 52,
+##     &quot;drat&quot;: 4.93,
+##     &quot;wt&quot;: 1.615,
+##     &quot;qsec&quot;: 18.52,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Honda Civic&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 33.9,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 71.1,
+##     &quot;hp&quot;: 65,
+##     &quot;drat&quot;: 4.22,
+##     &quot;wt&quot;: 1.835,
+##     &quot;qsec&quot;: 19.9,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Toyota Corolla&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 21.5,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 120.1,
+##     &quot;hp&quot;: 97,
+##     &quot;drat&quot;: 3.7,
+##     &quot;wt&quot;: 2.465,
+##     &quot;qsec&quot;: 20.01,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Toyota Corona&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 15.5,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 318,
+##     &quot;hp&quot;: 150,
+##     &quot;drat&quot;: 2.76,
+##     &quot;wt&quot;: 3.52,
+##     &quot;qsec&quot;: 16.87,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Dodge Challenger&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 15.2,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 304,
+##     &quot;hp&quot;: 150,
+##     &quot;drat&quot;: 3.15,
+##     &quot;wt&quot;: 3.435,
+##     &quot;qsec&quot;: 17.3,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;AMC Javelin&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 13.3,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 350,
+##     &quot;hp&quot;: 245,
+##     &quot;drat&quot;: 3.73,
+##     &quot;wt&quot;: 3.84,
+##     &quot;qsec&quot;: 15.41,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Camaro Z28&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 19.2,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 400,
+##     &quot;hp&quot;: 175,
+##     &quot;drat&quot;: 3.08,
+##     &quot;wt&quot;: 3.845,
+##     &quot;qsec&quot;: 17.05,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 0,
+##     &quot;gear&quot;: 3,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Pontiac Firebird&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 27.3,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 79,
+##     &quot;hp&quot;: 66,
+##     &quot;drat&quot;: 4.08,
+##     &quot;wt&quot;: 1.935,
+##     &quot;qsec&quot;: 18.9,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 1,
+##     &quot;_row&quot;: &quot;Fiat X1-9&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 26,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 120.3,
+##     &quot;hp&quot;: 91,
+##     &quot;drat&quot;: 4.43,
+##     &quot;wt&quot;: 2.14,
+##     &quot;qsec&quot;: 16.7,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 5,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Porsche 914-2&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 30.4,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 95.1,
+##     &quot;hp&quot;: 113,
+##     &quot;drat&quot;: 3.77,
+##     &quot;wt&quot;: 1.513,
+##     &quot;qsec&quot;: 16.9,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 5,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Lotus Europa&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 15.8,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 351,
+##     &quot;hp&quot;: 264,
+##     &quot;drat&quot;: 4.22,
+##     &quot;wt&quot;: 3.17,
+##     &quot;qsec&quot;: 14.5,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 5,
+##     &quot;carb&quot;: 4,
+##     &quot;_row&quot;: &quot;Ford Pantera L&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 19.7,
+##     &quot;cyl&quot;: 6,
+##     &quot;disp&quot;: 145,
+##     &quot;hp&quot;: 175,
+##     &quot;drat&quot;: 3.62,
+##     &quot;wt&quot;: 2.77,
+##     &quot;qsec&quot;: 15.5,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 5,
+##     &quot;carb&quot;: 6,
+##     &quot;_row&quot;: &quot;Ferrari Dino&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 15,
+##     &quot;cyl&quot;: 8,
+##     &quot;disp&quot;: 301,
+##     &quot;hp&quot;: 335,
+##     &quot;drat&quot;: 3.54,
+##     &quot;wt&quot;: 3.57,
+##     &quot;qsec&quot;: 14.6,
+##     &quot;vs&quot;: 0,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 5,
+##     &quot;carb&quot;: 8,
+##     &quot;_row&quot;: &quot;Maserati Bora&quot;
+##   },
+##   {
+##     &quot;mpg&quot;: 21.4,
+##     &quot;cyl&quot;: 4,
+##     &quot;disp&quot;: 121,
+##     &quot;hp&quot;: 109,
+##     &quot;drat&quot;: 4.11,
+##     &quot;wt&quot;: 2.78,
+##     &quot;qsec&quot;: 18.6,
+##     &quot;vs&quot;: 1,
+##     &quot;am&quot;: 1,
+##     &quot;gear&quot;: 4,
+##     &quot;carb&quot;: 2,
+##     &quot;_row&quot;: &quot;Volvo 142E&quot;
+##   }
+## ]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Minify pretty_json: mini_json</span>
+mini_json &lt;-<span class="st"> </span><span class="kw">minify</span>(pretty_json)
+
+<span class="co"># Print mini_json</span>
+mini_json</code></pre></div>
+<pre><code>## [{&quot;mpg&quot;:21,&quot;cyl&quot;:6,&quot;disp&quot;:160,&quot;hp&quot;:110,&quot;drat&quot;:3.9,&quot;wt&quot;:2.62,&quot;qsec&quot;:16.46,&quot;vs&quot;:0,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Mazda RX4&quot;},{&quot;mpg&quot;:21,&quot;cyl&quot;:6,&quot;disp&quot;:160,&quot;hp&quot;:110,&quot;drat&quot;:3.9,&quot;wt&quot;:2.875,&quot;qsec&quot;:17.02,&quot;vs&quot;:0,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Mazda RX4 Wag&quot;},{&quot;mpg&quot;:22.8,&quot;cyl&quot;:4,&quot;disp&quot;:108,&quot;hp&quot;:93,&quot;drat&quot;:3.85,&quot;wt&quot;:2.32,&quot;qsec&quot;:18.61,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Datsun 710&quot;},{&quot;mpg&quot;:21.4,&quot;cyl&quot;:6,&quot;disp&quot;:258,&quot;hp&quot;:110,&quot;drat&quot;:3.08,&quot;wt&quot;:3.215,&quot;qsec&quot;:19.44,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Hornet 4 Drive&quot;},{&quot;mpg&quot;:18.7,&quot;cyl&quot;:8,&quot;disp&quot;:360,&quot;hp&quot;:175,&quot;drat&quot;:3.15,&quot;wt&quot;:3.44,&quot;qsec&quot;:17.02,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Hornet Sportabout&quot;},{&quot;mpg&quot;:18.1,&quot;cyl&quot;:6,&quot;disp&quot;:225,&quot;hp&quot;:105,&quot;drat&quot;:2.76,&quot;wt&quot;:3.46,&quot;qsec&quot;:20.22,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Valiant&quot;},{&quot;mpg&quot;:14.3,&quot;cyl&quot;:8,&quot;disp&quot;:360,&quot;hp&quot;:245,&quot;drat&quot;:3.21,&quot;wt&quot;:3.57,&quot;qsec&quot;:15.84,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Duster 360&quot;},{&quot;mpg&quot;:24.4,&quot;cyl&quot;:4,&quot;disp&quot;:146.7,&quot;hp&quot;:62,&quot;drat&quot;:3.69,&quot;wt&quot;:3.19,&quot;qsec&quot;:20,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:4,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Merc 240D&quot;},{&quot;mpg&quot;:22.8,&quot;cyl&quot;:4,&quot;disp&quot;:140.8,&quot;hp&quot;:95,&quot;drat&quot;:3.92,&quot;wt&quot;:3.15,&quot;qsec&quot;:22.9,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:4,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Merc 230&quot;},{&quot;mpg&quot;:19.2,&quot;cyl&quot;:6,&quot;disp&quot;:167.6,&quot;hp&quot;:123,&quot;drat&quot;:3.92,&quot;wt&quot;:3.44,&quot;qsec&quot;:18.3,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:4,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Merc 280&quot;},{&quot;mpg&quot;:17.8,&quot;cyl&quot;:6,&quot;disp&quot;:167.6,&quot;hp&quot;:123,&quot;drat&quot;:3.92,&quot;wt&quot;:3.44,&quot;qsec&quot;:18.9,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:4,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Merc 280C&quot;},{&quot;mpg&quot;:16.4,&quot;cyl&quot;:8,&quot;disp&quot;:275.8,&quot;hp&quot;:180,&quot;drat&quot;:3.07,&quot;wt&quot;:4.07,&quot;qsec&quot;:17.4,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:3,&quot;_row&quot;:&quot;Merc 450SE&quot;},{&quot;mpg&quot;:17.3,&quot;cyl&quot;:8,&quot;disp&quot;:275.8,&quot;hp&quot;:180,&quot;drat&quot;:3.07,&quot;wt&quot;:3.73,&quot;qsec&quot;:17.6,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:3,&quot;_row&quot;:&quot;Merc 450SL&quot;},{&quot;mpg&quot;:15.2,&quot;cyl&quot;:8,&quot;disp&quot;:275.8,&quot;hp&quot;:180,&quot;drat&quot;:3.07,&quot;wt&quot;:3.78,&quot;qsec&quot;:18,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:3,&quot;_row&quot;:&quot;Merc 450SLC&quot;},{&quot;mpg&quot;:10.4,&quot;cyl&quot;:8,&quot;disp&quot;:472,&quot;hp&quot;:205,&quot;drat&quot;:2.93,&quot;wt&quot;:5.25,&quot;qsec&quot;:17.98,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Cadillac Fleetwood&quot;},{&quot;mpg&quot;:10.4,&quot;cyl&quot;:8,&quot;disp&quot;:460,&quot;hp&quot;:215,&quot;drat&quot;:3,&quot;wt&quot;:5.424,&quot;qsec&quot;:17.82,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Lincoln Continental&quot;},{&quot;mpg&quot;:14.7,&quot;cyl&quot;:8,&quot;disp&quot;:440,&quot;hp&quot;:230,&quot;drat&quot;:3.23,&quot;wt&quot;:5.345,&quot;qsec&quot;:17.42,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Chrysler Imperial&quot;},{&quot;mpg&quot;:32.4,&quot;cyl&quot;:4,&quot;disp&quot;:78.7,&quot;hp&quot;:66,&quot;drat&quot;:4.08,&quot;wt&quot;:2.2,&quot;qsec&quot;:19.47,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Fiat 128&quot;},{&quot;mpg&quot;:30.4,&quot;cyl&quot;:4,&quot;disp&quot;:75.7,&quot;hp&quot;:52,&quot;drat&quot;:4.93,&quot;wt&quot;:1.615,&quot;qsec&quot;:18.52,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Honda Civic&quot;},{&quot;mpg&quot;:33.9,&quot;cyl&quot;:4,&quot;disp&quot;:71.1,&quot;hp&quot;:65,&quot;drat&quot;:4.22,&quot;wt&quot;:1.835,&quot;qsec&quot;:19.9,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Toyota Corolla&quot;},{&quot;mpg&quot;:21.5,&quot;cyl&quot;:4,&quot;disp&quot;:120.1,&quot;hp&quot;:97,&quot;drat&quot;:3.7,&quot;wt&quot;:2.465,&quot;qsec&quot;:20.01,&quot;vs&quot;:1,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Toyota Corona&quot;},{&quot;mpg&quot;:15.5,&quot;cyl&quot;:8,&quot;disp&quot;:318,&quot;hp&quot;:150,&quot;drat&quot;:2.76,&quot;wt&quot;:3.52,&quot;qsec&quot;:16.87,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Dodge Challenger&quot;},{&quot;mpg&quot;:15.2,&quot;cyl&quot;:8,&quot;disp&quot;:304,&quot;hp&quot;:150,&quot;drat&quot;:3.15,&quot;wt&quot;:3.435,&quot;qsec&quot;:17.3,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:2,&quot;_row&quot;:&quot;AMC Javelin&quot;},{&quot;mpg&quot;:13.3,&quot;cyl&quot;:8,&quot;disp&quot;:350,&quot;hp&quot;:245,&quot;drat&quot;:3.73,&quot;wt&quot;:3.84,&quot;qsec&quot;:15.41,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Camaro Z28&quot;},{&quot;mpg&quot;:19.2,&quot;cyl&quot;:8,&quot;disp&quot;:400,&quot;hp&quot;:175,&quot;drat&quot;:3.08,&quot;wt&quot;:3.845,&quot;qsec&quot;:17.05,&quot;vs&quot;:0,&quot;am&quot;:0,&quot;gear&quot;:3,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Pontiac Firebird&quot;},{&quot;mpg&quot;:27.3,&quot;cyl&quot;:4,&quot;disp&quot;:79,&quot;hp&quot;:66,&quot;drat&quot;:4.08,&quot;wt&quot;:1.935,&quot;qsec&quot;:18.9,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:1,&quot;_row&quot;:&quot;Fiat X1-9&quot;},{&quot;mpg&quot;:26,&quot;cyl&quot;:4,&quot;disp&quot;:120.3,&quot;hp&quot;:91,&quot;drat&quot;:4.43,&quot;wt&quot;:2.14,&quot;qsec&quot;:16.7,&quot;vs&quot;:0,&quot;am&quot;:1,&quot;gear&quot;:5,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Porsche 914-2&quot;},{&quot;mpg&quot;:30.4,&quot;cyl&quot;:4,&quot;disp&quot;:95.1,&quot;hp&quot;:113,&quot;drat&quot;:3.77,&quot;wt&quot;:1.513,&quot;qsec&quot;:16.9,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:5,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Lotus Europa&quot;},{&quot;mpg&quot;:15.8,&quot;cyl&quot;:8,&quot;disp&quot;:351,&quot;hp&quot;:264,&quot;drat&quot;:4.22,&quot;wt&quot;:3.17,&quot;qsec&quot;:14.5,&quot;vs&quot;:0,&quot;am&quot;:1,&quot;gear&quot;:5,&quot;carb&quot;:4,&quot;_row&quot;:&quot;Ford Pantera L&quot;},{&quot;mpg&quot;:19.7,&quot;cyl&quot;:6,&quot;disp&quot;:145,&quot;hp&quot;:175,&quot;drat&quot;:3.62,&quot;wt&quot;:2.77,&quot;qsec&quot;:15.5,&quot;vs&quot;:0,&quot;am&quot;:1,&quot;gear&quot;:5,&quot;carb&quot;:6,&quot;_row&quot;:&quot;Ferrari Dino&quot;},{&quot;mpg&quot;:15,&quot;cyl&quot;:8,&quot;disp&quot;:301,&quot;hp&quot;:335,&quot;drat&quot;:3.54,&quot;wt&quot;:3.57,&quot;qsec&quot;:14.6,&quot;vs&quot;:0,&quot;am&quot;:1,&quot;gear&quot;:5,&quot;carb&quot;:8,&quot;_row&quot;:&quot;Maserati Bora&quot;},{&quot;mpg&quot;:21.4,&quot;cyl&quot;:4,&quot;disp&quot;:121,&quot;hp&quot;:109,&quot;drat&quot;:4.11,&quot;wt&quot;:2.78,&quot;qsec&quot;:18.6,&quot;vs&quot;:1,&quot;am&quot;:1,&quot;gear&quot;:4,&quot;carb&quot;:2,&quot;_row&quot;:&quot;Volvo 142E&quot;}]</code></pre>
 </div>
 </div>
             </section>

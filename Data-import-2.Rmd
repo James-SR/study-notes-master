@@ -126,6 +126,10 @@ dbDisconnect(con)
 
 ```
 
+```{r}
+
+```
+
 ## Web Data
 
 HyperText Transfer Protocol (HTTP) is the 'language of the web' and consists of a set of rules about data exchange between computers.  If the file is a csv file, we can use functions like read.csv() and add in the url in quotations marks, read.csv will recognise this is a URL and will issue a HTTP GET command to download the file.  This will also work on https sites on newer versions of R.  We can also use the readr package and other packages.
@@ -157,7 +161,7 @@ str(pools1)
 
 Some packages, like the readxl package, do not currently recognise urls.  However, we can use the donwload.file() or other command to download the file and then read it in locally.  This process can be much quicker that browsing the internet then downloading the file.
 
-```{r}
+```{r, eval = FALSE}
 library(readxl)
 
 # Specification of url: url_xls
@@ -171,6 +175,126 @@ excel_readxl <- read_excel("local_latitude.xls")
 
 ```
 
+```{r}
+# https URL to the wine RData file.
+url_rdata <- "https://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/wine.RData"
+
+# Download the wine file to your working directory
+download.file(url_rdata, destfile = "wine_local.RData")
+
+# Load the wine data into your workspace using load()
+load("wine_local.RData")
+
+# Print out the summary of the wine data
+summary(wine)
+```
+
+We can also read http content using the httr package.  This includes JSON formatted text, which httr will convert to a named list.
+
+```{r}
+# Load the httr package
+library(httr)
+
+# Get the url, save response to resp
+url <- "http://www.example.com/"
+resp <- GET(url)
+
+# Print resp
+resp
+
+# Get the raw content of resp: raw_content
+raw_content <- content(resp, as = "raw")
+
+# Print the head of raw_content
+head(raw_content)
+
+# JSON formatted
+
+# Get the url
+url <- "http://www.omdbapi.com/?apikey=ff21610b&t=Annie+Hall&y=&plot=short&r=json"
+resp <- GET(url)
+
+# Print resp
+resp
+
+# Print content of resp as text
+content(resp, as = "text")
+
+# Print content of resp
+content(resp)
+
+```
+
+## JSON and APIs
+
+JSON is both easy for machines to parse and generate and is human readable.  APIs are programtical ways of getting data, consisting of a set of protocols to interact with some other system or database.  JSON can be useful since it is often well structured and can save time over, say, parsing a html page.  So for instance, you can use the OMDb API to return JSON formatted text about a movie, rather than parse an IMDB html page entry.  One package for handling JSON in R is jsonlite.
+
+```{r}
+library(jsonlite)
+
+# wine_json is a JSON
+wine_json <- '{"name":"Chateau Migraine", "year":1997, "alcohol_pct":12.4, "color":"red", "awarded":false}'
+
+# Convert wine_json into a list: wine
+wine <- fromJSON(wine_json)
+
+# Print structure of wine
+str(wine)
+
+# Definition of quandl_url
+quandl_url <- "http://www.quandl.com/api/v1/datasets/IWS/INTERNET_INDIA.json?auth_token=i83asDsiWUUyfoypkgMz"
+
+# Import Quandl data: quandl_data
+quandl_data <- fromJSON(quandl_url)
+
+# Print structure of quandl_data
+str(quandl_data)
+```
+
+There are two types of JSON structures
+
+* JSON objects - has key value pairs e.g. name:James, age:21 etc
+* JSON arrays - a sequence of values, numbers, nulls e.g. 4, "a", 10, false, null etc
+
+You can also nest JSON objects or arrays within each other.  Some examples are below.  YOu can also use the minify and prettify functions to convert a JSON string to a more compact of easier to read version.  Similar functions can also be used inside the toJSON() function e.g. toJSON(x, pretty = TRUE)
+
+```{r}
+# Challenge 1
+json1 <- '[1, 2, 3, 4, 5, 6]'
+fromJSON(json1)
+
+# Challenge 2
+json2 <- '{"a": [1, 2, 3], "b": [4, 5, 6]}'
+fromJSON(json2)
+
+# You can also convert data to JSON from other formats.  Here we take a csv and format it into a JSON array
+
+# URL pointing to the .csv file
+url_csv <- "http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/water.csv"
+
+# Import the .csv file located at url_csv
+water <- read.csv(url_csv, stringsAsFactors = FALSE)
+
+# Convert the data file according to the requirements
+water_json <- toJSON(water)
+
+# Print out water_json
+water_json
+
+# Convert mtcars to a pretty JSON: pretty_json
+pretty_json <- toJSON(mtcars, pretty = TRUE)
+
+# Print pretty_json
+pretty_json
+
+# Minify pretty_json: mini_json
+mini_json <- minify(pretty_json)
+
+# Print mini_json
+mini_json
+
+
+```
 
 
 `r if (knitr:::is_html_output()) '# References {-}'`
