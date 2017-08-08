@@ -296,5 +296,64 @@ mini_json
 
 ```
 
+## Importing from other statistical software
+
+Common software packages include SAS, STATA and SPSS.  Two packages useful for importing data from these packages are:
+
+* **haven**: by Hadley Wickham and is under active development.  It aims to be more consistent, easier and faster than foreign.  It can read SAS, Stata and SPSS and will read in the file as an D dataframe.
+* **foreign**: is an older package by the R Core Team.  Foreign support more data formats than haven
+
+```{r, eval = FALSE}
+# Load the haven package
+library(haven)
+
+# Import sales.sas7bdat: sales
+sales <- read_sas("sales.sas7bdat")
+
+# Display the structure of sales
+str(sales)
+
+# Import the data from the URL: sugar
+sugar <- read_dta("http://assets.datacamp.com/production/course_1478/datasets/trade.dta")
+
+# Structure of sugar
+str(sugar)
+
+# Convert values in Date column to dates
+sugar$Date <- as.Date(as_factor(sugar$Date))
+
+# Structure of sugar again
+str(sugar)
+
+# Import person.sav: traits
+traits <- read_sav("person.sav")
+
+# Summarize traits
+summary(traits)
+
+# Print out a subset
+subset(traits, Extroversion > 40 & Agreeableness > 40)
+
+```
+
+When using SPSS files, it is often the case that the variable labels are also imported, it is best to change these in to standard R factors.
+
+```{r}
+# Import SPSS data from the URL: work
+work <- read_sav("http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/employee.sav")
+
+# Display summary of work$GENDER
+summary(work$GENDER)
+
+
+# Convert work$GENDER to a factor
+work$GENDER <- as_factor(work$GENDER)
+
+
+# Display summary of work$GENDER again
+summary(work$GENDER)
+```
+
+
 
 `r if (knitr:::is_html_output()) '# References {-}'`
