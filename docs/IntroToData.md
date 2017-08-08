@@ -337,25 +337,24 @@ county_srs %>%
 ```
 
 ```
-## # A tibble: 16 × 2
-##             state     n
-##            <fctr> <int>
-## 1         Alabama     1
-## 2        Colorado     1
-## 3         Georgia     1
-## 4           Idaho     1
-## 5        Illinois     2
-## 6        Kentucky     1
-## 7       Louisiana     1
-## 8        Michigan     3
-## 9         Montana     1
-## 10  New Hampshire     1
-## 11 North Carolina     2
-## 12 South Carolina     1
-## 13       Virginia     1
-## 14     Washington     1
-## 15  West Virginia     1
-## 16      Wisconsin     1
+## # A tibble: 15 × 2
+##           state     n
+##          <fctr> <int>
+## 1       Alabama     1
+## 2        Alaska     1
+## 3      Arkansas     2
+## 4    California     1
+## 5      Colorado     1
+## 6       Florida     1
+## 7      Illinois     1
+## 8          Iowa     1
+## 9        Kansas     2
+## 10        Maine     1
+## 11     Missouri     2
+## 12     Nebraska     1
+## 13 North Dakota     1
+## 14 South Dakota     3
+## 15     Virginia     1
 ```
 
 For a stratified sample we would do something similar.

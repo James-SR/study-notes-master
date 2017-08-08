@@ -121,6 +121,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
 <li class="chapter" data-level="2.3" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#web-data"><i class="fa fa-check"></i><b>2.3</b> Web Data</a></li>
 <li class="chapter" data-level="2.4" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#json-and-apis"><i class="fa fa-check"></i><b>2.4</b> JSON and APIs</a></li>
+<li class="chapter" data-level="2.5" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-other-statistical-software"><i class="fa fa-check"></i><b>2.5</b> Importing from other statistical software</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="3" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>3</b> Introduction to Data</a><ul>
@@ -418,25 +419,24 @@ county_srs &lt;-<span class="st"> </span>county %&gt;%
 county_srs %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(state) %&gt;%
 <span class="st">  </span><span class="kw">count</span>()</code></pre></div>
-<pre><code>## # A tibble: 16 × 2
-##             state     n
-##            &lt;fctr&gt; &lt;int&gt;
-## 1         Alabama     1
-## 2        Colorado     1
-## 3         Georgia     1
-## 4           Idaho     1
-## 5        Illinois     2
-## 6        Kentucky     1
-## 7       Louisiana     1
-## 8        Michigan     3
-## 9         Montana     1
-## 10  New Hampshire     1
-## 11 North Carolina     2
-## 12 South Carolina     1
-## 13       Virginia     1
-## 14     Washington     1
-## 15  West Virginia     1
-## 16      Wisconsin     1</code></pre>
+<pre><code>## # A tibble: 15 × 2
+##           state     n
+##          &lt;fctr&gt; &lt;int&gt;
+## 1       Alabama     1
+## 2        Alaska     1
+## 3      Arkansas     2
+## 4    California     1
+## 5      Colorado     1
+## 6       Florida     1
+## 7      Illinois     1
+## 8          Iowa     1
+## 9        Kansas     2
+## 10        Maine     1
+## 11     Missouri     2
+## 12     Nebraska     1
+## 13 North Dakota     1
+## 14 South Dakota     3
+## 15     Virginia     1</code></pre>
 <p>For a stratified sample we would do something similar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sample</span>
 states_str &lt;-<span class="st"> </span>us_regions %&gt;%

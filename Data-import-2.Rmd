@@ -301,7 +301,7 @@ mini_json
 Common software packages include SAS, STATA and SPSS.  Two packages useful for importing data from these packages are:
 
 * **haven**: by Hadley Wickham and is under active development.  It aims to be more consistent, easier and faster than foreign.  It can read SAS, Stata and SPSS and will read in the file as an D dataframe.
-* **foreign**: is an older package by the R Core Team.  Foreign support more data formats than haven
+* **foreign**: is an older package by the R Core Team.  Foreign support more data formats than haven including Weka and Systat
 
 ```{r, eval = FALSE}
 # Load the haven package
@@ -338,7 +338,7 @@ subset(traits, Extroversion > 40 & Agreeableness > 40)
 
 When using SPSS files, it is often the case that the variable labels are also imported, it is best to change these in to standard R factors.
 
-```{r}
+```{r, eval = FALSE}
 # Import SPSS data from the URL: work
 work <- read_sav("http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/employee.sav")
 
@@ -354,6 +354,34 @@ work$GENDER <- as_factor(work$GENDER)
 summary(work$GENDER)
 ```
 
+Foreign cannot use single SAS datafiles like haven, it works with SAS library files .xport.  Foreign tends to use dots in the function names rather than underscores in haven e.g. read.dta() vs read_dta().  Foreign does not provide consistency with it's functions i.e. read.dta() has different arguments than read.spss(), however foreign provides more control over the data importing, such as dealing with multiple types of missing data which are often present in survey data, more comprehensively than haven.  Although haven is still being developed. 
 
+```{r, eval = FALSE}
+# Load the foreign package
+library(foreign)
+
+# Specify the file path using file.path(): path
+path <- file.path("worldbank", "edequality.dta")
+
+# Create and print structure of edu_equal_1
+edu_equal_1 <- read.dta(path)
+str(edu_equal_1)
+
+# Create and print structure of edu_equal_2
+edu_equal_2 <- read.dta(path, convert.factors = FALSE)
+str(edu_equal_2)
+
+# Create and print structure of edu_equal_3
+edu_equal_3 <- read.dta(path, convert.underscore = TRUE)
+str(edu_equal_3)
+
+
+# Import international.sav as a data frame: demo
+demo <- read.spss("http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/international.sav", to.data.frame = TRUE)
+
+# Create boxplot of gdp variable of demo
+boxplot(demo$gdp)
+
+```
 
 `r if (knitr:::is_html_output()) '# References {-}'`

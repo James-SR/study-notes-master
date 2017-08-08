@@ -473,7 +473,7 @@ resp
 
 ```
 ## Response [http://www.example.com/]
-##   Date: 2017-08-07 19:08
+##   Date: 2017-08-08 18:12
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -515,7 +515,7 @@ resp
 
 ```
 ## Response [http://www.omdbapi.com/?apikey=ff21610b&t=Annie+Hall&y=&plot=short&r=json]
-##   Date: 2017-08-07 19:08
+##   Date: 2017-08-08 18:12
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 902 B
@@ -1211,5 +1211,93 @@ mini_json
 ## [{"mpg":21,"cyl":6,"disp":160,"hp":110,"drat":3.9,"wt":2.62,"qsec":16.46,"vs":0,"am":1,"gear":4,"carb":4,"_row":"Mazda RX4"},{"mpg":21,"cyl":6,"disp":160,"hp":110,"drat":3.9,"wt":2.875,"qsec":17.02,"vs":0,"am":1,"gear":4,"carb":4,"_row":"Mazda RX4 Wag"},{"mpg":22.8,"cyl":4,"disp":108,"hp":93,"drat":3.85,"wt":2.32,"qsec":18.61,"vs":1,"am":1,"gear":4,"carb":1,"_row":"Datsun 710"},{"mpg":21.4,"cyl":6,"disp":258,"hp":110,"drat":3.08,"wt":3.215,"qsec":19.44,"vs":1,"am":0,"gear":3,"carb":1,"_row":"Hornet 4 Drive"},{"mpg":18.7,"cyl":8,"disp":360,"hp":175,"drat":3.15,"wt":3.44,"qsec":17.02,"vs":0,"am":0,"gear":3,"carb":2,"_row":"Hornet Sportabout"},{"mpg":18.1,"cyl":6,"disp":225,"hp":105,"drat":2.76,"wt":3.46,"qsec":20.22,"vs":1,"am":0,"gear":3,"carb":1,"_row":"Valiant"},{"mpg":14.3,"cyl":8,"disp":360,"hp":245,"drat":3.21,"wt":3.57,"qsec":15.84,"vs":0,"am":0,"gear":3,"carb":4,"_row":"Duster 360"},{"mpg":24.4,"cyl":4,"disp":146.7,"hp":62,"drat":3.69,"wt":3.19,"qsec":20,"vs":1,"am":0,"gear":4,"carb":2,"_row":"Merc 240D"},{"mpg":22.8,"cyl":4,"disp":140.8,"hp":95,"drat":3.92,"wt":3.15,"qsec":22.9,"vs":1,"am":0,"gear":4,"carb":2,"_row":"Merc 230"},{"mpg":19.2,"cyl":6,"disp":167.6,"hp":123,"drat":3.92,"wt":3.44,"qsec":18.3,"vs":1,"am":0,"gear":4,"carb":4,"_row":"Merc 280"},{"mpg":17.8,"cyl":6,"disp":167.6,"hp":123,"drat":3.92,"wt":3.44,"qsec":18.9,"vs":1,"am":0,"gear":4,"carb":4,"_row":"Merc 280C"},{"mpg":16.4,"cyl":8,"disp":275.8,"hp":180,"drat":3.07,"wt":4.07,"qsec":17.4,"vs":0,"am":0,"gear":3,"carb":3,"_row":"Merc 450SE"},{"mpg":17.3,"cyl":8,"disp":275.8,"hp":180,"drat":3.07,"wt":3.73,"qsec":17.6,"vs":0,"am":0,"gear":3,"carb":3,"_row":"Merc 450SL"},{"mpg":15.2,"cyl":8,"disp":275.8,"hp":180,"drat":3.07,"wt":3.78,"qsec":18,"vs":0,"am":0,"gear":3,"carb":3,"_row":"Merc 450SLC"},{"mpg":10.4,"cyl":8,"disp":472,"hp":205,"drat":2.93,"wt":5.25,"qsec":17.98,"vs":0,"am":0,"gear":3,"carb":4,"_row":"Cadillac Fleetwood"},{"mpg":10.4,"cyl":8,"disp":460,"hp":215,"drat":3,"wt":5.424,"qsec":17.82,"vs":0,"am":0,"gear":3,"carb":4,"_row":"Lincoln Continental"},{"mpg":14.7,"cyl":8,"disp":440,"hp":230,"drat":3.23,"wt":5.345,"qsec":17.42,"vs":0,"am":0,"gear":3,"carb":4,"_row":"Chrysler Imperial"},{"mpg":32.4,"cyl":4,"disp":78.7,"hp":66,"drat":4.08,"wt":2.2,"qsec":19.47,"vs":1,"am":1,"gear":4,"carb":1,"_row":"Fiat 128"},{"mpg":30.4,"cyl":4,"disp":75.7,"hp":52,"drat":4.93,"wt":1.615,"qsec":18.52,"vs":1,"am":1,"gear":4,"carb":2,"_row":"Honda Civic"},{"mpg":33.9,"cyl":4,"disp":71.1,"hp":65,"drat":4.22,"wt":1.835,"qsec":19.9,"vs":1,"am":1,"gear":4,"carb":1,"_row":"Toyota Corolla"},{"mpg":21.5,"cyl":4,"disp":120.1,"hp":97,"drat":3.7,"wt":2.465,"qsec":20.01,"vs":1,"am":0,"gear":3,"carb":1,"_row":"Toyota Corona"},{"mpg":15.5,"cyl":8,"disp":318,"hp":150,"drat":2.76,"wt":3.52,"qsec":16.87,"vs":0,"am":0,"gear":3,"carb":2,"_row":"Dodge Challenger"},{"mpg":15.2,"cyl":8,"disp":304,"hp":150,"drat":3.15,"wt":3.435,"qsec":17.3,"vs":0,"am":0,"gear":3,"carb":2,"_row":"AMC Javelin"},{"mpg":13.3,"cyl":8,"disp":350,"hp":245,"drat":3.73,"wt":3.84,"qsec":15.41,"vs":0,"am":0,"gear":3,"carb":4,"_row":"Camaro Z28"},{"mpg":19.2,"cyl":8,"disp":400,"hp":175,"drat":3.08,"wt":3.845,"qsec":17.05,"vs":0,"am":0,"gear":3,"carb":2,"_row":"Pontiac Firebird"},{"mpg":27.3,"cyl":4,"disp":79,"hp":66,"drat":4.08,"wt":1.935,"qsec":18.9,"vs":1,"am":1,"gear":4,"carb":1,"_row":"Fiat X1-9"},{"mpg":26,"cyl":4,"disp":120.3,"hp":91,"drat":4.43,"wt":2.14,"qsec":16.7,"vs":0,"am":1,"gear":5,"carb":2,"_row":"Porsche 914-2"},{"mpg":30.4,"cyl":4,"disp":95.1,"hp":113,"drat":3.77,"wt":1.513,"qsec":16.9,"vs":1,"am":1,"gear":5,"carb":2,"_row":"Lotus Europa"},{"mpg":15.8,"cyl":8,"disp":351,"hp":264,"drat":4.22,"wt":3.17,"qsec":14.5,"vs":0,"am":1,"gear":5,"carb":4,"_row":"Ford Pantera L"},{"mpg":19.7,"cyl":6,"disp":145,"hp":175,"drat":3.62,"wt":2.77,"qsec":15.5,"vs":0,"am":1,"gear":5,"carb":6,"_row":"Ferrari Dino"},{"mpg":15,"cyl":8,"disp":301,"hp":335,"drat":3.54,"wt":3.57,"qsec":14.6,"vs":0,"am":1,"gear":5,"carb":8,"_row":"Maserati Bora"},{"mpg":21.4,"cyl":4,"disp":121,"hp":109,"drat":4.11,"wt":2.78,"qsec":18.6,"vs":1,"am":1,"gear":4,"carb":2,"_row":"Volvo 142E"}]
 ```
 
+## Importing from other statistical software
+
+Common software packages include SAS, STATA and SPSS.  Two packages useful for importing data from these packages are:
+
+* **haven**: by Hadley Wickham and is under active development.  It aims to be more consistent, easier and faster than foreign.  It can read SAS, Stata and SPSS and will read in the file as an D dataframe.
+* **foreign**: is an older package by the R Core Team.  Foreign support more data formats than haven including Weka and Systat
+
+
+```r
+# Load the haven package
+library(haven)
+
+# Import sales.sas7bdat: sales
+sales <- read_sas("sales.sas7bdat")
+
+# Display the structure of sales
+str(sales)
+
+# Import the data from the URL: sugar
+sugar <- read_dta("http://assets.datacamp.com/production/course_1478/datasets/trade.dta")
+
+# Structure of sugar
+str(sugar)
+
+# Convert values in Date column to dates
+sugar$Date <- as.Date(as_factor(sugar$Date))
+
+# Structure of sugar again
+str(sugar)
+
+# Import person.sav: traits
+traits <- read_sav("person.sav")
+
+# Summarize traits
+summary(traits)
+
+# Print out a subset
+subset(traits, Extroversion > 40 & Agreeableness > 40)
+```
+
+When using SPSS files, it is often the case that the variable labels are also imported, it is best to change these in to standard R factors.
+
+
+```r
+# Import SPSS data from the URL: work
+work <- read_sav("http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/employee.sav")
+
+# Display summary of work$GENDER
+summary(work$GENDER)
+
+
+# Convert work$GENDER to a factor
+work$GENDER <- as_factor(work$GENDER)
+
+
+# Display summary of work$GENDER again
+summary(work$GENDER)
+```
+
+Foreign cannot use single SAS datafiles like haven, it works with SAS library files .xport.  Foreign tends to use dots in the function names rather than underscores in haven e.g. read.dta() vs read_dta().  Foreign does not provide consistency with it's functions i.e. read.dta() has different arguments than read.spss(), however foreign provides more control over the data importing, such as dealing with multiple types of missing data which are often present in survey data, more comprehensively than haven.  Although haven is still being developed. 
+
+
+```r
+# Load the foreign package
+library(foreign)
+
+# Specify the file path using file.path(): path
+path <- file.path("worldbank", "edequality.dta")
+
+# Create and print structure of edu_equal_1
+edu_equal_1 <- read.dta(path)
+str(edu_equal_1)
+
+# Create and print structure of edu_equal_2
+edu_equal_2 <- read.dta(path, convert.factors = FALSE)
+str(edu_equal_2)
+
+# Create and print structure of edu_equal_3
+edu_equal_3 <- read.dta(path, convert.underscore = TRUE)
+str(edu_equal_3)
+
+
+# Import international.sav as a data frame: demo
+demo <- read.spss("http://s3.amazonaws.com/assets.datacamp.com/production/course_1478/datasets/international.sav", to.data.frame = TRUE)
+
+# Create boxplot of gdp variable of demo
+boxplot(demo$gdp)
+```
 
 # References {-}
