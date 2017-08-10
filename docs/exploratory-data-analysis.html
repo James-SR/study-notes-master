@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="introduction-to-data.html">
-<link rel="next" href="foundations-of-inference.html">
+<link rel="prev" href="references-2.html">
+<link rel="next" href="dimensional-modelling.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -174,17 +174,121 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references-1" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="exploratory-data-analysis" class="section level1">
+<h1><span class="header-section-number">5</span> Exploratory Data Analysis</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Exploratory Data Analysis’ by Andrew Bray.</p>
+<div id="categorical-data" class="section level2">
+<h2><span class="header-section-number">5.1</span> Categorical Data</h2>
+<p>Common functions when looking at categorical, aka factors variables, are levels(df<span class="math inline">\(var) and to get a contigency or xtab table the table(df\)</span>var1, df$var2). We can also create bar charts to visually represent the data using ggplot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in our dataset thanks to fivethirtyeight https://github.com/fivethirtyeight/data/tree/master/comic-characters</span>
 
+comics &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/comic-characters/dc-wikia-data.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)
+comics$name &lt;-<span class="st"> </span><span class="kw">as.character</span>(comics$name)
+
+<span class="co"># Check levels of align</span>
+<span class="kw">levels</span>(comics$ALIGN)</code></pre></div>
+<pre><code>## [1] &quot;&quot;                   &quot;Bad Characters&quot;     &quot;Good Characters&quot;   
+## [4] &quot;Neutral Characters&quot; &quot;Reformed Criminals&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check the levels of gender</span>
+<span class="kw">levels</span>(comics$SEX)</code></pre></div>
+<pre><code>## [1] &quot;&quot;                       &quot;Female Characters&quot;     
+## [3] &quot;Genderless Characters&quot;  &quot;Male Characters&quot;       
+## [5] &quot;Transgender Characters&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a 2-way contingency table</span>
+<span class="kw">table</span>(comics$ALIGN, comics$SEX)</code></pre></div>
+<pre><code>##                     
+##                           Female Characters Genderless Characters
+##                        25               220                     0
+##   Bad Characters       63               597                    11
+##   Good Characters      30               953                     6
+##   Neutral Characters    7               196                     3
+##   Reformed Criminals    0                 1                     0
+##                     
+##                      Male Characters Transgender Characters
+##                                  356                      0
+##   Bad Characters                2223                      1
+##   Good Characters               1843                      0
+##   Neutral Characters             359                      0
+##   Reformed Criminals               2                      0</code></pre>
+<p>To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don’t exist in a dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load dplyr</span>
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove align level</span>
+comics &lt;-<span class="st"> </span>comics %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(ALIGN !=<span class="st"> &quot;Reformed Criminals&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">droplevels</span>()</code></pre></div>
+<p>While a contingency table represents the counts numerically, it’s often more useful to represent them graphically.</p>
+<p>Here you’ll construct two side-by-side barcharts of the comics data. This shows that there can often be two or more options for presenting the same data. Passing the argument position = “dodge” to geom_bar() says that you want a side-by-side (i.e. not stacked) barchart.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load ggplot2</span>
+<span class="kw">library</span>(ggplot2)
+
+<span class="co"># Create side-by-side barchart of gender by alignment</span>
+<span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> ALIGN, <span class="dt">fill =</span> SEX)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create side-by-side barchart of alignment by gender</span>
+<span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> SEX, <span class="dt">fill =</span> ALIGN)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) +
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>))</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p>When creatign tables, it is often easier to look at proportions for patterns rather than counts. We can do this using conditional proportions, by using the prop.table(df_counts, n) where n is the number we want to condition our frequency/count table by, 1 = rows and 2 = columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span><span class="kw">table</span>(comics$ALIGN, comics$SEX)
+<span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">999</span>, <span class="dt">digits =</span> <span class="dv">2</span>) <span class="co"># Print fewer digits</span>
+<span class="kw">prop.table</span>(tab)     <span class="co"># Joint proportions (totals in the entire table)</span></code></pre></div>
+<pre><code>##                     
+##                              Female Characters Genderless Characters
+##                      0.00363           0.03192               0.00000
+##   Bad Characters     0.00914           0.08661               0.00160
+##   Good Characters    0.00435           0.13826               0.00087
+##   Neutral Characters 0.00102           0.02843               0.00044
+##                     
+##                      Male Characters Transgender Characters
+##                              0.05165                0.00000
+##   Bad Characters             0.32250                0.00015
+##   Good Characters            0.26737                0.00000
+##   Neutral Characters         0.05208                0.00000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(tab, <span class="dv">2</span>)  <span class="co"># Conditional on columns (column totals)</span></code></pre></div>
+<pre><code>##                     
+##                            Female Characters Genderless Characters
+##                      0.200             0.112                 0.000
+##   Bad Characters     0.504             0.304                 0.550
+##   Good Characters    0.240             0.485                 0.300
+##   Neutral Characters 0.056             0.100                 0.150
+##                     
+##                      Male Characters Transgender Characters
+##                                0.074                  0.000
+##   Bad Characters               0.465                  1.000
+##   Good Characters              0.385                  0.000
+##   Neutral Characters           0.075                  0.000</code></pre>
+<p>Here we see that approx. 49% of female characters are good, compared to 39% for males.</p>
+<p>Bar charts can tell dramatically different stories depending on whether they represent counts or proportions and, if proportions, what the proportions are conditioned on. To demonstrate this difference, you’ll construct two barcharts in this exercise: one of counts and one of proportions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of gender by align</span>
+<span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> ALIGN, <span class="dt">fill =</span> SEX)) +
+<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot proportion of gender, conditional on align</span>
+<span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> ALIGN, <span class="dt">fill =</span> SEX)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="introduction-to-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="foundations-of-inference.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="references-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dimensional-modelling.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

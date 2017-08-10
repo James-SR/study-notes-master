@@ -1,0 +1,78 @@
+# Exploratory Data Analysis
+***
+Notes taken during/inspired by the Datacamp course 'Exploratory Data Analysis' by Andrew Bray.
+
+## Categorical Data
+
+Common functions when looking at categorical, aka factors variables, are levels(df$var) and to get a contigency or xtab table the table(df$var1, df$var2).  We can also create bar charts to visually represent the data using ggplot.
+
+```{r}
+
+# Read in our dataset thanks to fivethirtyeight https://github.com/fivethirtyeight/data/tree/master/comic-characters
+
+comics <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/comic-characters/dc-wikia-data.csv", stringsAsFactors = TRUE)
+comics$name <- as.character(comics$name)
+
+# Check levels of align
+levels(comics$ALIGN)
+
+# Check the levels of gender
+levels(comics$SEX)
+
+# Create a 2-way contingency table
+table(comics$ALIGN, comics$SEX)
+
+```
+
+To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don’t exist in a dataset.
+
+```{r}
+# Load dplyr
+library(dplyr)
+
+# Remove align level
+comics <- comics %>%
+  filter(ALIGN != "Reformed Criminals") %>%
+  droplevels()
+
+```
+
+While a contingency table represents the counts numerically, it's often more useful to represent them graphically.
+
+Here you'll construct two side-by-side barcharts of the comics data. This shows that there can often be two or more options for presenting the same data. Passing the argument position = "dodge" to geom_bar() says that you want a side-by-side (i.e. not stacked) barchart.
+
+```{r}
+# Load ggplot2
+library(ggplot2)
+
+# Create side-by-side barchart of gender by alignment
+ggplot(comics, aes(x = ALIGN, fill = SEX)) + 
+  geom_bar(position = "dodge")
+
+# Create side-by-side barchart of alignment by gender
+ggplot(comics, aes(x = SEX, fill = ALIGN)) + 
+  geom_bar(position = "dodge") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+When creatign tables, it is often easier to look at proportions for patterns rather than counts.  We can do this using conditional proportions, by using the prop.table(df_counts, n) where n is the number we want to condition our frequency/count table by, 1 = rows and 2 = columns.
+
+```{r}
+tab <- table(comics$ALIGN, comics$SEX)
+options(scipen = 999, digits = 2) # Print fewer digits
+prop.table(tab)     # Joint proportions (totals in the entire table)
+prop.table(tab, 2)  # Conditional on columns (column totals)
+```
+
+Here we see that approx. 49% of female characters are good, compared to 39% for males.
+
+Bar charts can tell dramatically different stories depending on whether they represent counts or proportions and, if proportions, what the proportions are conditioned on. To demonstrate this difference, you'll construct two barcharts in this exercise: one of counts and one of proportions.
+```{r}
+# Plot of gender by align
+ggplot(comics, aes(x = ALIGN, fill = SEX)) +
+  geom_bar()
+  
+# Plot proportion of gender, conditional on align
+ggplot(comics, aes(x = ALIGN, fill = SEX)) + 
+  geom_bar(position = "fill")
+```

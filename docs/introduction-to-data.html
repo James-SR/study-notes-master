@@ -140,15 +140,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>4.7</b> Bootstrapping</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>5</b> Dimensional Modelling</a><ul>
-<li class="chapter" data-level="5.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>5.1</b> Introduction to Dimensional Data</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>5.1.1</b> Data Modelling levels</a></li>
+<li class="chapter" data-level="5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>5.1</b> Categorical Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>5.2</b> Architecture considerations</a></li>
-<li class="chapter" data-level="5.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>5.3</b> Graphical Representations</a></li>
-<li class="chapter" data-level="5.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>5.4</b> Kimball Approach</a></li>
-<li class="chapter" data-level="5.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>5.5</b> Four-Step Dimensional Design Process</a></li>
-<li class="chapter" data-level="5.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>5.6</b> Tips</a></li>
+<li class="chapter" data-level="6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>6</b> Dimensional Modelling</a><ul>
+<li class="chapter" data-level="6.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>6.1</b> Introduction to Dimensional Data</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>6.1.1</b> Data Modelling levels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>6.2</b> Architecture considerations</a></li>
+<li class="chapter" data-level="6.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>6.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="6.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>6.4</b> Kimball Approach</a></li>
+<li class="chapter" data-level="6.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>6.5</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="6.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>6.6</b> Tips</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references-3.html"><a href="references-3.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -419,24 +422,25 @@ county_srs &lt;-<span class="st"> </span>county %&gt;%
 county_srs %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(state) %&gt;%
 <span class="st">  </span><span class="kw">count</span>()</code></pre></div>
-<pre><code>## # A tibble: 15 × 2
-##           state     n
-##          &lt;fctr&gt; &lt;int&gt;
-## 1       Alabama     1
-## 2        Alaska     1
-## 3      Arkansas     2
-## 4    California     1
-## 5      Colorado     1
-## 6       Florida     1
-## 7      Illinois     1
-## 8          Iowa     1
-## 9        Kansas     2
-## 10        Maine     1
-## 11     Missouri     2
-## 12     Nebraska     1
-## 13 North Dakota     1
-## 14 South Dakota     3
-## 15     Virginia     1</code></pre>
+<pre><code>## # A tibble: 16 × 2
+##             state     n
+##            &lt;fctr&gt; &lt;int&gt;
+## 1         Florida     1
+## 2         Georgia     1
+## 3        Illinois     1
+## 4            Iowa     2
+## 5       Louisiana     1
+## 6     Mississippi     1
+## 7         Montana     1
+## 8      New Mexico     1
+## 9  North Carolina     2
+## 10           Ohio     1
+## 11       Oklahoma     2
+## 12   Pennsylvania     1
+## 13          Texas     2
+## 14       Virginia     1
+## 15     Washington     1
+## 16  West Virginia     1</code></pre>
 <p>For a stratified sample we would do something similar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sample</span>
 states_str &lt;-<span class="st"> </span>us_regions %&gt;%
