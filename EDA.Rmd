@@ -76,3 +76,78 @@ ggplot(comics, aes(x = ALIGN, fill = SEX)) +
 ggplot(comics, aes(x = ALIGN, fill = SEX)) + 
   geom_bar(position = "fill")
 ```
+
+
+**Conditional barchart**
+
+Now, if you want to break down the distribution of alignment based on gender, you're looking for conditional distributions.
+
+You could make these by creating multiple filtered datasets (one for each gender) or by faceting the plot of alignment based on gender. As a point of comparison, we've provided your plot of the marginal distribution of alignment from the last exercise.
+
+```{r}
+# Plot of alignment broken down by gender
+ggplot(comics, aes(x = ALIGN)) + 
+  geom_bar() +
+  facet_wrap(~ SEX)
+```
+
+## Numerical Data
+
+```{r eval = FALSE}
+# Data courtesy of http://www.idvbook.com/teaching-aid/data-sets/ with some variable name modifictions to match those in the exercise
+library(readxl)
+cars <- read_excel("04cars data.xls", sheet = 1)
+cars <- cars[-2] # remove variable 2
+
+# Rename vars
+names(cars) <- c("name", "sports_car", "suv", "wagon", "minivan", "pickup", "all_wheel", 
+                "rear_wheel", "msrp", "dealer_cost", "eng_size", "ncyl", "horsepwr",
+                "city_mpg","hwy_mpg",  "weight", "wheel_base", "length", "width")
+# Change data tpyes as needed
+cars[1:7] <- sapply(cars[1:7],as.logical)
+cars[c(8:10,12:19)] <- sapply(cars[c(8:10,12:19)],as.integer)
+
+# Learn data structure
+str(cars)
+
+# Create faceted histogram
+ggplot(cars, aes(x = city_mpg)) +
+  geom_histogram() +
+  facet_wrap(~ suv)
+```
+
+The mileage of a car tends to be associated with the size of its engine (as measured by the number of cylinders). To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you'll try your hand at two alternatives: the box plot and the density plot.
+
+```{r eval = FALSE}
+# Filter cars with 4, 6, 8 cylinders
+common_cyl <- filter(cars, ncyl %in% c(4,6,8))
+
+# Create box plots of city mpg by ncyl
+ggplot(common_cyl, aes(x = as.factor(ncyl), y = city_mpg)) +
+  geom_boxplot()
+
+# Create overlaid density plots for same data
+ggplot(common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
+  geom_density(alpha = .3)
+```
+
+Now, turn your attention to a new variable: horsepwr. The goal is to get a sense of the marginal distribution of this variable and then compare it to the distribution of horsepower conditional on the price of the car being less than $25,000.
+
+You'll be making two plots using the "data pipeline" paradigm, where you start with the raw data and end with the plot.
+
+```{r}
+# Create hist of horsepwr
+cars %>%
+  ggplot(aes(horsepwr)) +
+  geom_histogram() +
+  ggtitle("ALL Cars")
+
+# Create hist of horsepwr for affordable cars
+cars %>% 
+  filter(msrp < 25000) %>%
+  ggplot(aes(horsepwr)) +
+  geom_histogram() +
+  xlim(c(90, 550)) +
+  ggtitle("Affordable Cars")
+```
+
