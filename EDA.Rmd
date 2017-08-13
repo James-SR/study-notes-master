@@ -24,7 +24,7 @@ table(comics$ALIGN, comics$SEX)
 
 ```
 
-To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don’t exist in a dataset.
+To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don't exist in a dataset.
 
 ```{r}
 # Load dplyr
@@ -135,8 +135,10 @@ Now, turn your attention to a new variable: horsepwr. The goal is to get a sense
 
 You'll be making two plots using the "data pipeline" paradigm, where you start with the raw data and end with the plot.
 
+In addition to indicating the center and spread of a distribution, a box plot provides a graphical means to detect outliers. You can apply this method to the msrp column (manufacturer's suggested retail price) to detect if there are unusually expensive or cheap cars.
+
 ```{r}
-# Create hist of horsepwr
+# Create hist
 cars %>%
   ggplot(aes(horsepwr)) +
   geom_histogram() +
@@ -149,5 +151,47 @@ cars %>%
   geom_histogram() +
   xlim(c(90, 550)) +
   ggtitle("Affordable Cars")
+```
+
+
+```{r}
+# Construct box plot of msrp
+cars %>%
+  ggplot(aes(x = 1, y = msrp)) +
+  geom_boxplot()
+
+# Exclude outliers from data
+cars_no_out <- cars %>%
+  filter(msrp < 100000) 
+
+# Construct box plot of msrp using the reduced dataset
+cars_no_out %>%
+ ggplot(aes(x = 1, y = msrp)) +
+  geom_boxplot()
+```
+
+Consider two other columns in the cars dataset: city_mpg and width. Which is the most appropriate plot for displaying the important features of their distributions? Remember, both density plots and box plots display the central tendency and spread of the data, but the box plot is more robust to outliers.
+
+```{r}
+# Create plot of city_mpg
+cars %>% 
+  ggplot(aes(x = width)) +
+  geom_density()
+
+# Create plot of width
+cars %>%
+   ggplot(aes(x = 1, y = city_mpg)) +
+   geom_boxplot()
+```
+
+Faceting is a valuable technique for looking at several conditional distributions at the same time. If the faceted distributions are laid out in a grid, you can consider the association between a variable and two others, one on the rows of the grid and the other on the columns.
+
+```{r}
+# Facet hists using hwy mileage and ncyl
+common_cyl %>%
+  ggplot(aes(x = hwy_mpg)) +
+  geom_histogram() +
+  facet_grid(ncyl ~ suv) +
+  ggtitle("Faceted heavy mpg histograms by No. of Cyl and Suv")
 ```
 
