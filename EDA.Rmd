@@ -1,6 +1,6 @@
 # Exploratory Data Analysis
 ***
-Notes taken during/inspired by the Datacamp course 'Exploratory Data Analysis' by Andrew Bray.
+Notes taken during/inspired by the Datacamp course "Exploratory Data Analysis" by Andrew Bray.
 
 ## Categorical Data
 
@@ -24,7 +24,7 @@ table(comics$ALIGN, comics$SEX)
 
 ```
 
-To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don't exist in a dataset.
+To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don"t exist in a dataset.
 
 ```{r}
 # Load dplyr
@@ -37,9 +37,9 @@ comics <- comics %>%
 
 ```
 
-While a contingency table represents the counts numerically, it's often more useful to represent them graphically.
+While a contingency table represents the counts numerically, it"s often more useful to represent them graphically.
 
-Here you'll construct two side-by-side barcharts of the comics data. This shows that there can often be two or more options for presenting the same data. Passing the argument position = "dodge" to geom_bar() says that you want a side-by-side (i.e. not stacked) barchart.
+Here you"ll construct two side-by-side barcharts of the comics data. This shows that there can often be two or more options for presenting the same data. Passing the argument position = "dodge" to geom_bar() says that you want a side-by-side (i.e. not stacked) barchart.
 
 ```{r}
 # Load ggplot2
@@ -66,7 +66,7 @@ prop.table(tab, 2)  # Conditional on columns (column totals)
 
 Here we see that approx. 49% of female characters are good, compared to 39% for males.
 
-Bar charts can tell dramatically different stories depending on whether they represent counts or proportions and, if proportions, what the proportions are conditioned on. To demonstrate this difference, you'll construct two barcharts in this exercise: one of counts and one of proportions.
+Bar charts can tell dramatically different stories depending on whether they represent counts or proportions and, if proportions, what the proportions are conditioned on. To demonstrate this difference, you"ll construct two barcharts in this exercise: one of counts and one of proportions.
 ```{r}
 # Plot of gender by align
 ggplot(comics, aes(x = ALIGN, fill = SEX)) +
@@ -80,9 +80,9 @@ ggplot(comics, aes(x = ALIGN, fill = SEX)) +
 
 **Conditional barchart**
 
-Now, if you want to break down the distribution of alignment based on gender, you're looking for conditional distributions.
+Now, if you want to break down the distribution of alignment based on gender, you"re looking for conditional distributions.
 
-You could make these by creating multiple filtered datasets (one for each gender) or by faceting the plot of alignment based on gender. As a point of comparison, we've provided your plot of the marginal distribution of alignment from the last exercise.
+You could make these by creating multiple filtered datasets (one for each gender) or by faceting the plot of alignment based on gender. As a point of comparison, we"ve provided your plot of the marginal distribution of alignment from the last exercise.
 
 ```{r}
 # Plot of alignment broken down by gender
@@ -104,7 +104,7 @@ names(cars) <- c("name", "sports_car", "suv", "wagon", "minivan", "pickup", "all
                 "rear_wheel", "msrp", "dealer_cost", "eng_size", "ncyl", "horsepwr",
                 "city_mpg","hwy_mpg",  "weight", "wheel_base", "length", "width")
 # Change data tpyes as needed
-cars[1:7] <- sapply(cars[1:7],as.logical)
+cars[2:7] <- sapply(cars[2:7],as.logical)
 cars[c(8:10,12:19)] <- sapply(cars[c(8:10,12:19)],as.integer)
 
 # Learn data structure
@@ -116,7 +116,7 @@ ggplot(cars, aes(x = city_mpg)) +
   facet_wrap(~ suv)
 ```
 
-The mileage of a car tends to be associated with the size of its engine (as measured by the number of cylinders). To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you'll try your hand at two alternatives: the box plot and the density plot.
+The mileage of a car tends to be associated with the size of its engine (as measured by the number of cylinders). To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you"ll try your hand at two alternatives: the box plot and the density plot.
 
 ```{r eval = FALSE}
 # Filter cars with 4, 6, 8 cylinders
@@ -133,9 +133,9 @@ ggplot(common_cyl, aes(x = city_mpg, fill = as.factor(ncyl))) +
 
 Now, turn your attention to a new variable: horsepwr. The goal is to get a sense of the marginal distribution of this variable and then compare it to the distribution of horsepower conditional on the price of the car being less than $25,000.
 
-You'll be making two plots using the "data pipeline" paradigm, where you start with the raw data and end with the plot.
+You"ll be making two plots using the "data pipeline" paradigm, where you start with the raw data and end with the plot.
 
-In addition to indicating the center and spread of a distribution, a box plot provides a graphical means to detect outliers. You can apply this method to the msrp column (manufacturer's suggested retail price) to detect if there are unusually expensive or cheap cars.
+In addition to indicating the center and spread of a distribution, a box plot provides a graphical means to detect outliers. You can apply this method to the msrp column (manufacturer"s suggested retail price) to detect if there are unusually expensive or cheap cars.
 
 ```{r}
 # Create hist
@@ -193,5 +193,58 @@ common_cyl %>%
   geom_histogram() +
   facet_grid(ncyl ~ suv) +
   ggtitle("Faceted heavy mpg histograms by No. of Cyl and Suv")
+```
+
+## Numerical Summaries
+
+Throughout this chapter, you will use data from gapminder, which tracks demographic data in countries of the world over time. To learn more about it, you can bring up the help file with ?gapminder.
+
+For this exercise, focus on how the life expectancy differs from continent to continent. This requires that you conduct your analysis not at the country level, but aggregated up to the continent level. This is made possible by the one-two punch of group_by() and summarize(), a very powerful syntax for carrying out the same analysis on different subsets of the full dataset.
+
+```{r}
+library(gapminder)
+
+# Create dataset of 2007 data
+gap2007 <- filter(gapminder, year == 2007)
+
+# Compute groupwise mean and median lifeExp
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(mean(lifeExp),
+            median(lifeExp))
+
+# Generate box plots of lifeExp for each continent
+gap2007 %>%
+  ggplot(aes(x = continent, y = lifeExp)) +
+  geom_boxplot()
+
+```
+
+Let"s extend the powerful group_by() and summarize() syntax to measures of spread. If you"re unsure whether you"re working with symmetric or skewed distributions, it"s a good idea to consider a robust measure like IQR in addition to the usual measures of variance or standard deviation.
+
+```{r}
+# Compute groupwise measures of spread
+gap2007 %>%
+  group_by(continent) %>%
+  summarize(sd(lifeExp),
+            IQR(lifeExp),
+            n())
+
+# Generate overlaid density plots
+gap2007 %>%
+  ggplot(aes(x = lifeExp, fill = continent)) +
+  geom_density(alpha = 0.3)
+
+# Compute stats for lifeExp in Americas
+gap2007 %>%
+  filter(continent == "Americas") %>%
+  summarize(mean(lifeExp),
+            sd(lifeExp))
+
+# Compute stats for population
+gap2007 %>%
+  summarize(median(pop),
+            IQR(pop))
+
 ```
 
