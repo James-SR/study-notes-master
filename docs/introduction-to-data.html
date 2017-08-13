@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Study notes</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Study notes taken from courses and self learning.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Study notes" />
   <meta property="og:type" content="book" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="references.html">
 <link rel="next" href="references-1.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -94,6 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <body>
 
 
+
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
@@ -142,6 +141,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Exploratory Data Analysis</a><ul>
 <li class="chapter" data-level="5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>5.1</b> Categorical Data</a></li>
+<li class="chapter" data-level="5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>5.2</b> Numerical Data</a></li>
+<li class="chapter" data-level="5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>5.3</b> Numerical Summaries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>6</b> Dimensional Modelling</a><ul>
 <li class="chapter" data-level="6.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>6.1</b> Introduction to Dimensional Data</a><ul>
@@ -343,9 +344,7 @@ ucb_counts &lt;-<span class="st"> </span>ucb_admit_disagg %&gt;%
 
 <span class="co"># View result</span>
 ucb_counts</code></pre></div>
-<pre><code>## Source: local data frame [4 x 3]
-## Groups: Gender [?]
-## 
+<pre><code>## # A tibble: 4 x 3
 ##   Gender    Admit     n
 ##   &lt;fctr&gt;   &lt;fctr&gt; &lt;int&gt;
 ## 1   Male Admitted  1198
@@ -356,9 +355,7 @@ ucb_counts</code></pre></div>
 ucb_counts %&gt;%
 <span class="st">  </span><span class="kw">spread</span>(Admit, n) %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Perc_Admit =</span> Admitted /<span class="st"> </span>(Admitted +<span class="st"> </span>Rejected))</code></pre></div>
-<pre><code>## Source: local data frame [2 x 4]
-## Groups: Gender [2]
-## 
+<pre><code>## # A tibble: 2 x 4
 ##   Gender Admitted Rejected Perc_Admit
 ##   &lt;fctr&gt;    &lt;int&gt;    &lt;int&gt;      &lt;dbl&gt;
 ## 1   Male     1198     1493  0.4451877
@@ -371,40 +368,36 @@ admit_by_dept &lt;-<span class="st"> </span>ucb_admit_disagg %&gt;%
 
 <span class="co"># View result</span>
 admit_by_dept</code></pre></div>
-<pre><code>## Source: local data frame [12 x 4]
-## Groups: Dept, Gender [12]
-## 
+<pre><code>## # A tibble: 12 x 4
 ##      Dept Gender Admitted Rejected
-## *  &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;int&gt;
-## 1       A   Male      512      313
-## 2       A Female       89       19
-## 3       B   Male      353      207
-## 4       B Female       17        8
-## 5       C   Male      120      205
-## 6       C Female      202      391
-## 7       D   Male      138      279
-## 8       D Female      131      244
-## 9       E   Male       53      138
+##  * &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;int&gt;
+##  1      A   Male      512      313
+##  2      A Female       89       19
+##  3      B   Male      353      207
+##  4      B Female       17        8
+##  5      C   Male      120      205
+##  6      C Female      202      391
+##  7      D   Male      138      279
+##  8      D Female      131      244
+##  9      E   Male       53      138
 ## 10      E Female       94      299
 ## 11      F   Male       22      351
 ## 12      F Female       24      317</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Percentage of those admitted to each department</span>
 admit_by_dept %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Perc_Admit =</span> Admitted /<span class="st"> </span>(Admitted +<span class="st"> </span>Rejected))</code></pre></div>
-<pre><code>## Source: local data frame [12 x 5]
-## Groups: Dept, Gender [12]
-## 
+<pre><code>## # A tibble: 12 x 5
 ##      Dept Gender Admitted Rejected Perc_Admit
 ##    &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;    &lt;int&gt;      &lt;dbl&gt;
-## 1       A   Male      512      313 0.62060606
-## 2       A Female       89       19 0.82407407
-## 3       B   Male      353      207 0.63035714
-## 4       B Female       17        8 0.68000000
-## 5       C   Male      120      205 0.36923077
-## 6       C Female      202      391 0.34064081
-## 7       D   Male      138      279 0.33093525
-## 8       D Female      131      244 0.34933333
-## 9       E   Male       53      138 0.27748691
+##  1      A   Male      512      313 0.62060606
+##  2      A Female       89       19 0.82407407
+##  3      B   Male      353      207 0.63035714
+##  4      B Female       17        8 0.68000000
+##  5      C   Male      120      205 0.36923077
+##  6      C Female      202      391 0.34064081
+##  7      D   Male      138      279 0.33093525
+##  8      D Female      131      244 0.34933333
+##  9      E   Male       53      138 0.27748691
 ## 10      E Female       94      299 0.23918575
 ## 11      F   Male       22      351 0.05898123
 ## 12      F Female       24      317 0.07038123</code></pre>
@@ -422,25 +415,25 @@ county_srs &lt;-<span class="st"> </span>county %&gt;%
 county_srs %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(state) %&gt;%
 <span class="st">  </span><span class="kw">count</span>()</code></pre></div>
-<pre><code>## # A tibble: 16 × 2
-##             state     n
-##            &lt;fctr&gt; &lt;int&gt;
-## 1         Florida     1
-## 2         Georgia     1
-## 3        Illinois     1
-## 4            Iowa     2
-## 5       Louisiana     1
-## 6     Mississippi     1
-## 7         Montana     1
-## 8      New Mexico     1
-## 9  North Carolina     2
-## 10           Ohio     1
-## 11       Oklahoma     2
-## 12   Pennsylvania     1
-## 13          Texas     2
-## 14       Virginia     1
-## 15     Washington     1
-## 16  West Virginia     1</code></pre>
+<pre><code>## # A tibble: 15 x 2
+## # Groups:   state [15]
+##           state     n
+##          &lt;fctr&gt; &lt;int&gt;
+##  1     Arkansas     2
+##  2      Florida     1
+##  3      Georgia     1
+##  4     Illinois     1
+##  5      Indiana     2
+##  6     Maryland     1
+##  7     Missouri     1
+##  8     Nebraska     2
+##  9   New Mexico     1
+## 10 North Dakota     1
+## 11       Oregon     1
+## 12    Tennessee     1
+## 13        Texas     3
+## 14   Washington     1
+## 15    Wisconsin     1</code></pre>
 <p>For a stratified sample we would do something similar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sample</span>
 states_str &lt;-<span class="st"> </span>us_regions %&gt;%
@@ -474,8 +467,9 @@ states_str %&gt;%
         </div>
       </div>
 <a href="references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references-1.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="references-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -518,7 +512,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

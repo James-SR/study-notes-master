@@ -94,10 +94,10 @@ homes %>%
 ```
 
 ```
-## # A tibble: 1 × 2
+## # A tibble: 1 x 2
 ##      diff_perm   diff_orig
 ##          <dbl>       <dbl>
-## 1 -0.007828723 -0.01894953
+## 1 -0.007828723 0.009058431
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -108,7 +108,7 @@ head(homes)
 ```
 
 ```
-## # A tibble: 6 × 2
+## # A tibble: 6 x 2
 ##   Gender HomeOwn
 ##   <fctr>  <fctr>
 ## 1   male     Own
@@ -130,15 +130,14 @@ tail(homes2)
 ```
 
 ```
-## Source: local data frame [6 x 3]
-## Groups: Gender [2]
-## 
+## # A tibble: 6 x 3
+## # Groups:   Gender [2]
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
 ## 1   male    Rent          Own
-## 2   male    Rent         Rent
-## 3 female     Own          Own
-## 4   male     Own         Rent
+## 2   male    Rent          Own
+## 3 female     Own         Rent
+## 4   male     Own          Own
 ## 5   male     Own          Own
 ## 6   male     Own          Own
 ```
@@ -165,7 +164,7 @@ homes3
 ```
 
 ```
-## # A tibble: 2 × 3
+## # A tibble: 2 x 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
 ## 1 female     0.6635992 0.6654397
@@ -183,7 +182,7 @@ homes4
 ```
 
 ```
-## # A tibble: 1 × 2
+## # A tibble: 1 x 2
 ##      diff_perm    diff_orig
 ##          <dbl>        <dbl>
 ## 1 -0.007828723 -0.004121787
@@ -254,7 +253,7 @@ homeown_perm %>%
 
 ```
 ##   sum(diff_orig >= diff_perm)
-## 1                        20.5
+## 1                        21.5
 ```
 
 So in this instance, when we set the seed of 666 we end up with 20.5% of randomly shuffled (permuted) differences being greater than the observed difference, so the observed difference is consistent with the null hypothesis.  That it to say it is within the range we may expect by chance alone, were we to repeat the exercise, although we should specify a distribtion we are comparing against, in this which is inferred as being the normal distribution in this instance.  __We can therefore say that there is no statistically significant difference between gender and home ownership__.  Or put more formally
@@ -300,7 +299,7 @@ disc %>%
 ```
 
 ```
-## # A tibble: 2 × 2
+## # A tibble: 2 x 2
 ##      sex promoted_prop
 ##   <fctr>         <dbl>
 ## 1 female     0.5833333
@@ -352,10 +351,10 @@ disc_perm %>%
 ```
 
 ```
-## # A tibble: 1 × 3
-##    q.90      q.95      q.99
-##   <dbl>     <dbl>     <dbl>
-## 1 0.125 0.2083333 0.2916667
+## # A tibble: 1 x 3
+##        q.90      q.95      q.99
+##       <dbl>     <dbl>     <dbl>
+## 1 0.2083333 0.2083333 0.2916667
 ```
 
 So here, 95% of our null differences are 0.208 or lower, indeed 99% are 0.292 or lower, so our observed difference of 0.3 is quite extreme - it is in the critical region of the distribution.  We can go one step further by calculating the p-value.
@@ -369,27 +368,27 @@ disc_perm %>%
 ```
 
 ```
-## # A tibble: 1 × 1
+## # A tibble: 1 x 1
 ##   `mean(diff_orig <= diff_perm)`
 ##                            <dbl>
-## 1                          0.028
+## 1                          0.025
 ```
 
 So the p-value here is 0.028 (less than 3 %).  If repeat the exercise with smaller and larger number of shuffles we would get different p-values.
 
 
 ```
-## # A tibble: 1 × 1
+## # A tibble: 1 x 1
 ##   `mean(diff_orig <= diff_perm)`
 ##                            <dbl>
-## 1                           0.03
+## 1                           0.01
 ```
 
 ```
-## # A tibble: 1 × 1
+## # A tibble: 1 x 1
 ##   `mean(diff_orig <= diff_perm)`
 ##                            <dbl>
-## 1                         0.0235
+## 1                         0.0227
 ```
 
 With 100 shuffles our p-value is 0.03, and with 10,000 shuffles our p-value is 0.0235.  If we had a two-tailed test - for instance if we said the original research hypothesis had focused on any difference in promotion rates between men and women instead of focusing on whether men are more likely to be promoted than women - we could simple double the p-value.  
@@ -439,7 +438,7 @@ opportunity %>%
 ```
 
 ```
-## # A tibble: 2 × 2
+## # A tibble: 2 x 2
 ##       group  buy_prop
 ##      <fctr>     <dbl>
 ## 1   control 0.7466667
@@ -458,10 +457,10 @@ And finally, we can calculate the p-value
 
 
 ```
-## # A tibble: 1 × 1
+## # A tibble: 1 x 1
 ##   `mean(diff_perm <= diff_orig)`
 ##                            <dbl>
-## 1                          0.008
+## 1                          0.012
 ```
 
 In this instance, of p-value is substantially less than the usual critical value - 0.8% versus the usual value of 5% - so we can can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis.  Our results would only occur 8 times in 1000 by chance.  We can therefore accept the alternative hypothesis ($H_{A}$) that reminding students does cause them to be less likely to buy a DVD, as they were randomly assigned to the treatment and control groups, therefore any difference is due to the reminder to save.  Who can we therefore make the inference to?  Our sample was drawn from the student population for the @Frederick2009 study, so we would be able to generalise to that student population however defined, but not to another wider population.
@@ -518,10 +517,10 @@ ex1_props
 ```
 
 ```
-## # A tibble: 1 × 1
+## # A tibble: 1 x 1
 ##   `sd(prop_yes)`
 ##            <dbl>
-## 1       0.085741
+## 1     0.08624387
 ```
 
 So the variability - the standard error or SE - of $\hat{p}*$ is 0.0841.  We can now use this SE to calculate a confidence interval, since 95% of samples will be within +/- 1.96 standard errors of the centre of the distribution assuming a normal distribution $N(\mu, \sigma ^2)$.  We also use the bootstrap to calculate our bootstrap confidence interval, to give a range of possible values.
@@ -544,10 +543,10 @@ one_poll_boot %>%
 ```
 
 ```
-## # A tibble: 1 × 2
-##       lower     upper
-##       <dbl>     <dbl>
-## 1 0.5319476 0.8680524
+## # A tibble: 1 x 2
+##      lower    upper
+##      <dbl>    <dbl>
+## 1 0.530962 0.869038
 ```
 
 So our possible range of values, using the bootstrap at 95%, is between 53.2% and 86.8%.  Going back to our original statement, we had a single poll where 70% of those polled intended to vote for a particular candidate.  We can now say, using the bootstrap t-confidence interval, we are 95% confident that the true proportion planning to vote for the candidate is between 53% and 87%.  We are assuming that the distribution is normally distributed $N(\mu, \sigma ^2)$.

@@ -93,7 +93,7 @@ ggplot(comics, aes(x = ALIGN)) +
 
 ## Numerical Data
 
-```{r eval = FALSE}
+```{r}
 # Data courtesy of http://www.idvbook.com/teaching-aid/data-sets/ with some variable name modifictions to match those in the exercise
 library(readxl)
 cars <- read_excel("04cars data.xls", sheet = 1)
@@ -118,7 +118,7 @@ ggplot(cars, aes(x = city_mpg)) +
 
 The mileage of a car tends to be associated with the size of its engine (as measured by the number of cylinders). To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you"ll try your hand at two alternatives: the box plot and the density plot.
 
-```{r eval = FALSE}
+```{r}
 # Filter cars with 4, 6, 8 cylinders
 common_cyl <- filter(cars, ncyl %in% c(4,6,8))
 
@@ -139,8 +139,7 @@ In addition to indicating the center and spread of a distribution, a box plot pr
 
 ```{r}
 # Create hist
-cars %>%
-  ggplot(aes(horsepwr)) +
+cars %>% ggplot(aes(horsepwr)) +
   geom_histogram() +
   ggtitle("ALL Cars")
 

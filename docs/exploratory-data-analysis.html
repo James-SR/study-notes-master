@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Study notes</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Study notes taken from courses and self learning.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Study notes" />
   <meta property="og:type" content="book" />
@@ -34,7 +33,6 @@
   
 <link rel="prev" href="references-2.html">
 <link rel="next" href="dimensional-modelling.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -94,6 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <body>
 
 
+
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
@@ -142,6 +141,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Exploratory Data Analysis</a><ul>
 <li class="chapter" data-level="5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>5.1</b> Categorical Data</a></li>
+<li class="chapter" data-level="5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>5.2</b> Numerical Data</a></li>
+<li class="chapter" data-level="5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>5.3</b> Numerical Summaries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>6</b> Dimensional Modelling</a><ul>
 <li class="chapter" data-level="6.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>6.1</b> Introduction to Dimensional Data</a><ul>
@@ -177,7 +178,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="exploratory-data-analysis" class="section level1">
 <h1><span class="header-section-number">5</span> Exploratory Data Analysis</h1>
 <hr />
-<p>Notes taken during/inspired by the Datacamp course ‘Exploratory Data Analysis’ by Andrew Bray.</p>
+<p>Notes taken during/inspired by the Datacamp course “Exploratory Data Analysis” by Andrew Bray.</p>
 <div id="categorical-data" class="section level2">
 <h2><span class="header-section-number">5.1</span> Categorical Data</h2>
 <p>Common functions when looking at categorical, aka factors variables, are levels(df<span class="math inline">\(var) and to get a contigency or xtab table the table(df\)</span>var1, df$var2). We can also create bar charts to visually represent the data using ggplot.</p>
@@ -211,7 +212,7 @@ comics$name &lt;-<span class="st"> </span><span class="kw">as.character</span>(c
 ##   Good Characters               1843                      0
 ##   Neutral Characters             359                      0
 ##   Reformed Criminals               2                      0</code></pre>
-<p>To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don’t exist in a dataset.</p>
+<p>To simplify an analysis, it often helps to drop levels with small amounts of data. In R, this requires two steps: first filtering out any rows with the levels that have very low counts, then removing these levels from the factor variable with droplevels(). This is because the droplevels() function would keep levels that have just 1 or 2 counts; it only drops levels that don“t exist in a dataset.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load dplyr</span>
 <span class="kw">library</span>(dplyr)</code></pre></div>
 <pre><code>## 
@@ -226,8 +227,8 @@ comics$name &lt;-<span class="st"> </span><span class="kw">as.character</span>(c
 comics &lt;-<span class="st"> </span>comics %&gt;%
 <span class="st">  </span><span class="kw">filter</span>(ALIGN !=<span class="st"> &quot;Reformed Criminals&quot;</span>) %&gt;%
 <span class="st">  </span><span class="kw">droplevels</span>()</code></pre></div>
-<p>While a contingency table represents the counts numerically, it’s often more useful to represent them graphically.</p>
-<p>Here you’ll construct two side-by-side barcharts of the comics data. This shows that there can often be two or more options for presenting the same data. Passing the argument position = “dodge” to geom_bar() says that you want a side-by-side (i.e. not stacked) barchart.</p>
+<p>While a contingency table represents the counts numerically, it“s often more useful to represent them graphically.</p>
+<p>Here you“ll construct two side-by-side barcharts of the comics data. This shows that there can often be two or more options for presenting the same data. Passing the argument position =”dodge&quot; to geom_bar() says that you want a side-by-side (i.e. not stacked) barchart.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load ggplot2</span>
 <span class="kw">library</span>(ggplot2)
 
@@ -270,7 +271,7 @@ comics &lt;-<span class="st"> </span>comics %&gt;%
 ##   Good Characters              0.385                  0.000
 ##   Neutral Characters           0.075                  0.000</code></pre>
 <p>Here we see that approx. 49% of female characters are good, compared to 39% for males.</p>
-<p>Bar charts can tell dramatically different stories depending on whether they represent counts or proportions and, if proportions, what the proportions are conditioned on. To demonstrate this difference, you’ll construct two barcharts in this exercise: one of counts and one of proportions.</p>
+<p>Bar charts can tell dramatically different stories depending on whether they represent counts or proportions and, if proportions, what the proportions are conditioned on. To demonstrate this difference, you“ll construct two barcharts in this exercise: one of counts and one of proportions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of gender by align</span>
 <span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> ALIGN, <span class="dt">fill =</span> SEX)) +
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
@@ -279,6 +280,205 @@ comics &lt;-<span class="st"> </span>comics %&gt;%
 <span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> ALIGN, <span class="dt">fill =</span> SEX)) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
 <p><img src="EDA_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p><strong>Conditional barchart</strong></p>
+<p>Now, if you want to break down the distribution of alignment based on gender, you“re looking for conditional distributions.</p>
+<p>You could make these by creating multiple filtered datasets (one for each gender) or by faceting the plot of alignment based on gender. As a point of comparison, we“ve provided your plot of the marginal distribution of alignment from the last exercise.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot of alignment broken down by gender</span>
+<span class="kw">ggplot</span>(comics, <span class="kw">aes</span>(<span class="dt">x =</span> ALIGN)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_bar</span>() +
+<span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>SEX)</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="numerical-data" class="section level2">
+<h2><span class="header-section-number">5.2</span> Numerical Data</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Data courtesy of http://www.idvbook.com/teaching-aid/data-sets/ with some variable name modifictions to match those in the exercise</span>
+<span class="kw">library</span>(readxl)
+cars &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;04cars data.xls&quot;</span>, <span class="dt">sheet =</span> <span class="dv">1</span>)
+cars &lt;-<span class="st"> </span>cars[-<span class="dv">2</span>] <span class="co"># remove variable 2</span>
+
+<span class="co"># Rename vars</span>
+<span class="kw">names</span>(cars) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;sports_car&quot;</span>, <span class="st">&quot;suv&quot;</span>, <span class="st">&quot;wagon&quot;</span>, <span class="st">&quot;minivan&quot;</span>, <span class="st">&quot;pickup&quot;</span>, <span class="st">&quot;all_wheel&quot;</span>, 
+                <span class="st">&quot;rear_wheel&quot;</span>, <span class="st">&quot;msrp&quot;</span>, <span class="st">&quot;dealer_cost&quot;</span>, <span class="st">&quot;eng_size&quot;</span>, <span class="st">&quot;ncyl&quot;</span>, <span class="st">&quot;horsepwr&quot;</span>,
+                <span class="st">&quot;city_mpg&quot;</span>,<span class="st">&quot;hwy_mpg&quot;</span>,  <span class="st">&quot;weight&quot;</span>, <span class="st">&quot;wheel_base&quot;</span>, <span class="st">&quot;length&quot;</span>, <span class="st">&quot;width&quot;</span>)
+<span class="co"># Change data tpyes as needed</span>
+cars[<span class="dv">2</span>:<span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">sapply</span>(cars[<span class="dv">2</span>:<span class="dv">7</span>],as.logical)
+cars[<span class="kw">c</span>(<span class="dv">8</span>:<span class="dv">10</span>,<span class="dv">12</span>:<span class="dv">19</span>)] &lt;-<span class="st"> </span><span class="kw">sapply</span>(cars[<span class="kw">c</span>(<span class="dv">8</span>:<span class="dv">10</span>,<span class="dv">12</span>:<span class="dv">19</span>)],as.integer)</code></pre></div>
+<pre><code>## Warning in lapply(X = X, FUN = FUN, ...): NAs introduced by coercion
+
+## Warning in lapply(X = X, FUN = FUN, ...): NAs introduced by coercion
+
+## Warning in lapply(X = X, FUN = FUN, ...): NAs introduced by coercion
+
+## Warning in lapply(X = X, FUN = FUN, ...): NAs introduced by coercion
+
+## Warning in lapply(X = X, FUN = FUN, ...): NAs introduced by coercion
+
+## Warning in lapply(X = X, FUN = FUN, ...): NAs introduced by coercion</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Learn data structure</span>
+<span class="kw">str</span>(cars)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    428 obs. of  19 variables:
+##  $ name       : chr  &quot;Acura 3.5 RL 4dr&quot; &quot;Acura 3.5 RL w/Navigation 4dr&quot; &quot;Acura MDX&quot; &quot;Acura NSX coupe 2dr manual S&quot; ...
+##  $ sports_car : logi  FALSE FALSE FALSE TRUE FALSE FALSE ...
+##  $ suv        : logi  FALSE FALSE TRUE FALSE FALSE FALSE ...
+##  $ wagon      : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ minivan    : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ pickup     : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ all_wheel  : logi  FALSE FALSE TRUE FALSE FALSE FALSE ...
+##  $ rear_wheel : int  0 0 0 1 0 0 0 0 0 0 ...
+##  $ msrp       : int  43755 46100 36945 89765 23820 33195 26990 25940 31840 42490 ...
+##  $ dealer_cost: int  39014 41100 33337 79978 21761 30299 24647 23508 28846 38325 ...
+##  $ eng_size   : num  3.5 3.5 3.5 3.2 2 3.2 2.4 1.8 3 3 ...
+##  $ ncyl       : int  6 6 6 6 4 6 4 4 6 6 ...
+##  $ horsepwr   : int  225 225 265 290 200 270 200 170 220 220 ...
+##  $ city_mpg   : int  18 18 17 17 24 20 22 22 20 20 ...
+##  $ hwy_mpg    : int  24 24 23 24 31 28 29 31 28 27 ...
+##  $ weight     : int  3880 3893 4451 3153 2778 3575 3230 3252 3462 3814 ...
+##  $ wheel_base : int  115 115 106 100 101 108 105 104 104 105 ...
+##  $ length     : int  197 197 189 174 172 186 183 179 179 180 ...
+##  $ width      : int  72 72 77 71 68 72 69 70 70 70 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create faceted histogram</span>
+<span class="kw">ggplot</span>(cars, <span class="kw">aes</span>(<span class="dt">x =</span> city_mpg)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>() +
+<span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>suv)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 14 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>The mileage of a car tends to be associated with the size of its engine (as measured by the number of cylinders). To explore the relationship between these two variables, you could stick to using histograms, but in this exercise you“ll try your hand at two alternatives: the box plot and the density plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter cars with 4, 6, 8 cylinders</span>
+common_cyl &lt;-<span class="st"> </span><span class="kw">filter</span>(cars, ncyl %in%<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>))
+
+<span class="co"># Create box plots of city mpg by ncyl</span>
+<span class="kw">ggplot</span>(common_cyl, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">as.factor</span>(ncyl), <span class="dt">y =</span> city_mpg)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create overlaid density plots for same data</span>
+<span class="kw">ggplot</span>(common_cyl, <span class="kw">aes</span>(<span class="dt">x =</span> city_mpg, <span class="dt">fill =</span> <span class="kw">as.factor</span>(ncyl))) +
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> .<span class="dv">3</span>)</code></pre></div>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p>Now, turn your attention to a new variable: horsepwr. The goal is to get a sense of the marginal distribution of this variable and then compare it to the distribution of horsepower conditional on the price of the car being less than $25,000.</p>
+<p>You“ll be making two plots using the”data pipeline&quot; paradigm, where you start with the raw data and end with the plot.</p>
+<p>In addition to indicating the center and spread of a distribution, a box plot provides a graphical means to detect outliers. You can apply this method to the msrp column (manufacturer“s suggested retail price) to detect if there are unusually expensive or cheap cars.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create hist</span>
+cars %&gt;%<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(horsepwr)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>() +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;ALL Cars&quot;</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create hist of horsepwr for affordable cars</span>
+cars %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(msrp &lt;<span class="st"> </span><span class="dv">25000</span>) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(horsepwr)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>() +
+<span class="st">  </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">90</span>, <span class="dv">550</span>)) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Affordable Cars&quot;</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_bin).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_bar).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Construct box plot of msrp</span>
+cars %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> msrp)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Exclude outliers from data</span>
+cars_no_out &lt;-<span class="st"> </span>cars %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(msrp &lt;<span class="st"> </span><span class="dv">100000</span>) 
+
+<span class="co"># Construct box plot of msrp using the reduced dataset</span>
+cars_no_out %&gt;%
+<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> msrp)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<p>Consider two other columns in the cars dataset: city_mpg and width. Which is the most appropriate plot for displaying the important features of their distributions? Remember, both density plots and box plots display the central tendency and spread of the data, but the box plot is more robust to outliers.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create plot of city_mpg</span>
+cars %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> width)) +
+<span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
+<pre><code>## Warning: Removed 28 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create plot of width</span>
+cars %&gt;%
+<span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> city_mpg)) +
+<span class="st">   </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<pre><code>## Warning: Removed 14 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<p>Faceting is a valuable technique for looking at several conditional distributions at the same time. If the faceted distributions are laid out in a grid, you can consider the association between a variable and two others, one on the rows of the grid and the other on the columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Facet hists using hwy mileage and ncyl</span>
+common_cyl %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hwy_mpg)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>() +
+<span class="st">  </span><span class="kw">facet_grid</span>(ncyl ~<span class="st"> </span>suv) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Faceted heavy mpg histograms by No. of Cyl and Suv&quot;</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="numerical-summaries" class="section level2">
+<h2><span class="header-section-number">5.3</span> Numerical Summaries</h2>
+<p>Throughout this chapter, you will use data from gapminder, which tracks demographic data in countries of the world over time. To learn more about it, you can bring up the help file with ?gapminder.</p>
+<p>For this exercise, focus on how the life expectancy differs from continent to continent. This requires that you conduct your analysis not at the country level, but aggregated up to the continent level. This is made possible by the one-two punch of group_by() and summarize(), a very powerful syntax for carrying out the same analysis on different subsets of the full dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
+
+<span class="co"># Create dataset of 2007 data</span>
+gap2007 &lt;-<span class="st"> </span><span class="kw">filter</span>(gapminder, year ==<span class="st"> </span><span class="dv">2007</span>)
+
+<span class="co"># Compute groupwise mean and median lifeExp</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(continent) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">mean</span>(lifeExp),
+            <span class="kw">median</span>(lifeExp))</code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   continent `mean(lifeExp)` `median(lifeExp)`
+##      &lt;fctr&gt;           &lt;dbl&gt;             &lt;dbl&gt;
+## 1    Africa              55                53
+## 2  Americas              74                73
+## 3      Asia              71                72
+## 4    Europe              78                79
+## 5   Oceania              81                81</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate box plots of lifeExp for each continent</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> continent, <span class="dt">y =</span> lifeExp)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Let“s extend the powerful group_by() and summarize() syntax to measures of spread. If you”re unsure whether you“re working with symmetric or skewed distributions, it”s a good idea to consider a robust measure like IQR in addition to the usual measures of variance or standard deviation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute groupwise measures of spread</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(continent) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">sd</span>(lifeExp),
+            <span class="kw">IQR</span>(lifeExp),
+            <span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 5 x 4
+##   continent `sd(lifeExp)` `IQR(lifeExp)` `n()`
+##      &lt;fctr&gt;         &lt;dbl&gt;          &lt;dbl&gt; &lt;int&gt;
+## 1    Africa          9.63          11.61    52
+## 2  Americas          4.44           4.63    25
+## 3      Asia          7.96          10.15    33
+## 4    Europe          2.98           4.78    30
+## 5   Oceania          0.73           0.52     2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate overlaid density plots</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lifeExp, <span class="dt">fill =</span> continent)) +
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute stats for lifeExp in Americas</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(continent ==<span class="st"> &quot;Americas&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">mean</span>(lifeExp),
+            <span class="kw">sd</span>(lifeExp))</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   `mean(lifeExp)` `sd(lifeExp)`
+##             &lt;dbl&gt;         &lt;dbl&gt;
+## 1              74           4.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute stats for population</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">median</span>(pop),
+            <span class="kw">IQR</span>(pop))</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   `median(pop)` `IQR(pop)`
+##           &lt;dbl&gt;      &lt;dbl&gt;
+## 1      10517531   26702008</code></pre>
 
 </div>
 </div>
@@ -288,8 +488,9 @@ comics &lt;-<span class="st"> </span>comics %&gt;%
         </div>
       </div>
 <a href="references-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="dimensional-modelling.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="dimensional-modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -332,7 +533,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

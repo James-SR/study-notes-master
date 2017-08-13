@@ -335,18 +335,18 @@ pools
 ```
 
 ```
-## # A tibble: 20 × 4
+## # A tibble: 20 x 4
 ##                                         Name
 ##                                        <chr>
-## 1                Acacia Ridge Leisure Centre
-## 2                            Bellbowrie Pool
-## 3                                Carole Park
-## 4                Centenary Pool (inner City)
-## 5                             Chermside Pool
-## 6                Colmslie Pool (Morningside)
-## 7             Spring Hill Baths (inner City)
-## 8                 Dunlop Park Pool (Corinda)
-## 9                      Fortitude Valley Pool
+##  1               Acacia Ridge Leisure Centre
+##  2                           Bellbowrie Pool
+##  3                               Carole Park
+##  4               Centenary Pool (inner City)
+##  5                            Chermside Pool
+##  6               Colmslie Pool (Morningside)
+##  7            Spring Hill Baths (inner City)
+##  8                Dunlop Park Pool (Corinda)
+##  9                     Fortitude Valley Pool
 ## 10 Hibiscus Sports Complex (upper MtGravatt)
 ## 11                 Ithaca Pool ( Paddington)
 ## 12                             Jindalee Pool
@@ -367,18 +367,18 @@ potatoes
 ```
 
 ```
-## # A tibble: 160 × 8
+## # A tibble: 160 x 8
 ##     area  temp  size storage method texture flavor moistness
 ##    <int> <int> <int>   <int>  <int>   <dbl>  <dbl>     <dbl>
-## 1      1     1     1       1      1     2.9    3.2       3.0
-## 2      1     1     1       1      2     2.3    2.5       2.6
-## 3      1     1     1       1      3     2.5    2.8       2.8
-## 4      1     1     1       1      4     2.1    2.9       2.4
-## 5      1     1     1       1      5     1.9    2.8       2.2
-## 6      1     1     1       2      1     1.8    3.0       1.7
-## 7      1     1     1       2      2     2.6    3.1       2.4
-## 8      1     1     1       2      3     3.0    3.0       2.9
-## 9      1     1     1       2      4     2.2    3.2       2.5
+##  1     1     1     1       1      1     2.9    3.2       3.0
+##  2     1     1     1       1      2     2.3    2.5       2.6
+##  3     1     1     1       1      3     2.5    2.8       2.8
+##  4     1     1     1       1      4     2.1    2.9       2.4
+##  5     1     1     1       1      5     1.9    2.8       2.2
+##  6     1     1     1       2      1     1.8    3.0       1.7
+##  7     1     1     1       2      2     2.6    3.1       2.4
+##  8     1     1     1       2      3     3.0    3.0       2.9
+##  9     1     1     1       2      4     2.2    3.2       2.5
 ## 10     1     1     1       2      5     2.0    2.8       1.9
 ## # ... with 150 more rows
 ```
@@ -473,7 +473,7 @@ resp
 
 ```
 ## Response [http://www.example.com/]
-##   Date: 2017-08-10 19:00
+##   Date: 2017-08-13 19:44
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -515,7 +515,7 @@ resp
 
 ```
 ## Response [http://www.omdbapi.com/?apikey=ff21610b&t=Annie+Hall&y=&plot=short&r=json]
-##   Date: 2017-08-10 19:00
+##   Date: 2017-08-13 19:44
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 902 B

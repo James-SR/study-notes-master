@@ -230,9 +230,7 @@ ucb_counts
 ```
 
 ```
-## Source: local data frame [4 x 3]
-## Groups: Gender [?]
-## 
+## # A tibble: 4 x 3
 ##   Gender    Admit     n
 ##   <fctr>   <fctr> <int>
 ## 1   Male Admitted  1198
@@ -249,9 +247,7 @@ ucb_counts %>%
 ```
 
 ```
-## Source: local data frame [2 x 4]
-## Groups: Gender [2]
-## 
+## # A tibble: 2 x 4
 ##   Gender Admitted Rejected Perc_Admit
 ##   <fctr>    <int>    <int>      <dbl>
 ## 1   Male     1198     1493  0.4451877
@@ -272,20 +268,18 @@ admit_by_dept
 ```
 
 ```
-## Source: local data frame [12 x 4]
-## Groups: Dept, Gender [12]
-## 
+## # A tibble: 12 x 4
 ##      Dept Gender Admitted Rejected
-## *  <fctr> <fctr>    <int>    <int>
-## 1       A   Male      512      313
-## 2       A Female       89       19
-## 3       B   Male      353      207
-## 4       B Female       17        8
-## 5       C   Male      120      205
-## 6       C Female      202      391
-## 7       D   Male      138      279
-## 8       D Female      131      244
-## 9       E   Male       53      138
+##  * <fctr> <fctr>    <int>    <int>
+##  1      A   Male      512      313
+##  2      A Female       89       19
+##  3      B   Male      353      207
+##  4      B Female       17        8
+##  5      C   Male      120      205
+##  6      C Female      202      391
+##  7      D   Male      138      279
+##  8      D Female      131      244
+##  9      E   Male       53      138
 ## 10      E Female       94      299
 ## 11      F   Male       22      351
 ## 12      F Female       24      317
@@ -298,20 +292,18 @@ admit_by_dept %>%
 ```
 
 ```
-## Source: local data frame [12 x 5]
-## Groups: Dept, Gender [12]
-## 
+## # A tibble: 12 x 5
 ##      Dept Gender Admitted Rejected Perc_Admit
 ##    <fctr> <fctr>    <int>    <int>      <dbl>
-## 1       A   Male      512      313 0.62060606
-## 2       A Female       89       19 0.82407407
-## 3       B   Male      353      207 0.63035714
-## 4       B Female       17        8 0.68000000
-## 5       C   Male      120      205 0.36923077
-## 6       C Female      202      391 0.34064081
-## 7       D   Male      138      279 0.33093525
-## 8       D Female      131      244 0.34933333
-## 9       E   Male       53      138 0.27748691
+##  1      A   Male      512      313 0.62060606
+##  2      A Female       89       19 0.82407407
+##  3      B   Male      353      207 0.63035714
+##  4      B Female       17        8 0.68000000
+##  5      C   Male      120      205 0.36923077
+##  6      C Female      202      391 0.34064081
+##  7      D   Male      138      279 0.33093525
+##  8      D Female      131      244 0.34933333
+##  9      E   Male       53      138 0.27748691
 ## 10      E Female       94      299 0.23918575
 ## 11      F   Male       22      351 0.05898123
 ## 12      F Female       24      317 0.07038123
@@ -337,25 +329,25 @@ county_srs %>%
 ```
 
 ```
-## # A tibble: 16 × 2
-##             state     n
-##            <fctr> <int>
-## 1         Florida     1
-## 2         Georgia     1
-## 3        Illinois     1
-## 4            Iowa     2
-## 5       Louisiana     1
-## 6     Mississippi     1
-## 7         Montana     1
-## 8      New Mexico     1
-## 9  North Carolina     2
-## 10           Ohio     1
-## 11       Oklahoma     2
-## 12   Pennsylvania     1
-## 13          Texas     2
-## 14       Virginia     1
-## 15     Washington     1
-## 16  West Virginia     1
+## # A tibble: 15 x 2
+## # Groups:   state [15]
+##           state     n
+##          <fctr> <int>
+##  1     Arkansas     2
+##  2      Florida     1
+##  3      Georgia     1
+##  4     Illinois     1
+##  5      Indiana     2
+##  6     Maryland     1
+##  7     Missouri     1
+##  8     Nebraska     2
+##  9   New Mexico     1
+## 10 North Dakota     1
+## 11       Oregon     1
+## 12    Tennessee     1
+## 13        Texas     3
+## 14   Washington     1
+## 15    Wisconsin     1
 ```
 
 For a stratified sample we would do something similar.
