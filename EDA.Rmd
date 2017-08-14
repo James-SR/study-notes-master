@@ -247,3 +247,125 @@ gap2007 %>%
 
 ```
 
+### Transformations 
+In some data, there are different 'humps' in the distribution, which are calls the modes or the modality of the dataset
+
+* **Unimode** - single mean, this is a normal distribtion
+* **Bimodal** - two common distributions
+* **Multimodal** - three modes or more
+
+We also should consider whether the distribution is skewed.  Right skewed data has a long tail to the right, with the majority of the distribution to the left - we often see this with income distributions.  Left skewed has a small number of observations to the left and the majoirty of the distribution to the right.  A normal distribution is typically smyterical.
+
+Highly skewed distributions can make it very difficult to learn anything from a visualization. Transformations can be helpful in revealing the more subtle structure.
+
+Here you'll focus on the population variable, which exhibits strong right skew, and transform it with the natural logarithm function (log() in R).
+
+```{r}
+# Create density plot of old variable
+gap2007 %>%
+  ggplot(aes(x = pop)) +
+  geom_density()
+
+# Transform the skewed pop variable
+gap2007 <- gap2007 %>%
+  mutate(log_pop = log(pop))
+
+# Create density plot of new variable
+gap2007 %>%
+  ggplot(aes(x = log_pop)) +
+  geom_density()
+```
+
+### Outliers
+
+It is often useful within a dataset to identify, using a column, whether the data is an outlier, this can be done by using the mutate function e.g. df <- df %>% mutate(is_outlier > value), then filtering and arranging the resulting table e.g. df %>% filter(is_outlier) %>% arrange(desc(value)).  We can also use this outlier column to remove the values from a plot e.g. df %>% filter(!is_outlier) %>% ggplot ... The determination of the outlier value might be arbitary, or you could use a percentile value (say top or bottom 2%).
+
+```{r}
+# Filter for Asia, add column indicating outliers
+gap_asia <- gap2007 %>%
+  filter(continent == "Asia") %>%
+  mutate(is_outlier = lifeExp <50)
+
+# Remove outliers, create box plot of lifeExp
+gap_asia %>%
+  filter(!is_outlier) %>%
+  ggplot(aes(x = 1, y = lifeExp)) +
+  geom_boxplot()
+```
+
+## Email Case Study
+
+The example EDA comes from manually classified 3,900+ emails from the openintro package.  Is there an association between spam and the length of an email? You could imagine a story either way:
+
+* Spam is more likely to be a short message tempting me to click on a link, or
+*My normal email is likely shorter since I exchange brief emails with my friends all the time.
+
+Here, you'll use the email dataset to settle that question. Begin by bringing up the help file and learning about all the variables with ?email.
+
+As you explore the association between spam and the length of an email, use this opportunity to try out linking a dplyr chain with the layers in a ggplot2 object.
+
+```{r}
+library(openintro)
+
+
+# Compute summary statistics
+email %>%
+  group_by(spam) %>%
+  summarise(median(num_char), IQR(num_char))
+
+# Create plot
+email %>%
+  mutate(log_num_char = log(num_char)) %>%
+  ggplot(aes(x = factor(spam), y = log_num_char)) +
+  geom_boxplot()
+```
+
+Let's look at a more obvious indicator of spam: exclamation marks. exclaim_mess contains the number of exclamation marks in each message. Using summary statistics and visualization, see if there is a relationship between this variable and whether or not a message is spam.
+
+Note: when computing the log(0) is -Inf in R, which isn't a very useful value! You can get around this by adding a small number (like .01) to the quantity inside the log() function. This way, your value is never zero. This small shift to the right won't affect your results.
+
+```{r}
+# Compute center and spread for exclaim_mess by spam
+email %>%
+  group_by(spam) %>%
+  summarise(mean(exclaim_mess), sd(exclaim_mess))
+
+
+# Create plot for spam and exclaim_mess
+email %>%
+  ggplot(aes(log(exclaim_mess)+0.1)) +
+  geom_histogram() +
+  facet_wrap( ~ spam) +
+  ggtitle("Number of exclamation marks by not-spam vs spam")
+```
+
+If it was difficult to work with the heavy skew of exclaim_mess, the number of images attached to each email (image) poses even more of a challenge.
+
+```{r}
+table(email$image)
+```
+
+Recall that this tabulates the number of cases in each category (so there were 3811 emails with 0 images, for example). Given the very low counts at the higher number of images, let's collapse image into a categorical variable that indicates whether or not the email had at least one image. In this exercise, you'll create this new variable and explore its association with spam.
+
+** Here we deal with zero inflation** by converting the many zero values and the non zeros in to a categorical variable.  There are other strategies, such as doing analysis on these two groups seperatley.
+
+```{r}
+# Create plot of proportion of spam by image
+email %>%
+  mutate(has_image = image > 0) %>%
+  ggplot(aes(x = has_image, fill = factor(spam))) +
+  geom_bar(position = "fill")
+```
+
+Sometimes it is neccessary to check if our understanding of the data and how it has been created is correct and if the values we expect are in fact true.  
+
+In this instance, we check first if the number of charecters in the email is greater than zero (which it should be), then secondly whether images count as attachments using a boolean operator.  If image is never greater than attach, we can infer that images are counted as attachments.
+
+```{r}
+# Verify that all emails have non-negative values for num_char
+sum(email$num_char < 0)
+
+# Test if images count as attachments
+sum(email$images >= email$attach)
+```
+
