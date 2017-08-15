@@ -519,3 +519,279 @@ gap2007 %>%
 ## 1      10517531   26702008
 ```
 
+### Transformations 
+In some data, there are different 'humps' in the distribution, which are calls the modes or the modality of the dataset
+
+* **Unimode** - single mean, this is a normal distribtion
+* **Bimodal** - two common distributions
+* **Multimodal** - three modes or more
+
+We also should consider whether the distribution is skewed.  Right skewed data has a long tail to the right, with the majority of the distribution to the left - we often see this with income distributions.  Left skewed has a small number of observations to the left and the majoirty of the distribution to the right.  A normal distribution is typically smyterical.
+
+Highly skewed distributions can make it very difficult to learn anything from a visualization. Transformations can be helpful in revealing the more subtle structure.
+
+Here you'll focus on the population variable, which exhibits strong right skew, and transform it with the natural logarithm function (log() in R).
+
+
+```r
+# Create density plot of old variable
+gap2007 %>%
+  ggplot(aes(x = pop)) +
+  geom_density()
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+
+```r
+# Transform the skewed pop variable
+gap2007 <- gap2007 %>%
+  mutate(log_pop = log(pop))
+
+# Create density plot of new variable
+gap2007 %>%
+  ggplot(aes(x = log_pop)) +
+  geom_density()
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-15-2.png" width="672" />
+
+### Outliers
+
+It is often useful within a dataset to identify, using a column, whether the data is an outlier, this can be done by using the mutate function e.g. df <- df %>% mutate(is_outlier > value), then filtering and arranging the resulting table e.g. df %>% filter(is_outlier) %>% arrange(desc(value)).  We can also use this outlier column to remove the values from a plot e.g. df %>% filter(!is_outlier) %>% ggplot ... The determination of the outlier value might be arbitary, or you could use a percentile value (say top or bottom 2%).
+
+
+```r
+# Filter for Asia, add column indicating outliers
+gap_asia <- gap2007 %>%
+  filter(continent == "Asia") %>%
+  mutate(is_outlier = lifeExp <50)
+
+# Remove outliers, create box plot of lifeExp
+gap_asia %>%
+  filter(!is_outlier) %>%
+  ggplot(aes(x = 1, y = lifeExp)) +
+  geom_boxplot()
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
+## Email Case Study
+
+The example EDA comes from manually classified 3,900+ emails from the openintro package.  Is there an association between spam and the length of an email? You could imagine a story either way:
+
+* Spam is more likely to be a short message tempting me to click on a link, or
+*My normal email is likely shorter since I exchange brief emails with my friends all the time.
+
+Here, you'll use the email dataset to settle that question. Begin by bringing up the help file and learning about all the variables with ?email.
+
+As you explore the association between spam and the length of an email, use this opportunity to try out linking a dplyr chain with the layers in a ggplot2 object.
+
+
+```r
+library(openintro)
+```
+
+```
+## Please visit openintro.org for free statistics materials
+```
+
+```
+## 
+## Attaching package: 'openintro'
+```
+
+```
+## The following object is masked _by_ '.GlobalEnv':
+## 
+##     cars
+```
+
+```
+## The following object is masked from 'package:datasets':
+## 
+##     cars
+```
+
+```r
+# Compute summary statistics
+email %>%
+  group_by(spam) %>%
+  summarise(median(num_char), IQR(num_char))
+```
+
+```
+## # A tibble: 2 x 3
+##    spam `median(num_char)` `IQR(num_char)`
+##   <dbl>              <dbl>           <dbl>
+## 1     0                6.8            13.6
+## 2     1                1.0             2.8
+```
+
+```r
+# Create plot
+email %>%
+  mutate(log_num_char = log(num_char)) %>%
+  ggplot(aes(x = factor(spam), y = log_num_char)) +
+  geom_boxplot()
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+
+Let's look at a more obvious indicator of spam: exclamation marks. exclaim_mess contains the number of exclamation marks in each message. Using summary statistics and visualization, see if there is a relationship between this variable and whether or not a message is spam.
+
+Note: when computing the log(0) is -Inf in R, which isn't a very useful value! You can get around this by adding a small number (like .01) to the quantity inside the log() function. This way, your value is never zero. This small shift to the right won't affect your results.
+
+
+```r
+# Compute center and spread for exclaim_mess by spam
+email %>%
+  group_by(spam) %>%
+  summarise(mean(exclaim_mess), sd(exclaim_mess))
+```
+
+```
+## # A tibble: 2 x 3
+##    spam `mean(exclaim_mess)` `sd(exclaim_mess)`
+##   <dbl>                <dbl>              <dbl>
+## 1     0                  6.5                 48
+## 2     1                  7.3                 80
+```
+
+```r
+# Create plot for spam and exclaim_mess
+email %>%
+  ggplot(aes(log(exclaim_mess)+0.1)) +
+  geom_histogram() +
+  facet_wrap( ~ spam) +
+  ggtitle("Number of exclamation marks by not-spam vs spam")
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+```
+## Warning: Removed 1435 rows containing non-finite values (stat_bin).
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+
+If it was difficult to work with the heavy skew of exclaim_mess, the number of images attached to each email (image) poses even more of a challenge.
+
+
+```r
+table(email$image)
+```
+
+```
+## 
+##    0    1    2    3    4    5    9   20 
+## 3811   76   17   11    2    2    1    1
+```
+
+Recall that this tabulates the number of cases in each category (so there were 3811 emails with 0 images, for example). Given the very low counts at the higher number of images, let's collapse image into a categorical variable that indicates whether or not the email had at least one image. In this exercise, you'll create this new variable and explore its association with spam.
+
+** Here we deal with zero inflation** by converting the many zero values and the non zeros in to a categorical variable.  There are other strategies, such as doing analysis on these two groups seperatley.
+
+
+```r
+# Create plot of proportion of spam by image
+email %>%
+  mutate(has_image = image > 0) %>%
+  ggplot(aes(x = has_image, fill = factor(spam))) +
+  geom_bar(position = "fill")
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+
+Sometimes it is neccessary to check if our understanding of the data and how it has been created is correct and if the values we expect are in fact true.  
+
+In this instance, we check first if the number of charecters in the email is greater than zero (which it should be), then secondly whether images count as attachments using a boolean operator.  If image is never greater than attach, we can infer that images are counted as attachments.
+
+
+```r
+# Verify that all emails have non-negative values for num_char
+sum(email$num_char < 0)
+```
+
+```
+## [1] 0
+```
+
+```r
+# Test if images count as attachments
+sum(email$images >= email$attach)
+```
+
+```
+## [1] 0
+```
+
+When you have a specific question about a dataset, you can find your way to an answer by carefully constructing the appropriate chain of R code. For example, consider the following question:
+
+> "Within non-spam emails, is the typical length of emails shorter for those that were sent to multiple people?"
+
+This can be answered with the following chain:
+
+
+```r
+email %>%
+   filter(spam == "not-spam") %>%
+   group_by(to_multiple) %>%
+   summarize(median(num_char))
+```
+
+```
+## # A tibble: 0 x 2
+## # ... with 2 variables: to_multiple <dbl>, median(num_char) <lgl>
+```
+
+The code makes it clear that you are using num_char to measure the length of an email and median() as the measure of what is typical. If you run this code, you'll learn that the answer to the question is "yes": the typical length of non-spam sent to multiple people is a bit lower than those sent to only one person.
+
+This chain concluded with summary statistics, but others might end in a plot; it all depends on the question that you're trying to answer.
+
+> For emails containing the word "dollar", does the typical spam email contain a greater number of occurrences of the word than the typical non-spam email? Create a summary statistic that answers this question.
+> If you encounter an email with greater than 10 occurrences of the word "dollar", is it more likely to be spam or not-spam? Create a barchart that answers this question.
+
+
+```r
+# Question 1
+email %>%
+  filter(dollar > 0) %>%
+  group_by(spam) %>%
+  summarize(median(dollar))
+```
+
+```
+## # A tibble: 2 x 2
+##    spam `median(dollar)`
+##   <dbl>            <dbl>
+## 1     0                4
+## 2     1                2
+```
+
+```r
+# Question 2
+email %>%
+  filter(dollar > 10) %>%
+  ggplot(aes(x = spam)) +
+  geom_bar()
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+
+Turn your attention to the variable called number. To explore the association between this variable and spam, select and construct an informative plot. For illustrating relationships between categorical variables, you've seen
+
+
+```r
+# Reorder levels
+email$number <- factor(email$number, levels = c("none", "small", "big"))
+
+# Construct plot of number
+ggplot(email, aes(x = number)) +
+  geom_bar() +
+  facet_wrap(~ spam)
+```
+
+<img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+

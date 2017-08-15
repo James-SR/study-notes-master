@@ -142,7 +142,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Exploratory Data Analysis</a><ul>
 <li class="chapter" data-level="5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>5.1</b> Categorical Data</a></li>
 <li class="chapter" data-level="5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>5.2</b> Numerical Data</a></li>
-<li class="chapter" data-level="5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>5.3</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>5.3</b> Numerical Summaries</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#transformations"><i class="fa fa-check"></i><b>5.3.1</b> Transformations</a></li>
+<li class="chapter" data-level="5.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#outliers"><i class="fa fa-check"></i><b>5.3.2</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#email-case-study"><i class="fa fa-check"></i><b>5.4</b> Email Case Study</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>6</b> Dimensional Modelling</a><ul>
 <li class="chapter" data-level="6.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>6.1</b> Introduction to Dimensional Data</a><ul>
@@ -265,9 +269,9 @@ homes %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
             <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##      diff_perm   diff_orig
-##          &lt;dbl&gt;       &lt;dbl&gt;
-## 1 -0.007828723 0.009058431</code></pre>
+##      diff_perm    diff_orig
+##          &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.007828723 -2.96867e-06</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 x 2
@@ -288,12 +292,12 @@ homes %&gt;%
 ## # Groups:   Gender [2]
 ##   Gender HomeOwn HomeOwn_perm
 ##   &lt;fctr&gt;  &lt;fctr&gt;       &lt;fctr&gt;
-## 1   male    Rent          Own
-## 2   male    Rent          Own
+## 1   male    Rent         Rent
+## 2   male    Rent         Rent
 ## 3 female     Own         Rent
 ## 4   male     Own          Own
-## 5   male     Own          Own
-## 6   male     Own          Own</code></pre>
+## 5   male     Own         Rent
+## 6   male     Own         Rent</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
 ##  female:4890   Own  :6425   Own  :6425  
@@ -307,17 +311,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6635992 0.6654397
-## 2   male     0.6594774 0.6576109</code></pre>
+## 1 female     0.6701431 0.6654397
+## 2   male     0.6528411 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##      diff_perm    diff_orig
-##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.004121787</code></pre>
+##      diff_perm diff_orig
+##          &lt;dbl&gt;     &lt;dbl&gt;
+## 1 -0.007828723 -0.017302</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">4.3</span> Density Plots</h2>

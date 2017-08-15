@@ -142,7 +142,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Exploratory Data Analysis</a><ul>
 <li class="chapter" data-level="5.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>5.1</b> Categorical Data</a></li>
 <li class="chapter" data-level="5.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>5.2</b> Numerical Data</a></li>
-<li class="chapter" data-level="5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>5.3</b> Numerical Summaries</a></li>
+<li class="chapter" data-level="5.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>5.3</b> Numerical Summaries</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#transformations"><i class="fa fa-check"></i><b>5.3.1</b> Transformations</a></li>
+<li class="chapter" data-level="5.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#outliers"><i class="fa fa-check"></i><b>5.3.2</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#email-case-study"><i class="fa fa-check"></i><b>5.4</b> Email Case Study</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>6</b> Dimensional Modelling</a><ul>
 <li class="chapter" data-level="6.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>6.1</b> Introduction to Dimensional Data</a><ul>
@@ -479,6 +483,163 @@ gap2007 %&gt;%
 ##   `median(pop)` `IQR(pop)`
 ##           &lt;dbl&gt;      &lt;dbl&gt;
 ## 1      10517531   26702008</code></pre>
+<div id="transformations" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Transformations</h3>
+<p>In some data, there are different ‘humps’ in the distribution, which are calls the modes or the modality of the dataset</p>
+<ul>
+<li><strong>Unimode</strong> - single mean, this is a normal distribtion</li>
+<li><strong>Bimodal</strong> - two common distributions</li>
+<li><strong>Multimodal</strong> - three modes or more</li>
+</ul>
+<p>We also should consider whether the distribution is skewed. Right skewed data has a long tail to the right, with the majority of the distribution to the left - we often see this with income distributions. Left skewed has a small number of observations to the left and the majoirty of the distribution to the right. A normal distribution is typically smyterical.</p>
+<p>Highly skewed distributions can make it very difficult to learn anything from a visualization. Transformations can be helpful in revealing the more subtle structure.</p>
+<p>Here you’ll focus on the population variable, which exhibits strong right skew, and transform it with the natural logarithm function (log() in R).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create density plot of old variable</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> pop)) +
+<span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transform the skewed pop variable</span>
+gap2007 &lt;-<span class="st"> </span>gap2007 %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_pop =</span> <span class="kw">log</span>(pop))
+
+<span class="co"># Create density plot of new variable</span>
+gap2007 %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> log_pop)) +
+<span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+</div>
+<div id="outliers" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Outliers</h3>
+<p>It is often useful within a dataset to identify, using a column, whether the data is an outlier, this can be done by using the mutate function e.g. df &lt;- df %&gt;% mutate(is_outlier &gt; value), then filtering and arranging the resulting table e.g. df %&gt;% filter(is_outlier) %&gt;% arrange(desc(value)). We can also use this outlier column to remove the values from a plot e.g. df %&gt;% filter(!is_outlier) %&gt;% ggplot … The determination of the outlier value might be arbitary, or you could use a percentile value (say top or bottom 2%).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Filter for Asia, add column indicating outliers</span>
+gap_asia &lt;-<span class="st"> </span>gap2007 %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(continent ==<span class="st"> &quot;Asia&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">is_outlier =</span> lifeExp &lt;<span class="dv">50</span>)
+
+<span class="co"># Remove outliers, create box plot of lifeExp</span>
+gap_asia %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(!is_outlier) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> lifeExp)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+</div>
+<div id="email-case-study" class="section level2">
+<h2><span class="header-section-number">5.4</span> Email Case Study</h2>
+<p>The example EDA comes from manually classified 3,900+ emails from the openintro package. Is there an association between spam and the length of an email? You could imagine a story either way:</p>
+<ul>
+<li>Spam is more likely to be a short message tempting me to click on a link, or *My normal email is likely shorter since I exchange brief emails with my friends all the time.</li>
+</ul>
+<p>Here, you’ll use the email dataset to settle that question. Begin by bringing up the help file and learning about all the variables with ?email.</p>
+<p>As you explore the association between spam and the length of an email, use this opportunity to try out linking a dplyr chain with the layers in a ggplot2 object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(openintro)</code></pre></div>
+<pre><code>## Please visit openintro.org for free statistics materials</code></pre>
+<pre><code>## 
+## Attaching package: &#39;openintro&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     cars</code></pre>
+<pre><code>## The following object is masked from &#39;package:datasets&#39;:
+## 
+##     cars</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute summary statistics</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(spam) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>(<span class="kw">median</span>(num_char), <span class="kw">IQR</span>(num_char))</code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##    spam `median(num_char)` `IQR(num_char)`
+##   &lt;dbl&gt;              &lt;dbl&gt;           &lt;dbl&gt;
+## 1     0                6.8            13.6
+## 2     1                1.0             2.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create plot</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_num_char =</span> <span class="kw">log</span>(num_char)) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(spam), <span class="dt">y =</span> log_num_char)) +
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Let’s look at a more obvious indicator of spam: exclamation marks. exclaim_mess contains the number of exclamation marks in each message. Using summary statistics and visualization, see if there is a relationship between this variable and whether or not a message is spam.</p>
+<p>Note: when computing the log(0) is -Inf in R, which isn’t a very useful value! You can get around this by adding a small number (like .01) to the quantity inside the log() function. This way, your value is never zero. This small shift to the right won’t affect your results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute center and spread for exclaim_mess by spam</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(spam) %&gt;%
+<span class="st">  </span><span class="kw">summarise</span>(<span class="kw">mean</span>(exclaim_mess), <span class="kw">sd</span>(exclaim_mess))</code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##    spam `mean(exclaim_mess)` `sd(exclaim_mess)`
+##   &lt;dbl&gt;                &lt;dbl&gt;              &lt;dbl&gt;
+## 1     0                  6.5                 48
+## 2     1                  7.3                 80</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create plot for spam and exclaim_mess</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="kw">log</span>(exclaim_mess)+<span class="fl">0.1</span>)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>() +
+<span class="st">  </span><span class="kw">facet_wrap</span>( ~<span class="st"> </span>spam) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of exclamation marks by not-spam vs spam&quot;</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 1435 rows containing non-finite values (stat_bin).</code></pre>
+<p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>If it was difficult to work with the heavy skew of exclaim_mess, the number of images attached to each email (image) poses even more of a challenge.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(email$image)</code></pre></div>
+<pre><code>## 
+##    0    1    2    3    4    5    9   20 
+## 3811   76   17   11    2    2    1    1</code></pre>
+<p>Recall that this tabulates the number of cases in each category (so there were 3811 emails with 0 images, for example). Given the very low counts at the higher number of images, let’s collapse image into a categorical variable that indicates whether or not the email had at least one image. In this exercise, you’ll create this new variable and explore its association with spam.</p>
+<p>** Here we deal with zero inflation** by converting the many zero values and the non zeros in to a categorical variable. There are other strategies, such as doing analysis on these two groups seperatley.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create plot of proportion of spam by image</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">has_image =</span> image &gt;<span class="st"> </span><span class="dv">0</span>) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> has_image, <span class="dt">fill =</span> <span class="kw">factor</span>(spam))) +
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Sometimes it is neccessary to check if our understanding of the data and how it has been created is correct and if the values we expect are in fact true.</p>
+<p>In this instance, we check first if the number of charecters in the email is greater than zero (which it should be), then secondly whether images count as attachments using a boolean operator. If image is never greater than attach, we can infer that images are counted as attachments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Verify that all emails have non-negative values for num_char</span>
+<span class="kw">sum</span>(email$num_char &lt;<span class="st"> </span><span class="dv">0</span>)</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test if images count as attachments</span>
+<span class="kw">sum</span>(email$images &gt;=<span class="st"> </span>email$attach)</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>When you have a specific question about a dataset, you can find your way to an answer by carefully constructing the appropriate chain of R code. For example, consider the following question:</p>
+<blockquote>
+<p>“Within non-spam emails, is the typical length of emails shorter for those that were sent to multiple people?”</p>
+</blockquote>
+<p>This can be answered with the following chain:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">email %&gt;%
+<span class="st">   </span><span class="kw">filter</span>(spam ==<span class="st"> &quot;not-spam&quot;</span>) %&gt;%
+<span class="st">   </span><span class="kw">group_by</span>(to_multiple) %&gt;%
+<span class="st">   </span><span class="kw">summarize</span>(<span class="kw">median</span>(num_char))</code></pre></div>
+<pre><code>## # A tibble: 0 x 2
+## # ... with 2 variables: to_multiple &lt;dbl&gt;, median(num_char) &lt;lgl&gt;</code></pre>
+<p>The code makes it clear that you are using num_char to measure the length of an email and median() as the measure of what is typical. If you run this code, you’ll learn that the answer to the question is “yes”: the typical length of non-spam sent to multiple people is a bit lower than those sent to only one person.</p>
+<p>This chain concluded with summary statistics, but others might end in a plot; it all depends on the question that you’re trying to answer.</p>
+<blockquote>
+<p>For emails containing the word “dollar”, does the typical spam email contain a greater number of occurrences of the word than the typical non-spam email? Create a summary statistic that answers this question. If you encounter an email with greater than 10 occurrences of the word “dollar”, is it more likely to be spam or not-spam? Create a barchart that answers this question.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Question 1</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(dollar &gt;<span class="st"> </span><span class="dv">0</span>) %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(spam) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">median</span>(dollar))</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##    spam `median(dollar)`
+##   &lt;dbl&gt;            &lt;dbl&gt;
+## 1     0                4
+## 2     1                2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Question 2</span>
+email %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(dollar &gt;<span class="st"> </span><span class="dv">10</span>) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> spam)) +
+<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Turn your attention to the variable called number. To explore the association between this variable and spam, select and construct an informative plot. For illustrating relationships between categorical variables, you’ve seen</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Reorder levels</span>
+email$number &lt;-<span class="st"> </span><span class="kw">factor</span>(email$number, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;small&quot;</span>, <span class="st">&quot;big&quot;</span>))
+
+<span class="co"># Construct plot of number</span>
+<span class="kw">ggplot</span>(email, <span class="kw">aes</span>(<span class="dt">x =</span> number)) +
+<span class="st">  </span><span class="kw">geom_bar</span>() +
+<span class="st">  </span><span class="kw">facet_wrap</span>(~<span class="st"> </span>spam)</code></pre></div>
+<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 
 </div>
 </div>

@@ -29,7 +29,7 @@ The course goes on to say that idea behind statistical inference is to understan
 
 We can then generate a distribution (histogram) of differences, assuming the null hypothesis - that there is no link between drug effectiveness between a test group and a control group - is true. *"Generating a distribution of the statistic from the null population gives information about whether the observed data are inconsistent with the null hypothesis"*. That is to say, by taking repeated samples and creating a distribution, we can then say whether our observed difference is consistent (within an acceptable value range due to chance) to the null hypothesis. The null samples consist of randomly shuffled drug effectiveness variables (permuted samples from the population), so that the samples don't have any dependency between the two groups and effectiveness. 
 
-##Home Ownership by Gender
+## Home Ownership by Gender
 
 Data used in the exercises are from NHANES 2009-2012 With Adjusted Weighting.
 
@@ -95,9 +95,9 @@ homes %>%
 
 ```
 ## # A tibble: 1 x 2
-##      diff_perm   diff_orig
-##          <dbl>       <dbl>
-## 1 -0.007828723 0.009058431
+##      diff_perm    diff_orig
+##          <dbl>        <dbl>
+## 1 -0.007828723 -2.96867e-06
 ```
 
 It is easier to see what is going on by breaking the results down iteratively.  Our selected and filtered homes dataset looks like. 
@@ -134,12 +134,12 @@ tail(homes2)
 ## # Groups:   Gender [2]
 ##   Gender HomeOwn HomeOwn_perm
 ##   <fctr>  <fctr>       <fctr>
-## 1   male    Rent          Own
-## 2   male    Rent          Own
+## 1   male    Rent         Rent
+## 2   male    Rent         Rent
 ## 3 female     Own         Rent
 ## 4   male     Own          Own
-## 5   male     Own          Own
-## 6   male     Own          Own
+## 5   male     Own         Rent
+## 6   male     Own         Rent
 ```
 
 ```r
@@ -167,8 +167,8 @@ homes3
 ## # A tibble: 2 x 3
 ##   Gender prop_own_perm  prop_own
 ##   <fctr>         <dbl>     <dbl>
-## 1 female     0.6635992 0.6654397
-## 2   male     0.6594774 0.6576109
+## 1 female     0.6701431 0.6654397
+## 2   male     0.6528411 0.6576109
 ```
 
 FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.
@@ -183,12 +183,12 @@ homes4
 
 ```
 ## # A tibble: 1 x 2
-##      diff_perm    diff_orig
-##          <dbl>        <dbl>
-## 1 -0.007828723 -0.004121787
+##      diff_perm diff_orig
+##          <dbl>     <dbl>
+## 1 -0.007828723 -0.017302
 ```
 
-##Density Plots
+## Density Plots
 Next we can make multiple permutations using the rep_sample_n from the oilabs package.  We specify  the data (tbl), the sample size, the number of samples to take (reps), and whether sampling should be done with or without replacement (replace). The output includes a new column, replicate, which indicates the sample number. We can create 100 permutations and create a dot plot of the results.
 
 
@@ -261,7 +261,7 @@ So in this instance, when we set the seed of 666 we end up with 20.5% of randoml
 >__We fail to reject the null hypothesis:__
 > There is no evidence that our data are inconsistent with the null hypothesis
 
-##Gender Discrimination (p-values)
+## Gender Discrimination (p-values)
 
 In this section we use data from @Rosen1974, where 48 male bank supervisors were given personnel files and asked if they should be promoted to Branch Manager. All files were identical, but half (24) were named as female, and the other half (24) were named male.  The results showed 21 males were promoted and 14 females, meaning 35  of the total 48 were promoted. In @Rosen1974 sex was given along with an indication of the difficulty - routine or complex - here we only look at the routine promotion candidates.  Do we know if gender is a statistically significant factor?  
 
@@ -397,7 +397,7 @@ With 100 shuffles our p-value is 0.03, and with 10,000 shuffles our p-value is 0
 
 Indeed since the @Rosen1974 study, many further studies have been undertaken and found a similar pattern of discrimination.
 
-##Opportunity Cost
+## Opportunity Cost
 
 In @Frederick2009 their study showed that when potential purchasers were reminded that if they did not buy a particular DVD they could instead save the money, when compared to a control group who were just told they could not buy the DVD, those being reminded of the saving appeared to be more inclined not to make the purchase - 34 in the treatment group did not buy compared to 19 in the control.  So our test is setup as:
 
@@ -465,7 +465,7 @@ And finally, we can calculate the p-value
 
 In this instance, of p-value is substantially less than the usual critical value - 0.8% versus the usual value of 5% - so we can can reject the null hypthesis as there is evidence that our data are inconsistent with the null hypothesis.  Our results would only occur 8 times in 1000 by chance.  We can therefore accept the alternative hypothesis ($H_{A}$) that reminding students does cause them to be less likely to buy a DVD, as they were randomly assigned to the treatment and control groups, therefore any difference is due to the reminder to save.  Who can we therefore make the inference to?  Our sample was drawn from the student population for the @Frederick2009 study, so we would be able to generalise to that student population however defined, but not to another wider population.
 
-##Type I and Type II errors
+## Type I and Type II errors
 
 In our research and conslusions there is a risk that we will be incorrect, we will make an error.  The two errors are:
 
@@ -479,7 +479,7 @@ Type I: There is not a difference in proportions, but the observed difference is
 
 Type II: There is a difference in proportions, but the observed difference is not large enough to indicate that the proportions are different.
 
-##Bootstrapping
+## Bootstrapping
 
 Sometimes we are not neccessarily interested in testing a hypothesis, we are instead interested in making a claim about how our sample can be inferred to a large population.  To do so we use confidece intervals.  When calculating confidence intervals there is no null hypothesis like in hypothesis testing.  We need to understand how samples from our population vary around the parameter of interest.  In an ideal world we would take many samples from the population or know what the true value is in the population, but realistically this is not possible, so we use booststrapping.
 
