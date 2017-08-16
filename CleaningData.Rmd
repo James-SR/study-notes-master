@@ -1,0 +1,162 @@
+# Cleaning Data
+***
+Notes taken during/inspired by the Datacamp course 'Cleaning Data in R' by Nick Carchedi.
+
+## Tidying data
+
+In Hadley's paper on tidy data, he talked about how columns in a data frame should be variables or attributes and rows should be observations - this somestimes does not happen if there are things like dummy variables as columns, that could be collpased in to a single column.  The entire data table (data frame) should be about one particular set of data i.e. we have countries without an embedded table about cats.  
+
+Hadley introduced the tidyr package to try and help clean some data.  There are two fundamental verbs of data tidying:
+
+* **gather()** takes multiple columns, and gathers them into key-value pairs: it makes “wide” data longer
+
+* **spread()** takes two columns (key & value) and spreads in to multiple columns, it makes “long” data wider
+
+> gather(data, key, value ...)
+
+**data**: is a data frame
+
+**key**: the name of the new key column
+
+**value**: the name of the new value column
+
+**...**: names of columns to gather or not (if not, state -col e.g. -time to not include the time column in the gathered table)
+
+
+> spread(data, key, value)
+
+**data**: is a data frame
+
+**key**: the name containing the key column
+
+**value**: the name containing the value column
+
+```{r, evalu = FALSE}
+
+# Apply gather() to bmi and save the result as bmi_long
+bmi_long <- gather(bmi, year, bmi_value, -Country)
+
+# Apply spread() to bmi_long
+bmi_wide <- spread(bmi_long, year, bmi_val)
+
+```
+
+Another useful feature is separate().  This takes a single variable and separates it into two separate columns or variable, for instance converting a year-month (2015-10) into a separate column for year and month.
+
+> separate(data, col, into, sep = "")
+
+**data**: a data frame
+
+**col**: bare name of column to separate
+
+**into**: charecter vector of new column names
+
+**Optional sep = ""**: in the separate command you can designate on what item (/, @ etc) to break the data by.  This is optional and can depend on the column type (numeric vs char)
+
+```{r, eval = FALSE}
+
+# separate year-mo into two columns
+separate(treatments, year_mo, c("year", "month"))
+
+```
+
+We can also use the unite function to combine two columns together
+
+> unite(data, col, ...)
+
+**data**: a data frame
+
+**col**: name of the new column
+
+**...**: columns to unite
+
+The default seperator within the new column is an underscore, however we can specify something different
+
+**Optional sep = "-"**: would add the seperator as a hyphen
+
+head(bmi_cc)
+             Country_ISO  year  bmi_val
+1         Afghanistan/AF Y1980 21.48678
+2             Albania/AL Y1980 25.22533
+3             Algeria/DZ Y1980 22.25703
+4             Andorra/AD Y1980 25.66652
+5              Angola/AO Y1980 20.94876
+6 Antigua and Barbuda/AG Y1980 23.31424
+
+So to separate Country_ISO into two columns
+
+```{r, eval = FALSE}
+
+# Apply separate() to bmi_cc
+bmi_cc_clean <- separate(bmi_cc, col = Country_ISO, into = c("Country", "ISO"), sep = "/")
+
+# Apply unite() to bmi_cc_clean aand reverse
+bmi_cc <- unite(bmi_cc_clean, Country_ISO, Country, ISO, sep = "-")
+
+```
+
+## Preparing data for analysis
+
+Often we need to convert, or in the case of raw data, create the appropriate data type for each variable prior to analysis.  Some common data types include
+
+* **character**: "treatment", "123", "A"
+* **numeric**: 23.44, 120, NaN, Inf
+* **integer**: 4L, 1123L
+* **factor**: factor("Hello"), factor(8)
+* **logical**: TRUE, FALSE, NA
+
+We can use the class() function to detmine the variable type, or we can also include a value to determine the appropriate type e.g. class(77L) will return [1] "integer".  
+
+We can also use the coercion functions to change the types, such as as.numeric, as.factor() and as.character().
+
+For dates and times, we can use the lubridate package.
+
+```{r, eval = FALSE}
+# Load the lubridate package
+library(lubridate)
+
+# Parse as date
+dmy("17 Sep 2015")
+
+# Parse as date and time (with no seconds!)
+mdy_hm("July 15, 2012 12:56")
+
+# Coerce dob to a date (with no time)
+students2$dob <- ymd(students2$dob)
+
+# Coerce nurse_visit to a date and time
+students2$nurse_visit <- ymd_hms(students2$nurse_visit)
+```
+
+## String manipulation
+
+Another useful package is stringr, which like lubridate and other Hadley packages has a consistent interface, providing a range of functions for dealing with strings.  Some functions include
+
+* **str_trim()** - Trim leading and trailing white space
+* **str_pad()** - Pad with additional characters
+* **str_detect()** - Detect a pattern
+* **str_replace()** - Find and replace a pattern
+
+```{r, eval = FALSE}
+# Load the stringr package
+library(stringr)
+
+# Trim all leading and trailing whitespace
+str_trim(c("   Filip ", "Nick  ", " Jonathan"))
+
+# Pad these strings with leading zeros
+str_pad(c("23485W", "8823453Q", "994Z"), width = 9, side = "left", pad = 0)
+
+# Detect all dates of birth (dob) in 1997
+str_detect(students2$dob, "1997")
+
+# In the sex column, replace "F" with "Female"...
+students2$sex <-  str_replace(students2$sex, "F", "Female")
+
+# ...And "M" with "Male"
+students2$sex <- str_replace(students2$sex, "M", "Male"
+```
+
+R {base} also has some handy features for strings, including toupper() and tolower().
+
+
