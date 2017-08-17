@@ -160,3 +160,24 @@ students2$sex <- str_replace(students2$sex, "M", "Male"
 R {base} also has some handy features for strings, including toupper() and tolower().
 
 
+## Missing, Specials and Outliers 
+
+Generally missing values in R are represented by NA.  However, if the data has been imported from other systems, the values can be different, such as a . (dot) if imported from SPSS.  
+
+We can use the is.na(df) to return a TRUE/FALSE array of where there are NA values in a data frame.  Or, for large datasets, we can use the any(is.na(df)) to return a true or false if there is an NA anywhere in the data frame.  
+
+Alternatively we can use the sum(is.na(df)) to count how many NAs are in the dataframe.  Use complete.cases() to see which rows have no missing values.
+
+Special values include inf for infinite value, NaN for Not a number.
+
+Outliers are best detected by measures such as the IQR or other nuemrical measures (see the EDA section), by using a boxplot or a histogram/density plot.  There are a number of likely reasons for an outlier:
+
+*Valid measurements
+*Variability in measurement
+*Experimental error
+*Data entry error
+
+May be discarded or retained depending on cause.  In some instances we may want to cap, or put a limit on, the maximum number the outlier can.  Looking at the actual values and considering possible values can help, for instance negative age values or a perons age above 200 are not plausible values.  However, they may be data entry errors or in the case of negative numbers, represent a deliberately coded missing value.
+
+
+
