@@ -154,7 +154,7 @@ str_detect(students2$dob, "1997")
 students2$sex <-  str_replace(students2$sex, "F", "Female")
 
 # ...And "M" with "Male"
-students2$sex <- str_replace(students2$sex, "M", "Male"
+students2$sex <- str_replace(students2$sex, "M", "Male")
 ```
 
 R {base} also has some handy features for strings, including toupper() and tolower().
@@ -179,5 +179,70 @@ Outliers are best detected by measures such as the IQR or other nuemrical measur
 
 May be discarded or retained depending on cause.  In some instances we may want to cap, or put a limit on, the maximum number the outlier can.  Looking at the actual values and considering possible values can help, for instance negative age values or a perons age above 200 are not plausible values.  However, they may be data entry errors or in the case of negative numbers, represent a deliberately coded missing value.
 
+## Examples
 
+The weather dataset suffers from one of the five most common symptoms of messy data: column names are values. In particular, the column names X1-X31 represent days of the month, which should really be values of a new variable called day.
+
+head(weather)
+  X year month           measure X1 X2 X3 X4 X5 X6 X7 X8 X9 X10 X11 X12 X13 X14
+1 1 2014    12  Max.TemperatureF 64 42 51 43 42 45 38 29 49  48  39  39  42  45
+2 2 2014    12 Mean.TemperatureF 52 38 44 37 34 42 30 24 39  43  36  35  37  39
+3 3 2014    12  Min.TemperatureF 39 33 37 30 26 38 21 18 29  38  32  31  32  33
+4 4 2014    12    Max.Dew.PointF 46 40 49 24 37 45 36 28 49  45  37  28  28  29
+
+```{r, eval = FALSE}
+# Load the tidyr package
+library(tidyr)
+
+# Gather the columns
+weather2 <- gather(weather, day, value, X1:X31, na.rm = TRUE)
+
+```
+
+becomes
+
+head(weather2)
+  X year month           measure day value
+1 1 2014    12  Max.TemperatureF  X1    64
+2 2 2014    12 Mean.TemperatureF  X1    52
+3 3 2014    12  Min.TemperatureF  X1    39
+4 4 2014    12    Max.Dew.PointF  X1    46
+5 5 2014    12    MeanDew.PointF  X1    40
+6 6 2014    12     Min.DewpointF  X1    26
+
+Our data suffer from a second common symptom of messy data: values are variable names. Specifically, values in the measure column should be variables (i.e. column names) in our dataset.  WE also have an additional column (X) which is not needed.
+
+```{r, eval = FALSE}
+# First remove column of row names
+weather2 <- weather2[, -1]
+
+# Spread the data
+weather3 <- spread(weather2, measure, value)
+```
+
+head(weather3)
+  year month day CloudCover    Events Max.Dew.PointF Max.Gust.SpeedMPH
+1 2014    12  X1          6      Rain             46                29
+2 2014    12  X2          7 Rain-Snow             40                29
+3 2014    12  X3          8      Rain             49                38
+4 2014    12  X4          3                       24                33
+5 2014    12  X5          5      Rain             37                26
+6 2014    12  X6          8      Rain             45                25
+...
+
+Now that the weather dataset adheres to tidy data principles, the next step is to prepare it for analysis. We'll start by combining the year, month, and day columns and recoding the resulting character column as a date. We can use a combination of base R, stringr, and lubridate to accomplish this task.
+
+```{r}
+# Remove X's from day column
+weather3$day <- str_replace(weather3$day, "X", "")
+
+# Unite the year, month, and day columns
+weather4 <- unite(weather3, date, year, month, day, sep = "-")
+
+# Convert date column to proper date format using lubridates's ymd()
+weather4$date <- ymd(weather4$date)
+
+# Rearrange columns using dplyr's select()
+weather5 <- select(weather4, date, Events, CloudCover:WindDirDegrees)
+```
 
