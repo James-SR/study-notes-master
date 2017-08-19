@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="dimensional-modelling.html">
-
+<link rel="prev" href="exploratory-data-analysis.html">
+<link rel="next" href="dimensional-modelling.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -192,39 +192,82 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references-3" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="correlation-and-regression" class="section level1">
+<h1><span class="header-section-number">7</span> Correlation and Regression</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Correlation and Regression’ by Ben Baumer.</p>
+<div id="visualizing-two-variables" class="section level2">
+<h2><span class="header-section-number">7.1</span> Visualizing two variables</h2>
+<p>Some common terminology of data includes</p>
+<ul>
+<li>Response variable a.k.a. y, dependent (usually on the vertical axis if using a scatter plot)</li>
+<li>Explanatory variable, something you think might be related to the response a.k.a. x, independent, predictor (usually on the horizontal axis)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(openintro)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(dplyr)
 
-<div id="refs" class="references">
-<div>
-<p>Diez, D., C. Barr, and M. Cetinkaya-Rundel. 2015. <em>OpenIntro Statistics</em>. 3rd Edition. <a href="www.openintro.org" class="uri">www.openintro.org</a>.</p>
+<span class="co"># load the data</span>
+<span class="kw">data</span>(ncbirths)
+
+<span class="co"># Scatterplot of weight vs. weeks</span>
+<span class="kw">ggplot</span>(ncbirths, <span class="kw">aes</span>(weeks, weight)) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>If it is helpful, you can think of boxplots as scatterplots for which the variable on the x-axis has been discretized.</p>
+<p>The cut() function takes two arguments: the continuous variable you want to discretize and the number of breaks that you want to make in that continuous variable in order to discretize it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Boxplot of weight vs. weeks</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> ncbirths, 
+       <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">cut</span>(weeks, <span class="dt">breaks =</span> <span class="dv">5</span>), <span class="dt">y =</span> weight)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="transformations-1" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Transformations</h3>
+<p>Here the relationship is hard to see.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mammals)
+<span class="co"># Mammals scatterplot</span>
+<span class="kw">ggplot</span>(mammals, <span class="kw">aes</span>(BodyWt, BrainWt)) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>The relationship between two variables may not be linear. In these cases we can sometimes see strange and even inscrutable patterns in a scatterplot of the data. Sometimes there really is no meaningful relationship between the two variables. Other times, a careful transformation of one or both of the variables can reveal a clear relationship.</p>
+<p>ggplot2 provides several different mechanisms for viewing transformed relationships. The coord_trans() function transforms the coordinates of the plot. Alternatively, the scale_x_log10() and scale_y_log10() functions perform a base-10 log transformation of each axis. Note the differences in the appearance of the axes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scatterplot with coord_trans()</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mammals, <span class="kw">aes</span>(<span class="dt">x =</span> BodyWt, <span class="dt">y =</span> BrainWt)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_trans</span>(<span class="dt">x =</span> <span class="st">&quot;log10&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;log10&quot;</span>)</code></pre></div>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scatterplot with scale_x_log10() and scale_y_log10()</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> mammals, <span class="kw">aes</span>(<span class="dt">x =</span> BodyWt, <span class="dt">y =</span> BrainWt)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +
+<span class="st">  </span><span class="kw">scale_x_log10</span>() +<span class="st"> </span><span class="kw">scale_y_log10</span>()</code></pre></div>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 </div>
-<div>
-<p>Frederick, S., N. Novemsky, J. Wang, R. Dhar, and S. Nowlis. 2009. “Opportunity Cost Neglect.” <em>Journal of Consumer Research</em> 36 (4): 553–61.</p>
-</div>
-<div>
-<p>Huberty, Carl J. 1993. “Historical Origins of Statistical Testing Practices.” <em>The Journal of Experimental Education</em> 61 (4): 317–33.</p>
-</div>
-<div>
-<p>Inmon, W. 2000. “The Problem with Dimensional Modeling.” <em>DM Review</em>. <a href="http://www.information-management.com/issues/20000501/2184-1.html" class="uri">http://www.information-management.com/issues/20000501/2184-1.html</a>.</p>
-</div>
-<div>
-<p>James, G., D. Witten, T. Hastie, and R. Tibshirani. 2013. <em>An Introduction to Statistical Learning</em>. 6th Printing. London: Springer. <a href="http://www-bcf.usc.edu/~gareth/ISL/" class="uri">http://www-bcf.usc.edu/~gareth/ISL/</a>.</p>
-</div>
-<div>
-<p>Kimball, R., and M. Ross. 2013. <em>Data Warehouse Toolkit, the: The Definitive Guide to Dimensional Modeling</em>. 3rd Edition. Indianapolis: John Wiley &amp; Sons, Inc.</p>
-</div>
-<div>
-<p>Meridith, R. 2017. “FIT5195 - Business Intelligence and Data Warehousing.” Melbourne: Monash University. <a href="http://podcast.infotech.monash.edu.au/fit5195/" class="uri">http://podcast.infotech.monash.edu.au/fit5195/</a>.</p>
-</div>
-<div>
-<p>Rosen, B., and T. Jerdee. 1974. “Influence of Sex Role Stereotypes on Personnel Decisions.” <em>Journal of Applied Psychology</em> 59 (1): 9–14.</p>
-</div>
-<div>
-<p>Schnider, D., A. Martino, and M. Eschermann. 2014. “Comparison of Data Modeling Methods for a Core Data Warehouse.” <em>Trivadis White Paper</em>. <a href="https://www.trivadis.com/sites/default/files/downloads/Comparison_DWH_Core_Modeling.pdf" class="uri">https://www.trivadis.com/sites/default/files/downloads/Comparison_DWH_Core_Modeling.pdf</a>.</p>
-</div>
-<div>
-<p>Sharda, R., D. Delan, and E. Turban. 2014. <em>Business Intelligence and Analytics - Systems for Decision Support</em>. 10th Edition. Harlow: Pearson Education Limited.</p>
+<div id="identifying-outliers" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> Identifying Outliers</h3>
+<p>It is clear here, using the Using the mlbBat10 dataset, a scatterplot illustrates how the slugging percentage (SLG) of a player varies as a function of his on-base percentage (OBP).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;mlbBat10&quot;</span>)
+<span class="co"># Baseball player scatterplot</span>
+<span class="kw">ggplot</span>(mlbBat10, <span class="kw">aes</span>(OBP, SLG)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Most of the points are clustered in the lower left corner of the plot, making it difficult to see the general pattern of the majority of the data. This difficulty is caused by a few outlying players whose on-base percentages (OBPs) were exceptionally high. These values are present in our dataset only because these players had very few batting opportunities.</p>
+<p>Both OBP and SLG are known as rate statistics, since they measure the frequency of certain events (as opposed to their count). In order to compare these rates sensibly, it makes sense to include only players with a reasonable number of opportunities, so that these observed rates have the chance to approach their long-run frequencies.</p>
+<p>In Major League Baseball, batters qualify for the batting title only if they have 3.1 plate appearances per game. This translates into roughly 502 plate appearances in a 162-game season. The mlbBat10 dataset does not include plate appearances as a variable, but we can use at-bats (AB) – which constitute a subset of plate appearances – as a proxy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scatterplot of SLG vs. OBP</span>
+mlbBat10 %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(AB &gt;=<span class="st"> </span><span class="dv">200</span>) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> OBP, <span class="dt">y =</span> SLG)) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="CorrelationAndRegression_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Identify the outlying player</span>
+mlbBat10 %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(AB &gt;=<span class="st"> </span><span class="dv">200</span>, OBP &lt;<span class="st"> </span><span class="fl">0.2</span>)</code></pre></div>
+<pre><code>##     name team position  G  AB  R  H 2B 3B HR RBI TB BB SO SB CS   OBP
+## 1 B Wood  LAA       3B 81 226 20 33  2  0  4  14 47  6 71  1  0 0.174
+##     SLG   AVG
+## 1 0.208 0.146</code></pre>
+
 </div>
 </div>
 </div>
@@ -233,8 +276,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="dimensional-modelling.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="exploratory-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dimensional-modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

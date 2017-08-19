@@ -473,7 +473,7 @@ resp
 
 ```
 ## Response [http://www.example.com/]
-##   Date: 2017-08-15 04:02
+##   Date: 2017-08-19 19:02
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -515,7 +515,7 @@ resp
 
 ```
 ## Response [http://www.omdbapi.com/?apikey=ff21610b&t=Annie+Hall&y=&plot=short&r=json]
-##   Date: 2017-08-15 04:02
+##   Date: 2017-08-19 19:02
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 902 B
@@ -652,38 +652,6 @@ str(wine)
 ##  $ alcohol_pct: num 12.4
 ##  $ color      : chr "red"
 ##  $ awarded    : logi FALSE
-```
-
-```r
-# Definition of quandl_url
-quandl_url <- "http://www.quandl.com/api/v1/datasets/IWS/INTERNET_INDIA.json?auth_token=i83asDsiWUUyfoypkgMz"
-
-# Import Quandl data: quandl_data
-quandl_data <- fromJSON(quandl_url)
-
-# Print structure of quandl_data
-str(quandl_data)
-```
-
-```
-## List of 17
-##  $ errors      : Named list()
-##  $ id          : int 2351831
-##  $ source_name : chr "Internet World Stats"
-##  $ source_code : chr "IWS"
-##  $ code        : chr "INTERNET_INDIA"
-##  $ name        : chr "India Internet Usage"
-##  $ urlize_name : chr "India-Internet-Usage"
-##  $ display_url : chr "http://www.internetworldstats.com/asia/in.htm"
-##  $ description : chr "Internet Usage and Population Statistics"
-##  $ updated_at  : chr "2016-01-01T04:23:55.235Z"
-##  $ frequency   : chr "annual"
-##  $ from_date   : chr "1998-12-31"
-##  $ to_date     : chr "2012-12-31"
-##  $ column_names: chr [1:4] "YEAR" "Users" "Population" "% Pen."
-##  $ premium     : logi FALSE
-##  $ data        : chr [1:13, 1:4] "2012-12-31" "2010-12-31" "2009-12-31" "2007-12-31" ...
-##  $ type        : chr "Time Series"
 ```
 
 There are two types of JSON structures

@@ -241,14 +241,6 @@ wine <- fromJSON(wine_json)
 # Print structure of wine
 str(wine)
 
-# Definition of quandl_url
-quandl_url <- "http://www.quandl.com/api/v1/datasets/IWS/INTERNET_INDIA.json?auth_token=i83asDsiWUUyfoypkgMz"
-
-# Import Quandl data: quandl_data
-quandl_data <- fromJSON(quandl_url)
-
-# Print structure of quandl_data
-str(quandl_data)
 ```
 
 There are two types of JSON structures
