@@ -135,3 +135,80 @@ Anscombe %>%
   summarize(N = n(), mean(x), sd(x), mean(y), sd(y), cor(x,y))
 ```
 
+## Linear Regression
+
+The simple linear regression model for a numeric response as a function of a numeric explanatory variable can be visualized on the corresponding scatterplot by a straight line. This is a "best fit" line that cuts through the data in a way that minimizes the distance between the line and the data points.
+
+We might consider linear regression to be a specific example of a larger class of smooth models. The geom_smooth() function allows you to draw such models over a scatterplot of the data itself. This technique is known as visualizing the model in the data space. The method argument to geom_smooth() allows you to specify what class of smooth model you want to see. Since we are exploring linear models, we'll set this argument to the value "lm".
+
+```{r}
+data(bdims)
+
+# Scatterplot with regression line
+ggplot(data = bdims, aes(x = hgt, y = wgt)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = TRUE)
+```
+
+Sometimes it is better to think of the model error as 'noise' which we might try to better incorporate by creating a better model.
+
+Two facts enable you to compute the slope b1 and intercept b0 of a simple linear regression model from some basic summary statistics.
+
+First, the slope can be defined as:
+
+b1=rX,Y⋅sYsX
+
+where rX,Y represents the correlation (cor()) of X and Y and sX and sY represent the standard deviation (sd()) of X and Y, respectively.
+
+Second, the point (x¯,y¯)is always on the least squares regression line, where x¯and y¯denote the average of x and y, respectively.
+
+The bdims_summary data frame contains all of the information you need to compute the slope and intercept of the least squares regression line for body weight (Y) as a function of height (X). 
+
+```{r}
+N <- c(1507)
+r <- c(0.7173011)
+mean_hgt <- c(171.1438)
+sd_hgt <- c(9.407205)
+mean_wgt <- c(69.14753)
+sd_wgt <- c(13.34576)
+bdims_summary <- data.frame(N, r, mean_hgt, sd_hgt, mean_wgt, sd_wgt)
+
+# Print bdims_summary
+bdims_summary
+
+# Add slope and intercept
+bdims_summary %>%
+  mutate(slope = r * sd_wgt / sd_hgt, 
+         intercept = mean_wgt - slope * mean_hgt)
+```
+
+### Regression to the Mean
+
+Regression to the mean is a concept attributed to Sir Francis Galton. The basic idea is that extreme random observations will tend to be less extreme upon a second trial. This is simply due to chance alone. While "regression to the mean" and "linear regression" are not the same thing, we will examine them together in this exercise.
+
+One way to see the effects of regression to the mean is to compare the heights of parents to their children's heights. While it is true that tall mothers and fathers tend to have tall children, those children tend to be less tall than their parents, relative to average. That is, fathers who are 3 inches taller than the average father tend to have children who may be taller than average, but by less than 3 inches.
+
+```{r}
+# Galton data fromhttp://www.math.uah.edu/stat/data/Galton.html
+Galton <- read.csv("Galton.csv")
+
+# Height of children vs. height of father
+Galton %>% 
+  filter(Gender == "M") %>%
+  ggplot(aes(x = Father, y = Height)) +
+    geom_point() + 
+    geom_abline(slope = 1, intercept = 0) + 
+    geom_smooth(method = "lm", se = FALSE)
+
+# Height of children vs. height of mother
+Galton %>% 
+  filter(Gender == "F") %>%
+  ggplot(aes(x = Mother, y = Height)) +
+    geom_point() + 
+    geom_abline(slope = 1, intercept = 0) + 
+    geom_smooth(method = "lm", se = FALSE)
+
+
+```
+
+
