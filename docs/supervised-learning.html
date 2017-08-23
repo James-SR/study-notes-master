@@ -443,13 +443,13 @@ dframe</code></pre></div>
 
 <span class="co"># Create the treatment plan</span>
 treatplan &lt;-<span class="st"> </span><span class="kw">designTreatmentsZ</span>(dframe, vars)</code></pre></div>
-<pre><code>## [1] &quot;desigining treatments Wed Aug 23 15:30:34 2017&quot;
-## [1] &quot;designing treatments Wed Aug 23 15:30:34 2017&quot;
-## [1] &quot; have level statistics Wed Aug 23 15:30:34 2017&quot;
-## [1] &quot;design var color Wed Aug 23 15:30:34 2017&quot;
-## [1] &quot;design var size Wed Aug 23 15:30:34 2017&quot;
-## [1] &quot; scoring treatments Wed Aug 23 15:30:34 2017&quot;
-## [1] &quot;have treatment plan Wed Aug 23 15:30:34 2017&quot;</code></pre>
+<pre><code>## [1] &quot;desigining treatments Wed Aug 23 16:18:27 2017&quot;
+## [1] &quot;designing treatments Wed Aug 23 16:18:27 2017&quot;
+## [1] &quot; have level statistics Wed Aug 23 16:18:27 2017&quot;
+## [1] &quot;design var color Wed Aug 23 16:18:27 2017&quot;
+## [1] &quot;design var size Wed Aug 23 16:18:27 2017&quot;
+## [1] &quot; scoring treatments Wed Aug 23 16:18:27 2017&quot;
+## [1] &quot;have treatment plan Wed Aug 23 16:18:27 2017&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Examine the scoreFrame</span>
 (scoreFrame &lt;-<span class="st"> </span>treatplan %&gt;%
 <span class="st">    </span>magrittr::<span class="kw">use_series</span>(scoreFrame) %&gt;%
@@ -767,7 +767,7 @@ elog %&gt;%<span class="st"> </span>
 <span class="st">   </span><span class="kw">summarize</span>(<span class="dt">ntrees.train =</span> <span class="kw">which.min</span>(elog$train_rmse_mean),   <span class="co"># find the index of min(train_rmse_mean)</span>
              <span class="dt">ntrees.test  =</span> <span class="kw">which.min</span>(elog$test_rmse_mean))   <span class="co"># find the index of min(test_rmse_mean)</span></code></pre></div>
 <pre><code>##   ntrees.train ntrees.test
-## 1          100          98</code></pre>
+## 1           97          87</code></pre>
 <p>In most cases, ntrees.test is less than ntrees.train. The training error keeps decreasing even after the test error starts to increase. It’s important to use cross-validation to find the right number of trees (as determined by ntrees.test) and avoid an overfit model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The number of trees to use, as determined by xgb.cv</span>
 ntrees &lt;-<span class="st"> </span><span class="dv">84</span>
@@ -812,6 +812,12 @@ bikesAugust %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Predicted August bike rentals, Gradient Boosting model&quot;</span>)</code></pre></div>
 <p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p>We can also plot the importance of the top factors</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">names &lt;-<span class="st"> </span><span class="kw">dimnames</span>(<span class="kw">data.matrix</span>(bikesJuly.treat[,-<span class="dv">1</span>]))[[<span class="dv">2</span>]]
+importance_matrix &lt;-<span class="st"> </span><span class="kw">xgb.importance</span>(names, <span class="dt">model =</span> bike_model_xgb)
+<span class="kw">xgb.plot.importance</span>(importance_matrix[<span class="dv">1</span>:<span class="dv">10</span>,])</code></pre></div>
+<p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Looking at the results indicates that the temperature and clear/partly cloudy and the two most important factors, followed by the windspeed. The other factors relate to the time of day - higher at commuting times (9-10 am and 6-7 pm) and lower at night (2 and 4 am).</p>
 
 </div>
 </div>

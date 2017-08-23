@@ -344,13 +344,13 @@ treatplan <- designTreatmentsZ(dframe, vars)
 ```
 
 ```
-## [1] "desigining treatments Wed Aug 23 15:30:34 2017"
-## [1] "designing treatments Wed Aug 23 15:30:34 2017"
-## [1] " have level statistics Wed Aug 23 15:30:34 2017"
-## [1] "design var color Wed Aug 23 15:30:34 2017"
-## [1] "design var size Wed Aug 23 15:30:34 2017"
-## [1] " scoring treatments Wed Aug 23 15:30:34 2017"
-## [1] "have treatment plan Wed Aug 23 15:30:34 2017"
+## [1] "desigining treatments Wed Aug 23 16:18:27 2017"
+## [1] "designing treatments Wed Aug 23 16:18:27 2017"
+## [1] " have level statistics Wed Aug 23 16:18:27 2017"
+## [1] "design var color Wed Aug 23 16:18:27 2017"
+## [1] "design var size Wed Aug 23 16:18:27 2017"
+## [1] " scoring treatments Wed Aug 23 16:18:27 2017"
+## [1] "have treatment plan Wed Aug 23 16:18:27 2017"
 ```
 
 ```r
@@ -784,7 +784,7 @@ elog %>%
 
 ```
 ##   ntrees.train ntrees.test
-## 1          100          98
+## 1           97          87
 ```
 
 In most cases, ntrees.test is less than ntrees.train. The training error keeps decreasing even after the test error starts to increase. It's important to use cross-validation to find the right number of trees (as determined by ntrees.test) and avoid an overfit model.
@@ -856,4 +856,15 @@ bikesAugust %>%
 
 <img src="SupervisedLearning_files/figure-html/unnamed-chunk-13-2.png" width="672" />
 
+We can also plot the importance of the top factors
 
+
+```r
+names <- dimnames(data.matrix(bikesJuly.treat[,-1]))[[2]]
+importance_matrix <- xgb.importance(names, model = bike_model_xgb)
+xgb.plot.importance(importance_matrix[1:10,])
+```
+
+<img src="SupervisedLearning_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+
+Looking at the results indicates that the temperature and clear/partly cloudy and the two most important factors, followed by the windspeed.  The other factors relate to the time of day - higher at commuting times (9-10 am and 6-7 pm) and lower at night (2 and 4 am).
