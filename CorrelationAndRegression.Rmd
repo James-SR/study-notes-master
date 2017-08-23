@@ -272,3 +272,96 @@ bdims_tidy <- augment(mod)
 glimpse(bdims_tidy)
 ```
 
+## Model fit
+
+One way to assess strength of fit is to consider how far off the model is for a typical case. That is, for some observations, the fitted value will be very close to the actual value, while for others it will not. The magnitude of a typical residual can give us a sense of generally how close our estimates are.
+
+However, recall that some of the residuals are positive, while others are negative. In fact, it is guaranteed by the least squares fitting procedure that the mean of the residuals is zero. Thus, it makes more sense to compute the square root of the mean squared residual, or root mean squared error (RMSERMSE). R calls this quantity the residual standard error.
+
+To make this estimate unbiased, you have to divide the sum of the squared residuals by the degrees of freedom in the model. 
+
+```{r}
+# View summary of model
+summary(mod)
+
+# Compute the mean of the residuals
+mean(residuals(mod))
+
+# Compute RMSE
+sqrt(sum(residuals(mod)^2) / df.residual(mod))
+```
+
+Another measure we can use is R squared, whihc is the he coefficient of determination.  This gives us the interpretation of R2 as the percentage of the variability in the response that is explained by the model, since the residuals are the part of that variability that remains unexplained by the model.  In the example above, our model has an r-squared value of 51.5%.  We can also calculate the R-squared value manually if desired.
+
+```{r}
+# Compute R-squared
+bdims_tidy %>%
+  summarize(var_y = var(wgt), var_e = var(.resid)) %>%
+  mutate(R_squared = 1 - var_e / var_y)
+```
+
+
+### Unusual points
+
+As the model tries to fit the data on average, some extreme values can overly influence the model.  We can quantify how much influence a particular point has by using the leverage, which is a measure for each observation as a function of the value of the explanatory variable and the mean of the explanatory variable.  Therefore points to the centre line have a low leverage score, whilst points far from the line have a higher leverage.  The explanatory variable y does not come in to effect. This can be calculated as the .hat value using augment() from broom.
+
+It is possible to have a value with a high leverage but a low overall impact on the model, if the point lies close to the line of the model.  In this case, the residual is small for the point.  Conversely, a point with a high leverage score and a high residual - a point laying a distance a way from other meaures and not predicted well by the model - does have an impact.We say such a point is influential.   Numerically we can use cooks distance (.cooksd)to quantify this influence, which can also be calculated using the augment() function from broom.
+
+```{r, message = FALSE}
+# Rank points of high leverage
+mod %>%
+  augment() %>%
+  arrange(desc(.hat)) %>%
+  head()
+
+# Rank influential points
+mod %>%
+  augment() %>%
+  arrange(desc(.cooksd)) %>%
+  head()
+
+```
+
+When you have such outlying variables, you need to decide what to do.  The main thing is to remove the variables from the model, but you need to consider the implications.  There are other statistical techniques (see the EDA Chapter) for removing outliers.  Think about whether the scope of the inference changes if you remove those values.
+
+Observations can be outliers for a number of different reasons. Statisticians must always be careful—and more importantly, transparent—when dealing with outliers. Sometimes, a better model fit can be achieved by simply removing outliers and re-fitting the model. However, one must have strong justification for doing this. A desire to have a higher R2R2 is not a good enough reason!
+
+In the mlbBat10 data, the outlier with an OBP of 0.550 is Bobby Scales, an infielder who had four hits in 13 at-bats for the Chicago Cubs. Scales also walked seven times, resulting in his unusually high OBP. The justification for removing Scales here is weak. While his performance was unusual, there is nothing to suggest that it is not a valid data point, nor is there a good reason to think that somehow we will learn more about Major League Baseball players by excluding him.
+
+Nevertheless, we can demonstrate how removing him will affect our model.
+
+```{r}
+# Create nontrivial_players
+nontrivial_players <- mlbBat10 %>%
+  filter(AB >= 10 & OBP < 0.5)
+
+
+# Fit model to new data
+mod_cleaner <- lm(SLG ~ OBP, data = nontrivial_players)
+
+# View model summary
+summary(mod_cleaner)
+
+# Visualize new model
+ggplot(data = nontrivial_players, aes(x = OBP, y = SLG)) +
+ geom_point() +
+ geom_smooth(method = "lm")
+```
+
+### High leverage Points
+
+Not all points of high leverage are influential. While the high leverage observation corresponding to Bobby Scales in the previous exercise is influential, the three observations for players with OBP and SLG values of 0 are not influential.
+
+This is because they happen to lie right near the regression anyway. Thus, while their extremely low OBP gives them the power to exert influence over the slope of the regression line, their low SLG prevents them from using it.
+
+```{r}
+
+mod <- lm(formula = SLG ~ OBP, data = filter(mlbBat10, AB >= 10))
+
+# Rank high leverage points
+mod %>%
+  augment() %>%
+  arrange(desc(.hat),desc(.cooksd)) %>%
+  head()
+```
+

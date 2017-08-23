@@ -160,6 +160,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.1.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#transformations-1"><i class="fa fa-check"></i><b>7.1.1</b> Transformations</a></li>
 <li class="chapter" data-level="7.1.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#identifying-outliers"><i class="fa fa-check"></i><b>7.1.2</b> Identifying Outliers</a></li>
 </ul></li>
+<li class="chapter" data-level="7.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#correlation"><i class="fa fa-check"></i><b>7.2</b> Correlation</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#anscombe-dataset"><i class="fa fa-check"></i><b>7.2.1</b> Anscombe Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#regression-to-the-mean"><i class="fa fa-check"></i><b>7.3.1</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="7.3.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#fitting-linear-models"><i class="fa fa-check"></i><b>7.3.2</b> Fitting linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#model-fit"><i class="fa fa-check"></i><b>7.4</b> Model fit</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#unusual-points"><i class="fa fa-check"></i><b>7.4.1</b> Unusual points</a></li>
+<li class="chapter" data-level="7.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>7.4.2</b> High leverage Points</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>8</b> Dimensional Modelling</a><ul>
 <li class="chapter" data-level="8.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>8.1</b> Introduction to Dimensional Data</a><ul>
@@ -432,23 +443,25 @@ county_srs &lt;-<span class="st"> </span>county %&gt;%
 county_srs %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(state) %&gt;%
 <span class="st">  </span><span class="kw">count</span>()</code></pre></div>
-<pre><code>## # A tibble: 13 x 2
-## # Groups:   state [13]
-##           state     n
-##          &lt;fctr&gt; &lt;int&gt;
-##  1   California     1
-##  2      Florida     1
-##  3      Georgia     1
-##  4        Idaho     2
-##  5     Illinois     2
-##  6         Iowa     1
-##  7       Kansas     1
-##  8    Minnesota     1
-##  9  Mississippi     3
-## 10     Oklahoma     1
-## 11 Pennsylvania     1
-## 12        Texas     3
-## 13    Wisconsin     2</code></pre>
+<pre><code>## # A tibble: 15 x 2
+## # Groups:   state [15]
+##             state     n
+##            &lt;fctr&gt; &lt;int&gt;
+##  1        Alabama     1
+##  2     California     1
+##  3        Indiana     1
+##  4      Minnesota     1
+##  5    Mississippi     1
+##  6       Missouri     1
+##  7       Nebraska     1
+##  8 North Carolina     1
+##  9       Oklahoma     1
+## 10         Oregon     1
+## 11   South Dakota     2
+## 12      Tennessee     1
+## 13          Texas     4
+## 14       Virginia     2
+## 15        Wyoming     1</code></pre>
 <p>For a stratified sample we would do something similar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sample</span>
 states_str &lt;-<span class="st"> </span>us_regions %&gt;%

@@ -160,6 +160,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.1.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#transformations-1"><i class="fa fa-check"></i><b>7.1.1</b> Transformations</a></li>
 <li class="chapter" data-level="7.1.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#identifying-outliers"><i class="fa fa-check"></i><b>7.1.2</b> Identifying Outliers</a></li>
 </ul></li>
+<li class="chapter" data-level="7.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#correlation"><i class="fa fa-check"></i><b>7.2</b> Correlation</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#anscombe-dataset"><i class="fa fa-check"></i><b>7.2.1</b> Anscombe Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#regression-to-the-mean"><i class="fa fa-check"></i><b>7.3.1</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="7.3.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#fitting-linear-models"><i class="fa fa-check"></i><b>7.3.2</b> Fitting linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#model-fit"><i class="fa fa-check"></i><b>7.4</b> Model fit</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#unusual-points"><i class="fa fa-check"></i><b>7.4.1</b> Unusual points</a></li>
+<li class="chapter" data-level="7.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>7.4.2</b> High leverage Points</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>8</b> Dimensional Modelling</a><ul>
 <li class="chapter" data-level="8.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>8.1</b> Introduction to Dimensional Data</a><ul>
@@ -526,7 +537,7 @@ resp &lt;-<span class="st"> </span><span class="kw">GET</span>(url)
 <span class="co"># Print resp</span>
 resp</code></pre></div>
 <pre><code>## Response [http://www.example.com/]
-##   Date: 2017-08-19 19:02
+##   Date: 2017-08-23 08:25
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -556,13 +567,13 @@ resp &lt;-<span class="st"> </span><span class="kw">GET</span>(url)
 <span class="co"># Print resp</span>
 resp</code></pre></div>
 <pre><code>## Response [http://www.omdbapi.com/?apikey=ff21610b&amp;t=Annie+Hall&amp;y=&amp;plot=short&amp;r=json]
-##   Date: 2017-08-19 19:02
+##   Date: 2017-08-23 08:25
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
-##   Size: 902 B</code></pre>
+##   Size: 942 B</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print content of resp as text</span>
 <span class="kw">content</span>(resp, <span class="dt">as =</span> <span class="st">&quot;text&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;{\&quot;Title\&quot;:\&quot;Annie Hall\&quot;,\&quot;Year\&quot;:\&quot;1977\&quot;,\&quot;Rated\&quot;:\&quot;PG\&quot;,\&quot;Released\&quot;:\&quot;20 Apr 1977\&quot;,\&quot;Runtime\&quot;:\&quot;93 min\&quot;,\&quot;Genre\&quot;:\&quot;Comedy, Romance\&quot;,\&quot;Director\&quot;:\&quot;Woody Allen\&quot;,\&quot;Writer\&quot;:\&quot;Woody Allen, Marshall Brickman\&quot;,\&quot;Actors\&quot;:\&quot;Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\&quot;,\&quot;Plot\&quot;:\&quot;Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\&quot;,\&quot;Language\&quot;:\&quot;English, German\&quot;,\&quot;Country\&quot;:\&quot;USA\&quot;,\&quot;Awards\&quot;:\&quot;Won 4 Oscars. Another 26 wins &amp; 8 nominations.\&quot;,\&quot;Poster\&quot;:\&quot;https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\&quot;,\&quot;Ratings\&quot;:[{\&quot;Source\&quot;:\&quot;Internet Movie Database\&quot;,\&quot;Value\&quot;:\&quot;8.1/10\&quot;},{\&quot;Source\&quot;:\&quot;Rotten Tomatoes\&quot;,\&quot;Value\&quot;:\&quot;97%\&quot;}],\&quot;Metascore\&quot;:\&quot;N/A\&quot;,\&quot;imdbRating\&quot;:\&quot;8.1\&quot;,\&quot;imdbVotes\&quot;:\&quot;210,152\&quot;,\&quot;imdbID\&quot;:\&quot;tt0075686\&quot;,\&quot;Type\&quot;:\&quot;movie\&quot;,\&quot;DVD\&quot;:\&quot;28 Apr 1998\&quot;,\&quot;BoxOffice\&quot;:\&quot;N/A\&quot;,\&quot;Production\&quot;:\&quot;United Artists\&quot;,\&quot;Website\&quot;:\&quot;N/A\&quot;,\&quot;Response\&quot;:\&quot;True\&quot;}&quot;</code></pre>
+<pre><code>## [1] &quot;{\&quot;Title\&quot;:\&quot;Annie Hall\&quot;,\&quot;Year\&quot;:\&quot;1977\&quot;,\&quot;Rated\&quot;:\&quot;PG\&quot;,\&quot;Released\&quot;:\&quot;20 Apr 1977\&quot;,\&quot;Runtime\&quot;:\&quot;93 min\&quot;,\&quot;Genre\&quot;:\&quot;Comedy, Romance\&quot;,\&quot;Director\&quot;:\&quot;Woody Allen\&quot;,\&quot;Writer\&quot;:\&quot;Woody Allen, Marshall Brickman\&quot;,\&quot;Actors\&quot;:\&quot;Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\&quot;,\&quot;Plot\&quot;:\&quot;Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\&quot;,\&quot;Language\&quot;:\&quot;English, German\&quot;,\&quot;Country\&quot;:\&quot;USA\&quot;,\&quot;Awards\&quot;:\&quot;Won 4 Oscars. Another 26 wins &amp; 8 nominations.\&quot;,\&quot;Poster\&quot;:\&quot;https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\&quot;,\&quot;Ratings\&quot;:[{\&quot;Source\&quot;:\&quot;Internet Movie Database\&quot;,\&quot;Value\&quot;:\&quot;8.1/10\&quot;},{\&quot;Source\&quot;:\&quot;Rotten Tomatoes\&quot;,\&quot;Value\&quot;:\&quot;97%\&quot;},{\&quot;Source\&quot;:\&quot;Metacritic\&quot;,\&quot;Value\&quot;:\&quot;92/100\&quot;}],\&quot;Metascore\&quot;:\&quot;92\&quot;,\&quot;imdbRating\&quot;:\&quot;8.1\&quot;,\&quot;imdbVotes\&quot;:\&quot;211,761\&quot;,\&quot;imdbID\&quot;:\&quot;tt0075686\&quot;,\&quot;Type\&quot;:\&quot;movie\&quot;,\&quot;DVD\&quot;:\&quot;28 Apr 1998\&quot;,\&quot;BoxOffice\&quot;:\&quot;N/A\&quot;,\&quot;Production\&quot;:\&quot;United Artists\&quot;,\&quot;Website\&quot;:\&quot;N/A\&quot;,\&quot;Response\&quot;:\&quot;True\&quot;}&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print content of resp</span>
 <span class="kw">content</span>(resp)</code></pre></div>
 <pre><code>## $Title
@@ -624,15 +635,23 @@ resp</code></pre></div>
 ## [1] &quot;97%&quot;
 ## 
 ## 
+## $Ratings[[3]]
+## $Ratings[[3]]$Source
+## [1] &quot;Metacritic&quot;
+## 
+## $Ratings[[3]]$Value
+## [1] &quot;92/100&quot;
+## 
+## 
 ## 
 ## $Metascore
-## [1] &quot;N/A&quot;
+## [1] &quot;92&quot;
 ## 
 ## $imdbRating
 ## [1] &quot;8.1&quot;
 ## 
 ## $imdbVotes
-## [1] &quot;210,152&quot;
+## [1] &quot;211,761&quot;
 ## 
 ## $imdbID
 ## [1] &quot;tt0075686&quot;

@@ -473,7 +473,7 @@ resp
 
 ```
 ## Response [http://www.example.com/]
-##   Date: 2017-08-19 19:02
+##   Date: 2017-08-23 08:25
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -515,10 +515,10 @@ resp
 
 ```
 ## Response [http://www.omdbapi.com/?apikey=ff21610b&t=Annie+Hall&y=&plot=short&r=json]
-##   Date: 2017-08-19 19:02
+##   Date: 2017-08-23 08:25
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
-##   Size: 902 B
+##   Size: 942 B
 ```
 
 ```r
@@ -527,7 +527,7 @@ content(resp, as = "text")
 ```
 
 ```
-## [1] "{\"Title\":\"Annie Hall\",\"Year\":\"1977\",\"Rated\":\"PG\",\"Released\":\"20 Apr 1977\",\"Runtime\":\"93 min\",\"Genre\":\"Comedy, Romance\",\"Director\":\"Woody Allen\",\"Writer\":\"Woody Allen, Marshall Brickman\",\"Actors\":\"Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\",\"Plot\":\"Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\",\"Language\":\"English, German\",\"Country\":\"USA\",\"Awards\":\"Won 4 Oscars. Another 26 wins & 8 nominations.\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"8.1/10\"},{\"Source\":\"Rotten Tomatoes\",\"Value\":\"97%\"}],\"Metascore\":\"N/A\",\"imdbRating\":\"8.1\",\"imdbVotes\":\"210,152\",\"imdbID\":\"tt0075686\",\"Type\":\"movie\",\"DVD\":\"28 Apr 1998\",\"BoxOffice\":\"N/A\",\"Production\":\"United Artists\",\"Website\":\"N/A\",\"Response\":\"True\"}"
+## [1] "{\"Title\":\"Annie Hall\",\"Year\":\"1977\",\"Rated\":\"PG\",\"Released\":\"20 Apr 1977\",\"Runtime\":\"93 min\",\"Genre\":\"Comedy, Romance\",\"Director\":\"Woody Allen\",\"Writer\":\"Woody Allen, Marshall Brickman\",\"Actors\":\"Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\",\"Plot\":\"Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\",\"Language\":\"English, German\",\"Country\":\"USA\",\"Awards\":\"Won 4 Oscars. Another 26 wins & 8 nominations.\",\"Poster\":\"https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\",\"Ratings\":[{\"Source\":\"Internet Movie Database\",\"Value\":\"8.1/10\"},{\"Source\":\"Rotten Tomatoes\",\"Value\":\"97%\"},{\"Source\":\"Metacritic\",\"Value\":\"92/100\"}],\"Metascore\":\"92\",\"imdbRating\":\"8.1\",\"imdbVotes\":\"211,761\",\"imdbID\":\"tt0075686\",\"Type\":\"movie\",\"DVD\":\"28 Apr 1998\",\"BoxOffice\":\"N/A\",\"Production\":\"United Artists\",\"Website\":\"N/A\",\"Response\":\"True\"}"
 ```
 
 ```r
@@ -595,15 +595,23 @@ content(resp)
 ## [1] "97%"
 ## 
 ## 
+## $Ratings[[3]]
+## $Ratings[[3]]$Source
+## [1] "Metacritic"
+## 
+## $Ratings[[3]]$Value
+## [1] "92/100"
+## 
+## 
 ## 
 ## $Metascore
-## [1] "N/A"
+## [1] "92"
 ## 
 ## $imdbRating
 ## [1] "8.1"
 ## 
 ## $imdbVotes
-## [1] "210,152"
+## [1] "211,761"
 ## 
 ## $imdbID
 ## [1] "tt0075686"
