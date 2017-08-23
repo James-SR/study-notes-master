@@ -172,15 +172,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>7.4.2</b> High leverage Points</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>8</b> Dimensional Modelling</a><ul>
-<li class="chapter" data-level="8.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>8.1</b> Introduction to Dimensional Data</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>8.1.1</b> Data Modelling levels</a></li>
+<li class="chapter" data-level="8" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>8</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="8.1" data-path="supervised-learning.html"><a href="supervised-learning.html#tree-based-models"><i class="fa fa-check"></i><b>8.1</b> Tree Based Models</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="supervised-learning.html"><a href="supervised-learning.html#random-forests"><i class="fa fa-check"></i><b>8.1.1</b> Random Forests</a></li>
+<li class="chapter" data-level="8.1.2" data-path="supervised-learning.html"><a href="supervised-learning.html#one-hot-encoding-categorical-variables"><i class="fa fa-check"></i><b>8.1.2</b> One-Hot-Encoding Categorical Variables</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>8.2</b> Architecture considerations</a></li>
-<li class="chapter" data-level="8.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>8.3</b> Graphical Representations</a></li>
-<li class="chapter" data-level="8.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>8.4</b> Kimball Approach</a></li>
-<li class="chapter" data-level="8.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>8.5</b> Four-Step Dimensional Design Process</a></li>
-<li class="chapter" data-level="8.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>8.6</b> Tips</a></li>
+<li class="chapter" data-level="8.2" data-path="supervised-learning.html"><a href="supervised-learning.html#gradient-boosting-machines"><i class="fa fa-check"></i><b>8.2</b> Gradient Boosting Machines</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>9</b> Dimensional Modelling</a><ul>
+<li class="chapter" data-level="9.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>9.1</b> Introduction to Dimensional Data</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>9.1.1</b> Data Modelling levels</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>9.2</b> Architecture considerations</a></li>
+<li class="chapter" data-level="9.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>9.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="9.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>9.4</b> Kimball Approach</a></li>
+<li class="chapter" data-level="9.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>9.5</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="9.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>9.6</b> Tips</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references-3.html"><a href="references-3.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -295,7 +302,7 @@ homes %&gt;%
 <pre><code>## # A tibble: 1 x 2
 ##      diff_perm  diff_orig
 ##          &lt;dbl&gt;      &lt;dbl&gt;
-## 1 -0.007828723 0.00658714</code></pre>
+## 1 -0.007828723 0.01358913</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 x 2
@@ -319,8 +326,8 @@ homes %&gt;%
 ## 1   male    Rent          Own
 ## 2   male    Rent          Own
 ## 3 female     Own          Own
-## 4   male     Own         Rent
-## 5   male     Own          Own
+## 4   male     Own          Own
+## 5   male     Own         Rent
 ## 6   male     Own          Own</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
@@ -335,17 +342,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6642127 0.6654397
-## 2   male     0.6588552 0.6576109</code></pre>
+## 1 female     0.6599182 0.6654397
+## 2   male     0.6632103 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##      diff_perm    diff_orig
-##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -0.005357432</code></pre>
+##      diff_perm   diff_orig
+##          &lt;dbl&gt;       &lt;dbl&gt;
+## 1 -0.007828723 0.003292086</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">5.3</span> Density Plots</h2>

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Study notes</title>
+  <meta name="description" content="Study notes taken from courses and self learning.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Study notes" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://github.com/James-SR/study-notes-master" />
+  
+  <meta property="og:description" content="Study notes taken from courses and self learning." />
+  <meta name="github-repo" content="James-SR/study-notes-master" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Study notes" />
+  
+  <meta name="twitter:description" content="Study notes taken from courses and self learning." />
+  
+
+<meta name="author" content="James Solomon-Rounce">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="correlation-and-regression.html">
+<link rel="next" href="dimensional-modelling.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Study Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html"><i class="fa fa-check"></i><b>1</b> Importing data - Part 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
+<li class="chapter" data-level="1.3" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-tab-deliminated-files-or-other-table-formats"><i class="fa fa-check"></i><b>1.3</b> Reading tab deliminated files or other table formats</a></li>
+<li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#data.table-fread"><i class="fa fa-check"></i><b>1.4.1</b> data.table fread</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html"><i class="fa fa-check"></i><b>2</b> Importing data - Part 2</a><ul>
+<li class="chapter" data-level="2.1" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-databases---1"><i class="fa fa-check"></i><b>2.1</b> Importing from Databases - 1</a></li>
+<li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
+<li class="chapter" data-level="2.3" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#web-data"><i class="fa fa-check"></i><b>2.3</b> Web Data</a></li>
+<li class="chapter" data-level="2.4" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#json-and-apis"><i class="fa fa-check"></i><b>2.4</b> JSON and APIs</a></li>
+<li class="chapter" data-level="2.5" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-other-statistical-software"><i class="fa fa-check"></i><b>2.5</b> Importing from other statistical software</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>3</b> Cleaning Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>3.1</b> Tidying data</a></li>
+<li class="chapter" data-level="3.2" data-path="cleaning-data.html"><a href="cleaning-data.html#preparing-data-for-analysis"><i class="fa fa-check"></i><b>3.2</b> Preparing data for analysis</a></li>
+<li class="chapter" data-level="3.3" data-path="cleaning-data.html"><a href="cleaning-data.html#string-manipulation"><i class="fa fa-check"></i><b>3.3</b> String manipulation</a></li>
+<li class="chapter" data-level="3.4" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-specials-and-outliers"><i class="fa fa-check"></i><b>3.4</b> Missing, Specials and Outliers</a></li>
+<li class="chapter" data-level="3.5" data-path="cleaning-data.html"><a href="cleaning-data.html#examples"><i class="fa fa-check"></i><b>3.5</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>4</b> Introduction to Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-data.html"><a href="introduction-to-data.html#language-of-data"><i class="fa fa-check"></i><b>4.1</b> Language of Data</a></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-data.html"><a href="introduction-to-data.html#observational-studies-and-experiments"><i class="fa fa-check"></i><b>4.2</b> Observational Studies and Experiments</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-data.html"><a href="introduction-to-data.html#sampling-strategies-and-experimental-design"><i class="fa fa-check"></i><b>4.3</b> Sampling strategies and experimental design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>5</b> Foundations of Inference</a><ul>
+<li class="chapter" data-level="5.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>5.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="5.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>5.2</b> Home Ownership by Gender</a></li>
+<li class="chapter" data-level="5.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots"><i class="fa fa-check"></i><b>5.3</b> Density Plots</a></li>
+<li class="chapter" data-level="5.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>5.4</b> Gender Discrimination (p-values)</a></li>
+<li class="chapter" data-level="5.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>5.5</b> Opportunity Cost</a></li>
+<li class="chapter" data-level="5.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>5.6</b> Type I and Type II errors</a></li>
+<li class="chapter" data-level="5.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>5.7</b> Bootstrapping</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="6" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>6</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>6.1</b> Categorical Data</a></li>
+<li class="chapter" data-level="6.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>6.2</b> Numerical Data</a></li>
+<li class="chapter" data-level="6.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>6.3</b> Numerical Summaries</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#transformations"><i class="fa fa-check"></i><b>6.3.1</b> Transformations</a></li>
+<li class="chapter" data-level="6.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#outliers"><i class="fa fa-check"></i><b>6.3.2</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#email-case-study"><i class="fa fa-check"></i><b>6.4</b> Email Case Study</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html"><i class="fa fa-check"></i><b>7</b> Correlation and Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#visualizing-two-variables"><i class="fa fa-check"></i><b>7.1</b> Visualizing two variables</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#transformations-1"><i class="fa fa-check"></i><b>7.1.1</b> Transformations</a></li>
+<li class="chapter" data-level="7.1.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#identifying-outliers"><i class="fa fa-check"></i><b>7.1.2</b> Identifying Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#correlation"><i class="fa fa-check"></i><b>7.2</b> Correlation</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#anscombe-dataset"><i class="fa fa-check"></i><b>7.2.1</b> Anscombe Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#linear-regression"><i class="fa fa-check"></i><b>7.3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#regression-to-the-mean"><i class="fa fa-check"></i><b>7.3.1</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="7.3.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#fitting-linear-models"><i class="fa fa-check"></i><b>7.3.2</b> Fitting linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#model-fit"><i class="fa fa-check"></i><b>7.4</b> Model fit</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#unusual-points"><i class="fa fa-check"></i><b>7.4.1</b> Unusual points</a></li>
+<li class="chapter" data-level="7.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>7.4.2</b> High leverage Points</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>8</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="8.1" data-path="supervised-learning.html"><a href="supervised-learning.html#tree-based-models"><i class="fa fa-check"></i><b>8.1</b> Tree Based Models</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="supervised-learning.html"><a href="supervised-learning.html#random-forests"><i class="fa fa-check"></i><b>8.1.1</b> Random Forests</a></li>
+<li class="chapter" data-level="8.1.2" data-path="supervised-learning.html"><a href="supervised-learning.html#one-hot-encoding-categorical-variables"><i class="fa fa-check"></i><b>8.1.2</b> One-Hot-Encoding Categorical Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="supervised-learning.html"><a href="supervised-learning.html#gradient-boosting-machines"><i class="fa fa-check"></i><b>8.2</b> Gradient Boosting Machines</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>9</b> Dimensional Modelling</a><ul>
+<li class="chapter" data-level="9.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>9.1</b> Introduction to Dimensional Data</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>9.1.1</b> Data Modelling levels</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>9.2</b> Architecture considerations</a></li>
+<li class="chapter" data-level="9.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>9.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="9.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>9.4</b> Kimball Approach</a></li>
+<li class="chapter" data-level="9.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>9.5</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="9.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>9.6</b> Tips</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-3.html"><a href="references-3.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Study notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="supervised-learning" class="section level1">
+<h1><span class="header-section-number">8</span> Supervised Learning</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Supervised Learning in R: Regression’ by Nina Zumel and John Mount.</p>
+<div id="tree-based-models" class="section level2">
+<h2><span class="header-section-number">8.1</span> Tree Based Models</h2>
+<p>Tree based models can be used for both regression and classification models. Decision Trees say ‘if a AND b AND c THEN y’. We can therefore model non-linear models and multiplicative relationships - what is the affect of this AND that when combined together. We can use RMSE as a measure of accuracy of the model. The challenge with tree models is that they are interested in the model space as a whole, splitting this in to regions. Linear models can be better for linear relationships. We can adjust the tree depth, but there is a risk of overfitting (too deep/complex) or underfitting (to shallow/coarse).</p>
+<p>An ensemble model can be built combining different trees or indeed different models together, which will usually have the outcome of being better than a sinlge tree and less prone to overfitting, but at the loss of interpretability.</p>
+<div id="random-forests" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Random Forests</h3>
+<p>One example of an ensemble approach is a random forest, building multiple trees from the training data. We can average the results of multiple models together to reduce the degree of overfitting. To build a random forest we perform the following</p>
+<ol style="list-style-type: decimal">
+<li>Draw bootstrapped sample from training data</li>
+<li>For each sample grow a tree
+<ul>
+<li>At each node, pick best variable to split on (from a random subset of all variables)</li>
+<li>Continue until tree is grown</li>
+</ul></li>
+<li>To score a datum, evaluate it with all the trees and average the results.</li>
+</ol>
+<p>We can use the ranger package to fit random forests. If the outcome is numeric, ranger will automatically do regression rather than classification. The default is for 500 trees, a minimum approach is 200. The value respect.unordered.factors will handle categorical values, set it to “order” if using cateogrical values, which will convert the values to numeric values.</p>
+<p>The measures of accuracy are R squared and OOB (Out of Bag or out of sample performance). You should still evaluate the model further using test data.</p>
+<p>In this exercise you will again build a model to predict the number of bikes rented in an hour as a function of the weather, the type of day (holiday, working day, or weekend), and the time of day. You will train the model on data from the month of July.</p>
+<p>You will use the ranger package to fit the random forest model. For this exercise, the key arguments to the ranger() call are:</p>
+<ul>
+<li>formula</li>
+<li>data</li>
+<li>num.trees: the number of trees in the forest.</li>
+<li>respect.unordered.factors : Specifies how to treat unordered factor variables. We recommend setting this to “order” for regression.</li>
+<li>seed: because this is a random algorithm, you will set the seed to get reproducible results Since there are a lot of input variables, for convenience we will specify the outcome and the inputs in the variables outcome and vars, and use paste() to assemble a string representing the model formula.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bikes &lt;-<span class="st"> </span><span class="kw">load</span>(<span class="kw">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/course_3851/datasets/Bikes.RData&quot;</span>))
+
+<span class="co"># bikesJuly is in the workspace</span>
+<span class="kw">str</span>(bikesJuly)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    744 obs. of  12 variables:
+##  $ hr        : Factor w/ 24 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ holiday   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ workingday: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ weathersit: chr  &quot;Clear to partly cloudy&quot; &quot;Clear to partly cloudy&quot; &quot;Clear to partly cloudy&quot; &quot;Clear to partly cloudy&quot; ...
+##  $ temp      : num  0.76 0.74 0.72 0.72 0.7 0.68 0.7 0.74 0.78 0.82 ...
+##  $ atemp     : num  0.727 0.697 0.697 0.712 0.667 ...
+##  $ hum       : num  0.66 0.7 0.74 0.84 0.79 0.79 0.79 0.7 0.62 0.56 ...
+##  $ windspeed : num  0 0.1343 0.0896 0.1343 0.194 ...
+##  $ cnt       : int  149 93 90 33 4 10 27 50 142 219 ...
+##  $ instant   : int  13004 13005 13006 13007 13008 13009 13010 13011 13012 13013 ...
+##  $ mnth      : int  7 7 7 7 7 7 7 7 7 7 ...
+##  $ yr        : int  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Random seed to reproduce results</span>
+seed &lt;-<span class="st"> </span><span class="dv">423563</span>
+
+<span class="co"># The outcome column</span>
+(outcome &lt;-<span class="st"> &quot;cnt&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;cnt&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The input variables</span>
+(vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;hr&quot;</span>, <span class="st">&quot;holiday&quot;</span>, <span class="st">&quot;workingday&quot;</span>, <span class="st">&quot;weathersit&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;atemp&quot;</span>, <span class="st">&quot;hum&quot;</span>, <span class="st">&quot;windspeed&quot;</span>))</code></pre></div>
+<pre><code>## [1] &quot;hr&quot;         &quot;holiday&quot;    &quot;workingday&quot; &quot;weathersit&quot; &quot;temp&quot;      
+## [6] &quot;atemp&quot;      &quot;hum&quot;        &quot;windspeed&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the formula string for bikes rented as a function of the inputs</span>
+(fmla &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;cnt&quot;</span>, <span class="st">&quot;~&quot;</span>, <span class="kw">paste</span>(vars, <span class="dt">collapse =</span> <span class="st">&quot; + &quot;</span>)))</code></pre></div>
+<pre><code>## [1] &quot;cnt ~ hr + holiday + workingday + weathersit + temp + atemp + hum + windspeed&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the package ranger</span>
+<span class="kw">library</span>(ranger)
+
+<span class="co"># Fit and print the random forest model</span>
+(bike_model_rf &lt;-<span class="st"> </span><span class="kw">ranger</span>(fmla, <span class="co"># formula </span>
+                         bikesJuly, <span class="co"># data</span>
+                         <span class="dt">num.trees =</span> <span class="dv">500</span>, 
+                         <span class="dt">respect.unordered.factors =</span> <span class="st">&quot;order&quot;</span>, 
+                         <span class="dt">seed =</span> seed))</code></pre></div>
+<pre><code>## Ranger result
+## 
+## Call:
+##  ranger(fmla, bikesJuly, num.trees = 500, respect.unordered.factors = &quot;order&quot;,      seed = seed) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      744 
+## Number of independent variables:  8 
+## Mtry:                             2 
+## Target node size:                 5 
+## Variable importance mode:         none 
+## OOB prediction error (MSE):       8230.568 
+## R squared (OOB):                  0.8205434</code></pre>
+<p>In this exercise you will use the model that you fit in the previous exercise to predict bike rentals for the month of August.</p>
+<p>The predict() function for a ranger model produces a list. One of the elements of this list is predictions, a vector of predicted values. You can access predictions with the $ notation for accessing named elements of a list:</p>
+<ul>
+<li>predict(model, data)$predictions</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+
+<span class="co"># bikesAugust is in the workspace</span>
+<span class="kw">str</span>(bikesAugust)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    744 obs. of  12 variables:
+##  $ hr        : Factor w/ 24 levels &quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ holiday   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ workingday: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
+##  $ weathersit: chr  &quot;Clear to partly cloudy&quot; &quot;Clear to partly cloudy&quot; &quot;Clear to partly cloudy&quot; &quot;Clear to partly cloudy&quot; ...
+##  $ temp      : num  0.68 0.66 0.64 0.64 0.64 0.64 0.64 0.64 0.66 0.68 ...
+##  $ atemp     : num  0.636 0.606 0.576 0.576 0.591 ...
+##  $ hum       : num  0.79 0.83 0.83 0.83 0.78 0.78 0.78 0.83 0.78 0.74 ...
+##  $ windspeed : num  0.1642 0.0896 0.1045 0.1045 0.1343 ...
+##  $ cnt       : int  47 33 13 7 4 49 185 487 681 350 ...
+##  $ instant   : int  13748 13749 13750 13751 13752 13753 13754 13755 13756 13757 ...
+##  $ mnth      : int  8 8 8 8 8 8 8 8 8 8 ...
+##  $ yr        : int  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># bike_model_rf is in the workspace</span>
+bike_model_rf</code></pre></div>
+<pre><code>## Ranger result
+## 
+## Call:
+##  ranger(fmla, bikesJuly, num.trees = 500, respect.unordered.factors = &quot;order&quot;,      seed = seed) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      744 
+## Number of independent variables:  8 
+## Mtry:                             2 
+## Target node size:                 5 
+## Variable importance mode:         none 
+## OOB prediction error (MSE):       8230.568 
+## R squared (OOB):                  0.8205434</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make predictions on the August data</span>
+bikesAugust$pred &lt;-<span class="st"> </span><span class="kw">predict</span>(bike_model_rf, bikesAugust)$predictions
+
+<span class="co"># Calculate the RMSE of the predictions</span>
+bikesAugust %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">residual =</span> cnt -<span class="st"> </span>pred)  %&gt;%<span class="st"> </span><span class="co"># calculate the residual</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rmse  =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(residual^<span class="dv">2</span>)))      <span class="co"># calculate rmse</span></code></pre></div>
+<pre><code>##       rmse
+## 1 97.18347</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot actual outcome vs predictions (predictions on x-axis)</span>
+<span class="kw">ggplot</span>(bikesAugust, <span class="kw">aes</span>(<span class="dt">x =</span> pred, <span class="dt">y =</span> cnt)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_abline</span>()</code></pre></div>
+<p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>In the previous exercise, you saw that the random forest bike model did better on the August data than the quasiposson model, in terms of RMSE.</p>
+<p>In this exercise you will visualize the random forest model’s August predictions as a function of time. The corresponding plot from the quasipoisson model that you built in a previous exercise is in the workspace for you to compare.</p>
+<p>Recall that the quasipoisson model mostly identified the pattern of slow and busy hours in the day, but it somewhat underestimated peak demands. You would like to see how the random forest model compares.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
+
+<span class="co"># Plot predictions and cnt by date/time</span>
+randomforest_plot &lt;-<span class="st"> </span>bikesAugust %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">instant =</span> (instant -<span class="st"> </span><span class="kw">min</span>(instant))/<span class="dv">24</span>) %&gt;%<span class="st">  </span><span class="co"># set start to 0, convert unit to days</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> valuetype, <span class="dt">value =</span> value, cnt, pred) %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(instant &lt;<span class="st"> </span><span class="dv">14</span>) %&gt;%<span class="st"> </span><span class="co"># first two weeks</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> instant, <span class="dt">y =</span> value, <span class="dt">color =</span> valuetype, <span class="dt">linetype =</span> valuetype)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Day&quot;</span>, <span class="dt">breaks =</span> <span class="dv">0</span>:<span class="dv">14</span>, <span class="dt">labels =</span> <span class="dv">0</span>:<span class="dv">14</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Predicted August bike rentals, Random Forest plot&quot;</span>)
+randomforest_plot</code></pre></div>
+<p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>The random forest model captured the day-to-day variations in peak demand better than the quasipoisson model, but it still underestmates peak demand, and also overestimates minimum demand. So there is still room for improvement.</p>
+</div>
+<div id="one-hot-encoding-categorical-variables" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> One-Hot-Encoding Categorical Variables</h3>
+<p>For modelling purposes, we need to convert categorical variables to indicator variables. Some R packages do this automatically, but some non-native R packages, such as the xgboost package does not. So, these categorical variables need to be converted to numeric ones. We can use the vtreat package.</p>
+<ul>
+<li>DesignTreatmentsZ() to design a treatment plan from the training data, then</li>
+<li>prepare() to created “clean” data</li>
+<li>all numerical</li>
+<li>no missing values</li>
+<li>use prepare() with treatment plan for all future data</li>
+</ul>
+<p>In this exercise you will use vtreat to one-hot-encode a categorical variable on a small example. vtreat creates a treatment plan to transform categorical variables into indicator variables (coded “lev”), and to clean bad values out of numerical variables (coded “clean”).</p>
+<p>To design a treatment plan use the function designTreatmentsZ()</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">treatplan &lt;-<span class="st"> </span><span class="kw">designTreatmentsZ</span>(data, varlist)</code></pre></div>
+<ul>
+<li>data: the original training data frame</li>
+<li>varlist: a vector of input variables to be treated (as strings).</li>
+</ul>
+<p>designTreatmentsZ() returns a list with an element scoreFrame: a data frame that includes the names and types of the new variables:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scoreFrame &lt;-<span class="st"> </span>treatplan %&gt;%<span class="st"> </span>
+<span class="st">            </span>magrittr::<span class="kw">use_series</span>(scoreFrame) %&gt;%<span class="st"> </span>
+<span class="st">            </span><span class="kw">select</span>(varName, origName, code)</code></pre></div>
+<ul>
+<li>varName: the name of the new treated variable</li>
+<li>origName: the name of the original variable that the treated variable comes from</li>
+<li>code: the type of the new variable.</li>
+<li>“clean”: a numerical variable with no NAs or NaNs</li>
+<li>“lev”: an indicator variable for a specific level of the original categorical variable.</li>
+</ul>
+<p>(magrittr::use_series() is an alias for $ that you can use in pipes.)</p>
+<p>For these exercises, we want varName where code is either “clean” or “lev”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(newvarlist &lt;-<span class="st"> </span>scoreFrame %&gt;%<span class="st"> </span>
+<span class="st">             </span><span class="kw">filter</span>(code %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clean&quot;</span>, <span class="st">&quot;lev&quot;</span>) %&gt;%
+<span class="st">             </span>magrittr::<span class="kw">use_series</span>(varName))</code></pre></div>
+<p>To transform the data set into all numerical and one-hot-encoded variables, use prepare():</p>
+<ul>
+<li>data.treat &lt;- prepare(treatplan, data, varRestrictions = newvarlist)</li>
+<li>treatplan: the treatment plan</li>
+<li>data: the data frame to be treated</li>
+<li>varRestrictions: the variables desired in the treated data</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the dataframe for cleaning</span>
+color &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;b&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>)
+size &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">13</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">7</span>, <span class="dv">12</span>)
+popularity &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.0785088</span>, <span class="fl">1.3956245</span>, <span class="fl">0.9217988</span>, <span class="fl">1.2025453</span>, <span class="fl">1.0838662</span>, <span class="fl">0.8043527</span>, <span class="fl">1.1035440</span>, <span class="fl">0.8746332</span>, <span class="fl">0.6947058</span>, <span class="fl">0.8832502</span>)
+dframe &lt;-<span class="st"> </span><span class="kw">cbind</span>(color, size, popularity)
+dframe &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>((dframe))
+
+<span class="co"># dframe is in the workspace</span>
+dframe</code></pre></div>
+<pre><code>##    color size popularity
+## 1      b   13  1.0785088
+## 2      r   11  1.3956245
+## 3      r   15  0.9217988
+## 4      r   14  1.2025453
+## 5      r   13  1.0838662
+## 6      b   11  0.8043527
+## 7      r    9   1.103544
+## 8      g   12  0.8746332
+## 9      b    7  0.6947058
+## 10     b   12  0.8832502</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create and print a vector of variable names</span>
+(vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;size&quot;</span>))</code></pre></div>
+<pre><code>## [1] &quot;color&quot; &quot;size&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the package vtreat</span>
+<span class="kw">library</span>(vtreat)
+
+<span class="co"># Create the treatment plan</span>
+treatplan &lt;-<span class="st"> </span><span class="kw">designTreatmentsZ</span>(dframe, vars)</code></pre></div>
+<pre><code>## [1] &quot;desigining treatments Wed Aug 23 15:30:34 2017&quot;
+## [1] &quot;designing treatments Wed Aug 23 15:30:34 2017&quot;
+## [1] &quot; have level statistics Wed Aug 23 15:30:34 2017&quot;
+## [1] &quot;design var color Wed Aug 23 15:30:34 2017&quot;
+## [1] &quot;design var size Wed Aug 23 15:30:34 2017&quot;
+## [1] &quot; scoring treatments Wed Aug 23 15:30:34 2017&quot;
+## [1] &quot;have treatment plan Wed Aug 23 15:30:34 2017&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Examine the scoreFrame</span>
+(scoreFrame &lt;-<span class="st"> </span>treatplan %&gt;%
+<span class="st">    </span>magrittr::<span class="kw">use_series</span>(scoreFrame) %&gt;%
+<span class="st">    </span><span class="kw">select</span>(varName, origName, code))</code></pre></div>
+<pre><code>##          varName origName code
+## 1  color_lev_x.b    color  lev
+## 2  color_lev_x.g    color  lev
+## 3  color_lev_x.r    color  lev
+## 4     color_catP    color catP
+## 5  size_lev_x.11     size  lev
+## 6  size_lev_x.12     size  lev
+## 7  size_lev_x.13     size  lev
+## 8  size_lev_x.14     size  lev
+## 9  size_lev_x.15     size  lev
+## 10  size_lev_x.7     size  lev
+## 11  size_lev_x.9     size  lev
+## 12     size_catP     size catP</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># We only want the rows with codes &quot;clean&quot; or &quot;lev&quot;</span>
+(newvars &lt;-<span class="st"> </span>scoreFrame %&gt;%
+<span class="st">    </span><span class="kw">filter</span>(code %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clean&quot;</span>, <span class="st">&quot;lev&quot;</span>)) %&gt;%
+<span class="st">    </span>magrittr::<span class="kw">use_series</span>(varName))</code></pre></div>
+<pre><code>##  [1] &quot;color_lev_x.b&quot; &quot;color_lev_x.g&quot; &quot;color_lev_x.r&quot; &quot;size_lev_x.11&quot;
+##  [5] &quot;size_lev_x.12&quot; &quot;size_lev_x.13&quot; &quot;size_lev_x.14&quot; &quot;size_lev_x.15&quot;
+##  [9] &quot;size_lev_x.7&quot;  &quot;size_lev_x.9&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the treated training data</span>
+(dframe.treat &lt;-<span class="st"> </span><span class="kw">prepare</span>(treatplan, dframe, <span class="dt">varRestriction =</span> newvars))</code></pre></div>
+<pre><code>##    color_lev_x.b color_lev_x.g color_lev_x.r size_lev_x.11 size_lev_x.12
+## 1              1             0             0             0             0
+## 2              0             0             1             1             0
+## 3              0             0             1             0             0
+## 4              0             0             1             0             0
+## 5              0             0             1             0             0
+## 6              1             0             0             1             0
+## 7              0             0             1             0             0
+## 8              0             1             0             0             1
+## 9              1             0             0             0             0
+## 10             1             0             0             0             1
+##    size_lev_x.13 size_lev_x.14 size_lev_x.15 size_lev_x.7 size_lev_x.9
+## 1              1             0             0            0            0
+## 2              0             0             0            0            0
+## 3              0             0             1            0            0
+## 4              0             1             0            0            0
+## 5              1             0             0            0            0
+## 6              0             0             0            0            0
+## 7              0             0             0            0            1
+## 8              0             0             0            0            0
+## 9              0             0             0            1            0
+## 10             0             0             0            0            0</code></pre>
+<p>The new indicator variables have ‘<em>lev</em>’ in their names, and the new cleaned continuous variables have ’_clean’ in their names. The treated data is all numerical, with no missing values, and is suitable for use with xgboost and other R modeling functions.</p>
+<p>When a level of a categorical variable is rare, sometimes it will fail to show up in training data. If that rare level then appears in future data, downstream models may not know what to do with it. When such novel levels appear, using model.matrix or caret::dummyVars to one-hot-encode will not work correctly.</p>
+<p>vtreat is a “safer” alternative to model.matrix for one-hot-encoding, because it can manage novel levels safely. vtreat also manages missing values in the data (both categorical and continuous).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the testframe for testing new vars</span>
+color &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;g&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;r&quot;</span>)
+size &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">12</span>, <span class="dv">8</span>)
+popularity &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.9733920</span>, <span class="fl">0.9122529</span>, <span class="fl">1.4217153</span>, <span class="fl">1.1905828</span>, <span class="fl">0.9866464</span>, <span class="fl">1.3697515</span>, <span class="fl">1.0959387</span>, <span class="fl">0.9161547</span>, <span class="fl">1.0000460</span>, <span class="fl">1.3137360</span>)
+testframe &lt;-<span class="st"> </span><span class="kw">cbind</span>(color, size, popularity)
+testframe &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>((dframe))
+
+<span class="co"># treatplan is in the workspace</span>
+<span class="kw">summary</span>(treatplan)</code></pre></div>
+<pre><code>##               Length Class           Mode     
+## treatments    4      -none-          list     
+## scoreFrame    8      data.frame      list     
+## outcomename   1      -none-          character
+## vtreatVersion 1      package_version list     
+## outcomeType   1      -none-          character
+## outcomeTarget 1      -none-          character
+## meanY         1      -none-          logical  
+## splitmethod   1      -none-          character</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># newvars is in the workspace</span>
+newvars</code></pre></div>
+<pre><code>##  [1] &quot;color_lev_x.b&quot; &quot;color_lev_x.g&quot; &quot;color_lev_x.r&quot; &quot;size_lev_x.11&quot;
+##  [5] &quot;size_lev_x.12&quot; &quot;size_lev_x.13&quot; &quot;size_lev_x.14&quot; &quot;size_lev_x.15&quot;
+##  [9] &quot;size_lev_x.7&quot;  &quot;size_lev_x.9&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print dframe and testframe</span>
+dframe</code></pre></div>
+<pre><code>##    color size popularity
+## 1      b   13  1.0785088
+## 2      r   11  1.3956245
+## 3      r   15  0.9217988
+## 4      r   14  1.2025453
+## 5      r   13  1.0838662
+## 6      b   11  0.8043527
+## 7      r    9   1.103544
+## 8      g   12  0.8746332
+## 9      b    7  0.6947058
+## 10     b   12  0.8832502</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">testframe</code></pre></div>
+<pre><code>##    color size popularity
+## 1      b   13  1.0785088
+## 2      r   11  1.3956245
+## 3      r   15  0.9217988
+## 4      r   14  1.2025453
+## 5      r   13  1.0838662
+## 6      b   11  0.8043527
+## 7      r    9   1.103544
+## 8      g   12  0.8746332
+## 9      b    7  0.6947058
+## 10     b   12  0.8832502</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use prepare() to one-hot-encode testframe</span>
+(testframe.treat &lt;-<span class="st"> </span><span class="kw">prepare</span>(treatplan, testframe, <span class="dt">varRestriction =</span> newvars))</code></pre></div>
+<pre><code>##    color_lev_x.b color_lev_x.g color_lev_x.r size_lev_x.11 size_lev_x.12
+## 1              1             0             0             0             0
+## 2              0             0             1             1             0
+## 3              0             0             1             0             0
+## 4              0             0             1             0             0
+## 5              0             0             1             0             0
+## 6              1             0             0             1             0
+## 7              0             0             1             0             0
+## 8              0             1             0             0             1
+## 9              1             0             0             0             0
+## 10             1             0             0             0             1
+##    size_lev_x.13 size_lev_x.14 size_lev_x.15 size_lev_x.7 size_lev_x.9
+## 1              1             0             0            0            0
+## 2              0             0             0            0            0
+## 3              0             0             1            0            0
+## 4              0             1             0            0            0
+## 5              1             0             0            0            0
+## 6              0             0             0            0            0
+## 7              0             0             0            0            1
+## 8              0             0             0            0            0
+## 9              0             0             0            1            0
+## 10             0             0             0            0            0</code></pre>
+<p>vtreat encodes novel colors like yellow that were not present in the data as all zeros: ‘none of the known colors’. This allows downstream models to accept these novel values without crashing.</p>
+<p>In this exercise you will create one-hot-encoded data frames of the July/August bike data, for use with xgboost later on. vars defines the variable vars with the list of variable columns for the model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The outcome column</span>
+(outcome &lt;-<span class="st"> &quot;cnt&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;cnt&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The input columns</span>
+(vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;hr&quot;</span>, <span class="st">&quot;holiday&quot;</span>, <span class="st">&quot;workingday&quot;</span>, <span class="st">&quot;weathersit&quot;</span>, <span class="st">&quot;temp&quot;</span>, <span class="st">&quot;atemp&quot;</span>, <span class="st">&quot;hum&quot;</span>, <span class="st">&quot;windspeed&quot;</span>))</code></pre></div>
+<pre><code>## [1] &quot;hr&quot;         &quot;holiday&quot;    &quot;workingday&quot; &quot;weathersit&quot; &quot;temp&quot;      
+## [6] &quot;atemp&quot;      &quot;hum&quot;        &quot;windspeed&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the package vtreat</span>
+<span class="kw">library</span>(vtreat)
+
+<span class="co"># Create the treatment plan from bikesJuly (the training data)</span>
+treatplan &lt;-<span class="st"> </span><span class="kw">designTreatmentsZ</span>(bikesJuly, vars, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># Get the &quot;clean&quot; and &quot;lev&quot; variables from the scoreFrame</span>
+(newvars &lt;-<span class="st"> </span>treatplan %&gt;%
+<span class="st">  </span>magrittr::<span class="kw">use_series</span>(scoreFrame) %&gt;%<span class="st">        </span>
+<span class="st">  </span><span class="kw">filter</span>(code %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;clean&quot;</span>, <span class="st">&quot;lev&quot;</span>)) %&gt;%<span class="st">  </span><span class="co"># get the rows you care about</span>
+<span class="st">  </span>magrittr::<span class="kw">use_series</span>(varName))           <span class="co"># get the varName column</span></code></pre></div>
+<pre><code>##  [1] &quot;hr_lev_x.0&quot;                             
+##  [2] &quot;hr_lev_x.1&quot;                             
+##  [3] &quot;hr_lev_x.10&quot;                            
+##  [4] &quot;hr_lev_x.11&quot;                            
+##  [5] &quot;hr_lev_x.12&quot;                            
+##  [6] &quot;hr_lev_x.13&quot;                            
+##  [7] &quot;hr_lev_x.14&quot;                            
+##  [8] &quot;hr_lev_x.15&quot;                            
+##  [9] &quot;hr_lev_x.16&quot;                            
+## [10] &quot;hr_lev_x.17&quot;                            
+## [11] &quot;hr_lev_x.18&quot;                            
+## [12] &quot;hr_lev_x.19&quot;                            
+## [13] &quot;hr_lev_x.2&quot;                             
+## [14] &quot;hr_lev_x.20&quot;                            
+## [15] &quot;hr_lev_x.21&quot;                            
+## [16] &quot;hr_lev_x.22&quot;                            
+## [17] &quot;hr_lev_x.23&quot;                            
+## [18] &quot;hr_lev_x.3&quot;                             
+## [19] &quot;hr_lev_x.4&quot;                             
+## [20] &quot;hr_lev_x.5&quot;                             
+## [21] &quot;hr_lev_x.6&quot;                             
+## [22] &quot;hr_lev_x.7&quot;                             
+## [23] &quot;hr_lev_x.8&quot;                             
+## [24] &quot;hr_lev_x.9&quot;                             
+## [25] &quot;holiday_clean&quot;                          
+## [26] &quot;workingday_clean&quot;                       
+## [27] &quot;weathersit_lev_x.Clear.to.partly.cloudy&quot;
+## [28] &quot;weathersit_lev_x.Light.Precipitation&quot;   
+## [29] &quot;weathersit_lev_x.Misty&quot;                 
+## [30] &quot;temp_clean&quot;                             
+## [31] &quot;atemp_clean&quot;                            
+## [32] &quot;hum_clean&quot;                              
+## [33] &quot;windspeed_clean&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Prepare the training data</span>
+bikesJuly.treat &lt;-<span class="st"> </span><span class="kw">prepare</span>(treatplan, bikesJuly,  <span class="dt">varRestriction =</span> newvars)
+
+<span class="co"># Prepare the test data</span>
+bikesAugust.treat &lt;-<span class="st"> </span><span class="kw">prepare</span>(treatplan, bikesAugust,  <span class="dt">varRestriction =</span> newvars)
+
+<span class="co"># Call str() on the treated data</span>
+<span class="kw">str</span>(bikesAugust.treat)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    744 obs. of  33 variables:
+##  $ hr_lev_x.0                             : num  1 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.1                             : num  0 1 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.10                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.11                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.12                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.13                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.14                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.15                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.16                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.17                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.18                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.19                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.2                             : num  0 0 1 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.20                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.21                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.22                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.23                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.3                             : num  0 0 0 1 0 0 0 0 0 0 ...
+##  $ hr_lev_x.4                             : num  0 0 0 0 1 0 0 0 0 0 ...
+##  $ hr_lev_x.5                             : num  0 0 0 0 0 1 0 0 0 0 ...
+##  $ hr_lev_x.6                             : num  0 0 0 0 0 0 1 0 0 0 ...
+##  $ hr_lev_x.7                             : num  0 0 0 0 0 0 0 1 0 0 ...
+##  $ hr_lev_x.8                             : num  0 0 0 0 0 0 0 0 1 0 ...
+##  $ hr_lev_x.9                             : num  0 0 0 0 0 0 0 0 0 1 ...
+##  $ holiday_clean                          : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ workingday_clean                       : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ weathersit_lev_x.Clear.to.partly.cloudy: num  1 1 1 1 0 0 1 0 0 0 ...
+##  $ weathersit_lev_x.Light.Precipitation   : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ weathersit_lev_x.Misty                 : num  0 0 0 0 1 1 0 1 1 1 ...
+##  $ temp_clean                             : num  0.68 0.66 0.64 0.64 0.64 0.64 0.64 0.64 0.66 0.68 ...
+##  $ atemp_clean                            : num  0.636 0.606 0.576 0.576 0.591 ...
+##  $ hum_clean                              : num  0.79 0.83 0.83 0.83 0.78 0.78 0.78 0.83 0.78 0.74 ...
+##  $ windspeed_clean                        : num  0.1642 0.0896 0.1045 0.1045 0.1343 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(bikesJuly.treat)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    744 obs. of  33 variables:
+##  $ hr_lev_x.0                             : num  1 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.1                             : num  0 1 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.10                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.11                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.12                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.13                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.14                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.15                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.16                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.17                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.18                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.19                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.2                             : num  0 0 1 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.20                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.21                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.22                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.23                            : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ hr_lev_x.3                             : num  0 0 0 1 0 0 0 0 0 0 ...
+##  $ hr_lev_x.4                             : num  0 0 0 0 1 0 0 0 0 0 ...
+##  $ hr_lev_x.5                             : num  0 0 0 0 0 1 0 0 0 0 ...
+##  $ hr_lev_x.6                             : num  0 0 0 0 0 0 1 0 0 0 ...
+##  $ hr_lev_x.7                             : num  0 0 0 0 0 0 0 1 0 0 ...
+##  $ hr_lev_x.8                             : num  0 0 0 0 0 0 0 0 1 0 ...
+##  $ hr_lev_x.9                             : num  0 0 0 0 0 0 0 0 0 1 ...
+##  $ holiday_clean                          : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ workingday_clean                       : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ weathersit_lev_x.Clear.to.partly.cloudy: num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ weathersit_lev_x.Light.Precipitation   : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ weathersit_lev_x.Misty                 : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ temp_clean                             : num  0.76 0.74 0.72 0.72 0.7 0.68 0.7 0.74 0.78 0.82 ...
+##  $ atemp_clean                            : num  0.727 0.697 0.697 0.712 0.667 ...
+##  $ hum_clean                              : num  0.66 0.7 0.74 0.84 0.79 0.79 0.79 0.7 0.62 0.56 ...
+##  $ windspeed_clean                        : num  0 0.1343 0.0896 0.1343 0.194 ...</code></pre>
+</div>
+</div>
+<div id="gradient-boosting-machines" class="section level2">
+<h2><span class="header-section-number">8.2</span> Gradient Boosting Machines</h2>
+<p>Gradient boosting is an interative ensemble method, by improving the model each time. We start the model with a usually shallow tree. Next, we fit another model to the residuals ofd the model, then find the weighted sum of the second and first models that give the best fit. We can regualrise the learning by the factor eta, eta = 1 gives fast learning but with overfitting risk, smaller eta reduces speed of learning but reduces the risk of overfitting. We then repeat this process until the stopping condition is met.</p>
+<p>Gradient boosting works on the training data, so it can be easy to overfit. The best approach then is to use OOB and cross validation (CV) for each model, then determine how many trees to use.</p>
+<p>xgb.cv() is the function we use and has a number of diagnostic measures. One such measure is the</p>
+<ul>
+<li>xgb.cv()$evaluation_log: records estimated RMSE for each round - find the number that minimises the RMSE</li>
+</ul>
+<p>Inputs to xgb.cv() and xgboost() are:</p>
+<ul>
+<li>data: input data as matrix ; label: outcome</li>
+<li>label: vector of outcomes (also numeric)</li>
+<li>objective: for regression - “reg:linear”</li>
+<li>nrounds: maximum number of trees to fit</li>
+<li>eta: learning rate</li>
+<li>max_depth: depth of trees</li>
+<li>early_stopping_rounds: after this many rounds without improvement, stop</li>
+<li>nfold (xgb.cv() only): number of folds for cross validation. 5 is a good number</li>
+<li>verbose: 0 to stay silent.</li>
+</ul>
+<p>Then we use</p>
+<p>elog &lt;- as.data.frame(cv<span class="math inline">\(evaluation_log) nrounds &lt;- which.min(elog\)</span>test_rmse_mean)</p>
+<p>With the resulting number being the best number of trees. We then use xbgoost with this number (nrounds &lt;- n) to get the final model.</p>
+<p>In this exercise you will get ready to build a gradient boosting model to predict the number of bikes rented in an hour as a function of the weather and the type and time of day. You will train the model on data from the month of July.</p>
+<p>The July data is loaded into your workspace. Remember that bikesJuly.treat no longer has the outcome column, so you must get it from the untreated data: bikesJuly$cnt.</p>
+<p>You will use the xgboost package to fit the random forest model. The function xgb.cv() uses cross-validation to estimate the out-of-sample learning error as each new tree is added to the model. The appropriate number of trees to use in the final model is the number that minimizes the holdout RMSE.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The July data is in the workspace</span>
+<span class="kw">ls</span>()</code></pre></div>
+<pre><code>##  [1] &quot;bike_model_rf&quot;     &quot;bikes&quot;             &quot;bikesAugust&quot;      
+##  [4] &quot;bikesAugust.treat&quot; &quot;bikesJuly&quot;         &quot;bikesJuly.treat&quot;  
+##  [7] &quot;color&quot;             &quot;dframe&quot;            &quot;dframe.treat&quot;     
+## [10] &quot;fmla&quot;              &quot;newvars&quot;           &quot;outcome&quot;          
+## [13] &quot;popularity&quot;        &quot;randomforest_plot&quot; &quot;scoreFrame&quot;       
+## [16] &quot;seed&quot;              &quot;size&quot;              &quot;testframe&quot;        
+## [19] &quot;testframe.treat&quot;   &quot;treatplan&quot;         &quot;vars&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the package xgboost</span>
+<span class="kw">library</span>(xgboost)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;xgboost&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     slice</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run xgb.cv</span>
+cv &lt;-<span class="st"> </span><span class="kw">xgb.cv</span>(<span class="dt">data =</span> <span class="kw">as.matrix</span>(bikesJuly.treat), 
+            <span class="dt">label =</span> bikesJuly$cnt,
+            <span class="dt">nrounds =</span> <span class="dv">100</span>,
+            <span class="dt">nfold =</span> <span class="dv">5</span>,
+            <span class="dt">objective =</span> <span class="st">&quot;reg:linear&quot;</span>,
+            <span class="dt">eta =</span> <span class="fl">0.3</span>,
+            <span class="dt">max_depth =</span> <span class="dv">6</span>,
+            <span class="dt">early_stopping_rounds =</span> <span class="dv">10</span>,
+            <span class="dt">verbose =</span> <span class="dv">0</span>    <span class="co"># silent</span>
+)
+
+<span class="co"># Get the evaluation log </span>
+elog &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(cv$evaluation_log)
+
+<span class="co"># Determine and print how many trees minimize training and test error</span>
+elog %&gt;%<span class="st"> </span>
+<span class="st">   </span><span class="kw">summarize</span>(<span class="dt">ntrees.train =</span> <span class="kw">which.min</span>(elog$train_rmse_mean),   <span class="co"># find the index of min(train_rmse_mean)</span>
+             <span class="dt">ntrees.test  =</span> <span class="kw">which.min</span>(elog$test_rmse_mean))   <span class="co"># find the index of min(test_rmse_mean)</span></code></pre></div>
+<pre><code>##   ntrees.train ntrees.test
+## 1          100          98</code></pre>
+<p>In most cases, ntrees.test is less than ntrees.train. The training error keeps decreasing even after the test error starts to increase. It’s important to use cross-validation to find the right number of trees (as determined by ntrees.test) and avoid an overfit model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The number of trees to use, as determined by xgb.cv</span>
+ntrees &lt;-<span class="st"> </span><span class="dv">84</span>
+
+<span class="co"># Run xgboost</span>
+bike_model_xgb &lt;-<span class="st"> </span><span class="kw">xgboost</span>(<span class="dt">data =</span> <span class="kw">as.matrix</span>(bikesJuly.treat), <span class="co"># training data as matrix</span>
+                   <span class="dt">label =</span> bikesJuly$cnt,  <span class="co"># column of outcomes</span>
+                   <span class="dt">nrounds =</span> ntrees,       <span class="co"># number of trees to build</span>
+                   <span class="dt">objective =</span> <span class="st">&quot;reg:linear&quot;</span>, <span class="co"># objective</span>
+                   <span class="dt">eta =</span> <span class="fl">0.3</span>,
+                   <span class="dt">depth =</span> <span class="dv">6</span>,
+                   <span class="dt">verbose =</span> <span class="dv">0</span>  <span class="co"># silent</span>
+)
+
+<span class="co"># Make predictions</span>
+bikesAugust$pred &lt;-<span class="st"> </span><span class="kw">predict</span>(bike_model_xgb, <span class="kw">as.matrix</span>(bikesAugust.treat))
+
+<span class="co"># Plot predictions (on x axis) vs actual bike rental count</span>
+<span class="kw">ggplot</span>(bikesAugust, <span class="kw">aes</span>(<span class="dt">x =</span> pred, <span class="dt">y =</span> cnt)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_abline</span>()</code></pre></div>
+<p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-11-1.png" width="672" /> Overall, the scatterplot looked pretty good, but did you notice that the model made some negative predictions? In the next exercise, you’ll compare this model’s RMSE to the previous bike models that you’ve built. Finally we can calculate the RMSE</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate RMSE</span>
+bikesAugust %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">residuals =</span> cnt -<span class="st"> </span>pred) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rmse =</span> <span class="kw">sqrt</span>(<span class="kw">mean</span>(residuals ^<span class="st"> </span><span class="dv">2</span>)))</code></pre></div>
+<pre><code>##       rmse
+## 1 76.36407</code></pre>
+<p>Even though this gradient boosting made some negative predictions, overall it makes smaller errors than the previous model. Perhaps rounding negative predictions up to zero is a reasonable tradeoff.</p>
+<p>Finally we can compare the results graphically.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">randomforest_plot</code></pre></div>
+<p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot predictions and actual bike rentals as a function of time (days)</span>
+bikesAugust %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">instant =</span> (instant -<span class="st"> </span><span class="kw">min</span>(instant))/<span class="dv">24</span>) %&gt;%<span class="st">  </span><span class="co"># set start to 0, convert unit to days</span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> valuetype, <span class="dt">value =</span> value, cnt, pred) %&gt;%
+<span class="st">  </span><span class="kw">filter</span>(instant &lt;<span class="st"> </span><span class="dv">14</span>) %&gt;%<span class="st"> </span><span class="co"># first two weeks</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> instant, <span class="dt">y =</span> value, <span class="dt">color =</span> valuetype, <span class="dt">linetype =</span> valuetype)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Day&quot;</span>, <span class="dt">breaks =</span> <span class="dv">0</span>:<span class="dv">14</span>, <span class="dt">labels =</span> <span class="dv">0</span>:<span class="dv">14</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Predicted August bike rentals, Gradient Boosting model&quot;</span>)</code></pre></div>
+<p><img src="SupervisedLearning_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="correlation-and-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dimensional-modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["Study-Notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

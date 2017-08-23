@@ -473,7 +473,7 @@ resp
 
 ```
 ## Response [http://www.example.com/]
-##   Date: 2017-08-23 08:25
+##   Date: 2017-08-23 14:29
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -515,7 +515,7 @@ resp
 
 ```
 ## Response [http://www.omdbapi.com/?apikey=ff21610b&t=Annie+Hall&y=&plot=short&r=json]
-##   Date: 2017-08-23 08:25
+##   Date: 2017-08-23 14:29
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 942 B
