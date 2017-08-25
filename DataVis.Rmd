@@ -1,0 +1,125 @@
+# Data Visualization
+***
+Notes taken during/inspired by the Datacamp course 'Data Visualization in R' by Ronald Pearson.
+
+## Base R Graphics
+
+Two basic types of data visualizations:
+
+* Exploratory visualizations help us understand the data
+* Explanatory visualizations help us share ourunderstanding with others 
+
+There are four graphics systems in R:
+
+* Base graphics: Easiest to learn and focus of this course
+* Grid graphics: powerful set of modules for building othertools
+* Lattice graphics: general purpose system based on grid graphics
+* ggplot2: “the grammar of graphics”
+
+Grid graphics allows more control of the output but is more complex, typically it is used by package developers and both lattice and ggplot2 build on this.
+
+```{r}
+# Load MASS package
+library(MASS)
+
+# Plot whiteside data
+plot(whiteside)
+
+# Plot Gas vs. Temp
+plot(whiteside$Temp, whiteside$Gas, ylab = "Heating gas consumption", xlab = "Outside temperature")
+
+# Apply the plot() function to Insul - R will automatically change the plot type to suit the data (a factor)
+plot(whiteside$Insul)
+```
+
+Adding additional details to your explanatory plots can help emphasize certain aspects of your data. For example, by specifying the pch and col arguments to the plot() function, you can add different point shapes and colors to show how different variables or subsets of your data relate to each other. In addition, you can add a new set of points to your existing scatterplot with the points() function, and add reference lines with the abline() function.
+
+```{r}
+# Plot Max.Price vs. Price as red triangles
+plot(Cars93$Price, Cars93$Max.Price, pch = 17, col = "red")
+
+# Add Min.Price vs. Price as blue circles
+points(Cars93$Price, Cars93$Min.Price, pch = 16, col = "blue")
+
+# Add an equality reference line with abline() - lty=2 makes a dashed line
+abline(a = 0, b = 1, lty = 2)
+```
+
+You can plot multiple graphs on a single pane using the par() function with its mfrow parameter. For example, par(mfrow = c(1, 2)) creates a plot array with 1 row and 2 columns, allowing you to view two graphs side-by-side. This way, you can compare and contrast different datasets or different views of the same dataset. This exercise asks you to compare two views of the Animals2 dataset from the robustbase package, differing in how its variables are represented.
+
+The objective of this exercise is to emphasize that the original representation of the variables that we have in a dataset is not always the best one for visualization or analysis. By representing the original variables in log scale, for example, we can better see and understand the data.
+
+```{r}
+# Load the robustbase package
+library(robustbase)
+
+# Set up the side-by-side plot array
+par(mfrow = c(1, 2))
+
+# First plot: brain vs. body in its original form
+plot(Animals2$body, Animals2$brain)
+
+# Add the first title
+title("Original representation")
+
+# Second plot: log-log plot of brain vs. body
+plot(Animals2$body, Animals2$brain, log = "xy")
+
+# Add the second title
+title("Log-log plot")
+```
+
+Sometimes, log-transforming the x and y variables by specifying log = "xy" inside the plot() function can make it a lot easier to see the direct relationship between the two variables. Similarly, you can specify log = "y" to log-transform only the y variable and log = "x" to log-transform only the x variable.
+
+### Avoiding pie charts
+
+The same dataset can be displayed or summarized in many different ways, but some are much more suitable than others.
+
+Despite their general popularity, pie charts are often a poor choice. Though R allows pie charts with the pie() function, even the help file for this function argues against their use. Specifically, the help file includes a "Note" that begins with the words: "Pie charts are a very bad way of displaying information."
+
+Bar charts are a recommended alternative.
+
+```{r}
+# Load the insuranceData package
+library(insuranceData)
+
+# Use the data() function to get the dataCar data frame
+data(dataCar)
+
+# Set up a side-by-side plot array
+par(mfrow = c(1, 2))
+
+# Create a table of veh_body record counts and sort
+tbl <- sort(table(dataCar$veh_body),
+            decreasing = TRUE)
+
+# Create the pie chart and give it a title
+pie(tbl) + title("Pie chart")
+
+# Create the barplot with perpendicular, half-sized labels
+barplot(tbl, las = 2, cex.names = 0.5)
+
+# Add a title
+title("Bar chart")
+```
+
+## Different Plot Types
+
+Histograms are probably the best-known way of looking at how the values of a numerical variable are distributed over their range, and R provides several different histogram implementations.
+
+The purpose of this exercise is to introduce two of these:
+
+hist() is part of base R and its default option yields a histogram based on the number of times a record falls into each of the bins on which the histogram is based.
+truehist() is from the MASS package and scales these counts to give an estimate of the probability density.
+
+```{r}
+# Set up a side-by-side plot array
+par(mfrow = c(1, 2))
+
+# Create a histogram of counts with hist()
+hist(Cars93$Horsepower, main = "hist() plot")
+
+# Create a normalized histogram with truehist()
+truehist(Cars93$Horsepower, main = "truehist() plot")
+```
+
