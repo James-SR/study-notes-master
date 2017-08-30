@@ -214,3 +214,64 @@ More specifically, this exercise asks you to construct a mosaic plot showing the
  mosaicplot(carb ~ cyl, data = mtcars)
 ```
 
+A single box plot gives a graphical representation of the range of variation in a numerical variable, based on five numbers:
+
+* The minimum and maximum values
+* The median (or "middle") value
+* Two intermediate values called the lower and upper quartiles
+
+In addition, the standard box plot computes a nominal data range from three of these numbers and flags points falling outside this range as outliers, representing them as distinct points.
+
+The bag plot extends this representation to two numerical variables, showing their relationship, both within two-dimensional "bags" corresponding to the "box" in the standard boxplot, and indicating outlying points outside these limits.
+
+```{r}
+# Create a side-by-side boxplot summary
+boxplot(Cars93$Min.Price, Cars93$Max.Price)
+
+# Load aplpack to make the bagplot() function available
+library(aplpack)
+
+# Create a bagplot for the same two variables
+bagplot(Cars93$Min.Price, Cars93$Max.Price, cex = 1.2)
+
+# Add an equality reference line
+abline(a = 0, b = 1, lty = 2)
+```
+
+Correlation matrices were introduced in the video as a useful tool for obtaining a preliminary view of the relationships between multiple numerical variables.
+
+This exercise asks you to use the corrplot() function from the corrplot package to visualize this correlation matrix for the numerical variables from the UScereal data frame in the MASS package. Recall that in this version of these plots, ellipses that are thin and elongated indicate a large correlation value between the indicated variables, while ellipses that are nearly circular indicate correlations near zero.
+
+```{r}
+# Load the corrplot library for the corrplot() function
+library(corrplot)
+
+# Extract the numerical variables from UScereal
+numericalVars <- UScereal[, 2:10]
+
+# Compute the correlation matrix for these variables
+corrMat <- cor(numericalVars)
+
+# Generate the correlation ellipse plot
+corrplot(corrMat, method = "ellipse")
+```
+
+Decision trees represent a popular form of predictive model because they are easy to visualize and explain, rpart package is probably the most popular of several R packages that can be used to build and visualize these models.
+
+```{r}
+# Load the rpart library
+library(rpart)
+
+# Fit an rpart model to predict medv from all other Boston variables
+tree_model <- rpart(medv ~., data = Boston)
+
+# Plot the structure of this decision tree model
+plot(tree_model)
+
+# Add labels to this plot
+text(tree_model, cex = 0.7)
+```
+
+## Adding details to plots
+
+
