@@ -488,3 +488,262 @@ text(x = whiteside$Temp[indexA], y = whiteside$Gas[indexA],
      labels = "After", col = 'red', srt = -20, cex = .8)
 ```
 
+### Adding details to plots
+
+It is possible to add your own legend and custom axix, both in terms of scale and positioning i.e. at the top rather than at the bottom.  This section gives some examples on how to acheive this.
+
+```{r}
+# Set up and label empty plot of Gas vs. Temp
+plot(whiteside$Temp, whiteside$Gas,
+     type = "n", 
+     xlab = "Outside temperature",
+     ylab = "Heating gas consumption")
+
+# Create indexB, pointing to "Before" data
+indexB <- which(whiteside$Insul == "Before")
+
+# Create indexA, pointing to "After" data
+indexA <- which(whiteside$Insul == "After")
+
+# Add "Before" data as solid triangles
+points(whiteside$Temp[indexB], whiteside$Gas[indexB], pch = 17)
+
+# Add "After" data as open circles
+points(whiteside$Temp[indexA], whiteside$Gas[indexA], pch = 1)
+
+# Add legend that identifies points as "Before" and "After"
+legend("topright", pch = c(17, 1), legend = c("Before", "After"))
+```
+
+Typical base graphics functions like boxplot() provide x- and y-axes by default, with a label for the x-axis below the plot and one for the y-axis label to the left of the plot. These labels are generated automatically from the variable names used to generate the plot. Sometimes, we want to provide our own axes labels, and R makes this possible in two steps: first, we suppress the default axes when we create the plot by specifying axes = FALSE; then, we call the low-level graphics function axis() to create the axes we want.
+
+```{r}
+# Create a boxplot of sugars by shelf value, without axes
+boxplot(sugars ~ shelf, data = UScereal, axes = F)
+
+# Add a default y-axis to the left of the boxplot
+axis(side = 2)
+
+# Add an x-axis below the plot, labelled 1, 2, and 3
+axis(side = 1, at = c(1,2,3))
+
+# Add a second x-axis above the plot
+axis(side = 3, at = c(1,2,3),
+     labels = c("floor","middle","top"))
+```
+
+We may want to add a curved trend line that highlights this behavior of the data and the supsmu() function represents one way of doing this.
+
+To use this function, we need to specify values for the required arguments x and y, but it also has a number of optional arguments. Here, we consider the optional bass argument, which controls the degree of smoothness in the resulting trend curve. The default value is 0, but specifying larger values (up to a maximum of 10) results in a smoother curve. This exercise asks you to use the supsmu() function to add two trend lines to a scatterplot, one using the default parameters and the other with increased smoothness.
+
+```{r}
+# Create a scatterplot of MPG.city vs. Horsepower
+plot(Cars93$Horsepower, Cars93$MPG.city)
+
+# Call supsmu() to generate a smooth trend curve, with default bass
+trend1 <- supsmu(Cars93$Horsepower, Cars93$MPG.city)
+
+# Add this trend curve to the plot
+lines(trend1)
+
+# Call supsmu() for a second trend curve, with bass = 10
+trend2 <- supsmu(Cars93$Horsepower, Cars93$MPG.city, bass = 10)
+
+# Add this trend curve as a heavy, dotted line
+lines(trend2, lty = 3, lwd = 2)
+```
+
+## How much is too much
+
+The first example presented in this file applied the plot() function to a data frame, yielding an array of scatterplots with one for each pair of columns in the data frame. Thus, the number of plots in this array is equal to the square of the number of columns in the data frame.
+
+This means that if we apply the plot() function to a data frame with many columns, we will generate an enormous array of scatterplots, each of which will be too small to be useful. The purpose of this exercise is to provide a memorable example.
+
+```{r}
+# Compute the number of plots to be displayed
+ncol(Cars93)^2
+
+# Plot the array of scatterplots
+plot(Cars93)
+```
+
+The matplot() function can be used to easily generate a plot with several scatterplots on the same set of axes. By default, the points in these scatterplots are represented by the numbers 1 through n, where n is the total number of scatterplots included, but most of the options available with the plot() function are also possible by specifying the appropriate arguments.
+
+```{r}
+# Construct the vector keep_vars
+keep_vars <- c("calories", "protein", "fat",
+               "fibre", "carbo", "sugars")
+
+# Use keep_vars to extract the desired subset of UScereal
+df <- UScereal[, keep_vars]
+
+# Set up a two-by-two plot array
+par(mfrow = c(2, 2))
+
+# Use matplot() to generate an array of two scatterplots
+matplot(
+  UScereal$calories, 
+  UScereal[,c('protein', 'fat')], 
+  xlab = "calories",
+  ylab = "")
+
+
+# Add a title
+title("Two scatterplots")
+
+
+# Use matplot() to generate an array of three scatterplots
+matplot(
+  UScereal$calories, 
+  UScereal[,c('protein', 'fat', 'fibre')], 
+  xlab = "calories",
+  ylab = "")
+
+# Add a title
+title("Three scatterplots")
+
+# Use matplot() to generate an array of four scatterplots
+matplot(
+  UScereal$calories, 
+  UScereal[,c('protein', 'fat', 'fibre', 'carbo')], 
+  xlab = "calories",
+  ylab = "")
+
+# Add a title
+title("Four scatterplots")
+
+# Use matplot() to generate an array of five scatterplots
+matplot(
+  UScereal$calories, 
+  UScereal[,c('protein', 'fat', 'fibre', 'carbo','sugars')], 
+  xlab = "calories",
+  ylab = "")
+
+
+# Add a title
+title("Five scatterplots")
+
+```
+Any data visualization loses its utility if it becomes too complex.
+
+This exercise asks you to consider this problem with wordclouds, displays that present words in varying sizes depending on their frequency. That is, more frequent words appear larger in the display, while rarer words appear in a smaller font.
+
+In R, wordclouds are easy to generate with the wordcloud() function in the wordcloud package. This function is called with a character vector of words, and a second numerical vector giving the number of times each word appears in the collection used to generate the wordcloud.
+
+Two other useful arguments for this function are scale and min.freq. The scale argument is a two-component numerical vector giving the relative size of the largest word in the display and that of the smallest word. The wordcloud only includes those words that occur at least min.freq times in the collection and the default value for this argument is 3.
+
+
+```{r}
+library(wordcloud)
+
+mfr_table <- table(Cars93$Manufacturer)
+
+# Create the default wordcloud from this table
+wordcloud(
+  words = names(mfr_table), 
+  freq = as.numeric(mfr_table), 
+  scale = c(2, 0.25))
+
+# Change the minimum word frequency
+wordcloud(
+  words = names(mfr_table), 
+  freq = as.numeric(mfr_table), 
+  scale = c(2, 0.25),
+  min.freq = 1)
+
+# Create model_table of model frequencies
+model_table <- table(Cars93$Model)
+
+# Create the wordcloud of all model names with smaller scaling
+wordcloud(
+  words = names(model_table), 
+  freq = as.numeric(model_table), 
+  scale = c(.75, .25), 
+  min.freq = 1)
+```
+
+### Mutiple Plots
+
+There are a couple of ways to set up multiple plot arrays, one is mfrow.
+
+This exercise and the next one are based on the Anscombe quartet, a collection of four datasets that appear to be essentially identical on the basis of simple summary statistics like means and standard deviations. For example, the mean x-values for these datasets are identical to three digits, while the mean y-values differ only in the third digit.
+
+In spite of these apparent similarities, the behavior of the four datasets is quite different and this becomes immediately apparent when we plot them.
+
+```{r}
+# Set up a two-by-two plot array
+par(mfrow = c(2,2))
+
+# Plot y1 vs. x1 
+plot(anscombe$x1, anscombe$y1)
+
+# Plot y2 vs. x2
+plot(anscombe$x2, anscombe$y2)
+
+# Plot y3 vs. x3
+plot(anscombe$x3, anscombe$y3)
+
+# Plot y4 vs. x4
+plot(anscombe$x4, anscombe$y4)
+```
+
+The point of this exercise is to illustrate how much more clearly we can see the differences in these datasets if we plot all of them with the same x and y ranges. This exercise also illustrates the utility of improving the x- and y-axis labels and of adding informative plot titles.
+
+```{r}
+# Define common x and y limits for the four plots
+xmin <- 4
+xmax <- 19
+ymin <- 3
+ymax <- 13
+
+# Set up a two-by-two plot array
+par(mfrow = c(2,2))
+
+# Plot y1 vs. x1 with common x and y limits, labels & title
+plot(anscombe$x1, anscombe$y1,
+     xlim = c(xmin, xmax),
+     ylim = c(ymin, ymax),
+     xlab = "x value", ylab = "y value",
+     main = "First dataset")
+
+# Do the same for the y2 vs. x2 plot
+plot(anscombe$x2, anscombe$y2,
+     xlim = c(xmin, xmax),
+     ylim = c(ymin, ymax),
+     xlab = "x value", ylab = "y value",
+     main = "Second dataset")
+
+# Do the same for the y3 vs. x3 plot
+plot(anscombe$x3, anscombe$y3,
+     xlim = c(xmin, xmax),
+     ylim = c(ymin, ymax),
+     xlab = "x value", ylab = "y value",
+     main = "Third dataset")
+
+# Do the same for the y4 vs. x4 plot
+plot(anscombe$x4, anscombe$y4,
+     xlim = c(xmin, xmax),
+     ylim = c(ymin, ymax),
+     xlab = "x value", ylab = "y value",
+     main = "Fourth dataset")
+```
+
+This exercise illustrates this idea, giving four views of the same dataset: a plot of the raw data values themselves, a histogram of these data values, a density plot, and a normal QQ-plot.
+
+```{r}
+# Set up a two-by-two plot array
+par(mfrow = c(2,2))
+
+# Plot the raw duration data
+plot(geyser$duration, main = "Raw data")
+
+# Plot the normalized histogram of the duration data
+truehist(geyser$duration, main = "Histogram")
+
+# Plot the density of the duration data
+plot(density(geyser$duration), main = "Density")
+
+# Construct the normal QQ-plot of the duration data
+qqPlot(geyser$duration, main = "QQ-plot")
+```
+
