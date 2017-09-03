@@ -747,3 +747,128 @@ plot(density(geyser$duration), main = "Density")
 qqPlot(geyser$duration, main = "QQ-plot")
 ```
 
+As well as the par() function, you can also use the layout() function to setup a plot array.  You can think of the layout matrix as the plot pane, where a 0 represents empty space and other numbers represent the plot number, which is determined by the sequence of visualization function calls. For example, a 1 in the layout matrix refers to the visualization that was first called, a 2 refers to the plot of the second visualization call, etc. This exercise asks you to create your own 3 x 2 layout matrix, using the c() function to concatenate numbers into vectors that will form the rows of the matrix.
+
+You will then use the matrix() function to convert these rows into a matrix and apply the layout() function to set up the desired plot array. The convenience function layout.show() can then be used to verify that the plot array has the shape you want.
+
+```{r}
+# Use the matrix function to create a matrix with three rows and two columns
+layoutMatrix <- matrix(
+  c(
+    0, 1,
+    2, 0,
+    0, 3
+  ), 
+  byrow = T, 
+  nrow = 3
+)
+
+# Call the layout() function to set up the plot array
+layout(layoutMatrix)
+
+# Show where the three plots will go 
+layout.show(n = 3)
+
+# Set up the plot array
+layout(layoutMatrix)
+
+# Construct vectors indexB and indexA
+indexB <- which(whiteside$Insul == "Before")
+indexA <- which(whiteside$Insul == "After")
+
+# Create plot 1 and add title
+plot(whiteside$Temp[indexB], whiteside$Gas[indexB],
+     ylim = c(0,8))
+title("Before data only")
+
+# Create plot 2 and add title
+plot(whiteside$Temp, whiteside$Gas,
+     ylim = c(0,8))
+title("Complete dataset")
+
+# Create plot 3 and add title
+plot(whiteside$Temp[indexA], whiteside$Gas[indexA],
+     ylim = c(0,8))
+title("After data only")
+```
+
+Besides creating non-rectangular arrays, the layout() function can be used to create plot arrays with different sized component plots -- something else that is not possible by setting the par() function's mfrow parameter.
+
+```{r}
+# Create row1, row2, and layoutVector
+row1 <- c(1,0,0)
+row2 <- c(0,2,2)
+layoutVector <- c(row1,row2, row2)
+
+# Convert layoutVector into layoutMatrix
+layoutMatrix <- matrix(layoutVector, byrow = T, nrow = 3)
+
+# Set up the plot array
+layout(layoutMatrix)
+
+# Plot scatterplot
+plot(Boston$rad, Boston$zn)
+
+# Plot sunflower plot
+sunflowerplot(Boston$rad, Boston$zn)
+```
+
+
+## Advanced Plot Customisation
+
+Many functions, including barplot, will return invisible vectors of useful information.  For instance, bar plot returns a hdden vector that the centre positions of each bar.
+
+These return values can be especially useful when we want to overlay text on the bars of a horizontal barplot. Then, we capture the return values and use them as the y parameter in a subsequent call to the text() function, allowing us to place the text at whatever x position we want but overlaid in the middle of each horizontal bar. This exercise asks you to construct a horizontal barplot that exploits these possibilities.
+```{r}
+# Create a table of Cylinders frequencies
+tbl <- table(Cars93$Cylinders)
+
+# Generate a horizontal barplot of these frequencies
+mids <- barplot(tbl, 
+  horiz = T,
+  col = "transparent",
+  names.arg = "")
+
+# Add names labels with text()
+text(20, mids, names(tbl))
+
+# Add count labels with text()
+text(35, mids, as.numeric(tbl))
+```
+
+The scatterplot allows us to see how one numerical variable changes with the values of a second numerical variable. The symbols() function allows us to extend scatterplots to show the influence of other variables.
+
+This function is called with the variables x and y that define a scatterplot, along with another argument that specifies one of several possible shapes. Here, you are asked to use the circles argument to create a bubbleplot where each data point is represented by a circle whose radius depends on the third variable specified by the value of this argument.
+
+```{r}
+# Call symbols() to create the default bubbleplot
+symbols(Cars93$Horsepower,Cars93$MPG.city,
+        circles = sqrt(Cars93$Price))
+
+# Repeat, with the inches argument specified
+symbols(Cars93$Horsepower,Cars93$MPG.city,
+        circles = sqrt(Cars93$Price),
+        inches = 0.1)
+```
+
+
+R provides support for saving graphical results in several different external file formats, including jpeg, png, tiff, or pdf files. In addition, we can incorporate graphical results into external documents, using tools like the Sweave() function or the knitr package or using R Markdown.
+
+The basis for saving outputs/plots is using the png() function, which specifies the name of the png file to be generated and sets up a special environment that captures all graphical output until we exit this environment with the dev.off() command.
+
+```{r}
+# Call png() with the name of the file we want to create
+png('bubbleplot.png')
+
+# Re-create the plot from the last exercise
+symbols(Cars93$Horsepower, Cars93$MPG.city,
+        circles = sqrt(Cars93$Price),
+        inches = 0.1)
+
+# Save our file and return to our interactive session
+dev.off()
+
+# Verify that we have created the file
+list.files(pattern = "png")
+```
+
