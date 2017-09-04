@@ -344,13 +344,13 @@ treatplan <- designTreatmentsZ(dframe, vars)
 ```
 
 ```
-## [1] "desigining treatments Wed Aug 23 16:18:27 2017"
-## [1] "designing treatments Wed Aug 23 16:18:27 2017"
-## [1] " have level statistics Wed Aug 23 16:18:27 2017"
-## [1] "design var color Wed Aug 23 16:18:27 2017"
-## [1] "design var size Wed Aug 23 16:18:27 2017"
-## [1] " scoring treatments Wed Aug 23 16:18:27 2017"
-## [1] "have treatment plan Wed Aug 23 16:18:27 2017"
+## [1] "desigining treatments Mon Sep 04 05:11:20 2017"
+## [1] "designing treatments Mon Sep 04 05:11:20 2017"
+## [1] " have level statistics Mon Sep 04 05:11:20 2017"
+## [1] "design var color Mon Sep 04 05:11:20 2017"
+## [1] "design var size Mon Sep 04 05:11:20 2017"
+## [1] " scoring treatments Mon Sep 04 05:11:20 2017"
+## [1] "have treatment plan Mon Sep 04 05:11:20 2017"
 ```
 
 ```r
@@ -784,7 +784,7 @@ elog %>%
 
 ```
 ##   ntrees.train ntrees.test
-## 1           97          87
+## 1           67          57
 ```
 
 In most cases, ntrees.test is less than ntrees.train. The training error keeps decreasing even after the test error starts to increase. It's important to use cross-validation to find the right number of trees (as determined by ntrees.test) and avoid an overfit model.

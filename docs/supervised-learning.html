@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Study notes</title>
   <meta name="description" content="Study notes taken from courses and self learning.">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="Study notes" />
   <meta property="og:type" content="book" />
@@ -443,13 +443,13 @@ dframe</code></pre></div>
 
 <span class="co"># Create the treatment plan</span>
 treatplan &lt;-<span class="st"> </span><span class="kw">designTreatmentsZ</span>(dframe, vars)</code></pre></div>
-<pre><code>## [1] &quot;desigining treatments Wed Aug 23 16:18:27 2017&quot;
-## [1] &quot;designing treatments Wed Aug 23 16:18:27 2017&quot;
-## [1] &quot; have level statistics Wed Aug 23 16:18:27 2017&quot;
-## [1] &quot;design var color Wed Aug 23 16:18:27 2017&quot;
-## [1] &quot;design var size Wed Aug 23 16:18:27 2017&quot;
-## [1] &quot; scoring treatments Wed Aug 23 16:18:27 2017&quot;
-## [1] &quot;have treatment plan Wed Aug 23 16:18:27 2017&quot;</code></pre>
+<pre><code>## [1] &quot;desigining treatments Mon Sep 04 05:11:20 2017&quot;
+## [1] &quot;designing treatments Mon Sep 04 05:11:20 2017&quot;
+## [1] &quot; have level statistics Mon Sep 04 05:11:20 2017&quot;
+## [1] &quot;design var color Mon Sep 04 05:11:20 2017&quot;
+## [1] &quot;design var size Mon Sep 04 05:11:20 2017&quot;
+## [1] &quot; scoring treatments Mon Sep 04 05:11:20 2017&quot;
+## [1] &quot;have treatment plan Mon Sep 04 05:11:20 2017&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Examine the scoreFrame</span>
 (scoreFrame &lt;-<span class="st"> </span>treatplan %&gt;%
 <span class="st">    </span>magrittr::<span class="kw">use_series</span>(scoreFrame) %&gt;%
@@ -767,7 +767,7 @@ elog %&gt;%<span class="st"> </span>
 <span class="st">   </span><span class="kw">summarize</span>(<span class="dt">ntrees.train =</span> <span class="kw">which.min</span>(elog$train_rmse_mean),   <span class="co"># find the index of min(train_rmse_mean)</span>
              <span class="dt">ntrees.test  =</span> <span class="kw">which.min</span>(elog$test_rmse_mean))   <span class="co"># find the index of min(test_rmse_mean)</span></code></pre></div>
 <pre><code>##   ntrees.train ntrees.test
-## 1           97          87</code></pre>
+## 1           67          57</code></pre>
 <p>In most cases, ntrees.test is less than ntrees.train. The training error keeps decreasing even after the test error starts to increase. It’s important to use cross-validation to find the right number of trees (as determined by ntrees.test) and avoid an overfit model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The number of trees to use, as determined by xgb.cv</span>
 ntrees &lt;-<span class="st"> </span><span class="dv">84</span>
@@ -838,7 +838,7 @@ importance_matrix &lt;-<span class="st"> </span><span class="kw">xgb.importance<
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,

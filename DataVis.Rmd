@@ -872,3 +872,125 @@ dev.off()
 list.files(pattern = "png")
 ```
 
+### Using colour effectively
+
+Colour can be effective but limited - for instance, for those with colour blindness.  Black and white documents or prints loose some of the colour dinstinction. Illinsky and Steele suggest ideally using 6 colours, not more than 12 and certaintly no more than 20.  They provided a set of recommended 12 colors, in descending order of desirability from the top of the plot to the bottom. Also, the first six "more preferred" colors are displayed with longer bars to visually emphasize their preferred status over the other six.
+
+```{r}
+# Iliinsky and Steele color name vector
+IScolors <- c("red", "green", "yellow", "blue",
+              "black", "white", "pink", "cyan",
+              "gray", "orange", "brown", "purple")
+
+# Create the data for the barplot
+barWidths <- c(rep(2, 6), rep(1, 6))
+
+# Recreate the horizontal barplot with colored bars
+barplot(
+  rev(barWidths), 
+  horiz = T,
+  col = rev(IScolors), 
+  axes = F,
+  names.arg = rev(IScolors), 
+  las = 1)
+```
+
+We can use colours to improve our plots, for instance by colouring bubbles in scatter plots.
+
+```{r}
+# Iliinsky and Steele color name vector
+IScolors <- c("red", "green", "yellow", "blue",
+              "black", "white", "pink", "cyan",
+              "gray", "orange", "brown", "purple")
+
+# Create the `cylinderLevel` variable
+cylinderLevel <- Cars93$Cylinders
+
+# Create the colored bubbleplot
+symbols(
+  Cars93$Horsepower, Cars93$MPG.city, 
+  circles = as.numeric(Cars93$Cylinders), 
+  inches = 0.2, 
+  bg = IScolors[cylinderLevel])
+```
+
+Or in barcharts, liked this stacked bar.
+
+```{r}
+# Create a table of Cylinders by Origin
+tbl <- table(Cars93$Cylinders, Cars93$Origin)
+
+# Create the default stacked barplot
+barplot(tbl)
+
+# Enhance this plot with color
+barplot(tbl, col = IScolors)
+```
+
+## Other graphics systems
+
+Base R used in this chapter is flexible and relatively easy to learn.  There are other graphic systems in R, but they typically have to be used instead of one or other - Base, grid lattice, ggplot - they are generally incompatible with each other.
+
+* Grid - provides a lot more control than base graphics, but has a much steeper learning curver and requires a lot more code to produce even simple plots
+* Latice - built on grid, again provides more detail than base allows
+* ggplot2 - build by Hadley and again provides more graphics than base allows, we can build plots in stages, adding detail as we go
+
+Grid is often used with another package as a wrapper, to make working with grid easier and not direct.  The example below uses tabplot package, which is built on top of grid.
+
+```{r}
+library(insuranceData)
+
+# Load the insuranceData package
+library(insuranceData)
+
+# Use the data() function to load the dataCar data frame
+data(dataCar)
+head(dataCar)
+
+# Load the tabplot package
+suppressPackageStartupMessages(library(tabplot))
+
+# Generate the default tableplot() display
+tableplot(dataCar)
+```
+
+Here we used Lattice graphics package, lattice is a general-purpose graphics package that provides alternative implementations of many of the plotting functions available in base graphics. Specific examples include scatterplots with the xyplot() function, bar charts with the barchart() function, and boxplots with the bwplot() function.
+
+One important difference between lattice graphics and base graphics is that similar functions available in both graphics systems often produce very different results when applied to the same data. As a specific example, the bwplot() function creates horizontal boxplots, while the default result of the boxplot() is a vertical boxplot display.
+
+Another more important difference between lattice and base graphics is that lattice graphics supports conditional plots that show the separate relationships between variables within different groups. This capability is illustrated in this exercise, where you are asked to construct a plot showing the relationship between the variables calories and sugars from the UScereal data frame, conditional on the value of the shelf variable.
+
+
+```{r}
+# Load the lattice package
+library(lattice)
+
+# Use xyplot() to construct the conditional scatterplot
+xyplot(calories ~ sugars | shelf, data = UScereal)
+```
+
+Finally we use ggplot2. Like the lattice package, the ggplot2 package is also based on grid graphics and it also represents a general purpose graphics package.
+
+The unique feature of the ggplot2 package is that it is based on the grammar of graphics, a systematic approach to building and modifying graphical displays, starting with a basic graphics element and refining it through the addition of successive modifiers.
+
+```{r}
+# Load the ggplot2 package
+library(ggplot2)
+
+# Create the basic plot (not displayed): basePlot
+basePlot <- ggplot(Cars93, aes(x = Horsepower, y = MPG.city))
+
+# Display the basic scatterplot
+basePlot + 
+  geom_point()
+
+# Color the points by Cylinders value
+basePlot + 
+  geom_point(colour = IScolors[Cars93$Cylinders])
+
+# Make the point sizes also vary with Cylinders value
+basePlot + 
+  geom_point(colour = IScolors[Cars93$Cylinders], 
+             size = as.numeric(Cars93$Cylinders))
+```
+
