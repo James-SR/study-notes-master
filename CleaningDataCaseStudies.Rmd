@@ -1,0 +1,173 @@
+# Importing & Cleaning Data in R: Case Studies
+***
+Notes taken during/inspired by the Datacamp course 'Importing & Cleaning Data in R: Case Studies' by Nick Carchedi.
+
+## Ticket Sales Data
+
+```{r}
+
+# Import sales.csv: sales
+sales <- read.csv("https://assets.datacamp.com/production/course_1294/datasets/sales.csv", stringsAsFactors = FALSE)
+
+# View dimensions of sales
+dim(sales)
+
+# Inspect first 6 rows of sales
+head(sales, n = 6)
+
+# View column names of sales
+names(sales)
+
+
+```
+
+Luckily, the rows and columns appear to be arranged in a meaningful way: each row represents an observation and each column a variable, or piece of information about that observation.
+
+In R, there are a great many tools at your disposal to help get a feel for your data. Besides the three you used in the previous exercise, the functions str() and summary() can be very helpful.
+
+The dplyr package, introduced in Cleaning Data in R, offers the glimpse() function, which can also be used for this purpose. The package is already installed on DataCamp; you just need to load it.
+
+```{r}
+# Look at structure of sales
+str(sales)
+
+# View a summary of sales
+summary(sales)
+
+# Load dplyr
+library(dplyr)
+
+# Get a glimpse of sales
+glimpse(sales)
+```
+
+### Removing redundant info
+
+The first column of data is just a duplication of the row numbers. Not very useful. Go ahead and delete that column.
+
+Remember that nrow() and ncol() return the number of rows and columns in a data frame, respectively.
+
+Also, recall that you can use square brackets to subset a data frame as follows:
+
+> my_df[1:5, ]      # First 5 rows of my_df
+
+> my_df[, 4]        # Fourth column of my_df
+
+Alternatively, you can remove rows and columns using negative indices. For example:
+
+> my_df[-(1:5), ]   # Omit first 5 rows of my_df
+
+> my_df[, -4]       # Omit fourth column of my_df
+
+```{r}
+# Remove the first column of sales: sales2
+sales2 <- sales[, -1]
+```
+
+Many of the columns have information that's of no use to us. For example, the first four columns contain internal codes representing particular events. The last fifteen columns also aren't worth keeping; there are too many missing values to make them worthwhile.
+
+An easy way to get rid of unnecessary columns is to create a vector containing the column indices you want to keep, then subset the data based on that vector using single bracket subsetting.
+
+```{r}
+# Define a vector of column indices: keep
+keep <- c(5:30)
+
+# Subset sales2 using keep: sales3
+sales3 <- sales2[keep]
+```
+
+Some of the columns in your data frame include multiple pieces of information that should be in separate columns. In this exercise, you will separate such a column into two: one for date and one for time. You will use the separate() function from the tidyr package (already installed for you).
+
+For isntance the event_date_time column has a date and time separated by a space. Therefore, you'll use sep = " " as an argument to separate().
+  
+```{r}
+head(sales3$event_date_time)
+head(sales3$sales_ord_create_dttm)
+
+# Load tidyr
+library(tidyr)
+
+# Split event_date_time: sales4
+sales4 <- separate(sales3, event_date_time,
+                   into = c("event_dt", "event_time"), sep = " ")
+
+# Split sales_ord_create_dttm: sales5
+sales5 <- separate(sales4, sales_ord_create_dttm,
+                   into = c("ord_create_dt", "ord_create_time"), sep = " ")
+```
+
+Looks like that second call to separate() threw a warning. Not to worry; warnings aren't as bad as error messages. It's not saying that the command didn't execute; it's just a heads-up that something unusual happened.
+
+The warning says Too few values at 4 locations. You may be able to guess already what the issue is, but it's still good to take a look.
+
+```{r}
+sales3$sales_ord_create_dttm[c(2516, 3863, 4082, 4183)]
+
+# Define an issues vector
+issues <- c(2516, 3863, 4082, 4183)
+
+# Print values of sales_ord_create_dttm at these indices
+sales3$sales_ord_create_dttm[issues]
+
+# Print a well-behaved value of sales_ord_create_dttm
+sales3$sales_ord_create_dttm[2517]
+```
+
+## Working with dates
+
+Some of the columns in your dataset contain dates of different events. Right now, they are stored as character strings. That's fine if all you want to do is look up the date associated with an event, but if you want to do any comparisons or math with the dates, it's MUCH easier to store them as Date objects.
+
+Luckily, all of the date columns in this dataset have the substring "dt" in their name, so you can use the str_detect() function of the stringr package to find the date columns. Then you can coerce them to Date objects using a function from the lubridate package.
+
+You'll use lapply() to apply the appropriate lubridate function to all of the columns that contain dates. Recall the following syntax for lapply() applied to some data frame columns of interest:
+
+> lapply(my_data_frame[, cols], function_name)
+
+Also recall that function names in lubridate combine the letters y, m, d, h, m, and s depending on the format of the date/time string being read in.
+
+```{r}
+# Load stringr
+library(stringr)
+
+# Find columns of sales5 containing "dt": date_cols
+date_cols <- str_detect(names(sales5),"dt")
+
+# Load lubridate
+library(lubridate)
+
+# Coerce date columns into Date objects
+sales5[, date_cols] <- lapply(sales5[, date_cols], ymd)
+```
+
+Some of the calls to ymd() caused a failure to parse warning. That's probably because of more missing data, but again, it's good to check to be sure.
+
+```{r}
+## stringr is loaded
+
+# Find date columns (don't change)
+date_cols <- str_detect(names(sales5), "dt")
+
+# Create logical vectors indicating missing values (don't change)
+missing <- lapply(sales5[, date_cols], is.na)
+
+# Create a numerical vector that counts missing values: num_missing
+num_missing <- sapply(missing, sum)
+
+# Print num_missing
+num_missing
+```
+
+The number of NAs in each column match the numbers from the warning messages, so missing data is the culprit. How to proceed depends on your desired analysis. If you really need complete sets of date/time information, you might delete the rows or columns containing NAs.
+
+As your last step, you'll use the tidyr function unite() to combine the venue_city and venue_state columns into one column with the two values separated by a comma and a space. For example, "PORTLAND" "MAINE" should become "PORTLAND, MAINE".
+
+```{r}
+## tidyr is loaded
+
+# Combine the venue_city and venue_state columns
+sales6 <- unite(sales5, venue_city_state, venue_city, venue_state, sep = ", ")
+
+# View the head of sales6
+head(sales6, n = 6)
+```
+
