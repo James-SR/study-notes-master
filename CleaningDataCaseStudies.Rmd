@@ -171,3 +171,128 @@ sales6 <- unite(sales5, venue_city_state, venue_city, venue_state, sep = ", ")
 head(sales6, n = 6)
 ```
 
+## MBTA Ridership Data
+
+The Massachusetts Bay Transportation Authority ("MBTA" or just "the T" for short) manages America's oldest subway, as well as Greater Boston's commuter rail, ferry, and bus systems.
+
+It's your first day on the job as the T's data analyst and you've been tasked with analyzing average ridership through time. You're in luck, because this chapter of the course will guide you through cleaning a set of MBTA ridership data!
+
+The dataset is stored as an Excel spreadsheet called mbta.xlsx.  You'll use the read_excel() function from Hadley Wickham's readxl package to import it.
+
+The first time you import a dataset, you might not know how many rows need to be skipped. In this case, the first row is a title (see this Excel screenshot), so you'll need to skip the first row. 
+
+```{r}
+
+# Load readxl
+library(readxl)
+
+# Import mbta.xlsx and skip first row: mbta
+mbta <- read_excel("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/mbta.xlsx", skip = 1)
+
+# View the structure of mbta
+str(mbta)
+
+# View the first 6 rows of mbta
+head(mbta, n = 6)
+
+# View a summary of mbta
+summary(mbta)
+
+```
+
+The data are organized with observations stored as columns rather than as rows.
+
+First, though, you can address the missing data. All of the NA values are stored in the All Modes by Qtr row. This row really belongs in a different data frame; it is a quarterly average of weekday MBTA ridership. Since this dataset tracks monthly average ridership, you'll remove that row.
+
+Similarly, the 7th row (Pct Chg / Yr) and the 11th row (TOTAL) are not really observations as much as they are analysis. Go ahead and remove the 7th and 11th rows as well.
+
+The first column also needs to be removed because it's just listing the row numbers.
+
+```{r}
+# Remove rows 1, 7, and 11 of mbta: mbta2
+keep <- !(mbta$mode %in% c('All Modes by Qtr', 'Pct Chg / Yr', 'TOTAL'))
+mbta2 <- mbta[keep,]
+
+# Remove the first column of mbta2: mbta3
+mbta3 <- mbta2[,-1]
+```
+
+Our next problem is variables are stored in rows instead of columns. The different modes of transportation (commuter rail, bus, subway, ferry, ...) are variables, providing information about each month's average ridership. The months themselves are observations. You can tell which is which because as you go through time, the month changes, but the modes of transport offered by the T do not.
+
+As is customary, you want to represent variables in columns rather than rows. The first step is to use the gather() function from the tidyr package, which will gather columns into key-value pairs.
+
+
+```{r}
+# Load tidyr
+library(tidyr)
+
+# Gather columns of mbta3: mbta4
+mbta4 <- gather(mbta3, month, thou_riders, -mode)
+
+# View the head of mbta4
+head(mbta4)
+```
+
+The thousand riders coloumn is still charecter data, so lets change that.
+
+```{r}
+# Coerce thou_riders to numeric
+mbta4$thou_riders <- as.numeric(mbta4$thou_riders)
+```
+
+Now, you can finish the job you started earlier: getting variables into columns. Right now, variables are stored as "keys" in the mode column. You'll use the tidyr function spread() to make them into columns containing average weekday ridership for the given month and mode of transport.
+
+```{r}
+# Spread the contents of mbta4: mbta5
+mbta5 <- spread(mbta4, mode, thou_riders)
+
+# View the head of mbta5
+head(mbta5)
+```
+
+If we want to look at the data by year, we can seperate the month field out in to month and year.
+
+```{r}
+# View the head of mbta5
+head(mbta5)
+
+# Split month column into month and year: mbta6
+mbta6 <- separate(mbta5, month, into = c("month", "year"), sep ="-")
+
+# View the head of mbta6
+head(mbta6)
+```
+
+Looks like some of the data might be a bit out, which you can check using different functions, histogram being one such function.
+
+```{r}
+# View a summary of mbta6
+summary(mbta6)
+
+# Generate a histogram of Boat ridership
+hist(mbta6$Boat)
+```
+
+Looks like we may have an input or typo on the value close to 40 - perhaps should have been a 4.0 or just a 4.  Because it's an error, you don't want this value influencing your analysis. In this exercise, you'll locate the incorrect value and change it to 4.
+
+```{r}
+# Find the row number of the incorrect value: i
+i <- which(mbta6$Boat == 40)
+
+# Replace the incorrect value with 4
+mbta6$Boat[i] <- 4
+
+# Generate a histogram of Boat column
+hist(mbta6$Boat)
+
+library(ggplot2)
+
+
+# Look at all T ridership over time (example plot)
+ggplot(mbta4, aes(x = month, y = thou_riders, col = mode)) + geom_point() + 
+  scale_x_discrete(name = "Month", breaks = c(200701, 200801, 200901, 201001, 201101)) +  
+  scale_y_continuous(name = "Avg Weekday Ridership (thousands)")
+```
+
+
+
