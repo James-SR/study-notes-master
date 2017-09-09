@@ -1,0 +1,7 @@
+# Joining Data in R with dplyr
+***
+Notes taken during/inspired by the Datacamp course 'Joining Data in R with dplyr' by Garrett Grolemund.
+
+## Mutating joins
+
+
