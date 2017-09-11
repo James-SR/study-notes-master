@@ -59,3 +59,53 @@ Left_join and right_join are half of a class of 'mutating joins' with the name c
 
 * **inner_join**: only retains rows from both/all datasets
 * **full_join**: retains any row from both/any data set
+* **%>%**: Can be used to string joins or other functions together
+
+```{r, eval = FALSE}
+# Create goal2 using full_join() and inner_join() 
+goal2 <- artists %>%
+  full_join(bands, by = c("first","last")) %>%
+  inner_join(songs, by = c("first","last"))
+
+# Create one table that combines all information
+artists %>%
+  full_join(bands, by = c("first","last")) %>%
+  full_join(songs, by = c("first","last")) %>%
+  full_join(albums, by = c("album", "band"))
+
+```
+
+## Filtering joins and set operations
+
+Filtering joins returns a copy of the origianl data set rather than an augmented version of the original dataset.  
+
+```{r Filtering Joins, echo = FALSE, fig.cap='Filtering and Mutating Joins'}
+knitr::include_graphics("images/FilteringJoins.png")
+```
+
+Semi_join() is one of the filtering join functions, it can be used to check which rows in one table match the rows in another table, perhaps before a mutating join.  Semi_join is sometimes easier than many seperate functions together, for instance
+
+```{r, eval = FALSE}
+# View the output of semi_join()
+artists %>% 
+  semi_join(songs, by = c("first", "last"))
+
+# Create the same result
+artists %>% 
+  right_join(songs, by = c("first", "last")) %>% 
+  filter(!is.na(instrument)) %>% 
+  select(first, last, instrument) 
+```
+
+Semi-joins provide a useful way to explore the connections between multiple tables of data.
+
+For example, you can use a semi-join to determine the number of albums in the albums dataset that were made by a band in the bands dataset.
+
+```{r, eval = FALSE}
+albums %>% 
+  # Collect the albums made by a band
+  semi_join(bands, by = "band") %>% 
+  # Count the albums made by a band
+  nrow()
+```
+
