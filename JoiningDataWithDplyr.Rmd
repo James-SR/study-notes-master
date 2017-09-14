@@ -32,6 +32,10 @@ When working with dplyr, it works with the following tables for the purposes of 
 * **tibbles (tbl_df)** - similar to data frame but only what fits in to your R console window will be displayed but you can use View() all the table if needed 
 * **tbl references**
 
+```{r Dplyr Joins, echo = FALSE, fig.cap='Joins available in Dplyr'}
+knitr::include_graphics("images/DplyrJoins.png")
+```
+
 ### Left and right joins
 
 left_join() is the basic join function in dplyr. You can use it whenever you want to augment a data frame with information from another data frame.
@@ -107,5 +111,170 @@ albums %>%
   semi_join(bands, by = "band") %>% 
   # Count the albums made by a band
   nrow()
+```
+
+Anti-joins shows records which are in the primary table but do not have matches in the second data table.  This can be useful for checking spelling or key value errors.
+
+```{r}
+# Return rows of artists that don't have bands info
+artists %>% 
+  anti_join(bands, by = c("first", "last"))
+
+# Check whether album names in labels are mis-entered
+labels %>% 
+  anti_join(albums, by = "album")
+```
+
+Joins can also be used to count the number of records.
+
+```{r}
+# Determine which key joins labels and songs
+labels
+songs
+
+songs %>% 
+  # Find the rows of songs that match a row in labels
+  semi_join(labels, by = "album") %>% 
+  # Number of matches between labels and songs
+  nrow()
+```
+
+## Set Operations
+
+When two datasets contain the same variables, it can be useful to combine the datasets with set operations (rather than joins).  The three set operations can be used to combine observations from two datasets in to a single dataset.
+
+```{r Set Ops, echo = FALSE, fig.cap='Set Operations'}
+knitr::include_graphics("images/SetOps.png")
+```
+
+For instance we can count the number of unique songs in two data tables.
+
+```{r}
+library(dplyr)
+
+# Import files
+aerosmith <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/aerosmith.csv", stringsAsFactors = FALSE)
+greatest_hits <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/greatest_hits.csv", stringsAsFactors = FALSE)
+
+aerosmith %>% 
+  # Create the new dataset using a set operation
+  union(greatest_hits) %>% 
+  # Count the total number of songs
+  nrow()
+
+```
+
+Or use it to see which is in both (where the dataset has the exact same variables) - this is similar to the semi_join function.
+
+```{r}
+# Create the new dataset using a set operation
+aerosmith %>% 
+  intersect(greatest_hits)
+```
+
+Or use it to identify which are in one dataset but not the other.  Here, we also match on just the variable we are interested in that matches across both datasets.
+
+```{r}
+# Import file
+live <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/live.csv", stringsAsFactors = FALSE)
+
+# Select the song names from live
+live_songs <- live %>% select(song)
+
+# Select the song names from greatest_hits
+greatest_songs <- greatest_hits %>% select(song)
+
+# Create the new dataset using a set operation - songs in live that are not in greatest_hits
+live_songs %>% 
+  setdiff(greatest_songs)
+```
+
+There is no set operation to find rows that appear in one data frame or another, but not both. However, you can accomplish this by combining set operators.
+
+```{r}
+
+live_songs <- live %>% select(song)
+greatest_songs <- greatest_hits %>% select(song)
+
+# Return the songs that only exist in one dataset
+live_songs %>% 
+  setdiff(greatest_songs) %>% 
+  union(greatest_songs %>% 
+  setdiff(live_songs))
+```
+
+**Note**: The union() function removes duplicate rows, even if a duplicate is desired (perhaps a different record such as someone with the same name).
+
+Its common to want to know if one data set is the same as another dataset dplyr’s setequal will do this easily base R’s identical is will only return true if the datasets have the exact same rows in the exact same order
+Recap:
+
+* Mutating Joins:
+  *left_join
+  *right_join
+  *inner_join
+  *full_join
+
+*Filtering Joins:
+  *semi_join
+  *anti_join
+
+*Set Operations:
+  *union
+  *intersect
+  *setdiff
+
+*Comparisions:
+  *setequal
+  
+The definitive and complete contain the songs that appear in competing Led Zeppelin anthologies: The Definitive Collection and The Complete Studio Recordings, respectively.
+
+Both anthologies claim to contain the complete studio recordings of Led Zeppelin, but do the anthologies contain the same exact songs?
+```{r}
+# Import files
+complete <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/complete.csv", stringsAsFactors = FALSE)
+definitive <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/definitive.csv", stringsAsFactors = FALSE)
+
+# Check if same order: definitive and complete
+identical(definitive, complete)
+
+# Check if any order: definitive and complete
+setequal(definitive, complete)
+
+# Songs in definitive but not complete
+complete %>% 
+  setdiff(definitive)
+
+# Songs in complete but not definitive
+definitive %>%
+  setdiff(complete)
+
+# Return songs in definitive that are not in complete
+definitive %>% 
+  anti_join(complete, by = c("song", "album"))
+
+# Return songs in complete that are not in definitive
+complete %>% 
+  anti_join(definitive, by = c("song", "album"))
+```
+
+It appears that The Definitive Collection contains songs from the soundtrack of The Song Remains the Same, a movie filmed during a live Led Zeppelin concert. Is this the only difference between The Definitive Collection and The Complete Studio Recordings?  
+
+* **Remember**: base R’s identical is will only return true if the datasets have the exact same rows in the _exact_ same order.
+
+```{r}
+# Import file sounddtrack
+soundtrack <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/soundtrack.csv", stringsAsFactors = FALSE)
+
+# Check if same order: definitive and union of complete and soundtrack
+complete %>%
+  union(soundtrack) %>%
+  identical(definitive)
+
+
+# Check if any order: definitive and union of complete and soundtrack
+complete %>%
+  union(soundtrack) %>%
+  setequal(definitive)
+
 ```
 
