@@ -278,3 +278,107 @@ complete %>%
 
 ```
 
+## Bind in  Dplyr
+
+Whilst base R has rbrind and cbind, dplyr has bind_rows and bind_cols as equivalents.  Bind_rows adds the second dataset underneath the first, bind_cols assumes the datasets are in the exact same order and can be thought of as a 'lazy join'.
+
+The benefits of dplyr binds are:
+
+* Faster
+* Return a tibble
+* Can handle lists of data frames
+* .id
+
+The last one (.id) will return a name to indicate which source the data in the new data frame (tibble) the data came from, particularly useful for things like ggplot and keeping track of your data overall.
+
+```{r, eval = FALSE}
+# Examine side_one and side_two
+side_one
+side_two
+
+# Bind side_one and side_two into a single dataset
+side_one %>% 
+  bind_rows(side_two)
+```
+
+discography and jimi contain all of the information you need to create an anthology dataset for the band The Jimi Hendrix Experience.
+
+discography contains a data frame of each album by The Jimi Hendrix Experience and the year of the album.
+
+jimi contains a list of data frames of album tracks, one for each album released by The Jimi Hendrix Experience. You can pass bind_rows() a list of data frames like jimi to bind together into a single data frame.
+
+```{r}
+# Examine discography and jimi
+discography
+jimi
+
+jimi %>% 
+  # Bind jimi into a single data frame
+  bind_rows(.id = "album")  %>% 
+  # Make a complete data frame
+  left_join(discography)
+```
+
+```{r}
+# Import file sounddtrack
+hank_years <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/hank_years.csv", stringsAsFactors = FALSE)
+hank_charts <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/hank_charts.csv", stringsAsFactors = FALSE)
+
+# Examine hank_years and hank_charts
+hank_years
+hank_charts
+
+hank_years %>% 
+  # Reorder hank_years alphabetically by song title
+  arrange(song) %>% 
+  # Select just the year column
+  select(year) %>% 
+  # Bind the year column
+  bind_cols(hank_charts) %>% 
+  # Arrange the finished dataset
+  arrange(year, song)
+
+```
+Unfortunately, there is usually no clear way to tell whether or not the rows in two datasets align unless the datasets contain a mutual key. In that scenario, you can use a mutating join to bind the datasets in a foolproof way.
+
+### Data frames
+
+data.frame() defaults
+
+* Changes strings to factors
+* Adds row names
+* Changes unusual column names
+
+However sometimes we do not want this behaviour, so we can use data_frame() from dplyr
+
+data_frame() will not…
+
+* Change the data type of vectors (e.g. strings to factors)
+* Add row names
+* Change column names
+* Recycle vectors greater than length one
+
+```{r, eval = FALSE}
+# Make combined data frame using data_frame()
+data_frame(year = hank_year, song = hank_song, peak = hank_peak) %>% 
+  # Extract songs where peak equals 1
+  filter(peak == "1")
+
+
+# Or if the data was a list of vectors
+
+# Convert the hank list into a data frame
+as_data_frame(hank)  %>% 
+  # Extract songs where peak equals 1
+  filter(peak == "1")
+
+# Or if we had nested data tables as a list of vectors
+
+bind_rows(michael, .id = "album") %>% 
+  group_by(album) %>% 
+  mutate(rank = min_rank(peak)) %>% 
+  filter(rank == 1) %>% 
+  select(-rank, -peak)
+
+```
+
