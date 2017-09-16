@@ -382,3 +382,50 @@ bind_rows(michael, .id = "album") %>%
 
 ```
 
+### Data Types
+
+Usually R will do sensible things when working with data, linke 1 + 1 = 2, but "one" + "one" = error.  You should be aware of some of the data types when working in R.  
+
+Every piece of data in R is a vector, even if it only has a single value in it.  Unless the data is in a list, all elements in the vector are going to be in one of six data types - known as atomic data types.  You can use typeof() to identfy what is in a vector.
+
+
+Table: (\#tab:simple-table) Atomic Data Types in R
+
+Type             Output          Atomic data type   
+---------------  --------------  -------------  
+>typeof(TRUE)    [1] "logical"   Logical        
+>typeof("hello") [1] "character" Character (i.e. string)
+>typeof(3.14)    [1] "double"    Double (i.e. numeric w/ decimal)  
+> typeof(1L)     [1] "integer"   Integer (i.e. numeric w/o decimal)
+> typeof(1 + 2i) [1] "complex"   Complex
+> typeof(raw(1)) [1] "raw"       Raw  
+
+New classes of data, such as factors which are used for categorical variables, are created from one of the six types above giving it a class attributing and other metadata stored as attributes.  A factor is a an integer vector with a factor class atribute, a levels attribute and sometimes a level attribute.  Whilst they contain a sequence of integers, they are dispalyed as the asssocicated labels.
+
+**In R, each column in a data frame must be of a single type or class of data** because each column is stored as a single vector. If mutliple tables or columns are being combined, R uses coercion rules to decide what to do.  
+
+* If any variable being combined has a character, it stores it as a character string
+* Doubles being combined with Integers or logicals gets stored as a double (T = 1, F = 0)
+* If integers are being combined with a logical, it gets stored as a integer (T = 1, F = 0)
+* factors with charecters, the factor lables gets converted to strings (A = "A", B = "B")
+* factors with doubles or integers, the factor gets converted to their numeric values (A = 1, B = 2)
+
+**Note** pay particular attention to factor data with numeric labels - e.g. if 4, 5 and 6 values have factor levels of 1, 2 and 3, when combining or coercing with or to a numeric, the result will be 4, 5 and 6 rather than the factor lables.  To get the lables which are numeric values, convert the factor to a character string then convert those to a double or integer e.g. as.numeric(as.character(x)).  
+
+Dplyr won't try and coerce different data but will throw an error and let you manually determine what you want to do with the data.  If combining factors, dplyr will convert them to charecters then give a warning message. 
+
+For example, sixties contains the top selling albums in the US in the 1960s. It stores year as a numeric (double). When you combine it with seventies, which stores year as a factor, bind_rows() returns an error.
+
+You can fix this by coercing seventies$year to a numeric. But if you seventies %>% mutate(year = as.numeric(year)) will not return the correct year.  We need to convert the factor to a string.
+
+```{r, eval = false}
+
+seventies %>% 
+  # Coerce seventies$year into a useful numeric
+  mutate(year = as.numeric(as.character(year))) %>% 
+  # Bind the updated version of seventies to sixties
+  bind_rows(sixties) %>% 
+  arrange(year)
+
+```
+
