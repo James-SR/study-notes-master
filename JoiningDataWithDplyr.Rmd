@@ -396,9 +396,9 @@ Type             Output          Atomic data type
 >typeof(TRUE)    [1] "logical"   Logical        
 >typeof("hello") [1] "character" Character (i.e. string)
 >typeof(3.14)    [1] "double"    Double (i.e. numeric w/ decimal)  
-> typeof(1L)     [1] "integer"   Integer (i.e. numeric w/o decimal)
-> typeof(1 + 2i) [1] "complex"   Complex
-> typeof(raw(1)) [1] "raw"       Raw  
+>typeof(1L)      [1] "integer"   Integer (i.e. numeric w/o decimal)
+>typeof(1 + 2i)  [1] "complex"   Complex
+>typeof(raw(1))  [1] "raw"       Raw  
 
 New classes of data, such as factors which are used for categorical variables, are created from one of the six types above giving it a class attributing and other metadata stored as attributes.  A factor is a an integer vector with a factor class atribute, a levels attribute and sometimes a level attribute.  Whilst they contain a sequence of integers, they are dispalyed as the asssocicated labels.
 
@@ -427,5 +427,46 @@ seventies %>%
   bind_rows(sixties) %>% 
   arrange(year)
 
+```
+
+## Advanced Joining
+
+Sometimes joins can fail for one of two principle reasons - missing keys or duplicate keys.  These can be either related to the values or the columns.    
+
+One common problem can be that column names are missing and that the rows are called by their actual value.   R's data frames can store important information in the row.names attribute. This is not a tidy way to store data, but it does happen quite commonly. If the primary key of your dataset is stored in row.names, you will have trouble joining it to other datasets.
+
+For example, stage_songs contains information about songs that appear in musicals. However, it stores the primary key (song name) in the row.names attribute. As a result, you cannot access the key with a join function.
+
+One way to remedy this problem is to use the function rownames_to_column() from the tibble package. rownames_to_column() returns a copy of a dataset with the row names added to the data as a column.
+
+```{r}
+# Import the data
+stage_songs <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/stage_songs.csv", stringsAsFactors = FALSE)
+stage_writers <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/stage_writers.csv", stringsAsFactors = FALSE)
+
+# And view
+stage_songs
+stage_writers
+
+# Load the tibble package
+library(tibble)
+
+stage_songs %>% 
+  # Add row names as a column named song
+  rownames_to_column(var = "song") %>% 
+  # Left join stage_writers to stage_songs
+  left_join(stage_writers)
+
+```
+
+If there are duplicate rows in the primary table, there will be duplicate joins to the second table, resulting in a mutiple of new rows.  Equally, if there are multiple rows in the secondary table there will be duplicate entries.  This can be made worse if there are what appear to be duplicate key values in both sets of tables resulting in n^2 rows.
+
+In the case of missing data, it is best to remove the data with a filter first, before joining.
+
+```{r, eval = FALSE}
+# Remove NA's from key before joining
+two_songs %>% 
+  filter(!is.na(movie)) %>% 
+  inner_join(singers, by = "movie")
 ```
 
