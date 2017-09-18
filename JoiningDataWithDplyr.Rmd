@@ -470,3 +470,45 @@ two_songs %>%
   inner_join(singers, by = "movie")
 ```
 
+It is not always needed to add the by = argument when joining, dplyr when compare both tables looking for a common field.  However, where the column names differ (but have the same contents) when can explicitly state the columns to join by.  Equally, sometimes you may have to specify the by = argument when column names are the same, but contain different data, so you specify which column to actually join on.  
+
+```{r}
+# Import the data
+movie_studios <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/movie_studios.csv", stringsAsFactors = FALSE)
+movie_years <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/movie_years.csv", stringsAsFactors = FALSE)
+
+# View the data
+movie_studios
+movie_years
+```
+
+In this instance, name refers to the studio and the name of the actor in each data table.  By default, dplyr will ignore duplicate column names if you set the by argument and do not include the duplicated name in the argument. When you do this, dplyr will treat the columns in the normal fashion, but it will add .x and .y to the duplicated names to help you tell the columns apart.  We can use rename(data, new_name = old_name) renames old_name to new_name in data to something else if desired.
+
+```{r}
+movie_years %>% 
+  # Left join movie_studios to movie_years
+  left_join(movie_studios, by = "movie") %>% 
+  # Rename the columns: artist and studio
+  rename(artist = name.x, studio = name.y)
+```
+
+In the next example, name refers to different objects. To make the join, set by to a named vector. The names of the vector will refer to column names in the primary dataset (x). The values of the vector will correspond to the column names in the secondary dataset (y), e.g.
+
+> x %>% left_join(y, by = c("x.name1" = "y.name2"))
+
+```{r}
+# Import the data
+elvis_songs <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/elvis_songs.csv", stringsAsFactors = FALSE)
+elvis_movies <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/elvis_movies.csv", stringsAsFactors = FALSE)
+
+# And view
+elvis_songs
+elvis_movies
+
+elvis_movies %>% 
+  # Left join elvis_songs to elvis_movies by this column
+  left_join(elvis_songs, by = c("name" = "movie")) %>% 
+  # Rename columns
+  rename(movie = name, song = name.y)
+```
+
