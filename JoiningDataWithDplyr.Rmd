@@ -34,6 +34,7 @@ When working with dplyr, it works with the following tables for the purposes of 
 
 ```{r Dplyr Joins, echo = FALSE, fig.cap='Joins available in Dplyr'}
 knitr::include_graphics("images/DplyrJoins.png")
+library(dplyr)
 ```
 
 ### Left and right joins
@@ -115,7 +116,7 @@ albums %>%
 
 Anti-joins shows records which are in the primary table but do not have matches in the second data table.  This can be useful for checking spelling or key value errors.
 
-```{r}
+```{r, eval = FALSE}
 # Return rows of artists that don't have bands info
 artists %>% 
   anti_join(bands, by = c("first", "last"))
@@ -127,7 +128,7 @@ labels %>%
 
 Joins can also be used to count the number of records.
 
-```{r}
+```{r, eval = FALSE}
 # Determine which key joins labels and songs
 labels
 songs
@@ -150,7 +151,6 @@ knitr::include_graphics("images/SetOps.png")
 For instance we can count the number of unique songs in two data tables.
 
 ```{r}
-library(dplyr)
 
 # Import files
 aerosmith <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/aerosmith.csv", stringsAsFactors = FALSE)
@@ -307,7 +307,7 @@ discography contains a data frame of each album by The Jimi Hendrix Experience a
 
 jimi contains a list of data frames of album tracks, one for each album released by The Jimi Hendrix Experience. You can pass bind_rows() a list of data frames like jimi to bind together into a single data frame.
 
-```{r}
+```{r, eval = FALSE}
 # Examine discography and jimi
 discography
 jimi
@@ -418,7 +418,7 @@ For example, sixties contains the top selling albums in the US in the 1960s. It 
 
 You can fix this by coercing seventies$year to a numeric. But if you seventies %>% mutate(year = as.numeric(year)) will not return the correct year.  We need to convert the factor to a string.
 
-```{r, eval = false}
+```{r, eval = FALSE}
 
 seventies %>% 
   # Coerce seventies$year into a useful numeric
@@ -512,3 +512,62 @@ elvis_movies %>%
   rename(movie = name, song = name.y)
 ```
 
+In the following example, the two datasets in question have the same key variable, however the has a different column name that connects the datasets. We also rename one of the columns within the select statement to aid understanding in the dplyr pipeline.
+
+```{r}
+# Import the data
+movie_directors <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/movie_directors.csv", stringsAsFactors = FALSE)
+
+# Identify the key columns
+movie_directors
+movie_years
+
+movie_years %>% 
+  # Left join movie_directors to movie_years
+  left_join(movie_directors, by = c("movie" = "name")) %>% 
+  # Arrange the columns using select()
+  select(year, movie, artist = name, director, studio)
+
+```
+
+## Joining mutiple tables
+
+Whilst it would be possible to join multiple tables iteratively, for instance
+
+> df1 %>%
+> left_join(df2) %>%
+> left_join(df3) %>%
+> left_join(df4)
+
+We can use the purrr package instead.  We list the dataframes as a vector first, then pass the vector as the first argument to the reduce() function, the second argument should be the dplyr function (e.g. left_join without brackets), the third argument should be the by = var to specify what to join on.
+
+```{r, eval = FALSE}
+# Load the purrr library
+library(purrr)
+
+# Place supergroups, more_bands, and more_artists into a list
+list(supergroups, more_bands, more_artists) %>% 
+  # Use reduce to join together the contents of the list
+  reduce(left_join, by = c("first", "last"))
+
+# Or to list just those appear in all three tables
+list(more_artists, more_bands, supergroups) %>% 
+  # Return rows of more_artists in all three datasets
+  reduce(semi_join, by = c("first", "last"))
+
+```
+
+## Other implentations
+
+Dplyr join functions are similar to SQL statements, as shown below.  
+
+```{r SQL functions Dplyr, echo = FALSE, fig.cap='Joins available in Dplyr'}
+knitr::include_graphics("images/DplyrSQL.png")
+```
+
+
+With dplyr it is possible to create a connection to a database using the DBI package:
+
+* **src_sqlite()**: for SQLite datbases
+* **src_mysql**: mySQL and MariaDB
+* **src_postgres**: PostgreSQL

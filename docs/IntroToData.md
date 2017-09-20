@@ -186,7 +186,20 @@ We often want to compare two or three variables, which is most easily done using
 ```r
 # Load ggplot2
 library(ggplot2)
+```
 
+```
+## 
+## Attaching package: 'ggplot2'
+```
+
+```
+## The following object is masked from 'package:openintro':
+## 
+##     diamonds
+```
+
+```r
 # Scatterplot of exclaim_mess vs. num_char
 ggplot(email50, aes(x = num_char, y = exclaim_mess, color = factor(spam))) +
   geom_point()
@@ -329,24 +342,26 @@ county_srs %>%
 ```
 
 ```
-## # A tibble: 14 x 2
-## # Groups:   state [14]
-##             state     n
-##            <fctr> <int>
-##  1        Arizona     1
-##  2        Florida     1
-##  3       Illinois     2
-##  4        Indiana     1
-##  5           Iowa     1
-##  6      Louisiana     1
-##  7       Michigan     1
-##  8       Missouri     1
-##  9       New York     2
-## 10 North Carolina     1
-## 11           Ohio     2
-## 12   Pennsylvania     2
-## 13          Texas     2
-## 14           Utah     2
+## # A tibble: 16 x 2
+## # Groups:   state [16]
+##            state     n
+##           <fctr> <int>
+##  1       Alabama     1
+##  2      Arkansas     1
+##  3      Colorado     2
+##  4      Illinois     2
+##  5       Indiana     1
+##  6      Kentucky     1
+##  7      Maryland     1
+##  8      Michigan     1
+##  9       Montana     1
+## 10    New Mexico     1
+## 11      New York     2
+## 12          Ohio     1
+## 13      Oklahoma     1
+## 14     Tennessee     1
+## 15         Texas     2
+## 16 West Virginia     1
 ```
 
 For a stratified sample we would do something similar.

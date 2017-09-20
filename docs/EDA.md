@@ -607,9 +607,15 @@ library(openintro)
 ```
 
 ```
-## The following object is masked from 'package:datasets':
+## The following object is masked from 'package:ggplot2':
 ## 
-##     cars
+##     diamonds
+```
+
+```
+## The following objects are masked from 'package:datasets':
+## 
+##     cars, trees
 ```
 
 ```r

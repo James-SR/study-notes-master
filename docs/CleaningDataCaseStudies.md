@@ -1113,22 +1113,7 @@ library(data.table)
 ```r
 # Import sales.csv: food
 food <- fread("https://assets.datacamp.com/production/course_1294/datasets/food.csv", stringsAsFactors = FALSE)
-```
 
-```
-## Warning in fread("https://assets.datacamp.com/production/course_1294/
-## datasets/food.csv", : C function strtod() returned ERANGE for one or more
-## fields. The first was string input '1.59211456058953e-311'. It was read
-## using (double)strtold() as numeric value 1.5921145605895320E-311 (displayed
-## here using %.16E); loss of accuracy likely occurred. This message is
-## designed to tell you exactly what has been done by fread's C code, so
-## you can search yourself online for many references about double precision
-## accuracy and these specific C functions. You may wish to use colClasses to
-## read the column as character instead and then coerce that column using the
-## Rmpfr package for greater accuracy.
-```
-
-```r
 # Convert food to a data frame
 food <- data.frame(food)
 
@@ -1137,22 +1122,22 @@ summary(food)
 ```
 
 ```
-##       V1                 code       url              creator         
-##  Length:1500        Min.   :0   Length:1500        Length:1500       
-##  Class :character   1st Qu.:0   Class :character   Class :character  
-##  Mode  :character   Median :0   Mode  :character   Mode  :character  
-##                     Mean   :0                                        
-##                     3rd Qu.:0                                        
-##                     Max.   :0                                        
-##                                                                      
-##   created_t         created_datetime   last_modified_t   
-##  Length:1500        Length:1500        Length:1500       
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
+##        V1              code            url              creator         
+##  Min.   :   1.0   Min.   :100030   Length:1500        Length:1500       
+##  1st Qu.: 375.8   1st Qu.:124975   Class :character   Class :character  
+##  Median : 750.5   Median :149514   Mode  :character   Mode  :character  
+##  Mean   : 750.5   Mean   :149613                                        
+##  3rd Qu.:1125.2   3rd Qu.:174506                                        
+##  Max.   :1500.0   Max.   :199880                                        
+##                                                                         
+##    created_t         created_datetime   last_modified_t    
+##  Min.   :1.332e+09   Length:1500        Min.   :1.340e+09  
+##  1st Qu.:1.394e+09   Class :character   1st Qu.:1.424e+09  
+##  Median :1.425e+09   Mode  :character   Median :1.437e+09  
+##  Mean   :1.414e+09                      Mean   :1.430e+09  
+##  3rd Qu.:1.436e+09                      3rd Qu.:1.446e+09  
+##  Max.   :1.453e+09                      Max.   :1.453e+09  
+##                                                            
 ##  last_modified_datetime product_name       generic_name      
 ##  Length:1500            Length:1500        Length:1500       
 ##  Class :character       Class :character   Class :character  
@@ -1209,7 +1194,15 @@ summary(food)
 ##                                                                
 ##                                                                
 ##                                                                
-##     cities          cities_tags        purchase_places   
+##   cities        cities_tags        purchase_places       stores         
+##  Mode:logical   Length:1500        Length:1500        Length:1500       
+##  NA's:1500      Class :character   Class :character   Class :character  
+##                 Mode  :character   Mode  :character   Mode  :character  
+##                                                                         
+##                                                                         
+##                                                                         
+##                                                                         
+##   countries         countries_tags     countries_en      
 ##  Length:1500        Length:1500        Length:1500       
 ##  Class :character   Class :character   Class :character  
 ##  Mode  :character   Mode  :character   Mode  :character  
@@ -1217,46 +1210,30 @@ summary(food)
 ##                                                          
 ##                                                          
 ##                                                          
-##     stores           countries         countries_tags    
-##  Length:1500        Length:1500        Length:1500       
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
-##  countries_en       ingredients_text    allergens        
-##  Length:1500        Length:1500        Length:1500       
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
-##  allergens_en          traces          traces_tags       
-##  Length:1500        Length:1500        Length:1500       
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
-##   traces_en         serving_size       no_nutriments   additives_n    
-##  Length:1500        Length:1500        Mode:logical   Min.   : 0.000  
-##  Class :character   Class :character   NA's:1500      1st Qu.: 0.000  
-##  Mode  :character   Mode  :character                  Median : 1.000  
-##                                                       Mean   : 1.846  
-##                                                       3rd Qu.: 3.000  
-##                                                       Max.   :17.000  
-##                                                       NA's   :514     
-##   additives         additives_tags     additives_en      
-##  Length:1500        Length:1500        Length:1500       
-##  Class :character   Class :character   Class :character  
-##  Mode  :character   Mode  :character   Mode  :character  
-##                                                          
-##                                                          
-##                                                          
-##                                                          
+##  ingredients_text    allergens         allergens_en      traces         
+##  Length:1500        Length:1500        Mode:logical   Length:1500       
+##  Class :character   Class :character   NA's:1500      Class :character  
+##  Mode  :character   Mode  :character                  Mode  :character  
+##                                                                         
+##                                                                         
+##                                                                         
+##                                                                         
+##  traces_tags         traces_en         serving_size       no_nutriments 
+##  Length:1500        Length:1500        Length:1500        Mode:logical  
+##  Class :character   Class :character   Class :character   NA's:1500     
+##  Mode  :character   Mode  :character   Mode  :character                 
+##                                                                         
+##                                                                         
+##                                                                         
+##                                                                         
+##   additives_n      additives         additives_tags     additives_en      
+##  Min.   : 0.000   Length:1500        Length:1500        Length:1500       
+##  1st Qu.: 0.000   Class :character   Class :character   Class :character  
+##  Median : 1.000   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   : 1.846                                                           
+##  3rd Qu.: 3.000                                                           
+##  Max.   :17.000                                                           
+##  NA's   :514                                                              
 ##  ingredients_from_palm_oil_n ingredients_from_palm_oil
 ##  Min.   :0.0000              Mode:logical             
 ##  1st Qu.:0.0000              NA's:1500                
@@ -1537,13 +1514,13 @@ head(food)
 ```
 
 ```
-##   V1          code
-## 1  1 1.592115e-311
-## 2  2 2.673378e-311
-## 3  3 1.613001e-311
-## 4  4 3.955509e-311
-## 5  5 4.189677e-311
-## 6  6 4.333113e-313
+##   V1   code
+## 1  1 100030
+## 2  2 100050
+## 3  3 100079
+## 4  4 100094
+## 5  5 100124
+## 6  6 100136
 ##                                                                                                                            url
 ## 1 http://world-en.openfoodfacts.org/product/3222475745867/confiture-de-fraise-fraise-des-bois-au-sucre-de-canne-casino-delices
 ## 2                                         http://world-en.openfoodfacts.org/product/5410976880110/guylian-sea-shells-selection
@@ -1685,12 +1662,12 @@ head(food)
 ## 5 es-21-016540-v-ec,envasador,importaco-s-a                         
 ## 6                                                                   
 ##   cities             cities_tags purchase_places           stores
-## 1        andresy-yvelines-france     Lyon,France           Casino
-## 2                                  NSW,Australia                 
-## 3                                         France                 
-## 4                                 Madrid,EspaÃ±a El Corte InglÃ©s
-## 5                                 Madrid,EspaÃ±a        Mercadona
-## 6                                                                
+## 1     NA andresy-yvelines-france     Lyon,France           Casino
+## 2     NA                           NSW,Australia                 
+## 3     NA                                  France                 
+## 4     NA                          Madrid,EspaÃ±a El Corte InglÃ©s
+## 5     NA                          Madrid,EspaÃ±a        Mercadona
+## 6     NA                                                         
 ##   countries countries_tags countries_en
 ## 1    France      en:france       France
 ## 2 Australia   en:australia    Australia
@@ -1706,12 +1683,12 @@ head(food)
 ## 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Pipas de girasol y sal.
 ## 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 ##   allergens allergens_en                        traces        traces_tags
-## 1                                 Lait,Fruits Ã  coque    en:milk,en:nuts
-## 2                                                                        
-## 3                                                                        
-## 4                                                                        
-## 5                        Frutos de cÃ¡scara,Cacahuetes en:nuts,en:peanuts
-## 6                                                                        
+## 1                     NA          Lait,Fruits Ã  coque    en:milk,en:nuts
+## 2                     NA                                                 
+## 3                     NA                                                 
+## 4                     NA                                                 
+## 5                     NA Frutos de cÃ¡scara,Cacahuetes en:nuts,en:peanuts
+## 6                     NA                                                 
 ##      traces_en serving_size no_nutriments additives_n
 ## 1    Milk,Nuts         15 g            NA           1
 ## 2                                      NA          NA
@@ -2008,13 +1985,13 @@ str(food)
 
 ```
 ## 'data.frame':	1500 obs. of  160 variables:
-##  $ V1                                        : chr  "1" "2" "3" "4" ...
-##  $ code                                      : num  1.59e-311 2.67e-311 1.61e-311 3.96e-311 4.19e-311 ...
+##  $ V1                                        : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ code                                      : int  100030 100050 100079 100094 100124 100136 100194 100221 100257 100258 ...
 ##  $ url                                       : chr  "http://world-en.openfoodfacts.org/product/3222475745867/confiture-de-fraise-fraise-des-bois-au-sucre-de-canne-casino-delices" "http://world-en.openfoodfacts.org/product/5410976880110/guylian-sea-shells-selection" "http://world-en.openfoodfacts.org/product/3264750423503/pates-de-fruits-aromatisees-jacquot" "http://world-en.openfoodfacts.org/product/8006040247001/nata-vegetal-a-base-de-soja-valsoia" ...
 ##  $ creator                                   : chr  "sebleouf" "foodorigins" "domdom26" "javichu" ...
-##  $ created_t                                 : chr  "1424747544" "1450316429" "1428674916" "1420416591" ...
+##  $ created_t                                 : int  1424747544 1450316429 1428674916 1420416591 1420501121 1437983923 1442420988 1435686217 1436991777 1400516512 ...
 ##  $ created_datetime                          : chr  "2015-02-24T03:12:24Z" "2015-12-17T01:40:29Z" "2015-04-10T14:08:36Z" "2015-01-05T00:09:51Z" ...
-##  $ last_modified_t                           : chr  "1438445887" "1450817956" "1428739289" "1420417876" ...
+##  $ last_modified_t                           : int  1438445887 1450817956 1428739289 1420417876 1445700917 1445577476 1442420988 1451405288 1436991779 1437236856 ...
 ##  $ last_modified_datetime                    : chr  "2015-08-01T16:18:07Z" "2015-12-22T20:59:16Z" "2015-04-11T08:01:29Z" "2015-01-05T00:31:16Z" ...
 ##  $ product_name                              : chr  "Confiture de fraise fraise des bois au sucre de canne" "Guylian Sea Shells Selection" "PÃ¢tes de fruits aromatisÃ©es" "Nata vegetal a base de soja &quot;Valsoia&quot;" ...
 ##  $ generic_name                              : chr  "" "" "PÃ¢tes de fruits" "Nata vegetal a base de soja" ...
@@ -2036,7 +2013,7 @@ str(food)
 ##  $ emb_codes                                 : chr  "EMB 78015" "" "" "" ...
 ##  $ emb_codes_tags                            : chr  "emb-78015" "" "" "" ...
 ##  $ first_packaging_code_geo                  : chr  "48.983333,2.066667" "" "" "" ...
-##  $ cities                                    : chr  "" "" "" "" ...
+##  $ cities                                    : logi  NA NA NA NA NA NA ...
 ##  $ cities_tags                               : chr  "andresy-yvelines-france" "" "" "" ...
 ##  $ purchase_places                           : chr  "Lyon,France" "NSW,Australia" "France" "Madrid,EspaÃ±a" ...
 ##  $ stores                                    : chr  "Casino" "" "" "El Corte InglÃ©s" ...
@@ -2045,7 +2022,7 @@ str(food)
 ##  $ countries_en                              : chr  "France" "Australia" "France" "Spain" ...
 ##  $ ingredients_text                          : chr  "Sucre de canne, fraises 40 g, fraises des bois 14 g, gÃ©lifiant : pectines de fruits, jus de citron concentrÃ©."| __truncated__ "" "Pulpe de pommes 50% , sucre, sirop de glucose, gÃ©lifiant : pectine, acidifiant : acide citrique, arÃ´mes, colo"| __truncated__ "Extracto de soja (78%) (agua, semillas de soja 8,3%), grasas vegetales, jarabe de glucosa, dextrosa, emulsionan"| __truncated__ ...
 ##  $ allergens                                 : chr  "" "" "" "" ...
-##  $ allergens_en                              : chr  "" "" "" "" ...
+##  $ allergens_en                              : logi  NA NA NA NA NA NA ...
 ##  $ traces                                    : chr  "Lait,Fruits Ã  coque" "" "" "" ...
 ##  $ traces_tags                               : chr  "en:milk,en:nuts" "" "" "" ...
 ##  $ traces_en                                 : chr  "Milk,Nuts" "" "" "" ...
@@ -2124,13 +2101,13 @@ glimpse(food)
 ```
 ## Observations: 1,500
 ## Variables: 160
-## $ V1                                         <chr> "1", "2", "3", "4",...
-## $ code                                       <dbl> 1.592115e-311, 2.67...
+## $ V1                                         <int> 1, 2, 3, 4, 5, 6, 7...
+## $ code                                       <int> 100030, 100050, 100...
 ## $ url                                        <chr> "http://world-en.op...
 ## $ creator                                    <chr> "sebleouf", "foodor...
-## $ created_t                                  <chr> "1424747544", "1450...
+## $ created_t                                  <int> 1424747544, 1450316...
 ## $ created_datetime                           <chr> "2015-02-24T03:12:2...
-## $ last_modified_t                            <chr> "1438445887", "1450...
+## $ last_modified_t                            <int> 1438445887, 1450817...
 ## $ last_modified_datetime                     <chr> "2015-08-01T16:18:0...
 ## $ product_name                               <chr> "Confiture de frais...
 ## $ generic_name                               <chr> "", "", "PÃ¢tes de ...
@@ -2152,7 +2129,7 @@ glimpse(food)
 ## $ emb_codes                                  <chr> "EMB 78015", "", ""...
 ## $ emb_codes_tags                             <chr> "emb-78015", "", ""...
 ## $ first_packaging_code_geo                   <chr> "48.983333,2.066667...
-## $ cities                                     <chr> "", "", "", "", "",...
+## $ cities                                     <lgl> NA, NA, NA, NA, NA,...
 ## $ cities_tags                                <chr> "andresy-yvelines-f...
 ## $ purchase_places                            <chr> "Lyon,France", "NSW...
 ## $ stores                                     <chr> "Casino", "", "", "...
@@ -2161,7 +2138,7 @@ glimpse(food)
 ## $ countries_en                               <chr> "France", "Australi...
 ## $ ingredients_text                           <chr> "Sucre de canne, fr...
 ## $ allergens                                  <chr> "", "", "", "", "",...
-## $ allergens_en                               <chr> "", "", "", "", "",...
+## $ allergens_en                               <lgl> NA, NA, NA, NA, NA,...
 ## $ traces                                     <chr> "Lait,Fruits Ã  coq...
 ## $ traces_tags                                <chr> "en:milk,en:nuts", ...
 ## $ traces_en                                  <chr> "Milk,Nuts", "", ""...
