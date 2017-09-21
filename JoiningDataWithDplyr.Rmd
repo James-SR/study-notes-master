@@ -571,3 +571,46 @@ With dplyr it is possible to create a connection to a database using the DBI pac
 * **src_sqlite()**: for SQLite datbases
 * **src_mysql**: mySQL and MariaDB
 * **src_postgres**: PostgreSQL
+
+## Case Study - Lahman DB
+
+In this seciton we will use the Sean Lahman baseball statistics data.  
+
+```{r, message = FALSE}
+# Load names and the package
+readRDS("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/lahmanNames.rds")
+library(Lahman)
+
+# Find variables in common
+reduce(lahmanNames, intersect)
+
+```
+
+There are no common (intersecting) variables across the datasets.  But perhaps some variables are in more than one table. 
+
+```{r}
+lahmanNames %>%  
+  # Bind the data frames in lahmanNames
+  bind_rows() %>%
+  # Group the result by var
+  group_by(var) %>%
+  # Tally the number of appearances
+  tally() %>%
+  # Filter the data
+  filter(n > 1) %>% 
+  # Arrange the results
+  arrange(desc(n))
+```
+
+So PlayerID appears regularly, but in which tables?
+
+```{r}
+lahmanNames %>% 
+  # Bind the data frames
+  bind_rows(.id = 'dataframe') %>%
+  # Filter the results
+  filter(var == "playerID") %>% 
+  # Extract the dataframe variable
+  `$`(dataframe)
+```
+
