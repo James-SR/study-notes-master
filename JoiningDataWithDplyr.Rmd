@@ -576,9 +576,10 @@ With dplyr it is possible to create a connection to a database using the DBI pac
 
 In this seciton we will use the Sean Lahman baseball statistics data.  
 
-```{r, message = FALSE}
+```{r}
 # Load names and the package
 readRDS("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/lahmanNames.rds")
+library(purrr)
 library(Lahman)
 
 # Find variables in common
@@ -613,4 +614,69 @@ lahmanNames %>%
   # Extract the dataframe variable
   `$`(dataframe)
 ```
+
+Next we can begin to look at the salaries data.  First, let's begin by ensuring that we have salary information for each player in the database, or at least no systematic holes in our coverage.  Our new table will be concise and players contains only one row for each distinct player.
+
+```{r}
+players <- Master %>% 
+  # Return one row for each distinct player
+  distinct(playerID, nameFirst, nameLast)
+
+```
+
+Next, how many missing values do we have?
+
+```{r}
+players %>% 
+  # Find all players who do not appear in Salaries
+  anti_join(Salaries, by = "playerID") %>%
+  # Count them
+  count()
+```
+
+The answer - a lot!  Is it possible that these players somehow did not play (and hence did not earn a salary)?
+
+We can check with the Appearances data frame. Appearances contains information about every game played in major league baseball. That is, if a player played a game, it would show up as a row in Appearances.
+
+```{r}
+players %>% 
+  anti_join(Salaries, by = "playerID") %>% 
+  # How many unsalaried players appear in Appearances?
+  semi_join(Appearances, by = "playerID") %>% 
+  count()
+```
+
+So a large number of players played a game but are missing salary information. Interestingly, 193 players neither played a game nor have a recorded salary.  Perhaps the unsalaried players only played one or two games, and hence did not earn a full salary.
+
+```{r}
+players %>% 
+  # Find all players who do not appear in Salaries
+  anti_join(Salaries, by = "playerID") %>% 
+  # Join them to Appearances
+  left_join(Appearances, by = "playerID") %>% 
+  # Calculate total_games for each player
+  group_by(playerID) %>%
+  summarise(total_games = sum(G_all, na.rm = T)) %>%
+  # Arrange in descending order by total_games
+  arrange(desc(total_games))
+```
+Here we some some players played thousands of games, so the idea that some didn't play enough games doesn't seem to hold.
+
+Is it possible that the unsalaried players did not actually play in the games that they appeared in? One way to check would be to determine if the players had an at-bat (i.e. batted) in the games that they appeared in.
+
+```{r}
+players %>%
+  # Find unsalaried players
+  anti_join(Salaries, by = "playerID") %>% 
+  # Join Batting to the unsalaried players
+  left_join(Batting, by = "playerID") %>% 
+  # Group by player
+  group_by(playerID) %>% 
+  # Sum at-bats for each player
+  summarise(total_at_bat = sum(AB, na.rm = T)) %>% 
+  # Arrange in descending order
+  arrange(desc(total_at_bat))
+```
+The unpaid players definitely participated in the games. The highest number of at bats is Hank Aaron so it looks like we are dealing with missing data here and not unsalaried players.
+
 
