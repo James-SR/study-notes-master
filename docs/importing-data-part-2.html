@@ -138,6 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>3.5</b> Advanced Joining</a></li>
 <li class="chapter" data-level="3.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>3.6</b> Joining mutiple tables</a></li>
 <li class="chapter" data-level="3.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>3.7</b> Other implentations</a></li>
+<li class="chapter" data-level="3.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>3.8</b> Case Study - Lahman DB</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4</b> Cleaning Data</a><ul>
 <li class="chapter" data-level="4.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>4.1</b> Tidying data</a></li>
@@ -569,7 +570,7 @@ resp &lt;-<span class="st"> </span><span class="kw">GET</span>(url)
 <span class="co"># Print resp</span>
 resp</code></pre></div>
 <pre><code>## Response [http://www.example.com/]
-##   Date: 2017-09-20 12:55
+##   Date: 2017-09-24 03:50
 ##   Status: 200
 ##   Content-Type: text/html
 ##   Size: 1.27 kB
@@ -599,13 +600,13 @@ resp &lt;-<span class="st"> </span><span class="kw">GET</span>(url)
 <span class="co"># Print resp</span>
 resp</code></pre></div>
 <pre><code>## Response [http://www.omdbapi.com/?apikey=ff21610b&amp;t=Annie+Hall&amp;y=&amp;plot=short&amp;r=json]
-##   Date: 2017-09-20 12:55
+##   Date: 2017-09-24 03:50
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 942 B</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print content of resp as text</span>
 <span class="kw">content</span>(resp, <span class="dt">as =</span> <span class="st">&quot;text&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;{\&quot;Title\&quot;:\&quot;Annie Hall\&quot;,\&quot;Year\&quot;:\&quot;1977\&quot;,\&quot;Rated\&quot;:\&quot;PG\&quot;,\&quot;Released\&quot;:\&quot;20 Apr 1977\&quot;,\&quot;Runtime\&quot;:\&quot;93 min\&quot;,\&quot;Genre\&quot;:\&quot;Comedy, Romance\&quot;,\&quot;Director\&quot;:\&quot;Woody Allen\&quot;,\&quot;Writer\&quot;:\&quot;Woody Allen, Marshall Brickman\&quot;,\&quot;Actors\&quot;:\&quot;Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\&quot;,\&quot;Plot\&quot;:\&quot;Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\&quot;,\&quot;Language\&quot;:\&quot;English, German\&quot;,\&quot;Country\&quot;:\&quot;USA\&quot;,\&quot;Awards\&quot;:\&quot;Won 4 Oscars. Another 26 wins &amp; 8 nominations.\&quot;,\&quot;Poster\&quot;:\&quot;https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\&quot;,\&quot;Ratings\&quot;:[{\&quot;Source\&quot;:\&quot;Internet Movie Database\&quot;,\&quot;Value\&quot;:\&quot;8.1/10\&quot;},{\&quot;Source\&quot;:\&quot;Rotten Tomatoes\&quot;,\&quot;Value\&quot;:\&quot;97%\&quot;},{\&quot;Source\&quot;:\&quot;Metacritic\&quot;,\&quot;Value\&quot;:\&quot;92/100\&quot;}],\&quot;Metascore\&quot;:\&quot;92\&quot;,\&quot;imdbRating\&quot;:\&quot;8.1\&quot;,\&quot;imdbVotes\&quot;:\&quot;211,761\&quot;,\&quot;imdbID\&quot;:\&quot;tt0075686\&quot;,\&quot;Type\&quot;:\&quot;movie\&quot;,\&quot;DVD\&quot;:\&quot;28 Apr 1998\&quot;,\&quot;BoxOffice\&quot;:\&quot;N/A\&quot;,\&quot;Production\&quot;:\&quot;United Artists\&quot;,\&quot;Website\&quot;:\&quot;N/A\&quot;,\&quot;Response\&quot;:\&quot;True\&quot;}&quot;</code></pre>
+<pre><code>## [1] &quot;{\&quot;Title\&quot;:\&quot;Annie Hall\&quot;,\&quot;Year\&quot;:\&quot;1977\&quot;,\&quot;Rated\&quot;:\&quot;PG\&quot;,\&quot;Released\&quot;:\&quot;20 Apr 1977\&quot;,\&quot;Runtime\&quot;:\&quot;93 min\&quot;,\&quot;Genre\&quot;:\&quot;Comedy, Romance\&quot;,\&quot;Director\&quot;:\&quot;Woody Allen\&quot;,\&quot;Writer\&quot;:\&quot;Woody Allen, Marshall Brickman\&quot;,\&quot;Actors\&quot;:\&quot;Woody Allen, Diane Keaton, Tony Roberts, Carol Kane\&quot;,\&quot;Plot\&quot;:\&quot;Neurotic New York comedian Alvy Singer falls in love with the ditzy Annie Hall.\&quot;,\&quot;Language\&quot;:\&quot;English, German\&quot;,\&quot;Country\&quot;:\&quot;USA\&quot;,\&quot;Awards\&quot;:\&quot;Won 4 Oscars. Another 26 wins &amp; 8 nominations.\&quot;,\&quot;Poster\&quot;:\&quot;https://images-na.ssl-images-amazon.com/images/M/MV5BZDg1OGQ4YzgtM2Y2NS00NjA3LWFjYTctMDRlMDI3NWE1OTUyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg\&quot;,\&quot;Ratings\&quot;:[{\&quot;Source\&quot;:\&quot;Internet Movie Database\&quot;,\&quot;Value\&quot;:\&quot;8.1/10\&quot;},{\&quot;Source\&quot;:\&quot;Rotten Tomatoes\&quot;,\&quot;Value\&quot;:\&quot;97%\&quot;},{\&quot;Source\&quot;:\&quot;Metacritic\&quot;,\&quot;Value\&quot;:\&quot;92/100\&quot;}],\&quot;Metascore\&quot;:\&quot;92\&quot;,\&quot;imdbRating\&quot;:\&quot;8.1\&quot;,\&quot;imdbVotes\&quot;:\&quot;213,310\&quot;,\&quot;imdbID\&quot;:\&quot;tt0075686\&quot;,\&quot;Type\&quot;:\&quot;movie\&quot;,\&quot;DVD\&quot;:\&quot;28 Apr 1998\&quot;,\&quot;BoxOffice\&quot;:\&quot;N/A\&quot;,\&quot;Production\&quot;:\&quot;United Artists\&quot;,\&quot;Website\&quot;:\&quot;N/A\&quot;,\&quot;Response\&quot;:\&quot;True\&quot;}&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print content of resp</span>
 <span class="kw">content</span>(resp)</code></pre></div>
 <pre><code>## $Title
@@ -683,7 +684,7 @@ resp</code></pre></div>
 ## [1] &quot;8.1&quot;
 ## 
 ## $imdbVotes
-## [1] &quot;211,761&quot;
+## [1] &quot;213,310&quot;
 ## 
 ## $imdbID
 ## [1] &quot;tt0075686&quot;

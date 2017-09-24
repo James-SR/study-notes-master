@@ -578,7 +578,7 @@ In this seciton we will use the Sean Lahman baseball statistics data.
 
 ```{r}
 # Load names and the package
-readRDS("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/lahmanNames.rds")
+lahmanNames <- readRDS("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/lahmanNames.rds")
 library(purrr)
 library(Lahman)
 

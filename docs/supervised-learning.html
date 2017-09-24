@@ -138,6 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>3.5</b> Advanced Joining</a></li>
 <li class="chapter" data-level="3.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>3.6</b> Joining mutiple tables</a></li>
 <li class="chapter" data-level="3.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>3.7</b> Other implentations</a></li>
+<li class="chapter" data-level="3.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>3.8</b> Case Study - Lahman DB</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4</b> Cleaning Data</a><ul>
 <li class="chapter" data-level="4.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>4.1</b> Tidying data</a></li>
@@ -468,13 +469,13 @@ dframe</code></pre></div>
 
 <span class="co"># Create the treatment plan</span>
 treatplan &lt;-<span class="st"> </span><span class="kw">designTreatmentsZ</span>(dframe, vars)</code></pre></div>
-<pre><code>## [1] &quot;desigining treatments Wed Sep 20 13:56:16 2017&quot;
-## [1] &quot;designing treatments Wed Sep 20 13:56:16 2017&quot;
-## [1] &quot; have level statistics Wed Sep 20 13:56:16 2017&quot;
-## [1] &quot;design var color Wed Sep 20 13:56:16 2017&quot;
-## [1] &quot;design var size Wed Sep 20 13:56:16 2017&quot;
-## [1] &quot; scoring treatments Wed Sep 20 13:56:16 2017&quot;
-## [1] &quot;have treatment plan Wed Sep 20 13:56:16 2017&quot;</code></pre>
+<pre><code>## [1] &quot;desigining treatments Sun Sep 24 04:51:31 2017&quot;
+## [1] &quot;designing treatments Sun Sep 24 04:51:31 2017&quot;
+## [1] &quot; have level statistics Sun Sep 24 04:51:31 2017&quot;
+## [1] &quot;design var color Sun Sep 24 04:51:31 2017&quot;
+## [1] &quot;design var size Sun Sep 24 04:51:31 2017&quot;
+## [1] &quot; scoring treatments Sun Sep 24 04:51:31 2017&quot;
+## [1] &quot;have treatment plan Sun Sep 24 04:51:31 2017&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Examine the scoreFrame</span>
 (scoreFrame &lt;-<span class="st"> </span>treatplan <span class="op">%&gt;%</span>
 <span class="st">    </span>magrittr<span class="op">::</span><span class="kw">use_series</span>(scoreFrame) <span class="op">%&gt;%</span>
@@ -792,7 +793,7 @@ elog <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">   </span><span class="kw">summarize</span>(<span class="dt">ntrees.train =</span> <span class="kw">which.min</span>(elog<span class="op">$</span>train_rmse_mean),   <span class="co"># find the index of min(train_rmse_mean)</span>
              <span class="dt">ntrees.test  =</span> <span class="kw">which.min</span>(elog<span class="op">$</span>test_rmse_mean))   <span class="co"># find the index of min(test_rmse_mean)</span></code></pre></div>
 <pre><code>##   ntrees.train ntrees.test
-## 1           72          62</code></pre>
+## 1           86          76</code></pre>
 <p>In most cases, ntrees.test is less than ntrees.train. The training error keeps decreasing even after the test error starts to increase. It’s important to use cross-validation to find the right number of trees (as determined by ntrees.test) and avoid an overfit model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The number of trees to use, as determined by xgb.cv</span>
 ntrees &lt;-<span class="st"> </span><span class="dv">84</span>

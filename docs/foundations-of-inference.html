@@ -138,6 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>3.5</b> Advanced Joining</a></li>
 <li class="chapter" data-level="3.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>3.6</b> Joining mutiple tables</a></li>
 <li class="chapter" data-level="3.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>3.7</b> Other implentations</a></li>
+<li class="chapter" data-level="3.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>3.8</b> Case Study - Lahman DB</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4</b> Cleaning Data</a><ul>
 <li class="chapter" data-level="4.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>4.1</b> Tidying data</a></li>
@@ -325,9 +326,9 @@ homes <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
             <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##      diff_perm    diff_orig
-##          &lt;dbl&gt;        &lt;dbl&gt;
-## 1 -0.007828723 -2.96867e-06</code></pre>
+##      diff_perm   diff_orig
+##          &lt;dbl&gt;       &lt;dbl&gt;
+## 1 -0.007828723 0.003292086</code></pre>
 <p>It is easier to see what is going on by breaking the results down iteratively. Our selected and filtered homes dataset looks like.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(homes)</code></pre></div>
 <pre><code>## # A tibble: 6 x 2
@@ -348,12 +349,12 @@ homes <span class="op">%&gt;%</span>
 ## # Groups:   Gender [2]
 ##   Gender HomeOwn HomeOwn_perm
 ##   &lt;fctr&gt;  &lt;fctr&gt;       &lt;fctr&gt;
-## 1   male    Rent         Rent
+## 1   male    Rent          Own
 ## 2   male    Rent          Own
-## 3 female     Own         Rent
+## 3 female     Own          Own
 ## 4   male     Own          Own
-## 5   male     Own         Rent
-## 6   male     Own         Rent</code></pre>
+## 5   male     Own          Own
+## 6   male     Own          Own</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(homes2)</code></pre></div>
 <pre><code>##     Gender      HomeOwn     HomeOwn_perm
 ##  female:4890   Own  :6425   Own  :6425  
@@ -367,17 +368,17 @@ homes3</code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   Gender prop_own_perm  prop_own
 ##   &lt;fctr&gt;         &lt;dbl&gt;     &lt;dbl&gt;
-## 1 female     0.6541922 0.6654397
-## 2   male     0.6690170 0.6576109</code></pre>
+## 1 female     0.6629857 0.6654397
+## 2   male     0.6600995 0.6576109</code></pre>
 <p>FFinally we calculate the differences in ownership - note that the difference for the permuted value here may be different from the full code above, as it a new random permutation and we have used the set.seed() function which would create an identical permutation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">homes4 &lt;-<span class="st"> </span>homes3 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff_perm =</span> <span class="kw">diff</span>(prop_own),
   <span class="dt">diff_orig =</span> <span class="kw">diff</span>(prop_own_perm))
 homes4</code></pre></div>
 <pre><code>## # A tibble: 1 x 2
-##      diff_perm  diff_orig
-##          &lt;dbl&gt;      &lt;dbl&gt;
-## 1 -0.007828723 0.01482478</code></pre>
+##      diff_perm    diff_orig
+##          &lt;dbl&gt;        &lt;dbl&gt;
+## 1 -0.007828723 -0.002886141</code></pre>
 </div>
 <div id="density-plots" class="section level2">
 <h2><span class="header-section-number">7.3</span> Density Plots</h2>

@@ -251,23 +251,23 @@ live_songs %>%
 
 ```
 ##                                           song
-## 1                        One Way Street (live)
-## 2                          Sight for Sore Eyes
-## 3                                Draw the Line
-## 4                        Sweet Emotion (remix)
-## 5                           Lord of the Thighs
-## 6                             S.O.S. (Too Bad)
-## 7  Train Kept A-Rollin'/Strangers in the Night
-## 8                            Seasons of Winter
-## 9                 Mother Popcorn/Draw the Line
-## 10                           Lightning Strikes
-## 11                     Same Old Song and Dance
-## 12              Remember (Walking in the Sand)
-## 13                           Toys in the Attic
-## 14                               Sick as a Dog
-## 15                            Kings and Queens
+## 1                                Sick as a Dog
+## 2                            Seasons of Winter
+## 3                      Same Old Song and Dance
+## 4                            Toys in the Attic
+## 5                              I Ain't Got You
+## 6                 Mother Popcorn/Draw the Line
+## 7                           Lord of the Thighs
+## 8                            Lightning Strikes
+## 9                        One Way Street (live)
+## 10 Train Kept A-Rollin'/Strangers in the Night
+## 11              Remember (Walking in the Sand)
+## 12                       Sweet Emotion (remix)
+## 13                            S.O.S. (Too Bad)
+## 14                            Kings and Queens
+## 15                         Sight for Sore Eyes
 ## 16                         Big Ten Inch Record
-## 17                             I Ain't Got You
+## 17                               Draw the Line
 ```
 
 **Note**: The union() function removes duplicate rows, even if a duplicate is desired (perhaps a different record such as someone with the same name).
@@ -1105,3 +1105,434 @@ With dplyr it is possible to create a connection to a database using the DBI pac
 * **src_sqlite()**: for SQLite datbases
 * **src_mysql**: mySQL and MariaDB
 * **src_postgres**: PostgreSQL
+
+## Case Study - Lahman DB
+
+In this seciton we will use the Sean Lahman baseball statistics data.  
+
+
+```r
+# Load names and the package
+lahmanNames <- readRDS("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/lahmanNames.rds")
+library(purrr)
+library(Lahman)
+
+# Find variables in common
+reduce(lahmanNames, intersect)
+```
+
+```
+## # A tibble: 0 x 1
+## # ... with 1 variables: var <chr>
+```
+
+There are no common (intersecting) variables across the datasets.  But perhaps some variables are in more than one table. 
+
+
+```r
+lahmanNames %>%  
+  # Bind the data frames in lahmanNames
+  bind_rows() %>%
+  # Group the result by var
+  group_by(var) %>%
+  # Tally the number of appearances
+  tally() %>%
+  # Filter the data
+  filter(n > 1) %>% 
+  # Arrange the results
+  arrange(desc(n))
+```
+
+```
+## # A tibble: 59 x 2
+##         var     n
+##       <chr> <int>
+##  1   yearID    21
+##  2 playerID    19
+##  3     lgID    17
+##  4   teamID    13
+##  5        G    10
+##  6        L     6
+##  7        W     6
+##  8       BB     5
+##  9       CS     5
+## 10       GS     5
+## # ... with 49 more rows
+```
+
+So PlayerID appears regularly, but in which tables?
+
+
+```r
+lahmanNames %>% 
+  # Bind the data frames
+  bind_rows(.id = 'dataframe') %>%
+  # Filter the results
+  filter(var == "playerID") %>% 
+  # Extract the dataframe variable
+  `$`(dataframe)
+```
+
+```
+##  [1] "AllstarFull"         "Appearances"         "AwardsManagers"     
+##  [4] "AwardsPlayers"       "AwardsShareManagers" "AwardsSharePlayers" 
+##  [7] "Batting"             "BattingPost"         "CollegePlaying"     
+## [10] "Fielding"            "FieldingOF"          "FieldingPost"       
+## [13] "HallOfFame"          "Managers"            "ManagersHalf"       
+## [16] "Master"              "Pitching"            "PitchingPost"       
+## [19] "Salaries"
+```
+
+Next we can begin to look at the salaries data.  First, let's begin by ensuring that we have salary information for each player in the database, or at least no systematic holes in our coverage.  Our new table will be concise and players contains only one row for each distinct player.
+
+
+```r
+players <- Master %>% 
+  # Return one row for each distinct player
+  distinct(playerID, nameFirst, nameLast)
+```
+
+Next, how many missing values do we have?
+
+
+```r
+players %>% 
+  # Find all players who do not appear in Salaries
+  anti_join(Salaries, by = "playerID") %>%
+  # Count them
+  count()
+```
+
+```
+## # A tibble: 1 x 1
+##       n
+##   <int>
+## 1 13958
+```
+
+The answer - a lot!  Is it possible that these players somehow did not play (and hence did not earn a salary)?
+
+We can check with the Appearances data frame. Appearances contains information about every game played in major league baseball. That is, if a player played a game, it would show up as a row in Appearances.
+
+
+```r
+players %>% 
+  anti_join(Salaries, by = "playerID") %>% 
+  # How many unsalaried players appear in Appearances?
+  semi_join(Appearances, by = "playerID") %>% 
+  count()
+```
+
+```
+## # A tibble: 1 x 1
+##       n
+##   <int>
+## 1 13765
+```
+
+So a large number of players played a game but are missing salary information. Interestingly, 193 players neither played a game nor have a recorded salary.  Perhaps the unsalaried players only played one or two games, and hence did not earn a full salary.
+
+
+```r
+players %>% 
+  # Find all players who do not appear in Salaries
+  anti_join(Salaries, by = "playerID") %>% 
+  # Join them to Appearances
+  left_join(Appearances, by = "playerID") %>% 
+  # Calculate total_games for each player
+  group_by(playerID) %>%
+  summarise(total_games = sum(G_all, na.rm = T)) %>%
+  # Arrange in descending order by total_games
+  arrange(desc(total_games))
+```
+
+```
+## # A tibble: 13,958 x 2
+##     playerID total_games
+##        <chr>       <int>
+##  1 yastrca01        3308
+##  2 aaronha01        3298
+##  3  cobbty01        3034
+##  4 musiast01        3026
+##  5  mayswi01        2992
+##  6 robinbr01        2896
+##  7 kalinal01        2834
+##  8 collied01        2824
+##  9 robinfr02        2808
+## 10 wagneho01        2795
+## # ... with 13,948 more rows
+```
+Here we some some players played thousands of games, so the idea that some didn't play enough games doesn't seem to hold.
+
+Is it possible that the unsalaried players did not actually play in the games that they appeared in? One way to check would be to determine if the players had an at-bat (i.e. batted) in the games that they appeared in.
+
+
+```r
+players %>%
+  # Find unsalaried players
+  anti_join(Salaries, by = "playerID") %>% 
+  # Join Batting to the unsalaried players
+  left_join(Batting, by = "playerID") %>% 
+  # Group by player
+  group_by(playerID) %>% 
+  # Sum at-bats for each player
+  summarise(total_at_bat = sum(AB, na.rm = T)) %>% 
+  # Arrange in descending order
+  arrange(desc(total_at_bat))
+```
+
+```
+## # A tibble: 13,958 x 2
+##     playerID total_at_bat
+##        <chr>        <int>
+##  1 aaronha01        12364
+##  2 yastrca01        11988
+##  3  cobbty01        11434
+##  4 musiast01        10972
+##  5  mayswi01        10881
+##  6 robinbr01        10654
+##  7 wagneho01        10430
+##  8 brocklo01        10332
+##  9 ansonca01        10277
+## 10 aparilu01        10230
+## # ... with 13,948 more rows
+```
+The unpaid players definitely participated in the games. The highest number of at bats is Hank Aaron so it looks like we are dealing with missing data here and not unsalaried players.
+
+Next, lets look at the Hall of Fame players
+
+
+```r
+# Find the distinct players that appear in HallOfFame
+nominated <- HallOfFame %>% 
+  distinct(playerID)
+
+nominated %>% 
+  # Count the number of players in nominated
+  count()
+```
+
+```
+## # A tibble: 1 x 1
+##       n
+##   <int>
+## 1  1260
+```
+
+```r
+nominated_full <- nominated %>% 
+  # Join to Master
+  left_join(Master, by = "playerID") %>% 
+  # Return playerID, nameFirst, nameLast
+  select(playerID, nameFirst, nameLast)
+```
+
+Next, let's find out how many of those nominated are now inducted in to the HoF
+
+
+```r
+# Find distinct players in HallOfFame with inducted == "Y"
+inducted <- HallOfFame %>% 
+  filter(inducted == "Y") %>% 
+  distinct(playerID)
+
+inducted %>% 
+  # Count the number of players in inducted
+  count()
+```
+
+```
+## # A tibble: 1 x 1
+##       n
+##   <int>
+## 1   317
+```
+
+```r
+inducted_full <- inducted %>% 
+  # Join to Master
+  left_join(Master, by = "playerID") %>% 
+  # Return playerID, nameFirst, nameLast
+  select(playerID, nameFirst, nameLast)
+```
+
+Now that we know who was inducted and who was nominated, let's examine what separates the nominees who were inducted from the nominees who were not.  Let's start with a simple question: Did nominees who were inducted get more awards than nominees who were not inducted?
+
+
+```r
+# Tally the number of awards in AwardsPlayers by playerID
+nAwards <- AwardsPlayers %>% 
+  group_by(playerID) %>% 
+  tally()
+
+nAwards %>% 
+  # Filter to just the players in inducted 
+  semi_join(inducted, by = "playerID") %>% 
+  # Calculate the mean number of awards per player
+  summarize(avg_n = mean(n, na.rm = T))
+```
+
+```
+## # A tibble: 1 x 1
+##      avg_n
+##      <dbl>
+## 1 12.14583
+```
+
+```r
+nAwards %>% 
+  # Filter to just the players in nominated 
+  semi_join(nominated, by = "playerID") %>% 
+  # Filter to players NOT in inducted 
+  anti_join(inducted, by = "playerID") %>% 
+  # Calculate the mean number of awards per player
+  summarize(avg_n = mean(n, na.rm = T))
+```
+
+```
+## # A tibble: 1 x 1
+##      avg_n
+##      <dbl>
+## 1 4.231054
+```
+
+The answer is yes - it looks like about 3 times the number.  Was the salary much higher for those who were inducted?
+
+
+```r
+# Find the players who are in nominated, but not inducted
+notInducted <- nominated %>% 
+   setdiff(inducted)
+
+Salaries %>% 
+  # Find the players who are in notInducted
+  semi_join(notInducted, by = "playerID") %>% 
+  # Calculate the max salary by player
+  group_by(playerID) %>% 
+  summarize(max_salary = max(salary, na.rm = T)) %>% 
+  # Calculate the average of the max salaries
+  summarize(avg_salary = mean(max_salary, na.rm = T))
+```
+
+```
+## # A tibble: 1 x 1
+##   avg_salary
+##        <dbl>
+## 1    5124653
+```
+
+```r
+# Repeat for players who were inducted
+Salaries %>% 
+  semi_join(inducted, by = "playerID") %>% 
+  # Calculate the max salary by player
+  group_by(playerID) %>% 
+  summarize(max_salary = max(salary, na.rm = T)) %>% 
+  # Calculate the average of the max salaries
+  summarize(avg_salary = mean(max_salary, na.rm = T))
+```
+
+```
+## # A tibble: 1 x 1
+##   avg_salary
+##        <dbl>
+## 1    6092038
+```
+
+So the salaries of the players who were inducted was higher.  Were any players nominated 5 years before they retired?
+
+
+```r
+players <- Appearances %>% 
+  # Filter Appearances against nominated
+  semi_join(nominated, by = "playerID") %>% 
+  # Find last year played by player
+  group_by(playerID) %>% 
+  summarize(last_year = max(yearID, na.rm = T)) %>% 
+  # Join to full HallOfFame
+  left_join(HallOfFame, by = "playerID") %>% 
+  # Filter for unusual observations
+  filter((yearID - last_year) < 5 ) 
+
+players
+```
+
+```
+## # A tibble: 194 x 10
+##     playerID last_year yearID votedBy ballots needed votes inducted
+##        <chr>     <int>  <int>   <chr>   <int>  <int> <int>   <fctr>
+##  1 altroni01      1933   1937   BBWAA     201    151     3        N
+##  2 applilu01      1950   1953   BBWAA     264    198     2        N
+##  3 bartedi01      1946   1948   BBWAA     121     91     1        N
+##  4  beckro01      2004   2008   BBWAA     543    408     2        N
+##  5 boudrlo01      1952   1956   BBWAA     193    145     2        N
+##  6 camildo01      1945   1948   BBWAA     121     91     1        N
+##  7 chandsp01      1947   1950   BBWAA     168    126     2        N
+##  8 chandsp01      1947   1951   BBWAA     226    170     1        N
+##  9 chapmbe01      1946   1949   BBWAA     153    115     1        N
+## 10 cissebi01      1938   1937   BBWAA     201    151     1        N
+## # ... with 184 more rows, and 2 more variables: category <fctr>,
+## #   needed_note <chr>
+```
+
+```r
+players %>%
+  group_by(playerID) %>%
+  tally() %>%
+  # Arrange the results
+  arrange(desc(n))
+```
+
+```
+## # A tibble: 92 x 2
+##     playerID     n
+##        <chr> <int>
+##  1  deandi01     9
+##  2 dickebi01     7
+##  3  foxxji01     6
+##  4 lyonste01     6
+##  5 greenha01     5
+##  6 ruffire01     5
+##  7 cronijo01     4
+##  8 dimagjo01     4
+##  9 gehrich01     4
+## 10  hackst01     4
+## # ... with 82 more rows
+```
+
+So we get a list of 194 players who were nominated within 5 years of having last played, with some players being nominated many times.  And of those, how many were nominated whilst still playing?
+
+
+```r
+Appearances %>% 
+  # Filter Appearances against nominated
+  semi_join(nominated, by = "playerID") %>% 
+  # Find last year played by player
+  group_by(playerID) %>% 
+  summarize(last_year = max(yearID, na.rm = T)) %>% 
+  # Join to full HallOfFame
+  left_join(HallOfFame, by = "playerID") %>% 
+  # Filter for unusual observations
+  filter(yearID <= last_year) %>%
+  # look for the most recent incident of nomination before reirement
+  arrange(desc(yearID))
+```
+
+```
+## # A tibble: 39 x 10
+##     playerID last_year yearID votedBy ballots needed votes inducted
+##        <chr>     <int>  <int>   <chr>   <int>  <int> <int>   <fctr>
+##  1 francju02      2014   2013   BBWAA     569    427     6        N
+##  2  rijojo01      2002   2001   BBWAA     515    387     1        N
+##  3 stephjo03      2002   1979   BBWAA     432    324     0        N
+##  4 minosmi01      1980   1969   BBWAA     340    255     6        N
+##  5 spahnwa01      1965   1958   BBWAA     266    200     1        N
+##  6 rizzuph01      1956   1956   BBWAA     193    145     1        N
+##  7 paigesa01      1965   1951   BBWAA     226    170     1        N
+##  8 waltebu01      1950   1950   BBWAA     168    126     4        N
+##  9 medwijo01      1948   1948   BBWAA     121     91     1        N
+## 10  deandi01      1947   1947   BBWAA     161    121    88        N
+## # ... with 29 more rows, and 2 more variables: category <fctr>,
+## #   needed_note <chr>
+```
+So around 40 players were nominated whilst still plaing

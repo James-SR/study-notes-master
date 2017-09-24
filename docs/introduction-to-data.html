@@ -138,6 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>3.5</b> Advanced Joining</a></li>
 <li class="chapter" data-level="3.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>3.6</b> Joining mutiple tables</a></li>
 <li class="chapter" data-level="3.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>3.7</b> Other implentations</a></li>
+<li class="chapter" data-level="3.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>3.8</b> Case Study - Lahman DB</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4</b> Cleaning Data</a><ul>
 <li class="chapter" data-level="4.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>4.1</b> Tidying data</a></li>
@@ -479,26 +480,25 @@ county_srs &lt;-<span class="st"> </span>county <span class="op">%&gt;%</span>
 county_srs <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(state) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>()</code></pre></div>
-<pre><code>## # A tibble: 16 x 2
-## # Groups:   state [16]
+<pre><code>## # A tibble: 15 x 2
+## # Groups:   state [15]
 ##            state     n
 ##           &lt;fctr&gt; &lt;int&gt;
-##  1       Alabama     1
-##  2      Arkansas     1
-##  3      Colorado     2
-##  4      Illinois     2
-##  5       Indiana     1
-##  6      Kentucky     1
-##  7      Maryland     1
-##  8      Michigan     1
-##  9       Montana     1
-## 10    New Mexico     1
-## 11      New York     2
-## 12          Ohio     1
-## 13      Oklahoma     1
-## 14     Tennessee     1
-## 15         Texas     2
-## 16 West Virginia     1</code></pre>
+##  1       Florida     1
+##  2       Georgia     3
+##  3      Illinois     1
+##  4 Massachusetts     1
+##  5      Michigan     1
+##  6     Minnesota     1
+##  7   Mississippi     1
+##  8      Missouri     3
+##  9      Nebraska     1
+## 10    New Jersey     1
+## 11          Ohio     1
+## 12      Oklahoma     1
+## 13         Texas     2
+## 14 West Virginia     1
+## 15     Wisconsin     1</code></pre>
 <p>For a stratified sample we would do something similar.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Stratified sample</span>
 states_str &lt;-<span class="st"> </span>us_regions <span class="op">%&gt;%</span>
