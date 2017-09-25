@@ -1,0 +1,33 @@
+# Writing Functions in R
+***
+Notes taken during/inspired by the Datacamp course 'Writing Functions in R' by Hadley and Charlotte Wickham.
+
+R can create functions using a basic 'receipe' as Hadley calls it
+
+
+```{r, eval = FALSE}
+my_fun <- function(arg1, arg2) {
+   body
+}
+```
+
+> 
+
+Unlike in other languages, there is no special syntax for naming a function. Once created, there is no difference between the functions you create and the functions created by other developers such as those in base R.  
+
+Every function has three components
+
+* The formal arguments
+* The body of the function 
+* The environment - usually invisible but determines where the function looks for variables
+
+The environemnt is where the function was defined, if just coding the function in this will be the global environment.  
+
+The output from a function is usually the last expression evaluated.  However, it is possible to use a return statement to return(value) which will stop the function at that point.  It is possible to have functions without a name, so called 'anonymous' functions, which are covered later in this chapter.  Anonymous functions can be called, but have to be done on the same line.  
+
+Course slides:
+* [Part 1 - Refresher](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch1_pdf_slides_v2.pdf)
+* [Part 2 - When and how you should write a function]()
+* [Part 3 - Functional programming]()
+* [Part 4 - Advanced inputs and outputs]()
+* [Part 5 - Robust functions]
