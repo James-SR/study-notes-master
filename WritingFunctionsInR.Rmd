@@ -34,9 +34,37 @@ Course slides:
 
 ## Function overview
 
+```{r}
+# Define ratio() function
+ratio <- function(x, y) {
+  x / y
+}
 
+# Call ratio() with arguments 3 and 4
+ratio(3, 4)
+```
 
+There are  two ways to specify the arguments - ratio(3, 4), which relies on matching by position, or ratio(x = 3, y = 4), which relies on matching by name.
 
+For functions you and others use often, it's okay to use positional matching for the first one or two arguments. These are usually the data to be computed on. Good examples are the x argument to the summary functions (mean(), sd(), etc.) and the x and y arguments to plotting functions.
+
+However, beyond the first couple of arguments you should always use matching by name. It makes your code much easier for you and others to read. This is particularly important if the argument is optional, because it has a default. When overriding a default value, it's good practice to use the name.
+
+Notice that when you call a function, you should place a space around = in function calls, and always put a space after a comma, not before (just like in regular English). Using whitespace makes it easier to skim the function for the important components.
+
+In the follwing example we tidy up the function to follow best practice and make it easier to understand and repeat if needed in the future.
+
+```{r}
+# Original
+mean(0.1,x=c(1:9, NA),TRUE)
+
+# Rewrite the call to follow best practices
+mean(c(1:9, NA), trim = 0.1, na.rm = TRUE)
+```
+
+### Scoping
+
+SCoping describes how R looks up values when given a name.  When creating a function, R will look within that function first for a name e.g. x.  If it doesn't exist in that environment, it will look one level up, so if you've defined x but not y in a function, R will look for y in the next environment up - if within a single function, this next level up will be the gobal environment.  Every time you cann a function, it will get a 'clean' environment.  
 
 
 ## When and how you should write a function
