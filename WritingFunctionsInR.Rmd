@@ -64,7 +64,15 @@ mean(c(1:9, NA), trim = 0.1, na.rm = TRUE)
 
 ### Scoping
 
-SCoping describes how R looks up values when given a name.  When creating a function, R will look within that function first for a name e.g. x.  If it doesn't exist in that environment, it will look one level up, so if you've defined x but not y in a function, R will look for y in the next environment up - if within a single function, this next level up will be the gobal environment.  Every time you cann a function, it will get a 'clean' environment.  
+Scoping describes how R looks up values when given a name.  When creating a function, R will look within that function first for a name e.g. x.  If it doesn't exist in that environment, it will look one level up, so if you've defined x but not y in a function, R will look for y in the next environment up - if within a single function, this next level up will be the gobal environment.  Every time you cann a function, it will get a 'clean' environment.  
+
+### Data Structures
+
+There are two main typers of data structure in R - atomic vectors and lists (which are multiple vectors).  Lists are useful because they can be used to have different data ypes within them, they have nested vectors in effect.  Lists can be referenced either with a single brackedt [], a double braket [[]] which will strip out a level of hierachy or the usual dollar notation $.  
+
+```{r Subsetting Lists, echo = FALSE, fig.cap='Subsetting List flavours'}
+knitr::include_graphics("images/ListSubsetting.png")
+```
 
 
 ## When and how you should write a function
