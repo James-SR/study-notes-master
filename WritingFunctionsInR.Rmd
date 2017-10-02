@@ -74,6 +74,69 @@ There are two main typers of data structure in R - atomic vectors and lists (whi
 knitr::include_graphics("images/ListSubsetting.png")
 ```
 
+There are a few ways to subset a list. Throughout the course we'll mostly use double bracket ([[]]) subsetting by index and by name.
+
+That is, my_list[[1]] extracts the first element of the list my_list, and my_list[["name"]] extracts the element in my_list that is called name. If the list is nested you can travel down the heirarchy by recursive subsetting. For example, mylist[[1]][["name"]] is the element called name inside the first element of my_list.
+
+A data frame is just a special kind of list, so you can use double bracket subsetting on data frames too. my_df[[1]] will extract the first column of a data frame and my_df[["name"]] will extract the column named name from the data frame.
+
+
+```{r, eval = FALSE}
+# 2nd element in tricky_list
+typeof(tricky_list[[2]])
+
+# Element called x in tricky_list
+typeof(tricky_list[["x"]])
+
+# 2nd element inside the element called x in tricky_list
+typeof(tricky_list[["x"]][[2]])
+
+```
+
+Sometimes the output of models can be quite challenging to get out, with many lists inside a single list.
+
+```{r}
+# Guess where the regression model is stored
+names(tricky_list)
+
+# Use names() and str() on the model element
+names(tricky_list[["model"]])
+str(tricky_list[["model"]])
+
+# Subset the coefficients element
+tricky_list[["model"]][["coefficients"]]
+
+# Subset the wt element
+tricky_list[["model"]][["coefficients"]][["wt"]]
+```
+
+### For loops
+
+For loops are used for iteraction.  There are a number of parts within a loop:
+
+* **1**: The sequence - describes the name of an object with indexes an iteration e.g. i, and the values that this index should iterate over 
+* **2**: The body - between the curly braces {} and describes the operations to iterate over, referring back to the index (e.g. i)
+* **3**: The output - where should the results of the loop go?  OFten this might print to the screen rather than saving the output
+
+If you want to repeat a function for each column where the data frame is empty, rather than use the sequence for (i in 1:ncol(df)), it is better to use seq_along(df), since our sequence is now the somewhat non-sensical: 1, 0. You might think you wouldn't be silly enough to use a for loop with an empty data frame, but once you start writing your own functions, there's no telling what the input will be.
+
+```{r}
+
+df <- data.frame()
+1:ncol(df)
+
+# doesn't handle the empty data well
+for (i in 1:ncol(df)) {
+  print(median(df[[i]]))
+}
+
+# Replace the 1:ncol(df) sequence
+for (i in seq_along(df)) {
+  print(median(df[[i]]))
+}
+
+```
+
 
 ## When and how you should write a function
 
