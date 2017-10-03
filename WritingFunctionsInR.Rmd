@@ -27,7 +27,7 @@ The output from a function is usually the last expression evaluated.  However, i
 
 Course slides:
 * [Part 1 - Refresher](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch1_pdf_slides_v2.pdf)
-* [Part 2 - When and how you should write a function]()
+* [Part 2 - When and how you should write a function](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch2_pdf_slides.pdf)
 * [Part 3 - Functional programming]()
 * [Part 4 - Advanced inputs and outputs]()
 * [Part 5 - Robust functions]
@@ -137,6 +137,30 @@ for (i in seq_along(df)) {
 
 ```
 
+Our for loop does a good job displaying the column medians, but we might want to store these medians in a vector for future use.
+
+Before you start the loop, you must always allocate sufficient space for the output, let's say an object called output. This is very important for efficiency: if you grow the for loop at each iteration (e.g. using c()), your for loop will be very slow.
+
+A general way of creating an empty vector of given length is the vector() function. It has two arguments: the type of the vector ("logical", "integer", "double", "character", etc.) and the length of the vector.
+
+Then, at each iteration of the loop you must store the output in the corresponding entry of the output vector, i.e. assign the result to output[[i]]. (You might ask why we are using double brackets here when output is a vector. It's primarily for generalizability: this subsetting will work whether output is a vector or a list.)
+
+Let's edit our loop to store the medians, rather than printing them to the console.
+
+```{r, eval = FALSE}
+# Create new double vector: output
+output <- vector("double", ncol(df))
+
+# Alter the loop
+for (i in seq_along(df)) {
+  # Change code to store result in output
+  output[i] <- median(df[[i]])
+}
+
+# Print output
+output
+```
+
 
 ## When and how you should write a function
 
@@ -208,3 +232,72 @@ rescale01 <- function(x) {
 rescale01(x)
 ```
 
+### Write a function step by step
+
+Typically we go through a similar process in order to write a function:
+
+1. Start with a simiple problem
+2. Get a working snippet of code
+3. Rewrite the code to use temporary variables
+4. See if there is any duplication that we can minimise and rewrite to remove this
+5. With this clearly working version, we can turn it in to a function, by wrapping the code in a function
+
+In this next section we are going to go through these steps in order to write a function - both_na() - that counts at how many positions two vectors, x and y, both have a missing value.
+
+So first, we start writing some simple code to see how we get something workable.  
+
+```{r}
+# Define example vectors x and y
+x <- c( 1, 2, NA, 3, NA)
+y <- c(NA, 3, NA, 3,  4)
+
+# Count how many elements are missing in both x and y
+sum(is.na(x) & is.na(y))
+```
+
+So the function appears to be doing what we want, the function is already quite simple so we don't need to simplify further, so we proceed to wrap the function.
+
+```{r}
+# Turn this snippet into a function: both_na()
+both_na <- function(x, y) {
+  sum(is.na(x) & is.na(y))
+}
+```
+
+Now we can test whether the function operates as intended by using some other examples.
+
+```{r}
+# Define x, y1 and y2
+x <-  c(NA, NA, NA)
+y1 <- c( 1, NA, NA)
+y2 <- c( 1, NA, NA, NA)
+
+
+# Call both_na on x, y1
+both_na(x, y1)
+
+# Call both_na on x, y2
+both_na(x, y2)
+```
+
+### How can you write a good function?
+
+It should have the following criteria fulfilled
+
+* It should be correct
+* It should be understandable to other people
+* Correct + understandable = obvioulsy correct
+
+Good names can help make the data more understandable.  Good naming applies to all aspects in R - objects, functions or arguments.  Some examples are below, it doesn't matter which convention you follow although it is important to stick to the approach i.e. be consistent. 
+
+* Long names - these should be lower case and seperated with underscores e.g. row_maxes
+* Other names - don't override existing variables or functions e.g. T <- FALSE or c <- 10
+* Function names - use a verb as a name, since the function does something
+* Argument names - use nouns or naming words
+* Argument length - use short names when appropriate e.g. x,y or z
+* Data frames - usually referred to as df
+* Numeric indices - use i and j typically rows and columns
+* Others - n for the number of rows, p for the number of columns
+* Argument order - usually we placed data objects first, like x or df, then things that control the computation next (detail) which should be given default values
+
+Also think about having an [R style guide](http://adv-r.had.co.nz/Style.html).
