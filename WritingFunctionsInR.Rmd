@@ -301,3 +301,108 @@ Good names can help make the data more understandable.  Good naming applies to a
 * Argument order - usually we placed data objects first, like x or df, then things that control the computation next (detail) which should be given default values
 
 Also think about having an [R style guide](http://adv-r.had.co.nz/Style.html).
+
+## Functional Programming
+
+Writing for loops in R is not best practice.  They are like detailed recipe books which outline very detailed step in a recipe, they don't rely on any pre-existing knowledge so as a consequence, become very long.  This can make it hard to understand and see differences and similarities between different recipes (for loops).  For loops tend to relegate the verbs by hiding them in a sea of nouns. Using functional programming allows you to create 'meta recipes' which helps to identify what is different and what is the same, by simplifying some of the steps.  
+
+In the following example we will create a data frame, then try to calculate a median for each column.  This could be achieved by repeating median(df[[p]]) for each column p in the df, but it would be a lot of repetition.  The following shows how you would use a for loop
+
+```{r}
+# Create the dataframe
+df <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+# Initialize output vector
+output <- vector("double", ncol(df))  
+
+# Fill in the body of the for loop
+for (i in seq_along(df)) {            
+  output[i] <- median(df[[i]])
+}
+
+# View the result
+output
+
+```
+
+Now if we had two more data frames, df2 and df3 we would have something similar to the following
+
+```{r}
+# Create the dataframe2
+df2 <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+# Create the dataframe3
+df3 <- data.frame(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+output <- vector("double", ncol(df2))  
+for (i in seq_along(df2)) {            
+  output[[i]] <- median(df2[[i]])      
+}
+output
+
+output <- vector("double", ncol(df3))  
+for (i in seq_along(df3)) {            
+  output[[i]] <- median(df3[[i]])      
+}
+output
+```
+
+It would be easier to write a function in this instance.
+
+```{r}
+# Turn this code into col_median()
+col_median <- function(df) {
+  output <- vector("double", ncol(df))
+  for (i in seq_along(df)) {            
+    output[[i]] <- median(df[[i]])      
+  }
+  output
+}
+
+col_median(df2)
+col_median(df3)
+```
+And if we wanted means instead of medians we could write a similar function.
+
+```{r}
+# Create col_mean() function to find column means
+col_mean <- function(df) {
+  output <- numeric(length(df))
+  for (i in seq_along(df)) {
+    output[[i]] <- mean(df[[i]])
+  }
+  output
+}
+col_mean(df2)
+col_mean(df3)
+```
+And if we wanted standard deviations
+
+```{r}
+# Define col_sd() function
+col_sd <- function(df) {
+  output <- numeric(length(df))
+  for (i in seq_along(df)) {
+    output[[i]] <- sd(df[[i]])
+  }
+  output
+}
+col_sd(df2)
+col_sd(df3)
+```
+We have now copied our median function twice - to create mean and sd functions.  It would be writter to write a function which will take column summaries for any summary function we provide.  
