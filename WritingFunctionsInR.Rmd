@@ -406,3 +406,53 @@ col_sd(df2)
 col_sd(df3)
 ```
 We have now copied our median function twice - to create mean and sd functions.  It would be writter to write a function which will take column summaries for any summary function we provide.  
+
+```{r}
+f <- function(x, power) {
+    # Edit the body to return absolute deviations raised to power
+    abs(x - mean(x)) ^ power
+}
+```
+
+We can also use functions as arguments, by replacing the mean or median elements with fun, where fun = the summary function desired.
+
+```{r}
+col_summary <- function(df, fun) {
+  output <- vector("numeric", length(df))
+  for (i in seq_along(df)) {
+    output[[i]] <- fun(df[[i]])
+  }
+  output
+}
+```
+
+### Using purrr
+
+Passing functions as arguments is quite a common task in R, we can use the map function in purrr to achieve this.  Every function in the purrr package takes a vector to begin with (.x) and loops over it to do something (.f) e.g. map_dbl(.x, .f, ...).  The types of map functions are:
+
+* map() returns a list
+* map_dbl() returns a double vector
+* map_lgl() returns a logical vector
+* map_int() returns a integer vector
+* map_chr() returns a character vector
+
+Arguments to map() are .x and .f and not x and f because .x and .f are very unlikely to be argument names you might pass through the ..., thereby preventing confusion about whether an argument belongs to map() or to the function being mapped.
+
+```{r}
+# load the package and examine the data
+library(purrr)
+library(nycflights13)
+library(dplyr) # to select just the numeric columns of our dataset 
+str(planes)
+planes2 <- select_if(planes, is.numeric)
+
+# Find the mean of each column
+map_dbl(planes2, mean)
+
+# Find the mean of each column, excluding missing values
+map_dbl(planes2, mean, na.rm = T)
+
+# Find the 5th percentile of each column, excluding missing values
+map_dbl(planes2, quantile, probs = .05, na.rm = T)
+```
+
