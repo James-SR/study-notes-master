@@ -456,3 +456,150 @@ map_dbl(planes2, mean, na.rm = T)
 map_dbl(planes2, quantile, probs = .05, na.rm = T)
 ```
 
+```{r}
+# Find the columns that are numeric
+map_lgl(df3, is.numeric)
+
+# Find the type of each column
+map_chr(df3, typeof)
+
+# Find a summary of each column
+map(df3, summary)
+```
+
+### Shortcuts
+
+You can define an anonymous function on the fly like
+
+> map(df, function(x) sum(is.na(x)))
+
+Which will count how many missing values are in x.  This allows you to create and map your own functions.  
+
+In the next set of exercises we will use the mtcars data, but split the dataset in to a set for each number of cylinders in the engine e.g. 4, 6 and 8 cylinders. 
+
+Our goal is to fit a separate linear regression of miles per gallon (mpg) against weight (wt) for each group of cars in our list of data frames, where each data frame in our list represents a different group. How should we get started?
+
+First, let's confirm the structure of this list of data frames. Then, we'll solve a simpler problem first: fit the regression to the first group of cars.
+
+```{r}
+# Split the data
+cyl <- split(mtcars, mtcars$cyl)
+
+# Examine the structure of cyl
+str(cyl)
+
+# Extract the first element into four_cyls
+four_cyls <- cyl[[1]]
+
+# Fit a linear regression of mpg on wt using four_cyls
+lm(wt ~ mpg, four_cyls)
+```
+
+We now have a snippet of code that performs the operation we want on one data frame. One option would be to turn this into a function, for example:
+
+> fit_reg <- function(df) {
+>   lm(mpg ~ wt, data = df)
+> }
+
+Then pass this function into map():
+
+> map(cyl, fit_reg)
+
+But it seems a bit much to define a function for such a specific model when we only want to do this once. Instead of defining the function in the global environment, we will just use the function anonymously inside our call to map().
+
+What does this mean? Instead of referring to our function by name in map(), we define it on the fly in the .f argument to map()
+
+```{r}
+# Rewrite to call an anonymous function
+map(cyl, function(df) lm(mpg ~ wt, data = df))
+```
+
+Writing anonymous functions takes a lot of extra key strokes, so purrr provides a shortcut that allows you to write an anonymous function as a one-sided formula instead.
+
+In R, a one-sided formula starts with a ~, followed by an R expression. In purrr's map functions, the R expression can refer to an element of the .x argument using the . character.
+
+Let's take a look at an example. Imagine, instead of a regression on each data frame in cyl, we wanted to know the mean displacement for each data frame. One way to do this would be to use an anonymous function:
+
+> map_dbl(cyl, function(df) mean(df$disp))
+
+To perform the same operation using the formula shortcut, we replace the function definition (function(df)) with the ~, then when we need to refer to the element of cyl the function operates on (in this case df), we use a ..
+
+> map_dbl(cyl, ~ mean(.$disp))
+
+Much less typing. It also saves you from coming up with an argument name. Lets rewrite our previous anonymous function using this formula shortcut instead.
+
+```{r}
+# Rewrite to use the formula shortcut instead
+map(cyl, ~ lm(mpg ~ wt, data = .))
+```
+
+There are also some useful shortcuts that come in handy when you want to subset each element of the .x argument. If the .f argument to a map function is set equal to a string, let's say "name", then purrr extracts the "name" element from every element of .x.
+
+This is a really common situation you find yourself in when you work with nested lists. For example, if we have a list of where every element contains an a and b element:
+
+> list_of_results <- list(
+  list(a = 1, b = "A"), 
+  list(a = 2, b = "C"), 
+  list(a = 3, b = "D")
+)
+
+We might want to pull out the a element from every entry. We could do it with the string shortcut like this:
+
+> map(list_of_results, "a")
+
+Now take our list of regresssion models:
+
+> map(cyl, ~ lm(mpg ~ wt, data = .))
+
+It might be nice to extract the slope coefficient from each model. You'll do this in a few steps: first fit the models, then get the coefficients from each model using the coef() function, then pull out the wt estimate using the string shortcut.
+
+```{r}
+# Save the result from the previous exercise to the variable models
+models <- map(cyl, ~ lm(mpg ~ wt, data = .))
+
+# Use map and coef to get the coefficients for each model: coefs
+coefs <- map(models, ~ coef(.))
+
+# Use string shortcut to extract the wt coefficient 
+map(coefs, "wt")
+```
+
+Another useful shortcut for subsetting is to pass a numeric vector as the .f argument. This works just like passing a string but subsets by index rather than name. For example, with your previous list_of_results:
+
+> list_of_results <- list(
+  list(a = 1, b = "A"), 
+  list(a = 2, b = "C"), 
+  list(a = 3, b = "D")
+)
+
+Another way to pull out the a element from each list, is to pull out the first element:
+
+> map(list_of_results, 1)
+
+Let's pull out the slopes from our models again, but this time using numeric subsetting. Also, since we are pulling out a single numeric value from each element, let's use map_dbl().
+
+```{r}
+# use map_dbl with the numeric shortcut to pull out the second element
+map_dbl(coefs, 1)
+```
+purrr also includes a pipe operator: %>%. The pipe operator is another shortcut that saves typing, but also increases readability.  The example below pulls out the R2R2 from each model. Rewrite the last two lines to use a pipe instead.
+
+```{r}
+# Define models (don't change)
+models <- mtcars %>% 
+  split(mtcars$cyl) %>%
+  map(~ lm(mpg ~ wt, data = .))
+
+# Original code
+# summaries <- map(models, summary) 
+# map_dbl(summaries, "r.squared")
+
+# Re-writen to single command with pipes
+models %>%
+  map(summary) %>%
+  map_dbl("r.squared")
+
+
+```
+
+## Dealing with Failure
