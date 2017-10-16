@@ -701,3 +701,100 @@ Or if we wanted to do a similar exercise but use different functions, say to run
 
 > invoke_map(.f, .x = list(NULL), ...) # iterate over functions and arguments
 
+This next section will use the random number generator rnorm().
+
+```{r}
+# Create a list n containing the values: 5, 10, and 20
+n <- list(5, 10, 20)
+
+# Call map() on n with rnorm() to simulate three samples
+map(n, rnorm)
+```
+
+If we also want to vary the mean, the mean can be specified in rnorm() by the argument mean. Now there are two arguments to rnorm() we want to vary: n and mean.
+
+The map2() function is designed exactly for this purpose; it allows iteration over two objects. The first two arguments to map2() are the objects to iterate over and the third argument .f is the function to apply.
+
+Let's use map2() to simulate three samples with different sample sizes and different means.
+
+```{r}
+# Initialize n
+n <- list(5, 10, 20)
+
+# Create a list mu containing the values: 1, 5, and 10
+mu <- list(1, 5, 10)
+
+# Edit to call map2() on n and mu with rnorm() to simulate three samples
+map2(n, mu, rnorm)
+```
+
+We might want to vary: sd, the standard deviation of the Normal distribution. You might think there is a map3() function, but there isn't. Instead purrr provides a pmap() function that iterates over 2 or more arguments.
+
+First, let's take a look at pmap() for the situation we just solved: iterating over two arguments. Instead of providing each item to iterate over as arguments, pmap() takes a list of arguments as its input. For example, we could replicate our previous example, iterating over both n and mu with the following:
+
+> n <- list(5, 10, 20)
+> mu <- list(1, 5, 10)
+
+> pmap(list(n, mu), rnorm)
+
+Notice how we had to put our two items to iterate over (n and mu) into a list.
+
+Let's expand this code to iterate over varying standard deviations too.
+
+```{r}
+# Initialize n and mu
+n <- list(5, 10, 20)
+mu <- list(1, 5, 10)
+
+# Create a sd list with the values: 0.1, 1 and 0.1
+sd <- list(0.1, 1, 0.1)
+
+# Edit this call to pmap() to iterate over the sd list as well
+pmap(list(n, mu, sd), rnorm)
+```
+
+By default pmap() matches the elements of the list to the arguments in the function by position. 
+
+Instead of relying on this positional matching, a safer alternative is to provide names in our list. The name of each element should be the argument name we want to match it to.
+
+```{r}
+# Name the elements so they are read correctly
+pmap(list(mean = mu, n = n , sd = sd), rnorm)
+```
+
+Sometimes it's not the arguments to a function you want to iterate over, but a set of functions themselves. Imagine that instead of varying the parameters to rnorm() we want to simulate from different distributions, say, using rnorm(), runif(), and rexp(). How do we iterate over calling these functions?
+
+In purrr, this is handled by the invoke_map() function. The first argument is a list of functions. In our example, something like:
+
+> f <- list("rnorm", "runif", "rexp")
+
+The second argument specifies the arguments to the functions. In the simplest case, all the functions take the same argument, and we can specify it directly, relying on ... to pass it to each function. In this case, call each function with the argument n = 5:
+
+> invoke_map(f, n = 5)
+
+In more complicated cases, the functions may take different arguments, or we may want to pass different values to each function. In this case, we need to supply invoke_map() with a list, where each element specifies the arguments to the corresponding function.
+
+```{r}
+# Define list of functions
+f <- list("rnorm", "runif", "rexp")
+
+# Parameter list for rnorm()
+rnorm_params <- list(mean = 10)
+
+# Add a min element with value 0 and max element with value 5
+runif_params <- list(min =0, max = 5)
+
+# Add a rate element with value 5
+rexp_params <- list(rate = 5)
+
+# Define params for each function
+params <- list(
+  rnorm_params,
+  runif_params,
+  rexp_params
+)
+
+# Call invoke_map() on f supplying params as the second argument
+invoke_map(f, params, n = 5)
+```
+
