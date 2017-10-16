@@ -582,7 +582,7 @@ Let's pull out the slopes from our models again, but this time using numeric sub
 # use map_dbl with the numeric shortcut to pull out the second element
 map_dbl(coefs, 1)
 ```
-purrr also includes a pipe operator: %>%. The pipe operator is another shortcut that saves typing, but also increases readability.  The example below pulls out the R2R2 from each model. Rewrite the last two lines to use a pipe instead.
+purrr also includes a pipe operator: %>%. The pipe operator is another shortcut that saves typing, but also increases readability.  The example below pulls out the R2 from each model. Rewrite the last two lines to use a pipe instead.
 
 ```{r}
 # Define models (don't change)
@@ -602,4 +602,102 @@ models %>%
 
 ```
 
-## Dealing with Failure
+## Advanced Inputs and Outputs
+
+When using purrr, problems like errors with a single item within the map function, for instance char instead of numeric data in a list of lists, can cause errors with all the map functions.  We don't know which element caused the error and we cant access any of the succesful runs.  Purrr comes with a function called safely, which will return both successful elements and errors. It will take a function and return a variaton of that function which will never give an error - it will return two results, those successful (result) and those not (errors).  This is one adverb for dealing with unusual output:
+
+* safely() captures the successful result or the error, always returns a list
+* possibly() always succeeds, you give it a default value to return when there is an error
+* quietly() captures printed output, messages, and warnings instead of capturing errors
+
+```{r}
+# Create safe_readLines() by passing readLines() to safely()
+safe_readLines <- safely(readLines)
+
+# Call safe_readLines() on "http://example.org"
+safe_readLines("http://example.org")
+
+# Call safe_readLines() on "http://asdfasdasdkfjlda"
+safe_readLines("http://asdfasdasdkfjlda")
+```
+
+Safely also works with map functions.
+
+```{r}
+# Define safe_readLines()
+safe_readLines <- safely(readLines)
+
+# Use the safe_readLines() function with map(): html
+html <- map(urls, safe_readLines)
+
+# Call str() on html
+str(html)
+
+# Extract the result from one of the successful elements
+html[[1]]
+
+# Extract the error from the element that was unsuccessful
+html[[3]]
+```
+
+We now have output that contains the HTML for each of the two URLs on which readLines() was successful and the error for the other. But the output isn't that easy to work with, since the results and errors are buried in the inner-most level of the list.
+
+purrr provides a function transpose() that reshapes a list so the inner-most level becomes the outer-most level. In otherwords, it turns a list-of-lists "inside-out". Consider the following list:
+
+> nested_list <- list(
+   x1 = list(a = 1, b = 2),
+   x2 = list(a = 3, b = 4)
+)
+
+If I need to extract the a element in x1, I could do nested_list[["x1"]][["a"]]. However, if I transpose the list first, the order of subsetting reverses. That is, to extract the same element I could also do transpose(nested_list)[["a"]][["x1"]].
+
+This is really handy for safe output, since we can grab all the results or all the errors really easily.
+
+```{r}
+# Define save_readLines() and html
+safe_readLines <- safely(readLines)
+html <- map(urls, safe_readLines)
+
+# Examine the structure of transpose(html)
+str(transpose(html))
+
+# Extract the results: res
+res <- transpose(html)[["result"]]
+
+# Extract the errors: errs
+errs <- transpose(html)[["error"]]
+```
+
+What you do with the errors and results is up to you. But, commonly you'll want to collect all the results for the elements that were successful and examine the inputs for all those that weren't.
+
+```{r}
+# Initialize some objects
+safe_readLines <- safely(readLines)
+html <- map(urls, safe_readLines)
+res <- transpose(html)[["result"]]
+errs <- transpose(html)[["error"]]
+
+# Create a logical vector is_ok
+is_ok <- map_lgl(errs, is_null)
+
+# Extract the successful results
+res[is_ok]
+
+# Extract the input from the unsuccessful results
+urls[!is_ok]
+```
+
+### Maps over multiple arguments
+
+If we want to add multiple arguments - for instance creating a normal distribution using rnorm() with two arguments, one for the number of rows (n) and one for the desired mean - we can use the map2 function which now takes the form
+
+> map2(.x, .y, .f ...) # iterate over two arguments
+
+But if we wanted to extend this, by adding saying the standard deviation (sd) rather than use map3 and so on for more arguments, purr has a pmap function that takes lists as inputs
+
+> pmap(.l, .f, ...) # iterate over many arguments
+
+Or if we wanted to do a similar exercise but use different functions, say to run distributions for expontial as well as rnorm, we use the invoke map() functions
+
+> invoke_map(.f, .x = list(NULL), ...) # iterate over functions and arguments
+
