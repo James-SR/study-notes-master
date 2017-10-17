@@ -377,6 +377,7 @@ col_median <- function(df) {
 col_median(df2)
 col_median(df3)
 ```
+
 And if we wanted means instead of medians we could write a similar function.
 
 ```{r}
@@ -391,6 +392,7 @@ col_mean <- function(df) {
 col_mean(df2)
 col_mean(df3)
 ```
+
 And if we wanted standard deviations
 
 ```{r}
@@ -582,6 +584,7 @@ Let's pull out the slopes from our models again, but this time using numeric sub
 # use map_dbl with the numeric shortcut to pull out the second element
 map_dbl(coefs, 1)
 ```
+
 purrr also includes a pipe operator: %>%. The pipe operator is another shortcut that saves typing, but also increases readability.  The example below pulls out the R2 from each model. Rewrite the last two lines to use a pipe instead.
 
 ```{r}
@@ -796,5 +799,102 @@ params <- list(
 
 # Call invoke_map() on f supplying params as the second argument
 invoke_map(f, params, n = 5)
+```
+
+### Side effect functions
+
+In R we have functions that are so called 'side effect' functions, for example saving files or producing plots.  They don't manipulate data per se.  In purrr we have a function, walk(), which is designed for use with these side effect functions rather than map().  You can also walk over 2 or more functions, like map 2 and pmap we saw earlier.  Walk can be used in pipe operations also.  
+
+First, let's check that our simulated samples are in fact what we think they are by plotting a histogram for each one.
+
+```{r}
+# Define list of functions
+f <- list(Normal = "rnorm", Uniform = "runif", Exp = "rexp")
+
+# Define params
+params <- list(
+  Normal = list(mean = 10),
+  Uniform = list(min = 0, max = 5),
+  Exp = list(rate = 5)
+)
+
+# Assign the simulated samples to sims
+sims <- invoke_map(f, params, n = 50)
+
+# Use walk() to make a histogram of each element in sims
+walk(sims, hist)
+```
+
+We need better breaks for the bins on the x-axis. That means we need to vary two arguments to hist(): x and breaks. Remember map2()? That allowed us to iterate over two arguments. Guess what? There is a walk2(), too! Let's use walk2() to improve those histograms with better breaks.
+
+```{r}
+# Replace "Sturges" with reasonable breaks for each sample
+breaks_list <- list(
+  Normal = seq(6, 16, 0.5),
+  Uniform = seq(0, 5, 0.25),
+  Exp = seq(0, 1.5, 0.1)
+)
+
+# Use walk2() to make histograms with the right breaks
+walk2(sims, breaks_list, hist)
+```
+
+An extension of these hard coded break values for the bins, would be to use a function to calculate them whenever our data changes. 
+
+```{r}
+# Variable rather than hard coded range finder
+
+  find_breaks <- function(x){
+    rng <- range(x, na.rm = TRUE)
+    seq(rng[1], rng[2], length.out = 30)
+  }
+
+# Call find_breaks() on sims[[1]]
+find_breaks(sims[[1]])
+```
+
+We can now use these breaks for our histograms.
+
+```{r}
+# Use map() to iterate find_breaks() over sims: nice_breaks
+nice_breaks <- map(sims, find_breaks)
+
+# Use nice_breaks as the second argument to walk2()
+walk2(sims, nice_breaks, hist)
+```
+
+Next we want to tidy the labels.  We can use the ... argument to any of the map() or walk() functions to pass in further arguments to the function .f. In this case, we might decide we don't want any labels on the x-axis, in which case we need to pass an empty string to the xlab argument of hist():
+
+> walk2(sims, nice_breaks, hist, xlab = "")
+
+For the titles, we don't want them to be the same for each plot. How can we iterate over the arguments x, breaks and main? There is a pwalk() function that works just like pmap().
+
+Note that in the following example, xlab = "" is kept outside of the list of arguments being iterated over since it's the same value for all three histograms.
+
+```{r}
+# Increase sample size to 1000
+sims <- invoke_map(f, params, n = 1000)
+
+# Compute nice_breaks (don't change this)
+nice_breaks <- map(sims, find_breaks)
+
+# Create a vector nice_titles
+nice_titles <- list(
+  "Normal(10, 1)", 
+  "Uniform(0, 5)", 
+  "Exp(5)"
+  )
+
+# Use pwalk() instead of walk2()
+pwalk(list(x = sims, breaks = nice_breaks, main = nice_titles), hist, xlab = "")
+```
+
+One of the nice things about the walk() functions is that they return the object you passed to them. This means they can easily be used in pipelines (a pipeline is just a short way of saying "a statement with lots of pipes").  WE can, for instance, calculate summary statistics as shown below.
+
+```{r}
+# Pipe this along to map(), using summary() as .f
+sims %>%
+  walk(hist) %>%
+  map(summary)
 ```
 
