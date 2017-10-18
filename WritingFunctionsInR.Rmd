@@ -898,3 +898,51 @@ sims %>%
   map(summary)
 ```
 
+## Robust Functions
+
+Robust functions either work or give error messages that can be understood.  R is both an interactive analytical environment (helpful) and programming environment (strict).  Interactive functions are designed to iterate over things quickly to help with analysis, the programming/robust functions on the other hand want to get things right.  Interactive functions try to guess at the type of things you want to achieve, which can cause problems later on.  There are 3 main types of problem functions:
+
+1. TYpe-unstable functions - they return different types of things.  For example, with one type of input they might return a vector, but with another type they return a dataframe or a matrix.  
+2. Non standard evaluation - 'an important part of R's magic' says Hadley.  It allows you to use succinct APIs like ggplot and dpylr, but it can introduce ambiguity when programming
+4.  Hidden arguments - R has global options that can affect the operation of some functions.  The most notorious of these are strings as factors.
+
+```{r}
+# Define troublesome x and y
+x <- c(NA, NA, NA)
+y <- c( 1, NA, NA, NA)
+
+both_na <- function(x, y) {
+  # Add stopifnot() to check length of x and y
+  stopifnot(length(x) == length(y))
+  sum(is.na(x) & is.na(y))
+}
+
+# Call both_na() on x and y
+both_na(x, y)
+```
+
+We might want a more informative error message.  To do so, we use the stop() rather than the stopifnot() function, which has more options including specifying the error message.
+
+```{r}
+# Define troublesome x and y
+x <- c(NA, NA, NA)
+y <- c( 1, NA, NA, NA)
+
+both_na <- function(x, y) {
+    if (length(x) != length(y)) {
+    stop("x and y must have the same length", call. = FALSE)
+  }  
+  sum(is.na(x) & is.na(y))
+}
+
+# Call both_na() 
+both_na(x, y)
+```
+
+### Unstable types
+
+An unstable type is a function whose output can't be known without being fully aware of what it's inputs are.  They can be hard to program with, since you need to write cases which handle all the different input types.  Most of the time this doesn't matter, but problems can arise when type inconsistent functions are burried within your own functions.  
+
+Where possible you should try to avoid writing type unstable functions.  The first step in this is to avoid using such functions inside your own functions, which comes from knowing what the common type-inconsistent functions are e.g. sapply.  You also need to know a set of type consistent functions that can be used, which include those from the purrr package.  
+
+### Non standard evaluation
