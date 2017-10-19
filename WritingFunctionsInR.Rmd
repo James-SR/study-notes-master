@@ -28,9 +28,10 @@ The output from a function is usually the last expression evaluated.  However, i
 Course slides:
 * [Part 1 - Refresher](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch1_pdf_slides_v2.pdf)
 * [Part 2 - When and how you should write a function](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch2_pdf_slides.pdf)
-* [Part 3 - Functional programming]()
-* [Part 4 - Advanced inputs and outputs]()
-* [Part 5 - Robust functions]
+* [Part 3 - Functional programming](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch3_pdf_slides.pdf)
+* [Part 4 - Advanced inputs and outputs](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch4_pdf_slides.pdf)
+* [Part 5 - Robust functions](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch5_pdf_slides.pdf)
+* [Hadley's Non-standard evaluation functions vignette](http://rpubs.com/hadley/157957)
 
 ## Function overview
 
@@ -945,4 +946,56 @@ An unstable type is a function whose output can't be known without being fully a
 
 Where possible you should try to avoid writing type unstable functions.  The first step in this is to avoid using such functions inside your own functions, which comes from knowing what the common type-inconsistent functions are e.g. sapply.  You also need to know a set of type consistent functions that can be used, which include those from the purrr package.  
 
-### Non standard evaluation
+### Non standard evaluation (NSE)
+
+These are functions that don't use the usual lookup rules.  One example is the subset function, which takes a dataset then a control function, such as disp > 400, to subset the data e.g. subset(mtcars, disp > 400).  Because disp only exists within the mtcars data frame, we can only evaluation disp > 400 inside the mtcars data, not in the global environment.  Non standard evaulation functions are great as they can save a lot of typing, but they can cause problems inside your own functions. 
+
+Another example of NSE is within ggplot, where we can call a data frame initially, but don't have to apply the $ sign notation for all the aesthetic mappings within the ggplot call, we only need to specify the data frame once.  Dplyr also has a number of NSE functions. BUT these functions can call objects from the global enironment also, for instance a grid search / control object or vector for ML can be called within a model (e.g. caret package).  These speed benefits can make programming with such functions difficult. 
+
+To get around NSE, you can avoid using them in your own functions, or try to protect against where they cause problems.  As within unstable types, the majority of the time (95%) such things may not cause problems and it is the edge cases we need to be aware of.
+
+More information is available in [Hadley's NSE vignette](http://rpubs.com/hadley/157957).
+
+For example, if we had the following NSE function (filter from dplyr) within our own function
+
+> big_x <- function(df, threshold) {
+  dplyr::filter(df, x > threshold)
+}
+
+There are two ways this could fail
+
+1. The x column doesn't exist in df - but may exist in the global environment, causing the function to find a value there
+2. There is a threshold column in df - causing dplyr to look inside the dataframe first and finding the incorrect value, rather our desired value as an argument to the custom/user defined function.
+
+We could we write our function previously outlined with stop controls to handle these two instances.
+
+```{r}
+
+big_x <- function(df, threshold) {
+  # Write a check for x not being in df
+  if (!"x" %in% names(df)) {
+    stop("df must contain variable called x", call. = FALSE)
+  } 
+  
+  # Write a check for threshold being in df
+  if ("threshold" %in% names(df)) {
+    stop("df must not contain variable called threshold", call. = FALSE)
+  }
+  
+  dplyr::filter(df, x > threshold)
+}
+```
+
+### Hidden arguments
+
+Pure functions only have outputs that depend on their inputs and also don't affect the outside world, except through their return value.  
+
+Hidden arguments are function inputs that may be different for different users or sessions.  This can commonly occur when argument defaults depend on global options.  You can view global options in R by typing options(). Some packages can change their options, they can vary dependent on the OS or other custom user defined setups.  Such options include the number of digits to be displayed, how warning and error messages are handled and what to do with missing values.  The help page provides more information ?options.  
+
+A classic example of a hidden dependence is the stringsAsFactors argument to the read.csv() function (and a few other data frame functions.)
+
+When you see the following code, you don't know exactly what the result will be:
+
+> pools <- read.csv("swimming_pools.csv")
+
+That's because if the argument stringsAsFactors isn't specified, it inherits its value from getOption("stringsAsFactors"), a global option that a user may change.
