@@ -126,3 +126,83 @@ ggplot(mtcars, aes(x = wt, y = mpg, col = factor(cyl))) +
   scale_color_manual("Cylinders", values = myColors)
 ```
 
+The next example shows 4 plots
+
+Plot 1: builds a jittered plot of vocabulary against education of the Vocab data frame.
+Add a stat_smooth() layer with method set to "lm". Make sure no CI ribbons are shown by setting se to FALSE.
+
+Plot 2: We'll just focus on the linear models from now on.
+Copy the previous command, remove the geom_jitter() layer.
+Add the col aesthetic to the ggplot() command. Set it to factor(year).
+
+Plot 3: The default colors are pretty unintuitive. Since this can be considered an ordinal scale, it would be nice to use a sequential color palette.
+Copy the previous command, add scale_color_brewer() to use a default ColorBrewer. This should result in an error, since the default palette, "Blues", only has 9 colors, but we have 16 years here.
+
+Plot 4: Overcome the error by using year as a numeric vector. You'll have to specify the invisible group aesthetic which will be factor(year). You are given a scale layer which will fix your coloring, but you'll need to make the following changes:
+Add group inside aes(), set it to factor(year).
+Inside stat_smooth(), set alpha equal to 0.6 and size equal to 2.
+
+When mapping onto color you can sometimes treat a continuous scale, like year, as an ordinal variable, but only if it is a regular series. The better alternative is to leave it as a continuous variable and use the group aesthetic as a factor to make sure your plot is drawn correctly.
+
+```{r}
+# load the data Vocab from the car package
+library(car)
+
+# load the RColorBrewer package for plot 4
+library(RColorBrewer)
+
+# Plot 1: Jittered scatter plot, add a linear model (lm) smooth:
+ggplot(Vocab, aes(x = education, y = vocabulary)) +
+  geom_jitter(alpha = 0.2) +
+  stat_smooth(method = "lm", se = FALSE)
+
+# Plot 2: Only lm, colored by year
+ggplot(Vocab, aes(x = education, y = vocabulary, col = factor(year))) +
+  stat_smooth(method = "lm", se = FALSE)
+
+# Plot 3: Set a color brewer palette
+ggplot(Vocab, aes(x = education, y = vocabulary, col = factor(year))) +
+  stat_smooth(method = "lm", se = FALSE) + 
+  scale_color_brewer()
+
+# Plot 4: Add the group, specify alpha and size
+ggplot(Vocab, aes(x = education, y = vocabulary, col = year, group = factor(year))) +
+  stat_smooth(method = "lm", se = F, alpha = 0.6, size = 2) +
+  scale_color_gradientn(colors = brewer.pal(9,"YlOrRd"))
+```
+
+The previous example used the Vocab dataset and applied linear models describing vocabulary by education for different years. Here we'll continue with that example by using stat_quantile() to apply a quantile regression (method rq).
+
+By default, the 1st, 2nd (i.e. median), and 3rd quartiles are modeled as a response to the predictor variable, in this case education. Specific quantiles can be specified with the quantiles argument.
+
+If you want to specify many quantile and color according to year, then things get too busy. The resulting plot will be a mess, because there are three quartiles drawn by default in the first plot. The second plot takes the code for the previous plot and sets the quantiles argument to 0.5 so that only the median is shown.
+
+```{r, messages = FALSE}
+# Use stat_quantile instead of stat_smooth:
+ggplot(Vocab, aes(x = education, y = vocabulary, col = year, group = factor(year))) +
+  stat_quantile(alpha = 0.6, size = 2) +
+  scale_color_gradientn(colors = brewer.pal(9,"YlOrRd"))
+
+# Set quantile to 0.5:
+ggplot(Vocab, aes(x = education, y = vocabulary, col = year, group = factor(year))) +
+  stat_quantile(quantiles = 0.5, alpha = 0.6, size = 2) +
+  scale_color_gradientn(colors = brewer.pal(9,"YlOrRd"))
+```
+
+Another useful stat function is stat_sum() which calculates the count for each group.  Typically we'd draw our models on top of the dots, but in this case we didn't so that we could just keep recycling the p object.
+
+```{r}
+# Plot with linear and loess model
+p <- ggplot(Vocab, aes(x = education, y = vocabulary)) +
+       stat_smooth(method = "loess", aes(col = "red"), se = F) +
+       stat_smooth(method = "lm", aes(col = "blue"), se = F) +
+       scale_color_discrete("Model", labels = c("blue" = "lm", "red" = "LOESS"))
+
+# Add stat_sum
+p + stat_sum()
+
+# Add stat_sum and set size range
+p + stat_sum() + scale_size(range = c(1, 10))
+```
+
+
