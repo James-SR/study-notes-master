@@ -31,6 +31,9 @@ Course slides:
 * [Part 3 - Functional programming](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch3_pdf_slides.pdf)
 * [Part 4 - Advanced inputs and outputs](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch4_pdf_slides.pdf)
 * [Part 5 - Robust functions](https://s3.amazonaws.com/assets.datacamp.com/production/course_1008/slides/ch5_pdf_slides.pdf)
+
+Other useful info:
+
 * [Hadley's Non-standard evaluation functions vignette](http://rpubs.com/hadley/157957)
 
 ## Function overview
