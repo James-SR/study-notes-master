@@ -205,4 +205,111 @@ p + stat_sum()
 p + stat_sum() + scale_size(range = c(1, 10))
 ```
 
+### Stats outside geoms
 
+We can use the fun.data = functio_name() which will feed the results in to our plot.  In the Hmisc package, we can calculate a 95% CI using the command smean.cl.normal() or within ggplot2 using mean_cl_normal(). We can use any statistical method inside ggplot2, as long as the output format is the same as the required format of the geom that is called.  So making sure the data is in the right format and that all the positions that we might use in our plots are defined is an important first step.  The following example also sets up some base variables and base graphics.
+
+```{r}
+# Display structure of mtcars
+str(mtcars)
+
+# Convert cyl and am to factors:
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$am <- as.factor(mtcars$am)
+
+# Define positions:
+posn.d <- position_dodge(width = 0.1)
+posn.jd <- position_jitterdodge(jitter.width = 0.1, dodge.width = 0.2)
+posn.j <- position_jitter(width = 0.2)
+
+# base layers:
+#wt.cyl.am <- ggplot(mtcars, aex(x = cyl, y = wt, col = am, fill = am, group = am)) # more explicit naming
+wt.cyl.am <- ggplot(mtcars, aes(cyl, wt, col = am, fill = am, group = am))
+```
+
+Plot 2: Add a stat_summary() layer to wt.cyl.am and calculate the mean and standard deviation as we did in the video: set fun.data to mean_sdl and specify fun.args to be list(mult = 1). Set the position argument to posn.d.
+
+Plot 3: Repeat the previous plot, but use the 95% confidence interval instead of the standard deviation. You can use mean_cl_normal instead of mean_sdl this time. There's no need to specify fun.args in this case. Again, set position to posn.d.
+
+The above plots were simple because they implicitly used a default geom, which is geom_pointrange(). For Plot 4, fill in the blanks to calculate the mean and standard deviation separately with two stat_summary() functions:
+For the mean, use geom = "point" and set fun.y = mean. This time you should use fun.y because the point geom uses the y aesthetic behind the scenes.
+Add error bars with another stat_summary() function. Set geom = "errorbar" to get the real "T" tips. Set fun.data = mean_sdl.
+
+```{r}
+library(Hmisc) # required for the stat_summary() functions
+
+# Plot 1: Jittered, dodged scatter plot with transparent points
+wt.cyl.am +
+  geom_point(position = posn.jd, alpha = 0.6)
+
+# Plot 2: Mean and SD - the easy way
+wt.cyl.am +
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), position = posn.d)
+
+
+# Plot 3: Mean and 95% CI - the easy way
+wt.cyl.am +
+  stat_summary(fun.data = mean_cl_normal, position = posn.d)
+
+
+# Plot 4: Mean and SD - with T-tipped error bars - fill in ___
+wt.cyl.am +
+  stat_summary(geom = "point", fun.y = mean,
+               position = posn.d) +
+  stat_summary(geom = "errorbar", fun.data = mean_sdl,
+               position = posn.d, fun.args = list(mult = 1), width = 0.1)
+```
+
+The only difference between ggplot2::mean_sdl() and Hmisc::smean.sdl() is the naming convention. In order to use the results of a function directly in ggplot2 we need to ensure that the names of the variables match the aesthetics needed for our respective geoms.
+
+Here we'll create two new functions. One function will measure the full range of the dataset and the other will measure the interquartile range.
+
+```{r}
+
+xx <- 1:100 # our data
+
+# Function to save range for use in ggplot
+gg_range <- function(x) {
+  # Change x below to return the instructed values
+  data.frame(ymin = min(x), # Min
+             ymax = max(x)) # Max
+}
+
+gg_range(xx)
+# Required output:
+#   ymin ymax
+# 1    1  100
+
+# Function to Custom function:
+med_IQR <- function(x) {
+  # Change x below to return the instructed values
+  data.frame(y = median(x), # Median
+             ymin = quantile(x)[2], # 1st quartile
+             ymax = quantile(x)[4])  # 3rd quartile
+}
+
+med_IQR(xx)
+# Required output:
+#        y  ymin  ymax
+# 25% 50.5 25.75 75.25
+```
+
+We have now created functions that will allow us to plot the five-number summary (the minimum, 1st quartile, median, 3rd quartile, and the maximum). Here, we'll implement that into a unique plot type.
+
+All the functions and objects from the previous exercise are available including the updated mtcars data frame, the position object posn.d, the base layers wt.cyl.am and the functions med_IQR() and gg_range().
+
+```{r}
+# Add three stat_summary calls to wt.cyl.am
+wt.cyl.am +
+  stat_summary(geom = "linerange", fun.data = med_IQR,
+               position = posn.d, size = 3) +
+  stat_summary(geom = "linerange", fun.data = gg_range,
+               position = posn.d, size = 3,
+               alpha = 0.4) +
+  stat_summary(geom = "point", fun.y = median,
+               position = posn.d, size = 3,
+               col = "black", shape = "X")
+```
+
+## Coordinates Layer
+ 
