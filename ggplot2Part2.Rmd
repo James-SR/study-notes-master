@@ -6,7 +6,7 @@ The focus of this course is onfour layers (statistics, coordinates, facets and t
 
 Course slides:
 * [Part 1 - Statistics](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch1_slides.pdf)
-* [Part 2 - Coordinates and Facets]()
+* [Part 2 - Coordinates and Facets](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch2_slides.pdf)
 * [Part 3 - Themes]()
 * [Part 4 - Best Practices]()
 * [Part 5 - Case Study]()
@@ -312,4 +312,64 @@ wt.cyl.am +
 ```
 
 ## Coordinates Layer
+
+The coordinates layer controls the dimensions of the plot using the coord_ such as the coord_cartesian() which controls the x and y elements.  You can use the scale_x_continous to effectivly show just a section of the plot if you so desire, but some data will be missed out as it itsn't on the plot.  Conversley the coord_cartesian will draw all the plot, but zoom in to just a section of it.  We can also alter the aspect ratio, which can make certain trends in data easier to see, however there is a risk of deceiving the viewer, perhaps by mistake, if we are not careful.
+
+
+```{r}
+# Basic ggplot() command
+p <- ggplot(mtcars, aes(x = wt, y = hp, col = am)) + geom_point() + geom_smooth()
+
+# Add scale_x_continuous
+p + scale_x_continuous(limits = c(3, 6), expand = c(0, 0))
+
+# The proper way to zoom in - shows the data appropriatley
+p + coord_cartesian(xlim = c(3, 6))
+```
  
+We can set the aspect ratio of a plot with coord_fixed() or coord_equal(). Both use aspect = 1 as a default. A 1:1 aspect ratio is most appropriate when two continuous variables are on the same scale, as with the iris dataset.
+
+All variables are measured in centimeters, so it only makes sense that one unit on the plot should be the same physical distance on each axis. This gives a more truthful depiction of the relationship between the two variables since the aspect ratio can change the angle of our smoothing line. This would give an erroneous impression of the data.
+
+Of course the underlying linear models don't change, but our perception can be influenced by the angle drawn.  As a rule of thumb you'll want to use a 1:1 aspect ratio when your axes show the same scales, but there are always exceptions.
+
+```{r}
+# Complete basic scatter plot function
+base.plot <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) +
+               geom_jitter() +
+               geom_smooth(method = "lm", se = F)
+
+# Plot base.plot: default aspect ratio
+base.plot
+
+# Fix aspect ratio (1:1) of base.plot
+base.plot + coord_equal()
+```
+
+The coord_polar() function converts a planar x-y cartesian plot to polar coordinates. This can be useful if you are producing pie charts.
+
+We can imagine two forms for pie charts - the typical filled circle, or a colored ring.
+
+As an example, consider a stacked bar chart. Imagine that we just take the y axis on the left and bend it until it loops back on itself, while expanding the right side as we go along. We'd end up with a pie chart - it's simply a bar chart transformed onto a polar coordinate system.
+
+Typical pie charts omit all of the non-data ink, which we'll learn about in the next chapter. Pie charts are not really better than stacked bar charts, but we'll come back to this point in the fourth chapter on best practices.
+
+This function is particularly useful if you are dealing with a cycle, like yearly data, that you would like to see represented as such.
+
+```{r}
+# Create stacked bar plot: thin.bar
+thin.bar <- ggplot(mtcars, aes(x = 1, fill = cyl)) +
+              geom_bar()
+
+# Convert thin.bar to pie chart
+thin.bar + coord_polar(theta = "y")
+
+# Create stacked bar plot: wide.bar
+wide.bar <- ggplot(mtcars, aes(x = 1, fill = cyl)) +
+              geom_bar(width = 1)
+
+
+# Convert wide.bar to pie chart
+wide.bar + coord_polar(theta = "y")
+```
+
