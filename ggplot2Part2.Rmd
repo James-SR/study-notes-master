@@ -490,6 +490,82 @@ z <- z +
   theme(plot.background = element_rect(fill = myPink, 
       color = "black", size = 3)) + uniform_panels
 
-z  
+# Extend z with theme() function and three arguments to change the appearance of lines
+z + theme(panel.grid = element_blank(),
+  axis.line = element_line(color = "black"),
+  axis.ticks = element_line(color = "black"))
+
+# Extend z with theme() function and four arguments to make the text better
+z + theme(
+  strip.text = element_text(size = 16, color = myRed),
+  axis.title.y = element_text(color = myRed, hjust = 0, face = "italic"),
+  axis.title.x = element_text(color = myRed, hjust = 0, face = "italic"),
+  axis.text = element_text(color = "black")
+)
+```
+
+We can also use similar arguments to change the location and other settings of the legend
+
+```{r, eval = FALSE}
+
+# Move legend by position, now top right of third facet
+z + theme(legend.position = c(0.85, 0.85))
+
+# Change direction of the legend entries
+z + theme(legend.direction = "horizontal")
+
+# Change location by name
+z + theme(legend.position = "bottom")
+
+# Remove legend entirely
+z + theme(legend.position = "none")
+```
+
+The different rectangles of your plot have spacing between them. There's spacing between the facets, between the axis labels and the plot rectangle, between the plot rectangle and the entire panel background, etc.
+
+Suppose you want to have more spacing between the different facets. You can control this by specifying panel.spacing.x inside a theme() function you add to z. For the argument value, you should pass a unit object. To achieve this, load the grid package with library().
+
+```{r, eval = FALSE}
+
+# Increase spacing between facets
+library(grid)
+z + theme(panel.spacing.x = unit(2, "cm"))
+
+# Add code to remove any excess plot margin space
+z + theme(panel.spacing.x = unit(2, "cm"),
+  plot.margin = unit(c(0, 0, 0, 0), "cm"))
+```
+
+### Recycling themes
+
+When using the same themes repeatedly, for instance in a publication or report, we wouldn't want to repeate the theme instructions every time.  To do this, we save our theme element as an R object.  If a new chart type or chart element then appears in a later plot, we can reuse the previous theme but just extend with a little more code to account for this new chart or object type, without having to re-type all the theme code.  
+
+If we want all our plots to use the same theme, we can use the theme_set(theme_name()) command and all plots will do this.  To return to the default, you can speficy theme_grey(). 
+
+There are many themes available by default in ggplot2: theme_bw(), theme_classic(), theme_gray(), etc. In the previous exercise, you saw that you can apply these themes to all following plots, with theme_set():
+
+> theme_set(theme_bw())
+
+But you can also apply them on a particular plot, with:
+
+> ... + theme_bw()
+
+Next, it's perfectly possible and super-easy to extend these themes with your own modifications. In this exercise, you will experiment with this and use some preset templates available from the ggthemes package.
+
+```{r, eval = FALSE}
+# Load ggthemes package
+library(ggthemes)
+
+# Apply theme_tufte
+z2 + theme_tufte()
+
+
+# Apply theme_tufte, modified:
+ z2 + theme_tufte() + 
+  theme(
+    legend.position = c(0.9, 0.9),
+    legend.title = element_text(face = "italic", size = 12),
+    axis.title = element_text(face = "bold", size = 14)
+  )
 ```
 
