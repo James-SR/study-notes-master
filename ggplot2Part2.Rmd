@@ -569,3 +569,55 @@ z2 + theme_tufte()
   )
 ```
 
+## Best Practice
+
+Knowing how to create the plots is important, but choosing the right chart type is equally important.  
+
+### Bar Plots
+
+Typically two types
+
+* Absolute values e.g. counts
+* Distribution plots
+
+Problems in interpretation can arise, for instance if a bar plot shows sleep patters, there will be a distribution around a mean, but no values of zero hours, but the plot axies is likely to go to zero.  It is equally problematic to see extreme value, such as animals with many hours of sleep, since we typically show a mean and perhaps a standard deviation line.  
+
+A better option would be to use a scatter plot of sleep times, with jitter and some transparency (alpha) to reduce any over plotting.  
+
+The example below shows a bar plot with error bars, sometimes referred to as a dynamite plot.
+
+```{r}
+# Base layers
+m <- ggplot(mtcars, aes(x = cyl, y = wt))
+
+# Draw dynamite plot
+m +
+  stat_summary(fun.y = mean, geom = "bar", fill = "skyblue") +
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), geom = "errorbar", width = 0.1)
+```
+
+```{r}
+# Base layers, update m so that we split the bars according to transmission type, am
+m <- ggplot(mtcars, aes(x = cyl,y = wt, col = am, fill = am))
+
+# Plot 1: Draw dynamite plot - error bars overlap
+m +
+  stat_summary(fun.y = mean, geom = "bar") +
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), geom = "errorbar", width = 0.1)
+
+# Plot 2: Set position dodge in each stat function, dodge them, which does not work because the default dodging is different for the different stat_summary() functions
+m +
+  stat_summary(fun.y = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), 
+               geom = "errorbar", width = 0.1, position = "dodge")
+
+# Set your dodge posn manually
+posn.d <- position_dodge(0.9)
+
+# Plot 3:  Redraw dynamite plot
+m +
+  stat_summary(fun.y = mean, geom = "bar", position = posn.d) +
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), geom = "errorbar", width = 0.1, position = posn.d)
+```
+
+### Pie Charts
