@@ -621,3 +621,48 @@ m +
 ```
 
 ### Pie Charts
+
+Pie charts are not usually your first choice for plots.  Angle, area and length elements are hard to compare, particularly if you are comparing more than one pie chart.  Pie charts work based when comparing differences between of around 3 groups.  A better alternative is to use bar charts - usually a horizontal bar where two bars can be plotted next to each other and compared.  
+
+In this example we're going to consider a typical use of pie charts - a categorical variable as the proportion of another categorical variable. For example, the proportion of each transmission type am, in each cylinder, cyl class.  We use dummy aesthetic for the x. Changing the aes() function such that factor(1) maps onto x.
+
+```{r}
+# Convert bar chart to pie chart
+ggplot(mtcars, aes(x = factor(1), fill = am)) +
+  geom_bar(position = "fill", width = 1) +
+  facet_grid(. ~ cyl) + 
+  coord_polar(theta = "y")
+```
+
+In the previous example, we looked at the proportions of one categorical variable (am) as a proportion of another (cyl). In this example, we're interested in two, or possibly many, categorical variables independent of each other. 
+
+The trick is to use a parallel coordinates plot.  Each variable is plotted on its own axis and they are plotted as parallel axes. The individual observations are connected with lines, which can be colored according to another variable. This is a surprisingly useful visualization since we can combine many variables, even if they are on entirely different scales.
+
+A word of caution though: typically it is very taboo to draw lines in this way. It's the reason why we don't draw lines across levels of a nominal variable - the order, and thus the slope of the line, is meaningless. Parallel plots are a (very useful) exception to the rule!
+
+Parallel plots not only allow us to see many different variables at the same time, but because we can apply specific statistics to each axis or the order of the axes, we can derive even more information from these plots.
+
+```{r, message=FALSE}
+# Parallel coordinates plot using GGally
+library(GGally)
+
+# All columns except am
+group_by_am <- which(names(mtcars) == 'am')
+my_names_am <- (1:11)[-group_by_am]
+
+# Basic parallel plot - each variable plotted as a z-score transformation
+ggparcoord(mtcars, my_names_am, groupColumn = group_by_am, alpha = 0.8)
+```
+
+The parallel coordinate plot from the last exercise is an excellent example of an exploratory plot. It presents a massive amount of information and allows the specialist to explore many relationships all at once. Another great example is a plot matrix (a SPLOM, from scatter plot matrix).
+
+GGally::ggpairs(mtcars2) will produce the plot of a selection of the mtcars dataset, mtcars2. Depending on the nature of the dataset a specific plot type will be produced and if both variables are continuous the correlation (rho) will also be calculated.
+
+The relationship between the variables drat and mpg is shown in two areas. What is the correlation between these two variables?
+
+```{r}
+mtcars2 <- mtcars[, c(1, 3, 5, 6, 7)]
+ggpairs(mtcars2)
+```
+
+The answer is 0.681, this is in the first row, in the first column you can find the scatter plot.
