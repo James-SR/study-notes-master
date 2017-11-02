@@ -666,3 +666,52 @@ ggpairs(mtcars2)
 ```
 
 The answer is 0.681, this is in the first row, in the first column you can find the scatter plot.
+
+### Heat Maps
+
+Heat Maps can be difficult to read as the interpretation can change, dependent on the colours around each element.  Plotting continous data on comon scales is always the better option.  
+
+You may encounter a case in which you really do want to use one. Luckily, they're fairly straightforward to produce in ggplot2.
+
+We begin by specifying two categorical variables for the x and y aesthetics. At the intersection of each category we'll draw a box, except here we call it a tile, using the geom_tile() layer. Then we will fill each tile with a continuous variable.
+
+We'll produce the heat map we saw in the video with the built-in barley dataset. The barley dataset is in the lattice package and has already been loaded for you. Begin by exploring the structure of the data in the console using str().
+
+```{r}
+library(RColorBrewer)
+library(lattice)
+data(barley)
+
+# Create color palette
+myColors <- brewer.pal(9, "Reds")
+
+# Build the heat map from scratch
+ggplot(barley, aes(x = year, y = variety, fill = yield)) +
+  geom_tile() + 
+  facet_wrap( ~ site, ncol = 1) +
+  scale_fill_gradientn(colors = myColors)
+```
+
+There are several alternatives to heat maps. The best choice really depends on the data and the story you want to tell with this data. If there is a time component, the most obvious choice is a line plot like what we see in the viewer.
+
+```{r}
+# Line plots
+ggplot(barley, aes(x = year, y = variety, col = variety, group = variety)) + 
+  geom_line() + 
+  facet_wrap( ~ site, nrow = 1)
+```
+
+You can use dodged error bars or you can use overlapping transparent ribbons (shown in the viewer). In this exercise we'll try to recreate the second option, the transparent ribbons.
+
+```{r}
+ggplot(barley, aes(x = year, y = yield, colour = site, group = site, fill = site)) + 
+  stat_summary(fun.y = mean, geom = "line") + 
+  stat_summary(
+    fun.data = mean_sdl, 
+    fun.args = list(mult = 1), 
+    geom = "ribbon", 
+    col = NA, 
+    alpha = 0.1
+    )
+```
+
