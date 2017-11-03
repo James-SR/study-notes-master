@@ -758,3 +758,106 @@ ggplot(adult, aes(x = BMI_P)) + geom_histogram()
 ggplot(adult, aes(x = SRAGE_P, fill = factor(RBMI))) + geom_histogram(binwidth = 1) 
 ```
 
+Next we want to tidy our dateset, we'll remove some extreme values then provide some better labels to help with plotting.
+
+```{r}
+# Remove individual aboves 84, as it seems >85 is grouped together
+adult <- adult[adult$SRAGE_P <= 84, ]
+
+# Remove individuals with a BMI below 16 and above or equal to 52
+adult <- adult[adult$BMI_P >= 16 & adult$BMI_P < 52, ]
+
+# Relabel the race variable to make plotting easier:
+adult$RACEHPR2 <- factor(adult$RACEHPR2, labels = c("Latino", "Asian", "African American", "White"))
+
+# Relabel the BMI categories variable to make plotting easier:
+adult$RBMI <- factor(adult$RBMI, labels = c("Under-weight", "Normal-weight", "Over-weight", "Obese"))
+```
+
+When we introduced histograms we focused on univariate data, which is exactly what we've been doing here. However, when we want to explore distributions further there is much more we can do. For example, there are density plots, which you'll explore in the next course. For now, we'll look deeper at frequency histograms and begin developing our mosaic plots.
+
+```{r}
+# The color scale used in the plot
+BMI_fill <- scale_fill_brewer("BMI Category", palette = "Reds")
+
+# Theme to fix category display in faceted plot
+fix_strips <- theme(strip.text.y = element_text(angle = 0, hjust = 0, vjust = 0.1, size = 14),
+                    strip.background = element_blank(),
+                    legend.position = "none")
+
+# Histogram, add BMI_fill and customizations
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(binwidth = 1) +
+  fix_strips +
+  BMI_fill + 
+  facet_grid(RBMI ~ .) +
+  theme_classic()
+```
+
+In the previous exercise we looked at different ways of showing the absolute count of multiple histograms. This is fine, but density would be more useful measure if we wanted to see how the frequency of one variable changes accross another. However, there are some difficulties here, so let's take a closer look at different plots.
+
+```{r}
+# Plot 1 - Count histogram
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(binwidth = 1) +
+  BMI_fill
+
+# Plot 2 - Density histogram - odd because we get the density within each BMI category, not within each age group
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(aes(y = ..density..),binwidth = 1) +
+  BMI_fill
+
+# Plot 3 - Faceted count histogram - if we are interested in the frequency distribution within each BMI category
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(binwidth = 1) +
+  BMI_fill + 
+  facet_grid(RBMI ~.)
+
+# Plot 4 - Faceted density histogram - similat to 3 but density rather than count
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(aes(y = ..density..),binwidth = 1) +
+  BMI_fill + 
+  facet_grid(RBMI ~.)
+
+# Plot 5 - Density histogram with position = "fill" - not an accurate representation, as density calculates the proportion across category, and not across bin
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(aes(y = ..density..),binwidth = 1, position = "fill") +
+  BMI_fill
+
+# Plot 6 - The accurate histogram
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(aes(y = ..count../sum(..count..)),binwidth = 1, position = "fill") +
+  BMI_fill
+```
+
+In the previous exercise we looked at how to produce a frequency histogram when we have many sub-categories. The problem here is that this can't be facetted because the calculations occur on the fly inside ggplot2.
+
+To overcome this we're going to calculate the proportions outside ggplot2. This is the beginning of our flexible script for a mosaic plot.
+
+```{r}
+# An attempt to facet the accurate frequency histogram from before (failed)
+ggplot(adult, aes (x = SRAGE_P, fill= factor(RBMI))) +
+  geom_histogram(aes(y = ..count../sum(..count..)), binwidth = 1, position = "fill") +
+  BMI_fill +
+  facet_grid(RBMI ~ .)
+
+# Create DF with table()
+DF <- table(adult$RBMI, adult$SRAGE_P)
+
+# Use apply on DF to get frequency of each group - the second argument is 2 because we want to do calculations on each column
+DF_freq <- apply(DF, 2, function(x) x/sum(x))
+
+# Load reshape2 and use melt on DF to create DF_melted
+library(reshape2)
+DF_melted <- melt(DF_freq)
+
+# Change names of DF_melted
+names(DF_melted) <- c("FILL", "X", "value")
+
+# Add code to make this a faceted plot - note we are now using geom_bar
+ggplot(DF_melted, aes(x = X, y = value, fill = FILL)) +
+  geom_bar(stat = "identity", position = "stack") +
+  BMI_fill +
+  facet_grid(FILL ~ .)
+```
+
