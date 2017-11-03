@@ -715,3 +715,46 @@ ggplot(barley, aes(x = year, y = yield, colour = site, group = site, fill = site
     )
 ```
 
+## Case Study - Descriptive statistics
+
+Data from from the California Health Interview Survey (CHIS).  The original dataset from 2009 has over 47,000 respondents across 536 variables, but we will use a slightly filtered version with around 44,000 responses over 10 variables.  The data is filtered to show just the 4 largest ethnicity groups giving the over 44,000 responses.  
+
+In this chapter we're going to continuously build on our plotting functions and understanding to produce a mosaic plot (aka Merimeko plot). This is a visual representation of a contingency table, comparing two categorical variables. Essentially, our question is which groups are over or under represented in our dataset. To visualize this we'll color groups according to their pearson residuals from a chi-squared test. At the end of it all we'll wrap up our script into a flexible function so that we can look at other variables.
+
+We'll familiarize ourselves with a small number of variables from the 2009 CHIS adult-response dataset (as opposed to children). We have selected the following variables to explore:
+
+* RBMI: BMI Category description
+* BMI_P: BMI value
+* RACEHPR2: race
+* SRSEX: sex
+* SRAGE_P: age
+* MARIT2: Marital status
+* AB1: General Health Condition
+* ASTCUR: Current Asthma Status
+* AB51: Type I or Type II Diabetes
+* POVLL: Poverty level
+
+We'll filter our dataset to plot a more reliable subset (we'll still retain over 95% of the data).
+
+Before we get into mosaic plots it's worthwhile exploring the dataset using simple distribution plots - i.e. histograms.
+
+```{r}
+# load the data
+load("D:/CloudStation/Documents/2017/RData/CHIS2009_reduced_2.Rdata")
+
+# Explore the dataset with summary and str
+str(adult)
+summary(adult)
+
+# Age histogram
+ggplot(adult, aes(x = SRAGE_P)) + geom_histogram() 
+
+
+# BMI histogram
+ggplot(adult, aes(x = BMI_P)) + geom_histogram() 
+
+
+# Age colored by BMI, default binwidth
+ggplot(adult, aes(x = SRAGE_P, fill = factor(RBMI))) + geom_histogram(binwidth = 1) 
+```
+
