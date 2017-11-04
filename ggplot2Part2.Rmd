@@ -861,3 +861,198 @@ ggplot(DF_melted, aes(x = X, y = value, fill = FILL)) +
   facet_grid(FILL ~ .)
 ```
 
+### Mosaic Plots
+
+Mosaic plots are similar to the last plot we created, however they show the proportion that the item makes up of the whole dataset, not just a particular year.  In effect, we have a large contigency table derived from two categorical variables - BMI category and age (we treat this as an ordinal variable for the mosaic plot).  We want to know if the proportions of one variable, such as BMI, within groups of another variable such as age, stray from the null model of equal proportions. This is in effect a visual representation of a chi-squared plot, as developed by Michael Friendly.  We can now think about colouring the bars for each group based on it's residual value. 
+
+Mosaic plots are a bit more involved, because the aim is not to draw bars, but rather rectangles, for which we can control the widths. Whilst bars are simply rectangles, but we don't have easy access to the xmin and xmax aesthetics, but in geom_rect() we do. Likewise, we also have access to ymin and ymax. So we're going to draw a box for every one of our 268 distinct groups of BMI category and age.
+
+In this first section we need to create our data frame, based on our contigency table, but with some more calculations. 
+
+```{r}
+# The initial contingency table
+DF <- as.data.frame.matrix(table(adult$SRAGE_P, adult$RBMI))
+
+# Add the columns groupsSum, xmax and xmin. Remove groupSum again.
+DF$groupSum <- rowSums(DF)
+DF$xmax <- cumsum(DF$groupSum)
+DF$xmin <- DF$xmax - DF$groupSum 
+# The groupSum column needs to be removed
+DF$groupSum <- NULL
+
+# Copy row names to variable X as the names of the x axis groups are stored in the row name
+DF$X <- row.names(DF)
+
+# Melt the dataset
+library(reshape2)
+DF_melted <- melt(DF, id.vars = c("X", "xmin", "xmax"), variable.name = "FILL")
+
+# dplyr call to calculate ymin and ymax - first groups by X and then calculates cumulative proportions
+library(dplyr)
+DF_melted <- DF_melted %>%
+  group_by(X) %>%
+  mutate(ymax = cumsum(value/sum(value)),
+         ymin = ymax - value/sum(value))
+
+# Plot rectangles - don't change.
+library(ggthemes)
+ggplot(DF_melted, aes(ymin = ymin,
+                 ymax = ymax,
+                 xmin = xmin,
+                 xmax = xmax,
+                 fill = FILL)) +
+  geom_rect(colour = "white") +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  BMI_fill +
+  theme_tufte()
+```
+
+Previously we generated a plot where each individual bar was plotted separately using rectangles . This means we have access to each piece and we can apply different fill parameters.
+
+So let's make some new parameters. To get the Pearson residuals, we'll use the chisq.test().
+
+```{r}
+# Perform chi.sq test (RBMI and SRAGE_P)
+results <- chisq.test(table(adult$RBMI, adult$SRAGE_P))
+
+# Melt results$residuals and store as resid
+resid <- melt(results$residuals)
+
+# Change names of resid - so that we have a consistent naming convention
+names(resid) <- c("FILL", "X", "residual")
+
+# merge the two datasets:
+DF_all <- merge(DF_melted, resid)
+
+# Update plot command
+library(ggthemes)
+ggplot(DF_all, aes(ymin = ymin,
+                   ymax = ymax,
+                   xmin = xmin,
+                   xmax = xmax,
+                   fill = residual)) +
+  geom_rect() +
+  scale_fill_gradient2() +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme_tufte()
+```
+
+Now that we are not coloring according to BMI category, we have to add the group labels manually. Also, we neglected to label the x-axis properly.
+
+Here we'll use the label aesthetic inside geom_text(). The actual labels will be the FILL and X columns in the DF data frame. Since we have axes on the left and bottom of our plot, we'll add information to the top and right inner edges of the plot. We could have also added margin text, but that is a more advanced topic. This will be a suitable solution for the moment.
+
+To position our labels correctly, we need to calculate the midpoint between each xmax and xmin value. To get this, calculate the half difference between each pair of xmax and xmin then add this value to xmin.
+
+For the y label positions, we only want to work with the values at the maximum xmax, i.e. at the very end. 
+
+Now that xtext and ytext are available, we can add the labels to our plot. In the two geom_text() functions, separate aesthetics are defined that control the x and y positioning of the labels.
+
+For the age groups, set the x position with xtext. The y position is fixed since our y axis is always going to end at 1.  For the labeling of the y axis, the second geom_text() has three aesthetics since the position on the right will depend on the size of our dataset in the future. 
+
+Some additional attributes have been set inside geom_text(), outside the aes() function. This is just some fine tweaking to get the positioning and angle correct. It's not perfect, but since this is an exploratory plot, it does a pretty good job.
+
+```{r}
+# Position for labels on x axis
+DF_all$xtext <- DF_all$xmin + (DF_all$xmax - DF_all$xmin)/2
+
+# Position for labels on y axis (don't change)
+index <- DF_all$xmax == max(DF_all$xmax)
+DF_all$ytext <- DF_all$ymin[index] + (DF_all$ymax[index] - DF_all$ymin[index])/2
+
+# Plot
+ggplot(DF_all, aes(ymin = ymin, ymax = ymax, xmin = xmin,
+                   xmax = xmax, fill = residual)) +
+  geom_rect(col = "white") +
+  # geom_text for ages (i.e. the x axis)
+  geom_text(aes(x = xtext,
+                label = X),
+            y = 1,
+            size = 3,
+            angle = 90,
+            hjust = 1,
+            show.legend = FALSE) +
+  # geom_text for BMI (i.e. the fill axis)
+  geom_text(aes(x = max(xmax),
+                y = ytext,
+                label = FILL),
+            size = 3,
+            hjust = 1,
+            show.legend  = FALSE) +
+  scale_fill_gradient2() +
+  theme_tufte() +
+  theme(legend.position = "bottom")
+```
+
+We can now wrap all the steps into a single function that we can use to examine any two variables of interest in our data frame (or in any other data frame for that matter). 
+
+Notice that the function takes multiple arguments, such as the data frame of interest and the variables that you want to create the mosaic plot for. None of the arguments have default values, so you'll have to specify all three if you want the mosaicGG() function to work.
+
+```{r}
+# Load all packages
+library(ggplot2)
+library(reshape2)
+library(dplyr)
+library(ggthemes)
+
+# Script generalized into a function
+mosaicGG <- function(data, X, FILL) {
+
+  # Proportions in raw data
+  DF <- as.data.frame.matrix(table(data[[X]], data[[FILL]]))
+  DF$groupSum <- rowSums(DF)
+  DF$xmax <- cumsum(DF$groupSum)
+  DF$xmin <- DF$xmax - DF$groupSum
+  DF$X <- row.names(DF)
+  DF$groupSum <- NULL
+  DF_melted <- melt(DF, id = c("X", "xmin", "xmax"), variable.name = "FILL")
+  library(dplyr)
+  DF_melted <- DF_melted %>%
+    group_by(X) %>%
+    mutate(ymax = cumsum(value/sum(value)),
+           ymin = ymax - value/sum(value))
+
+  # Chi-sq test
+  results <- chisq.test(table(data[[FILL]], data[[X]])) # fill and then x
+  resid <- melt(results$residuals)
+  names(resid) <- c("FILL", "X", "residual")
+
+  # Merge data
+  DF_all <- merge(DF_melted, resid)
+
+  # Positions for labels
+  DF_all$xtext <- DF_all$xmin + (DF_all$xmax - DF_all$xmin)/2
+  index <- DF_all$xmax == max(DF_all$xmax)
+  DF_all$ytext <- DF_all$ymin[index] + (DF_all$ymax[index] - DF_all$ymin[index])/2
+
+  # plot:
+  g <- ggplot(DF_all, aes(ymin = ymin,  ymax = ymax, xmin = xmin,
+                          xmax = xmax, fill = residual)) +
+  geom_rect(col = "white") +
+  geom_text(aes(x = xtext, label = X),
+            y = 1, size = 3, angle = 90, hjust = 1, show.legend = FALSE) +
+  geom_text(aes(x = max(xmax),  y = ytext, label = FILL),
+            size = 3, hjust = 1, show.legend = FALSE) +
+  scale_fill_gradient2("Residuals") +
+  scale_x_continuous("Individuals", expand = c(0,0)) +
+  scale_y_continuous("Proportion", expand = c(0,0)) +
+  theme_tufte() +
+  theme(legend.position = "bottom")
+  print(g)
+}
+
+# BMI described by age
+mosaicGG(adult, "SRAGE_P","RBMI")
+
+# Poverty described by age
+mosaicGG(adult, "SRAGE_P","POVLL")
+
+# mtcars: am described by cyl
+mosaicGG(mtcars, "cyl", "am") 
+
+# Vocab: vocabulary described by education
+library(car)
+mosaicGG(Vocab, "education", "vocabulary")
+```
+
