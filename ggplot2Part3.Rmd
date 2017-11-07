@@ -1,0 +1,14 @@
+# Advanced ggplot2
+***
+Notes taken during/inspired by the Datacamp course 'Data Visualization with ggplot2 (Part 3)' by Rick Scavetta.  This course builds on the first course and second courses, which looked at how to build plots, aesthetics, statistics and practical matters such as themes.
+
+The focus of this course is on more specific plot types, including looking at handling large data plots.  We also look at maps and video frames aka animations.  The fourth chapter looks at the internals of GGPlot2 including the grid extra package.  Finally we will look at a case study, which includes looking at how we can use the extensions function to build our own plots from scratch.  
+
+Course slides:
+* [Part 1 - Statistical Plots](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch1.pdf)
+* [Part 2 - Plots for Specific Data Part 1](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch2.pdf)
+* [Part 3 - Plots for Specific Data Part 2](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch3.pdf)
+* [Part 4 - GGPlot2 Internals](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch4.pdf)
+* [Part 5 - Case Study](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch5.pdf)
+
+## 

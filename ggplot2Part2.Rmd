@@ -7,12 +7,9 @@ The focus of this course is onfour layers (statistics, coordinates, facets and t
 Course slides:
 * [Part 1 - Statistics](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch1_slides.pdf)
 * [Part 2 - Coordinates and Facets](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch2_slides.pdf)
-* [Part 3 - Themes]()
-* [Part 4 - Best Practices]()
-* [Part 5 - Case Study]()
-
-Other useful info:
-* [Name](Link)
+* [Part 3 - Themes](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch3_slides.pdf)
+* [Part 4 - Best Practices](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch4_slides.pdf)
+* [Part 5 - Case Study](https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch5_slides.pdf)
 
 ## Statistics
 
