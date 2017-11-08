@@ -11,4 +11,68 @@ Course slides:
 * [Part 4 - GGPlot2 Internals](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch4.pdf)
 * [Part 5 - Case Study](https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch5.pdf)
 
-## 
+## Refresher
+
+As a refresher to statistical plots, let's build a scatter plot with an additional statistic layer.
+
+A dataset called movies_small is coded in your workspace. It is a random sample of 1000 observations from the larger movies dataset, that's inside the ggplot2movies package. The dataset contains information on movies from IMDB. The variable votes is the number of IMDB users who have rated a movie and the rating (converted into a categorical variable) is the average rating for the movie.
+
+```{r}
+library(ggplot2)
+#load the data
+movies_small <- readRDS("D:/CloudStation/Documents/2017/RData/ch1_movies_small.RDS")
+
+# Create movies_small
+#library(ggplot2movies)
+#set.seed(123)
+#movies_small <- movies[sample(nrow(movies), 1000), ]
+#movies_small$rating <- factor(round(movies_small$rating))
+
+# Explore movies_small with str()
+str(movies_small)
+
+# Build a scatter plot with mean and 95% CI
+ggplot(movies_small, aes(x = rating, y = votes)) +
+  geom_point() +
+  stat_summary(fun.data = "mean_cl_normal",
+               geom = "crossbar",
+               width = 0.2,
+               col = "red") +
+  scale_y_log10()
+
+```
+
+Next we are going to look at the diamons dataset.  Recall that there are a variety of scale_ functions. Here, data are transformed or filtered first, after which the plot and associated statistics are computed. For example, scale_y_continuous(limits = c(100, 1000) will remove values outside that range.
+
+Contrast this to coord_cartesian(), which computes the statistics before plotting. That means that the plot and summary statistics are performed on the raw data. That's why we say that coord_cartesian(c(100, 1000)) "zooms in" a plot. This was discussed in the chapter on coordinates in course 2.
+
+Here we're going to expand on this and introduce scale_x_log10() and scale_y_log10() which perform log10 transformations, and coord_equal(), which sets an aspect ratio of 1 (coord_fixed() is also an option).
+
+```{r}
+str(diamonds)
+
+# Produce the plot - To get nice formatting we're using the expression() function for the labels
+ggplot(diamonds, aes(x = carat, y = price, col = color)) +
+  geom_point(alpha = 0.5, size = 0.5, shape = 16) +
+  scale_x_log10(expression(log[10](Carat)), limits = c(0.1,10)) +
+  scale_y_log10(expression(log[10](Price)), limits = c(100,100000)) +
+  scale_color_brewer(palette = "YlOrRd") +
+  coord_equal() + # sets the aspect ratio to 1
+  theme_classic()
+  
+
+```
+
+Or we can present the data as a smooth/linear model
+
+```{r}
+# Add smooth layer and facet the plot
+ggplot(diamonds, aes(x = carat, y = price, col = color)) +
+  stat_smooth(method = "lm") +
+  scale_x_log10(expression(log[10](Carat)), limits = c(0.1,10)) +
+  scale_y_log10(expression(log[10](Price)), limits = c(100,100000)) +
+  scale_color_brewer(palette = "YlOrRd") +
+  coord_equal() +
+  theme_classic()
+```
+
