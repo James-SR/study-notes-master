@@ -220,3 +220,146 @@ p + geom_density(kernel = "e")
 ```
 
 Notice how the curve contained more features and their individual heights were increased as the bandwidth decreased.
+
+## Multiple groups or variables
+
+Groups = levels of a factor variable.  A drawback of showing a box plot per group, is that you don't have any indication of the sample size, n, in each group, that went into making the plot. One way of dealing with this is to use a variable width for the box, which reflects differences in n.
+
+```{r}
+# Diamond box plot sized according to the number of observations
+ggplot(diamonds, aes(x = cut, y = price, col = color)) +
+  geom_boxplot(varwidth = TRUE) +
+  facet_grid(. ~ color)
+  
+```
+
+This helps us see the differences in group size, but unfortunately there is no legend, so it's not a complete solution.
+
+The next section of code combines multiple density plots. Here, you'll combine just two distributions, a normal and a bimodal.
+
+The first thing to remember is that you can consider values as two separate variables, like in the test_data data frame, or as a single continuous variable with their ID as a separate categorical variable, like in the test_data2 data frame. test_data2 is more convenient for combining and comparing multiple distributions.
+
+A small number of overlapping density plots are a fantastic way of comparing distinct distributions, for example, when descriptive statistics only (mean and sd) don't represent the data well enough.
+
+```{r}
+# Load the data
+test_data  <- ch1_test_data
+test_data2 <- ch1_test_data2
+
+# check the structure
+str(test_data)
+str(test_data2)
+
+# Plot with test_data
+ggplot(test_data, aes(x = norm)) +
+  geom_rug() +
+  geom_density()
+
+# Plot two distributions with test_data2
+ggplot(test_data2, aes(x = value, fill = dist, col = dist)) +
+  geom_rug(alpha = 0.6) +
+  geom_density(alpha = 0.6)
+```
+When you looked at multiple box plots, you compared the total sleep time of various mammals, sorted according to their eating habits. One thing you noted is that for insectivores, box plots didn't really make sense, since there were only 5 observations to begin with. You decided that you could nonetheless use the width of a box plot to show the difference in sample size between the groups. Here, you'll see a similar thing with density plots.
+
+A cleaned up version of the mammalian dataset is first loaded as mammals.
+
+```{r}
+mammals <- readRDS("D:/CloudStation/Documents/2017/RData/mammals.RDS")
+
+# Individual densities
+ggplot(mammals[mammals$vore == "Insectivore", ], aes(x = sleep_total, fill = vore)) +
+  geom_density(col = NA, alpha = 0.35) +
+  scale_x_continuous(limits = c(0, 24)) +
+  coord_cartesian(ylim = c(0, 0.3))
+
+# With faceting
+ggplot(mammals, aes(x = sleep_total, fill = vore)) +
+  geom_density(col = NA, alpha = 0.35) +
+  scale_x_continuous(limits = c(0, 24)) +
+  coord_cartesian(ylim = c(0, 0.3)) +
+  facet_wrap( ~ vore, nrow = 2)
+
+# Note that by default, the x ranges fill the scale
+ggplot(mammals, aes(x = sleep_total, fill = vore)) +
+  geom_density(col = NA, alpha = 0.35) +
+  scale_x_continuous(limits = c(0, 24)) +
+  coord_cartesian(ylim = c(0, 0.3))
+
+# Trim each density plot individually
+ggplot(mammals, aes(x = sleep_total, fill = vore)) +
+  geom_density(col = NA, alpha = 0.35, trim = TRUE) +
+  scale_x_continuous(limits=c(0,24)) +
+  coord_cartesian(ylim = c(0, 0.3))
+```
+When plotting a single variable, the density plots (and their bandwidths) are calculated separate for each variable (see the first plot).
+
+However, when you compare several variables (such as eating habits) it's useful to see the density of each subset in relation to the whole data set. This holds true for multiple density plots as well as for violin plots.
+
+For this, we need to weight the density plots so that they're relative to each other. Each density plot is adjusted according to what proportion of the total data set each sub-group represents. We calculated this using the dplyr commands in the third section.
+
+After executing the commnads, it will have the variable n, which we'll use for weighting.  To generate the weighted density plot, use aes() to map n onto the weight aesthetic inside geom_density().  The results will be more detailed and accurate.
+
+```{r}
+# Unweighted density plot from before
+ggplot(mammals, aes(x = sleep_total, fill = vore)) +
+  geom_density(col = NA, alpha = 0.35) +
+  scale_x_continuous(limits = c(0, 24)) +
+  coord_cartesian(ylim = c(0, 0.3))
+
+# Unweighted violin plot
+ggplot(mammals, aes(x = vore, y = sleep_total, fill = vore)) +
+  geom_violin()
+
+# Calculate weighting measure
+library(dplyr)
+mammals2 <- mammals %>%
+  group_by(vore) %>%
+  mutate(n = n() / nrow(mammals)) -> mammals
+
+# Weighted density plot
+ggplot(mammals2, aes(x = sleep_total, fill = vore)) +
+  geom_density(aes(weight = n), col = NA, alpha = 0.35) +
+  scale_x_continuous(limits = c(0, 24)) +
+  coord_cartesian(ylim = c(0, 0.3))
+
+# Weighted violin plot
+ggplot(mammals2, aes(x = vore, y = sleep_total, fill = vore)) +
+  geom_violin(aes(weight = n), col = NA)
+```
+
+We can also create 2D density plots.  You can consider two orthogonal density plots in the form of a 2D density plot. Just like with a 1D density plot, you can adjust the bandwidth of both axes independently.
+
+The data is stored in the faithful data frame, available in the datasets package. The object p contains the base definitions of a plot.  Think about the message in your scatter plots, sometimes clusters of high-density are more intersting than linear models.
+
+```{r}
+# Base layers
+p <- ggplot(faithful, aes(x = waiting, y = eruptions)) +
+  scale_y_continuous(limits = c(1, 5.5), expand = c(0, 0)) +
+  scale_x_continuous(limits = c(40, 100), expand = c(0, 0)) +
+  coord_fixed(60 / 4.5)
+
+# 1 - Use geom_density_2d()
+p + geom_density_2d()
+
+# 2 - Use stat_density_2d() with arguments
+p + stat_density_2d(aes(col = ..level..), h = c(5, 0.5))
+```
+
+Next we use the viridis package. This package contains multi-hue color palettes suitable for continuous variables.
+
+The advantage of these scales is that instead of providing an even color gradient for a continuous scale, they highlight the highest values by using an uneven color gradient on purpose. The high values are lighter colors (yellow versus blue), so they stand out more.
+
+```{r}
+# Load in the viridis package
+library(viridis)
+
+# Add viridis color scale
+ggplot(faithful, aes(x = waiting, y = eruptions)) +
+  scale_y_continuous(limits = c(1, 5.5), expand = c(0,0)) +
+  scale_x_continuous(limits = c(40, 100), expand = c(0,0)) +
+  coord_fixed(60/4.5) +
+  stat_density_2d(geom = "tile", aes(fill = ..density..), h=c(5,.5), contour = FALSE) + 
+  scale_fill_viridis()
+```
+
