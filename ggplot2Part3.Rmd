@@ -76,3 +76,147 @@ ggplot(diamonds, aes(x = carat, y = price, col = color)) +
   theme_classic()
 ```
 
+## Statistical plots
+
+Whilst all the previous plots could be considered as statistical plots, we now concentrate on those more suited to a statistical or academic audienc - two examples are box plots and density plots.  In this exercise you'll return to the first plotting exercise and see how box plots compare to dot plots for representing high-density data.
+
+### Box plots
+
+Box plots are very useful, but they don't solve all your problems all the time, for example, when your data are heavily skewed, you will still need to transform it. You'll see that here, using the movies_small dataset, a subset of 10,000 observations of ggplot2movies::movies.
+
+```{r}
+# Add a boxplot geom
+d <- ggplot(movies_small, aes(x = rating, y = votes)) +
+  geom_point() +
+  geom_boxplot() +
+  stat_summary(fun.data = "mean_cl_normal",
+               geom = "crossbar",
+               width = 0.2,
+               col = "red")
+
+# Untransformed plot
+d
+
+# Transform the scale
+d + scale_y_log10()
+
+# Transform the coordinates
+d + coord_trans(y = "log10")
+```
+
+Notice how different the normal distribution estimation (red boxes) and boxplots (less prone to outliers) are.
+
+If you only have continuous variables, you can convert them into ordinal variables using any of the following functions:
+
+* cut_interval(x, n) makes n groups from vector x with equal range.
+* cut_number(x, n) makes n groups from vector x with (approximately) equal numbers of observations.
+* cut_width(x, width) makes groups of width width from vector x.
+
+This is useful when you want to summarize a complex scatter plot. By applying these functions to the carat variable and mapping that onto the group aesthetic, you can convert the scatter plot in the viewer into a series of box plots on the fly.
+
+Going from a continuous to a categorical variable reduces the amount of information, but sometimes that helps us understand the data.
+
+```{r}
+# Plot object p
+p <- ggplot(diamonds, aes(x = carat, y = price))
+
+# Use cut_interval
+p + geom_boxplot(aes(group = cut_interval(carat, n = 10)))
+
+# Use cut_number
+p + geom_boxplot(aes(group = cut_number(carat, n = 10)))
+
+# Use cut_width
+p + geom_boxplot(aes(group = cut_width(carat, width = 0.25)))
+```
+
+Be aware that there are many ways to calculate the IQR, short for inter-quartile range (that is Q3−Q1Q3−Q1). These are defined in the help pages for the quantile() function:
+
+> ?quantile
+
+Generally, the IQR becomes more consistent across methods as the sample size increases, you are likely to encounter spurious artefacts when drawing box plots with small sample sizes.
+
+### Density Plots
+
+Density plots are similar to histograms but less well used.  They are used to display the distribution of univariate data, such as probabilty density functions (PDFs).  One aspect you can set is the bandwidth, which helps to determine how 'lumpy' or how high the seperation is between each individual peak in a dataset.  
+
+To make a straightforward density plot, add a geom_density() layer.
+
+Before plotting, you will calculate the emperical density function, similar to how you can use the density() function in the stats package, available by default when you start R. The following default parameters are used (you can specify these arguments both in density() as well as geom_density()):
+
+> bw = "nrd0", telling R which rule to use to choose an appropriate bandwidth.
+> kernel = "gaussian", telling R to use the Gaussian kernel.
+
+There is some test data, containing three columns: norm, bimodal and uniform. Each column represents 200 samples from a normal, bimodal and uniform distribution.
+
+```{r}
+# Load the test data
+load("D:/CloudStation/Documents/2017/RData/test_datasets.RData")
+test_data <- ch1_test_data
+
+# Calculating density: d
+d <- density(test_data$norm)
+
+# Use which.max() to calculate mode
+mode <- d$x[which.max(d$y)]
+
+# Finish the ggplot call
+ggplot(test_data, aes(x = norm)) +
+  geom_rug() +
+  geom_density() +
+  geom_vline(xintercept = mode, col = "red")
+```
+
+Sometimes it is useful to compare a histogram with a density plot. However, the histogram's y-scale must first be converted to frequency instead of absolute count. After doing so, you can add an empirical PDF using geom_density() or a theoretical PDF using stat_function().
+
+```{r}
+# Arguments you'll need later on
+fun_args <- list(mean = mean(test_data$norm), sd = sd(test_data$norm))
+
+# Finish the ggplot
+ggplot(test_data, aes(x = norm)) + 
+  geom_histogram(aes(y = ..density..)) + 
+  geom_density(col = "red") + 
+  stat_function(fun = dnorm, args = fun_args, col = "blue")
+```
+
+There are three parameters that you may be tempted to adjust in a density plot:
+
+* bw - the smoothing bandwidth to be used, see ?density for details
+* adjust - adjustment of the bandwidth, see density for details
+* kernel - kernel used for density estimation, defined as
+* "g" = gaussian
+* "r" = rectangular
+* "t" = triangular
+* "e" = epanechnikov
+* "b" = biweight
+* "c" = cosine
+* "o" = optcosine
+
+In this exercise you'll use a dataset containing only four points, small_data, so that you can see how these three arguments affect the shape of the density plot.
+
+The vector get_bw contains the bandwidth that is used by default in geom_density(). p is a basic plotting object that you can start from.
+
+```{r}
+x <- c(-3.5, 0.0, 0.5, 6.0)
+small_data <- data.frame(x)
+
+# Get the bandwith
+get_bw <- density(small_data$x)$bw
+
+# Basic plotting object
+p <- ggplot(small_data, aes(x = x)) +
+  geom_rug() +
+  coord_cartesian(ylim = c(0,0.5))
+
+# Create three plots
+p + geom_density()
+p + geom_density(adjust = 0.25)
+p + geom_density(bw = 0.25 * get_bw)
+
+# Create two plots
+p + geom_density(kernel = "r")
+p + geom_density(kernel = "e")
+```
+
+Notice how the curve contained more features and their individual heights were increased as the bandwidth decreased.
