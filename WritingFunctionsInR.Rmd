@@ -99,7 +99,7 @@ typeof(tricky_list[["x"]][[2]])
 
 Sometimes the output of models can be quite challenging to get out, with many lists inside a single list.
 
-```{r}
+```{r, eval = FALSE}
 # Guess where the regression model is stored
 names(tricky_list)
 
@@ -124,7 +124,7 @@ For loops are used for iteraction.  There are a number of parts within a loop:
 
 If you want to repeat a function for each column where the data frame is empty, rather than use the sequence for (i in 1:ncol(df)), it is better to use seq_along(df), since our sequence is now the somewhat non-sensical: 1, 0. You might think you wouldn't be silly enough to use a for loop with an empty data frame, but once you start writing your own functions, there's no telling what the input will be.
 
-```{r}
+```{r, eval = FALSE}
 
 df <- data.frame()
 1:ncol(df)
@@ -634,6 +634,12 @@ Safely also works with map functions.
 # Define safe_readLines()
 safe_readLines <- safely(readLines)
 
+urls <- list(
+  example = "http://example.org",
+  rproj = "http://www.r-project.org",
+  asdf = "http://asdfasdasdkfjlda"
+)
+
 # Use the safe_readLines() function with map(): html
 html <- map(urls, safe_readLines)
 
@@ -910,7 +916,7 @@ Robust functions either work or give error messages that can be understood.  R i
 2. Non standard evaluation - 'an important part of R's magic' says Hadley.  It allows you to use succinct APIs like ggplot and dpylr, but it can introduce ambiguity when programming
 4.  Hidden arguments - R has global options that can affect the operation of some functions.  The most notorious of these are strings as factors.
 
-```{r}
+```{r, eval = FALSE}
 # Define troublesome x and y
 x <- c(NA, NA, NA)
 y <- c( 1, NA, NA, NA)
@@ -927,7 +933,7 @@ both_na(x, y)
 
 We might want a more informative error message.  To do so, we use the stop() rather than the stopifnot() function, which has more options including specifying the error message.
 
-```{r}
+```{r, eval = FALSE}
 # Define troublesome x and y
 x <- c(NA, NA, NA)
 y <- c( 1, NA, NA, NA)

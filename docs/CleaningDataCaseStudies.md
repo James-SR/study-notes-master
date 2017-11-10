@@ -645,7 +645,7 @@ The first time you import a dataset, you might not know how many rows need to be
 library(readxl)
 
 # Import mbta.xlsx and skip first row: mbta
-mbta <- read_excel("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/mbta.xlsx", skip = 1)
+mbta <- read_excel("D:/CloudStation/Documents/2017/RData/mbta.xlsx", skip = 1)
 
 # View the structure of mbta
 str(mbta)

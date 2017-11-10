@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Study notes</title>
+  <meta name="description" content="Study notes taken from courses and self learning.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Study notes" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://github.com/James-SR/study-notes-master" />
+  
+  <meta property="og:description" content="Study notes taken from courses and self learning." />
+  <meta name="github-repo" content="James-SR/study-notes-master" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Study notes" />
+  
+  <meta name="twitter:description" content="Study notes taken from courses and self learning." />
+  
+
+<meta name="author" content="James Solomon-Rounce">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="intermediate-ggplot2.html">
+<link rel="next" href="introduction-to-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Study Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html"><i class="fa fa-check"></i><b>1</b> Importing data - Part 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
+<li class="chapter" data-level="1.3" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-tab-deliminated-files-or-other-table-formats"><i class="fa fa-check"></i><b>1.3</b> Reading tab deliminated files or other table formats</a></li>
+<li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#data.table-fread"><i class="fa fa-check"></i><b>1.4.1</b> data.table fread</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html"><i class="fa fa-check"></i><b>2</b> Importing data - Part 2</a><ul>
+<li class="chapter" data-level="2.1" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-databases---1"><i class="fa fa-check"></i><b>2.1</b> Importing from Databases - 1</a></li>
+<li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
+<li class="chapter" data-level="2.3" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#web-data"><i class="fa fa-check"></i><b>2.3</b> Web Data</a></li>
+<li class="chapter" data-level="2.4" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#json-and-apis"><i class="fa fa-check"></i><b>2.4</b> JSON and APIs</a></li>
+<li class="chapter" data-level="2.5" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-other-statistical-software"><i class="fa fa-check"></i><b>2.5</b> Importing from other statistical software</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html"><i class="fa fa-check"></i><b>3</b> Writing Functions in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#function-overview"><i class="fa fa-check"></i><b>3.1</b> Function overview</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#scoping"><i class="fa fa-check"></i><b>3.1.1</b> Scoping</a></li>
+<li class="chapter" data-level="3.1.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#data-structures"><i class="fa fa-check"></i><b>3.1.2</b> Data Structures</a></li>
+<li class="chapter" data-level="3.1.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#for-loops"><i class="fa fa-check"></i><b>3.1.3</b> For loops</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#when-and-how-you-should-write-a-function"><i class="fa fa-check"></i><b>3.2</b> When and how you should write a function</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#rescale-example"><i class="fa fa-check"></i><b>3.2.1</b> Rescale example</a></li>
+<li class="chapter" data-level="3.2.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#write-a-function-step-by-step"><i class="fa fa-check"></i><b>3.2.2</b> Write a function step by step</a></li>
+<li class="chapter" data-level="3.2.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#how-can-you-write-a-good-function"><i class="fa fa-check"></i><b>3.2.3</b> How can you write a good function?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#functional-programming"><i class="fa fa-check"></i><b>3.3</b> Functional Programming</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#using-purrr"><i class="fa fa-check"></i><b>3.3.1</b> Using purrr</a></li>
+<li class="chapter" data-level="3.3.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#shortcuts"><i class="fa fa-check"></i><b>3.3.2</b> Shortcuts</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#advanced-inputs-and-outputs"><i class="fa fa-check"></i><b>3.4</b> Advanced Inputs and Outputs</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#maps-over-multiple-arguments"><i class="fa fa-check"></i><b>3.4.1</b> Maps over multiple arguments</a></li>
+<li class="chapter" data-level="3.4.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#side-effect-functions"><i class="fa fa-check"></i><b>3.4.2</b> Side effect functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#robust-functions"><i class="fa fa-check"></i><b>3.5</b> Robust Functions</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#unstable-types"><i class="fa fa-check"></i><b>3.5.1</b> Unstable types</a></li>
+<li class="chapter" data-level="3.5.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#non-standard-evaluation-nse"><i class="fa fa-check"></i><b>3.5.2</b> Non standard evaluation (NSE)</a></li>
+<li class="chapter" data-level="3.5.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#hidden-arguments"><i class="fa fa-check"></i><b>3.5.3</b> Hidden arguments</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html"><i class="fa fa-check"></i><b>4</b> Joining Data in R with dplyr</a><ul>
+<li class="chapter" data-level="4.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#mutating-joins"><i class="fa fa-check"></i><b>4.1</b> Mutating joins</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#keys"><i class="fa fa-check"></i><b>4.1.1</b> Keys</a></li>
+<li class="chapter" data-level="4.1.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>4.1.2</b> Left and right joins</a></li>
+<li class="chapter" data-level="4.1.3" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#inner-and-full-joins"><i class="fa fa-check"></i><b>4.1.3</b> Inner and full joins</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#filtering-joins-and-set-operations"><i class="fa fa-check"></i><b>4.2</b> Filtering joins and set operations</a></li>
+<li class="chapter" data-level="4.3" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#set-operations"><i class="fa fa-check"></i><b>4.3</b> Set Operations</a></li>
+<li class="chapter" data-level="4.4" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#bind-in-dplyr"><i class="fa fa-check"></i><b>4.4</b> Bind in Dplyr</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#data-frames"><i class="fa fa-check"></i><b>4.4.1</b> Data frames</a></li>
+<li class="chapter" data-level="4.4.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>4.5</b> Advanced Joining</a></li>
+<li class="chapter" data-level="4.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>4.6</b> Joining mutiple tables</a></li>
+<li class="chapter" data-level="4.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>4.7</b> Other implentations</a></li>
+<li class="chapter" data-level="4.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>4.8</b> Case Study - Lahman DB</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>5</b> Cleaning Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>5.1</b> Tidying data</a></li>
+<li class="chapter" data-level="5.2" data-path="cleaning-data.html"><a href="cleaning-data.html#preparing-data-for-analysis"><i class="fa fa-check"></i><b>5.2</b> Preparing data for analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="cleaning-data.html"><a href="cleaning-data.html#string-manipulation"><i class="fa fa-check"></i><b>5.3</b> String manipulation</a></li>
+<li class="chapter" data-level="5.4" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-specials-and-outliers"><i class="fa fa-check"></i><b>5.4</b> Missing, Specials and Outliers</a></li>
+<li class="chapter" data-level="5.5" data-path="cleaning-data.html"><a href="cleaning-data.html#examples"><i class="fa fa-check"></i><b>5.5</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html"><i class="fa fa-check"></i><b>6</b> Importing &amp; Cleaning Data in R: Case Studies</a><ul>
+<li class="chapter" data-level="6.1" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#ticket-sales-data"><i class="fa fa-check"></i><b>6.1</b> Ticket Sales Data</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#removing-redundant-info"><i class="fa fa-check"></i><b>6.1.1</b> Removing redundant info</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#working-with-dates"><i class="fa fa-check"></i><b>6.2</b> Working with dates</a></li>
+<li class="chapter" data-level="6.3" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#mbta-ridership-data"><i class="fa fa-check"></i><b>6.3</b> MBTA Ridership Data</a></li>
+<li class="chapter" data-level="6.4" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#world-food-facts"><i class="fa fa-check"></i><b>6.4</b> World Food Facts</a></li>
+<li class="chapter" data-level="6.5" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#school-attendance-data"><i class="fa fa-check"></i><b>6.5</b> School Attendance Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-visualization.html"><a href="data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a><ul>
+<li class="chapter" data-level="7.1" data-path="data-visualization.html"><a href="data-visualization.html#base-r-graphics"><i class="fa fa-check"></i><b>7.1</b> Base R Graphics</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="data-visualization.html"><a href="data-visualization.html#avoiding-pie-charts"><i class="fa fa-check"></i><b>7.1.1</b> Avoiding pie charts</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-visualization.html"><a href="data-visualization.html#different-plot-types"><i class="fa fa-check"></i><b>7.2</b> Different Plot Types</a></li>
+<li class="chapter" data-level="7.3" data-path="data-visualization.html"><a href="data-visualization.html#adding-details-to-plots"><i class="fa fa-check"></i><b>7.3</b> Adding details to plots</a></li>
+<li class="chapter" data-level="7.4" data-path="data-visualization.html"><a href="data-visualization.html#adding-text"><i class="fa fa-check"></i><b>7.4</b> Adding text</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="data-visualization.html"><a href="data-visualization.html#adding-details-to-plots-1"><i class="fa fa-check"></i><b>7.4.1</b> Adding details to plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="data-visualization.html"><a href="data-visualization.html#how-much-is-too-much"><i class="fa fa-check"></i><b>7.5</b> How much is too much</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="data-visualization.html"><a href="data-visualization.html#mutiple-plots"><i class="fa fa-check"></i><b>7.5.1</b> Mutiple Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="data-visualization.html"><a href="data-visualization.html#advanced-plot-customisation"><i class="fa fa-check"></i><b>7.6</b> Advanced Plot Customisation</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="data-visualization.html"><a href="data-visualization.html#using-colour-effectively"><i class="fa fa-check"></i><b>7.6.1</b> Using colour effectively</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="data-visualization.html"><a href="data-visualization.html#other-graphics-systems"><i class="fa fa-check"></i><b>7.7</b> Other graphics systems</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html"><i class="fa fa-check"></i><b>8</b> Intermediate ggplot2</a><ul>
+<li class="chapter" data-level="8.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#statistics"><i class="fa fa-check"></i><b>8.1</b> Statistics</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#stats-outside-geoms"><i class="fa fa-check"></i><b>8.1.1</b> Stats outside geoms</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#coordinates-layer"><i class="fa fa-check"></i><b>8.2</b> Coordinates Layer</a></li>
+<li class="chapter" data-level="8.3" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#facets"><i class="fa fa-check"></i><b>8.3</b> Facets</a></li>
+<li class="chapter" data-level="8.4" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#themes"><i class="fa fa-check"></i><b>8.4</b> Themes</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#recycling-themes"><i class="fa fa-check"></i><b>8.4.1</b> Recycling themes</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#best-practice"><i class="fa fa-check"></i><b>8.5</b> Best Practice</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#bar-plots"><i class="fa fa-check"></i><b>8.5.1</b> Bar Plots</a></li>
+<li class="chapter" data-level="8.5.2" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#pie-charts"><i class="fa fa-check"></i><b>8.5.2</b> Pie Charts</a></li>
+<li class="chapter" data-level="8.5.3" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#heat-maps"><i class="fa fa-check"></i><b>8.5.3</b> Heat Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#case-study---descriptive-statistics"><i class="fa fa-check"></i><b>8.6</b> Case Study - Descriptive statistics</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#mosaic-plots"><i class="fa fa-check"></i><b>8.6.1</b> Mosaic Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Advanced ggplot2</a><ul>
+<li class="chapter" data-level="9.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#refresher"><i class="fa fa-check"></i><b>9.1</b> Refresher</a></li>
+<li class="chapter" data-level="9.2" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#statistical-plots"><i class="fa fa-check"></i><b>9.2</b> Statistical plots</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.2.1</b> Box plots</a></li>
+<li class="chapter" data-level="9.2.2" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#density-plots"><i class="fa fa-check"></i><b>9.2.2</b> Density Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#multiple-groups-or-variables"><i class="fa fa-check"></i><b>9.3</b> Multiple groups or variables</a></li>
+<li class="chapter" data-level="9.4" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#plots-for-specific-data-1"><i class="fa fa-check"></i><b>9.4</b> Plots for Specific Data 1</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#big-data"><i class="fa fa-check"></i><b>9.4.1</b> Big data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>10</b> Introduction to Data</a><ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-data.html"><a href="introduction-to-data.html#language-of-data"><i class="fa fa-check"></i><b>10.1</b> Language of Data</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-data.html"><a href="introduction-to-data.html#observational-studies-and-experiments"><i class="fa fa-check"></i><b>10.2</b> Observational Studies and Experiments</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-data.html"><a href="introduction-to-data.html#sampling-strategies-and-experimental-design"><i class="fa fa-check"></i><b>10.3</b> Sampling strategies and experimental design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="11" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>11</b> Foundations of Inference</a><ul>
+<li class="chapter" data-level="11.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>11.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="11.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>11.2</b> Home Ownership by Gender</a></li>
+<li class="chapter" data-level="11.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots-1"><i class="fa fa-check"></i><b>11.3</b> Density Plots</a></li>
+<li class="chapter" data-level="11.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>11.4</b> Gender Discrimination (p-values)</a></li>
+<li class="chapter" data-level="11.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>11.5</b> Opportunity Cost</a></li>
+<li class="chapter" data-level="11.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>11.6</b> Type I and Type II errors</a></li>
+<li class="chapter" data-level="11.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>11.7</b> Bootstrapping</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>12.1</b> Categorical Data</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>12.2</b> Numerical Data</a></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>12.3</b> Numerical Summaries</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#transformations"><i class="fa fa-check"></i><b>12.3.1</b> Transformations</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#outliers"><i class="fa fa-check"></i><b>12.3.2</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#email-case-study"><i class="fa fa-check"></i><b>12.4</b> Email Case Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html"><i class="fa fa-check"></i><b>13</b> Correlation and Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#visualizing-two-variables"><i class="fa fa-check"></i><b>13.1</b> Visualizing two variables</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#transformations-1"><i class="fa fa-check"></i><b>13.1.1</b> Transformations</a></li>
+<li class="chapter" data-level="13.1.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#identifying-outliers"><i class="fa fa-check"></i><b>13.1.2</b> Identifying Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#correlation"><i class="fa fa-check"></i><b>13.2</b> Correlation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#anscombe-dataset"><i class="fa fa-check"></i><b>13.2.1</b> Anscombe Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#linear-regression"><i class="fa fa-check"></i><b>13.3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#regression-to-the-mean"><i class="fa fa-check"></i><b>13.3.1</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="13.3.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#fitting-linear-models"><i class="fa fa-check"></i><b>13.3.2</b> Fitting linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#model-fit"><i class="fa fa-check"></i><b>13.4</b> Model fit</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#unusual-points"><i class="fa fa-check"></i><b>13.4.1</b> Unusual points</a></li>
+<li class="chapter" data-level="13.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>13.4.2</b> High leverage Points</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>14</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="14.1" data-path="supervised-learning.html"><a href="supervised-learning.html#tree-based-models"><i class="fa fa-check"></i><b>14.1</b> Tree Based Models</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="supervised-learning.html"><a href="supervised-learning.html#random-forests"><i class="fa fa-check"></i><b>14.1.1</b> Random Forests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="supervised-learning.html"><a href="supervised-learning.html#one-hot-encoding-categorical-variables"><i class="fa fa-check"></i><b>14.1.2</b> One-Hot-Encoding Categorical Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="supervised-learning.html"><a href="supervised-learning.html#gradient-boosting-machines"><i class="fa fa-check"></i><b>14.2</b> Gradient Boosting Machines</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>15</b> Dimensional Modelling</a><ul>
+<li class="chapter" data-level="15.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>15.1</b> Introduction to Dimensional Data</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>15.1.1</b> Data Modelling levels</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>15.2</b> Architecture considerations</a></li>
+<li class="chapter" data-level="15.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>15.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="15.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>15.4</b> Kimball Approach</a></li>
+<li class="chapter" data-level="15.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>15.5</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="15.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>15.6</b> Tips</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-3.html"><a href="references-3.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Study notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="advanced-ggplot2" class="section level1">
+<h1><span class="header-section-number">9</span> Advanced ggplot2</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Data Visualization with ggplot2 (Part 3)’ by Rick Scavetta. This course builds on the first course and second courses, which looked at how to build plots, aesthetics, statistics and practical matters such as themes.</p>
+<p>The focus of this course is on more specific plot types, including looking at handling large data plots. We also look at maps and video frames aka animations. The fourth chapter looks at the internals of GGPlot2 including the grid extra package. Finally we will look at a case study, which includes looking at how we can use the extensions function to build our own plots from scratch.</p>
+<p>Course slides: * <a href="https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch1.pdf">Part 1 - Statistical Plots</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch2.pdf">Part 2 - Plots for Specific Data Part 1</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch3.pdf">Part 3 - Plots for Specific Data Part 2</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch4.pdf">Part 4 - GGPlot2 Internals</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/production/course_862/slides/ggplot2_course_3_ch5.pdf">Part 5 - Case Study</a></p>
+<div id="refresher" class="section level2">
+<h2><span class="header-section-number">9.1</span> Refresher</h2>
+<p>As a refresher to statistical plots, let’s build a scatter plot with an additional statistic layer.</p>
+<p>A dataset called movies_small is coded in your workspace. It is a random sample of 1000 observations from the larger movies dataset, that’s inside the ggplot2movies package. The dataset contains information on movies from IMDB. The variable votes is the number of IMDB users who have rated a movie and the rating (converted into a categorical variable) is the average rating for the movie.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="co">#load the data</span>
+movies_small &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;D:/CloudStation/Documents/2017/RData/ch1_movies_small.RDS&quot;</span>)
+
+<span class="co"># Explore movies_small with str()</span>
+<span class="kw">str</span>(movies_small)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    10000 obs. of  24 variables:
+##  $ title      : chr  &quot;Fair and Worm-er&quot; &quot;Shelf Life&quot; &quot;House: After Five Years of Living&quot; &quot;Three Long Years&quot; ...
+##  $ year       : int  1946 2000 1955 2003 1963 1992 1999 1972 1994 1985 ...
+##  $ length     : int  7 4 11 76 103 107 87 84 127 94 ...
+##  $ budget     : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ rating     : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 7 7 6 8 8 5 4 8 5 5 ...
+##  $ votes      : int  16 11 15 11 103 28 105 9 37 28 ...
+##  $ r1         : num  0 0 14.5 4.5 4.5 4.5 14.5 0 4.5 4.5 ...
+##  $ r2         : num  0 0 0 0 4.5 0 4.5 0 4.5 0 ...
+##  $ r3         : num  0 0 4.5 4.5 0 4.5 4.5 0 14.5 4.5 ...
+##  $ r4         : num  0 0 4.5 0 4.5 4.5 4.5 0 4.5 14.5 ...
+##  $ r5         : num  4.5 4.5 0 0 4.5 0 4.5 14.5 24.5 4.5 ...
+##  $ r6         : num  4.5 24.5 34.5 4.5 4.5 0 14.5 0 4.5 14.5 ...
+##  $ r7         : num  64.5 4.5 24.5 0 14.5 4.5 14.5 14.5 14.5 14.5 ...
+##  $ r8         : num  14.5 24.5 4.5 4.5 14.5 24.5 14.5 24.5 14.5 14.5 ...
+##  $ r9         : num  0 0 0 14.5 14.5 24.5 14.5 14.5 4.5 4.5 ...
+##  $ r10        : num  14.5 24.5 14.5 44.5 44.5 24.5 14.5 44.5 4.5 24.5 ...
+##  $ mpaa       : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+##  $ Action     : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Animation  : int  1 0 0 0 0 0 0 0 0 0 ...
+##  $ Comedy     : int  1 0 0 1 0 1 1 1 0 0 ...
+##  $ Drama      : int  0 0 0 0 1 0 0 0 1 1 ...
+##  $ Documentary: int  0 0 1 0 0 0 0 0 0 0 ...
+##  $ Romance    : int  0 0 0 0 0 0 1 0 0 0 ...
+##  $ Short      : int  1 1 1 0 0 0 0 0 0 0 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Build a scatter plot with mean and 95% CI</span>
+<span class="kw">ggplot</span>(movies_small, <span class="kw">aes</span>(<span class="dt">x =</span> rating, <span class="dt">y =</span> votes)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_normal&quot;</span>,
+               <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>,
+               <span class="dt">width =</span> <span class="fl">0.2</span>,
+               <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_log10</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Next we are going to look at the diamons dataset. Recall that there are a variety of scale_ functions. Here, data are transformed or filtered first, after which the plot and associated statistics are computed. For example, scale_y_continuous(limits = c(100, 1000) will remove values outside that range.</p>
+<p>Contrast this to coord_cartesian(), which computes the statistics before plotting. That means that the plot and summary statistics are performed on the raw data. That’s why we say that coord_cartesian(c(100, 1000)) “zooms in” a plot. This was discussed in the chapter on coordinates in course 2.</p>
+<p>Here we’re going to expand on this and introduce scale_x_log10() and scale_y_log10() which perform log10 transformations, and coord_equal(), which sets an aspect ratio of 1 (coord_fixed() is also an option).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(diamonds)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    53940 obs. of  10 variables:
+##  $ carat  : num  0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
+##  $ cut    : Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...
+##  $ color  : Ord.factor w/ 7 levels &quot;D&quot;&lt;&quot;E&quot;&lt;&quot;F&quot;&lt;&quot;G&quot;&lt;..: 2 2 2 6 7 7 6 5 2 5 ...
+##  $ clarity: Ord.factor w/ 8 levels &quot;I1&quot;&lt;&quot;SI2&quot;&lt;&quot;SI1&quot;&lt;..: 2 3 5 4 2 6 7 3 4 5 ...
+##  $ depth  : num  61.5 59.8 56.9 62.4 63.3 62.8 62.3 61.9 65.1 59.4 ...
+##  $ table  : num  55 61 65 58 58 57 57 55 61 61 ...
+##  $ price  : int  326 326 327 334 335 336 336 337 337 338 ...
+##  $ x      : num  3.95 3.89 4.05 4.2 4.34 3.94 3.95 4.07 3.87 4 ...
+##  $ y      : num  3.98 3.84 4.07 4.23 4.35 3.96 3.98 4.11 3.78 4.05 ...
+##  $ z      : num  2.43 2.31 2.31 2.63 2.75 2.48 2.47 2.53 2.49 2.39 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Produce the plot - To get nice formatting we&#39;re using the expression() function for the labels</span>
+<span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">col =</span> color)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">shape =</span> <span class="dv">16</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_log10</span>(<span class="kw">expression</span>(log[<span class="dv">10</span>](Carat)), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.1</span>,<span class="dv">10</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_log10</span>(<span class="kw">expression</span>(log[<span class="dv">10</span>](Price)), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">100</span>,<span class="dv">100000</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span><span class="st"> </span><span class="co"># sets the aspect ratio to 1</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Or we can present the data as a smooth/linear model</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add smooth layer and facet the plot</span>
+<span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">col =</span> color)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_log10</span>(<span class="kw">expression</span>(log[<span class="dv">10</span>](Carat)), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.1</span>,<span class="dv">10</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_log10</span>(<span class="kw">expression</span>(log[<span class="dv">10</span>](Price)), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">100</span>,<span class="dv">100000</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="statistical-plots" class="section level2">
+<h2><span class="header-section-number">9.2</span> Statistical plots</h2>
+<p>Whilst all the previous plots could be considered as statistical plots, we now concentrate on those more suited to a statistical or academic audienc - two examples are box plots and density plots. In this exercise you’ll return to the first plotting exercise and see how box plots compare to dot plots for representing high-density data.</p>
+<div id="box-plots" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Box plots</h3>
+<p>Box plots are very useful, but they don’t solve all your problems all the time, for example, when your data are heavily skewed, you will still need to transform it. You’ll see that here, using the movies_small dataset, a subset of 10,000 observations of ggplot2movies::movies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a boxplot geom</span>
+d &lt;-<span class="st"> </span><span class="kw">ggplot</span>(movies_small, <span class="kw">aes</span>(<span class="dt">x =</span> rating, <span class="dt">y =</span> votes)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_normal&quot;</span>,
+               <span class="dt">geom =</span> <span class="st">&quot;crossbar&quot;</span>,
+               <span class="dt">width =</span> <span class="fl">0.2</span>,
+               <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+
+<span class="co"># Untransformed plot</span>
+d</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transform the scale</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_log10</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Transform the coordinates</span>
+d <span class="op">+</span><span class="st"> </span><span class="kw">coord_trans</span>(<span class="dt">y =</span> <span class="st">&quot;log10&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p>Notice how different the normal distribution estimation (red boxes) and boxplots (less prone to outliers) are.</p>
+<p>If you only have continuous variables, you can convert them into ordinal variables using any of the following functions:</p>
+<ul>
+<li>cut_interval(x, n) makes n groups from vector x with equal range.</li>
+<li>cut_number(x, n) makes n groups from vector x with (approximately) equal numbers of observations.</li>
+<li>cut_width(x, width) makes groups of width width from vector x.</li>
+</ul>
+<p>This is useful when you want to summarize a complex scatter plot. By applying these functions to the carat variable and mapping that onto the group aesthetic, you can convert the scatter plot in the viewer into a series of box plots on the fly.</p>
+<p>Going from a continuous to a categorical variable reduces the amount of information, but sometimes that helps us understand the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot object p</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price))
+
+<span class="co"># Use cut_interval</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="kw">cut_interval</span>(carat, <span class="dt">n =</span> <span class="dv">10</span>)))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use cut_number</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="kw">cut_number</span>(carat, <span class="dt">n =</span> <span class="dv">10</span>)))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use cut_width</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="kw">cut_width</span>(carat, <span class="dt">width =</span> <span class="fl">0.25</span>)))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<p>Be aware that there are many ways to calculate the IQR, short for inter-quartile range (that is Q3−Q1Q3−Q1). These are defined in the help pages for the quantile() function:</p>
+<blockquote>
+<p>?quantile</p>
+</blockquote>
+<p>Generally, the IQR becomes more consistent across methods as the sample size increases, you are likely to encounter spurious artefacts when drawing box plots with small sample sizes.</p>
+</div>
+<div id="density-plots" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Density Plots</h3>
+<p>Density plots are similar to histograms but less well used. They are used to display the distribution of univariate data, such as probabilty density functions (PDFs). One aspect you can set is the bandwidth, which helps to determine how ‘lumpy’ or how high the seperation is between each individual peak in a dataset.</p>
+<p>To make a straightforward density plot, add a geom_density() layer.</p>
+<p>Before plotting, you will calculate the emperical density function, similar to how you can use the density() function in the stats package, available by default when you start R. The following default parameters are used (you can specify these arguments both in density() as well as geom_density()):</p>
+<blockquote>
+<p>bw = “nrd0”, telling R which rule to use to choose an appropriate bandwidth. kernel = “gaussian”, telling R to use the Gaussian kernel.</p>
+</blockquote>
+<p>There is some test data, containing three columns: norm, bimodal and uniform. Each column represents 200 samples from a normal, bimodal and uniform distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the test data</span>
+<span class="kw">load</span>(<span class="st">&quot;D:/CloudStation/Documents/2017/RData/test_datasets.RData&quot;</span>)
+test_data &lt;-<span class="st"> </span>ch1_test_data
+
+<span class="co"># Calculating density: d</span>
+d &lt;-<span class="st"> </span><span class="kw">density</span>(test_data<span class="op">$</span>norm)
+
+<span class="co"># Use which.max() to calculate mode</span>
+mode &lt;-<span class="st"> </span>d<span class="op">$</span>x[<span class="kw">which.max</span>(d<span class="op">$</span>y)]
+
+<span class="co"># Finish the ggplot call</span>
+<span class="kw">ggplot</span>(test_data, <span class="kw">aes</span>(<span class="dt">x =</span> norm)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rug</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> mode, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Sometimes it is useful to compare a histogram with a density plot. However, the histogram’s y-scale must first be converted to frequency instead of absolute count. After doing so, you can add an empirical PDF using geom_density() or a theoretical PDF using stat_function().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arguments you&#39;ll need later on</span>
+fun_args &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(test_data<span class="op">$</span>norm), <span class="dt">sd =</span> <span class="kw">sd</span>(test_data<span class="op">$</span>norm))
+
+<span class="co"># Finish the ggplot</span>
+<span class="kw">ggplot</span>(test_data, <span class="kw">aes</span>(<span class="dt">x =</span> norm)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density..)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> fun_args, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>There are three parameters that you may be tempted to adjust in a density plot:</p>
+<ul>
+<li>bw - the smoothing bandwidth to be used, see ?density for details</li>
+<li>adjust - adjustment of the bandwidth, see density for details</li>
+<li>kernel - kernel used for density estimation, defined as</li>
+<li>“g” = gaussian</li>
+<li>“r” = rectangular</li>
+<li>“t” = triangular</li>
+<li>“e” = epanechnikov</li>
+<li>“b” = biweight</li>
+<li>“c” = cosine</li>
+<li>“o” = optcosine</li>
+</ul>
+<p>In this exercise you’ll use a dataset containing only four points, small_data, so that you can see how these three arguments affect the shape of the density plot.</p>
+<p>The vector get_bw contains the bandwidth that is used by default in geom_density(). p is a basic plotting object that you can start from.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">3.5</span>, <span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">6.0</span>)
+small_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x)
+
+<span class="co"># Get the bandwith</span>
+get_bw &lt;-<span class="st"> </span><span class="kw">density</span>(small_data<span class="op">$</span>x)<span class="op">$</span>bw
+
+<span class="co"># Basic plotting object</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(small_data, <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rug</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.5</span>))
+
+<span class="co"># Create three plots</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">adjust =</span> <span class="fl">0.25</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.25</span> <span class="op">*</span><span class="st"> </span>get_bw)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create two plots</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">kernel =</span> <span class="st">&quot;r&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">kernel =</span> <span class="st">&quot;e&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-8-5.png" width="672" /></p>
+<p>Notice how the curve contained more features and their individual heights were increased as the bandwidth decreased.</p>
+</div>
+</div>
+<div id="multiple-groups-or-variables" class="section level2">
+<h2><span class="header-section-number">9.3</span> Multiple groups or variables</h2>
+<p>Groups = levels of a factor variable. A drawback of showing a box plot per group, is that you don’t have any indication of the sample size, n, in each group, that went into making the plot. One way of dealing with this is to use a variable width for the box, which reflects differences in n.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Diamond box plot sized according to the number of observations</span>
+<span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price, <span class="dt">col =</span> color)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">varwidth =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>color)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>This helps us see the differences in group size, but unfortunately there is no legend, so it’s not a complete solution.</p>
+<p>The next section of code combines multiple density plots. Here, you’ll combine just two distributions, a normal and a bimodal.</p>
+<p>The first thing to remember is that you can consider values as two separate variables, like in the test_data data frame, or as a single continuous variable with their ID as a separate categorical variable, like in the test_data2 data frame. test_data2 is more convenient for combining and comparing multiple distributions.</p>
+<p>A small number of overlapping density plots are a fantastic way of comparing distinct distributions, for example, when descriptive statistics only (mean and sd) don’t represent the data well enough.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the data</span>
+test_data  &lt;-<span class="st"> </span>ch1_test_data
+test_data2 &lt;-<span class="st"> </span>ch1_test_data2
+
+<span class="co"># check the structure</span>
+<span class="kw">str</span>(test_data)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    200 obs. of  3 variables:
+##  $ norm   : num  -0.5605 -0.2302 1.5587 0.0705 0.1293 ...
+##  $ bimodal: num  0.199 -0.688 -2.265 -1.457 -2.414 ...
+##  $ uniform: num  -0.117 -0.537 -1.515 -1.812 -0.949 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(test_data2)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    400 obs. of  2 variables:
+##  $ dist : Factor w/ 2 levels &quot;norm&quot;,&quot;bimodal&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ value: num  -0.5605 -0.2302 1.5587 0.0705 0.1293 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot with test_data</span>
+<span class="kw">ggplot</span>(test_data, <span class="kw">aes</span>(<span class="dt">x =</span> norm)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rug</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot two distributions with test_data2</span>
+<span class="kw">ggplot</span>(test_data2, <span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">fill =</span> dist, <span class="dt">col =</span> dist)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rug</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-10-2.png" width="672" /> When you looked at multiple box plots, you compared the total sleep time of various mammals, sorted according to their eating habits. One thing you noted is that for insectivores, box plots didn’t really make sense, since there were only 5 observations to begin with. You decided that you could nonetheless use the width of a box plot to show the difference in sample size between the groups. Here, you’ll see a similar thing with density plots.</p>
+<p>A cleaned up version of the mammalian dataset is first loaded as mammals.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mammals &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;D:/CloudStation/Documents/2017/RData/mammals.RDS&quot;</span>)
+
+<span class="co"># Individual densities</span>
+<span class="kw">ggplot</span>(mammals[mammals<span class="op">$</span>vore <span class="op">==</span><span class="st"> &quot;Insectivore&quot;</span>, ], <span class="kw">aes</span>(<span class="dt">x =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">24</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># With faceting</span>
+<span class="kw">ggplot</span>(mammals, <span class="kw">aes</span>(<span class="dt">x =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">24</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>vore, <span class="dt">nrow =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Note that by default, the x ranges fill the scale</span>
+<span class="kw">ggplot</span>(mammals, <span class="kw">aes</span>(<span class="dt">x =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">24</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Trim each density plot individually</span>
+<span class="kw">ggplot</span>(mammals, <span class="kw">aes</span>(<span class="dt">x =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.35</span>, <span class="dt">trim =</span> <span class="ot">TRUE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">24</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-11-4.png" width="672" /> When plotting a single variable, the density plots (and their bandwidths) are calculated separate for each variable (see the first plot).</p>
+<p>However, when you compare several variables (such as eating habits) it’s useful to see the density of each subset in relation to the whole data set. This holds true for multiple density plots as well as for violin plots.</p>
+<p>For this, we need to weight the density plots so that they’re relative to each other. Each density plot is adjusted according to what proportion of the total data set each sub-group represents. We calculated this using the dplyr commands in the third section.</p>
+<p>After executing the commnads, it will have the variable n, which we’ll use for weighting. To generate the weighted density plot, use aes() to map n onto the weight aesthetic inside geom_density(). The results will be more detailed and accurate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Unweighted density plot from before</span>
+<span class="kw">ggplot</span>(mammals, <span class="kw">aes</span>(<span class="dt">x =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">24</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Unweighted violin plot</span>
+<span class="kw">ggplot</span>(mammals, <span class="kw">aes</span>(<span class="dt">x =</span> vore, <span class="dt">y =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_violin</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Calculate weighting measure</span>
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mammals2 &lt;-<span class="st"> </span>mammals <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(vore) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(mammals)) -&gt;<span class="st"> </span>mammals
+
+<span class="co"># Weighted density plot</span>
+<span class="kw">ggplot</span>(mammals2, <span class="kw">aes</span>(<span class="dt">x =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">weight =</span> n), <span class="dt">col =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.35</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">24</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.3</span>))</code></pre></div>
+<pre><code>## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density
+
+## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density
+
+## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density
+
+## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density</code></pre>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Weighted violin plot</span>
+<span class="kw">ggplot</span>(mammals2, <span class="kw">aes</span>(<span class="dt">x =</span> vore, <span class="dt">y =</span> sleep_total, <span class="dt">fill =</span> vore)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">weight =</span> n), <span class="dt">col =</span> <span class="ot">NA</span>)</code></pre></div>
+<pre><code>## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density
+
+## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density
+
+## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density
+
+## Warning in density.default(x, weights = w, bw = bw, adjust = adjust, kernel
+## = kernel, : sum(weights) != 1 -- will not get true density</code></pre>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-12-4.png" width="672" /></p>
+<p>We can also create 2D density plots. You can consider two orthogonal density plots in the form of a 2D density plot. Just like with a 1D density plot, you can adjust the bandwidth of both axes independently.</p>
+<p>The data is stored in the faithful data frame, available in the datasets package. The object p contains the base definitions of a plot. Think about the message in your scatter plots, sometimes clusters of high-density are more intersting than linear models.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Base layers</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(faithful, <span class="kw">aes</span>(<span class="dt">x =</span> waiting, <span class="dt">y =</span> eruptions)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">5.5</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">100</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_fixed</span>(<span class="dv">60</span> <span class="op">/</span><span class="st"> </span><span class="fl">4.5</span>)
+
+<span class="co"># 1 - Use geom_density_2d()</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">geom_density_2d</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 2 - Use stat_density_2d() with arguments</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_density_2d</span>(<span class="kw">aes</span>(<span class="dt">col =</span> ..level..), <span class="dt">h =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="fl">0.5</span>))</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p>Next we use the viridis package. This package contains multi-hue color palettes suitable for continuous variables.</p>
+<p>The advantage of these scales is that instead of providing an even color gradient for a continuous scale, they highlight the highest values by using an uneven color gradient on purpose. The high values are lighter colors (yellow versus blue), so they stand out more.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load in the viridis package</span>
+<span class="kw">library</span>(viridis)</code></pre></div>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add viridis color scale</span>
+<span class="kw">ggplot</span>(faithful, <span class="kw">aes</span>(<span class="dt">x =</span> waiting, <span class="dt">y =</span> eruptions)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">5.5</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">100</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_fixed</span>(<span class="dv">60</span><span class="op">/</span><span class="fl">4.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density_2d</span>(<span class="dt">geom =</span> <span class="st">&quot;tile&quot;</span>, <span class="kw">aes</span>(<span class="dt">fill =</span> ..density..), <span class="dt">h=</span><span class="kw">c</span>(<span class="dv">5</span>,.<span class="dv">5</span>), <span class="dt">contour =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_fill_viridis</span>()</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="plots-for-specific-data-1" class="section level2">
+<h2><span class="header-section-number">9.4</span> Plots for Specific Data 1</h2>
+<p>In this and the next section, we cover a lot of different plot types which are meant for specific use cases. They give an overview of the different plots so you can remember them when you have appropriate data, even if that isn’t very often.</p>
+<div id="big-data" class="section level3">
+<h3><span class="header-section-number">9.4.1</span> Big data</h3>
+<p>This could be in the form of many observations, or it could be many variables (multidimensional data) or some combination thereof.</p>
+<p>In the case of many observations (big n) there are some techniques we can use:</p>
+<ul>
+<li>Reducing overplotting</li>
+<li>Reducing the amount of information that is plotted</li>
+<li>Aggregating data</li>
+</ul>
+<p>In the case of multidimensional or hign data (big p) there are other techniques we can use:</p>
+<ul>
+<li>Data Reduction methods (e.g. PCA)</li>
+<li>Use facets in plots</li>
+<li>Use a SPLOM - Scatter PLOt Matrix, a nice example is the chart.Correlation fun in PerformanceAnalytics package</li>
+<li>Use a parallel coordinate plot, which can be used for continous and discreet data, inluding those on different scales</li>
+</ul>
+<p>First we will look at SPLOMs. Base R features two useful quick-and-dirty pairs plots functions. They both only take continuous variables. There are two datasets - iris dataset and mtcars_fact, a version of mtcars where categorical variables have been converted into actual factor columns.</p>
+<p><em>S</em>catter <em>PLO</em>t <em>M</em>atrices.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert nums to factors where needed for mtcars</span>
+mtcars_fact &lt;-<span class="st"> </span>mtcars
+mtcars_fact[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">8</span><span class="op">:</span><span class="dv">11</span>)] &lt;-<span class="st"> </span><span class="kw">lapply</span>(mtcars_fact[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">8</span><span class="op">:</span><span class="dv">11</span>)], as.factor)
+
+<span class="co"># pairs</span>
+<span class="kw">pairs</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># chart.Correlation</span>
+<span class="kw">library</span>(PerformanceAnalytics)
+<span class="kw">chart.Correlation</span>(iris[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggpairs</span>
+<span class="kw">library</span>(GGally)
+<span class="kw">ggpairs</span>(mtcars_fact[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-15-3.png" width="672" /></p>
+<p>Instead of using an off-the-shelf correlation matrix function, you can of course create your own plot. For starters, a correlation matrix can be calculated using, for example, cor(dataframe) (if all variables are numerical). Before you can use your data frame to create your own correlation matrix plot, you’ll need to get it in the right format.</p>
+<p>There is a definition of cor_list(), a function that re-formats the data frame x. Here, L is used to add the points to the lower triangle of the matrix, and M is used to add the numerical values as text to the upper triangle of the matrix. With reshape2::melt(), the correlation matrices L and M are each converted into a three-column data frame: the x and y axes of the correlation matrix make up the first two columns and the corresponding correlation coefficient makes up the third column. These become the new variables “points” and “labels”, which can be mapped onto the size aesthetic for the points in the lower triangle and onto the label aesthetic for the text in the upper triangle, respectively. Their values will be the same, but their positions on the plot will be symmetrical about the diagonal! Merging L and M, you have everything you need.</p>
+<p>We use reshape2 instead of tidyr is that reshape2::melt() can handle a matrix, whereas tidyr::gather() requires a data frame. At this point you just need to understand how to use the output from cor_list().</p>
+<p>First use dplyr to execute this function on the continuous variables in the iris data frame (the first four columns), but separately for each species. Next, you’ll actually plot the resulting data frame with ggplot2 functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
+
+cor_list &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  L &lt;-<span class="st"> </span>M &lt;-<span class="st"> </span><span class="kw">cor</span>(x)
+  
+  M[<span class="kw">lower.tri</span>(M, <span class="dt">diag =</span> <span class="ot">TRUE</span>)] &lt;-<span class="st"> </span><span class="ot">NA</span>
+  M &lt;-<span class="st"> </span><span class="kw">melt</span>(M)
+  <span class="kw">names</span>(M)[<span class="dv">3</span>] &lt;-<span class="st"> &quot;points&quot;</span>
+  
+  L[<span class="kw">upper.tri</span>(L, <span class="dt">diag =</span> <span class="ot">TRUE</span>)] &lt;-<span class="st"> </span><span class="ot">NA</span>
+  L &lt;-<span class="st"> </span><span class="kw">melt</span>(L)
+  <span class="kw">names</span>(L)[<span class="dv">3</span>] &lt;-<span class="st"> &quot;labels&quot;</span>
+  
+  <span class="kw">merge</span>(M, L)
+}
+
+<span class="co"># Calculate xx with cor_list</span>
+<span class="kw">library</span>(dplyr)
+xx &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">do</span>(<span class="kw">cor_list</span>(.[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])) 
+
+<span class="co"># Finish the plot</span>
+<span class="kw">ggplot</span>(xx, <span class="kw">aes</span>(<span class="dt">x =</span> Var1, <span class="dt">y =</span> Var2)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(
+    <span class="kw">aes</span>(<span class="dt">col =</span> points, <span class="dt">size =</span> <span class="kw">abs</span>(points)), 
+    <span class="dt">shape =</span> <span class="dv">16</span>
+    ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(
+    <span class="kw">aes</span>(<span class="dt">col =</span> labels, <span class="dt">size =</span> <span class="kw">abs</span>(labels), <span class="dt">label =</span> <span class="kw">round</span>(labels, <span class="dv">2</span>))
+    ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">6</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_gradient2</span>(<span class="st">&quot;r&quot;</span>, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_discrete</span>(<span class="st">&quot;&quot;</span>, <span class="dt">limits =</span> <span class="kw">rev</span>(<span class="kw">levels</span>(xx<span class="op">$</span>Var1))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">size =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">slope =</span> <span class="op">-</span><span class="dv">1</span>, <span class="dt">intercept =</span> <span class="kw">nlevels</span>(xx<span class="op">$</span>Var1) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_fixed</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>Species) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>),
+        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>),
+        <span class="dt">strip.background =</span> <span class="kw">element_blank</span>())</code></pre></div>
+<pre><code>## Warning: Removed 30 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 30 rows containing missing values (geom_text).</code></pre>
+<p><img src="ggplot2Part3_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intermediate-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["Study-Notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

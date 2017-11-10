@@ -86,6 +86,8 @@ Plot 4: Now we should see our "All" model in the legend, but it's not black anym
 Add a scale layer: scale_color_manual() with the first argument set to "Cylinders" and values set to the predfined myColors variable
 
 ```{r}
+library(RColorBrewer)
+
 # Plot 1: change the LOESS span
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +

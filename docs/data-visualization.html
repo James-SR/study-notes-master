@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Study notes</title>
+  <meta name="description" content="Study notes taken from courses and self learning.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Study notes" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://github.com/James-SR/study-notes-master" />
+  
+  <meta property="og:description" content="Study notes taken from courses and self learning." />
+  <meta name="github-repo" content="James-SR/study-notes-master" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Study notes" />
+  
+  <meta name="twitter:description" content="Study notes taken from courses and self learning." />
+  
+
+<meta name="author" content="James Solomon-Rounce">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="importing-cleaning-data-in-r-case-studies.html">
+<link rel="next" href="intermediate-ggplot2.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Study Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html"><i class="fa fa-check"></i><b>1</b> Importing data - Part 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
+<li class="chapter" data-level="1.3" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-tab-deliminated-files-or-other-table-formats"><i class="fa fa-check"></i><b>1.3</b> Reading tab deliminated files or other table formats</a></li>
+<li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#data.table-fread"><i class="fa fa-check"></i><b>1.4.1</b> data.table fread</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html"><i class="fa fa-check"></i><b>2</b> Importing data - Part 2</a><ul>
+<li class="chapter" data-level="2.1" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-databases---1"><i class="fa fa-check"></i><b>2.1</b> Importing from Databases - 1</a></li>
+<li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
+<li class="chapter" data-level="2.3" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#web-data"><i class="fa fa-check"></i><b>2.3</b> Web Data</a></li>
+<li class="chapter" data-level="2.4" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#json-and-apis"><i class="fa fa-check"></i><b>2.4</b> JSON and APIs</a></li>
+<li class="chapter" data-level="2.5" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-other-statistical-software"><i class="fa fa-check"></i><b>2.5</b> Importing from other statistical software</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html"><i class="fa fa-check"></i><b>3</b> Writing Functions in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#function-overview"><i class="fa fa-check"></i><b>3.1</b> Function overview</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#scoping"><i class="fa fa-check"></i><b>3.1.1</b> Scoping</a></li>
+<li class="chapter" data-level="3.1.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#data-structures"><i class="fa fa-check"></i><b>3.1.2</b> Data Structures</a></li>
+<li class="chapter" data-level="3.1.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#for-loops"><i class="fa fa-check"></i><b>3.1.3</b> For loops</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#when-and-how-you-should-write-a-function"><i class="fa fa-check"></i><b>3.2</b> When and how you should write a function</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#rescale-example"><i class="fa fa-check"></i><b>3.2.1</b> Rescale example</a></li>
+<li class="chapter" data-level="3.2.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#write-a-function-step-by-step"><i class="fa fa-check"></i><b>3.2.2</b> Write a function step by step</a></li>
+<li class="chapter" data-level="3.2.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#how-can-you-write-a-good-function"><i class="fa fa-check"></i><b>3.2.3</b> How can you write a good function?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#functional-programming"><i class="fa fa-check"></i><b>3.3</b> Functional Programming</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#using-purrr"><i class="fa fa-check"></i><b>3.3.1</b> Using purrr</a></li>
+<li class="chapter" data-level="3.3.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#shortcuts"><i class="fa fa-check"></i><b>3.3.2</b> Shortcuts</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#advanced-inputs-and-outputs"><i class="fa fa-check"></i><b>3.4</b> Advanced Inputs and Outputs</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#maps-over-multiple-arguments"><i class="fa fa-check"></i><b>3.4.1</b> Maps over multiple arguments</a></li>
+<li class="chapter" data-level="3.4.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#side-effect-functions"><i class="fa fa-check"></i><b>3.4.2</b> Side effect functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#robust-functions"><i class="fa fa-check"></i><b>3.5</b> Robust Functions</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#unstable-types"><i class="fa fa-check"></i><b>3.5.1</b> Unstable types</a></li>
+<li class="chapter" data-level="3.5.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#non-standard-evaluation-nse"><i class="fa fa-check"></i><b>3.5.2</b> Non standard evaluation (NSE)</a></li>
+<li class="chapter" data-level="3.5.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#hidden-arguments"><i class="fa fa-check"></i><b>3.5.3</b> Hidden arguments</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html"><i class="fa fa-check"></i><b>4</b> Joining Data in R with dplyr</a><ul>
+<li class="chapter" data-level="4.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#mutating-joins"><i class="fa fa-check"></i><b>4.1</b> Mutating joins</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#keys"><i class="fa fa-check"></i><b>4.1.1</b> Keys</a></li>
+<li class="chapter" data-level="4.1.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>4.1.2</b> Left and right joins</a></li>
+<li class="chapter" data-level="4.1.3" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#inner-and-full-joins"><i class="fa fa-check"></i><b>4.1.3</b> Inner and full joins</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#filtering-joins-and-set-operations"><i class="fa fa-check"></i><b>4.2</b> Filtering joins and set operations</a></li>
+<li class="chapter" data-level="4.3" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#set-operations"><i class="fa fa-check"></i><b>4.3</b> Set Operations</a></li>
+<li class="chapter" data-level="4.4" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#bind-in-dplyr"><i class="fa fa-check"></i><b>4.4</b> Bind in Dplyr</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#data-frames"><i class="fa fa-check"></i><b>4.4.1</b> Data frames</a></li>
+<li class="chapter" data-level="4.4.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>4.5</b> Advanced Joining</a></li>
+<li class="chapter" data-level="4.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>4.6</b> Joining mutiple tables</a></li>
+<li class="chapter" data-level="4.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>4.7</b> Other implentations</a></li>
+<li class="chapter" data-level="4.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>4.8</b> Case Study - Lahman DB</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>5</b> Cleaning Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>5.1</b> Tidying data</a></li>
+<li class="chapter" data-level="5.2" data-path="cleaning-data.html"><a href="cleaning-data.html#preparing-data-for-analysis"><i class="fa fa-check"></i><b>5.2</b> Preparing data for analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="cleaning-data.html"><a href="cleaning-data.html#string-manipulation"><i class="fa fa-check"></i><b>5.3</b> String manipulation</a></li>
+<li class="chapter" data-level="5.4" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-specials-and-outliers"><i class="fa fa-check"></i><b>5.4</b> Missing, Specials and Outliers</a></li>
+<li class="chapter" data-level="5.5" data-path="cleaning-data.html"><a href="cleaning-data.html#examples"><i class="fa fa-check"></i><b>5.5</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html"><i class="fa fa-check"></i><b>6</b> Importing &amp; Cleaning Data in R: Case Studies</a><ul>
+<li class="chapter" data-level="6.1" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#ticket-sales-data"><i class="fa fa-check"></i><b>6.1</b> Ticket Sales Data</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#removing-redundant-info"><i class="fa fa-check"></i><b>6.1.1</b> Removing redundant info</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#working-with-dates"><i class="fa fa-check"></i><b>6.2</b> Working with dates</a></li>
+<li class="chapter" data-level="6.3" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#mbta-ridership-data"><i class="fa fa-check"></i><b>6.3</b> MBTA Ridership Data</a></li>
+<li class="chapter" data-level="6.4" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#world-food-facts"><i class="fa fa-check"></i><b>6.4</b> World Food Facts</a></li>
+<li class="chapter" data-level="6.5" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#school-attendance-data"><i class="fa fa-check"></i><b>6.5</b> School Attendance Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-visualization.html"><a href="data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a><ul>
+<li class="chapter" data-level="7.1" data-path="data-visualization.html"><a href="data-visualization.html#base-r-graphics"><i class="fa fa-check"></i><b>7.1</b> Base R Graphics</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="data-visualization.html"><a href="data-visualization.html#avoiding-pie-charts"><i class="fa fa-check"></i><b>7.1.1</b> Avoiding pie charts</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-visualization.html"><a href="data-visualization.html#different-plot-types"><i class="fa fa-check"></i><b>7.2</b> Different Plot Types</a></li>
+<li class="chapter" data-level="7.3" data-path="data-visualization.html"><a href="data-visualization.html#adding-details-to-plots"><i class="fa fa-check"></i><b>7.3</b> Adding details to plots</a></li>
+<li class="chapter" data-level="7.4" data-path="data-visualization.html"><a href="data-visualization.html#adding-text"><i class="fa fa-check"></i><b>7.4</b> Adding text</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="data-visualization.html"><a href="data-visualization.html#adding-details-to-plots-1"><i class="fa fa-check"></i><b>7.4.1</b> Adding details to plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="data-visualization.html"><a href="data-visualization.html#how-much-is-too-much"><i class="fa fa-check"></i><b>7.5</b> How much is too much</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="data-visualization.html"><a href="data-visualization.html#mutiple-plots"><i class="fa fa-check"></i><b>7.5.1</b> Mutiple Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="data-visualization.html"><a href="data-visualization.html#advanced-plot-customisation"><i class="fa fa-check"></i><b>7.6</b> Advanced Plot Customisation</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="data-visualization.html"><a href="data-visualization.html#using-colour-effectively"><i class="fa fa-check"></i><b>7.6.1</b> Using colour effectively</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="data-visualization.html"><a href="data-visualization.html#other-graphics-systems"><i class="fa fa-check"></i><b>7.7</b> Other graphics systems</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html"><i class="fa fa-check"></i><b>8</b> Intermediate ggplot2</a><ul>
+<li class="chapter" data-level="8.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#statistics"><i class="fa fa-check"></i><b>8.1</b> Statistics</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#stats-outside-geoms"><i class="fa fa-check"></i><b>8.1.1</b> Stats outside geoms</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#coordinates-layer"><i class="fa fa-check"></i><b>8.2</b> Coordinates Layer</a></li>
+<li class="chapter" data-level="8.3" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#facets"><i class="fa fa-check"></i><b>8.3</b> Facets</a></li>
+<li class="chapter" data-level="8.4" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#themes"><i class="fa fa-check"></i><b>8.4</b> Themes</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#recycling-themes"><i class="fa fa-check"></i><b>8.4.1</b> Recycling themes</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#best-practice"><i class="fa fa-check"></i><b>8.5</b> Best Practice</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#bar-plots"><i class="fa fa-check"></i><b>8.5.1</b> Bar Plots</a></li>
+<li class="chapter" data-level="8.5.2" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#pie-charts"><i class="fa fa-check"></i><b>8.5.2</b> Pie Charts</a></li>
+<li class="chapter" data-level="8.5.3" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#heat-maps"><i class="fa fa-check"></i><b>8.5.3</b> Heat Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#case-study---descriptive-statistics"><i class="fa fa-check"></i><b>8.6</b> Case Study - Descriptive statistics</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#mosaic-plots"><i class="fa fa-check"></i><b>8.6.1</b> Mosaic Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Advanced ggplot2</a><ul>
+<li class="chapter" data-level="9.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#refresher"><i class="fa fa-check"></i><b>9.1</b> Refresher</a></li>
+<li class="chapter" data-level="9.2" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#statistical-plots"><i class="fa fa-check"></i><b>9.2</b> Statistical plots</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.2.1</b> Box plots</a></li>
+<li class="chapter" data-level="9.2.2" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#density-plots"><i class="fa fa-check"></i><b>9.2.2</b> Density Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#multiple-groups-or-variables"><i class="fa fa-check"></i><b>9.3</b> Multiple groups or variables</a></li>
+<li class="chapter" data-level="9.4" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#plots-for-specific-data-1"><i class="fa fa-check"></i><b>9.4</b> Plots for Specific Data 1</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#big-data"><i class="fa fa-check"></i><b>9.4.1</b> Big data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>10</b> Introduction to Data</a><ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-data.html"><a href="introduction-to-data.html#language-of-data"><i class="fa fa-check"></i><b>10.1</b> Language of Data</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-data.html"><a href="introduction-to-data.html#observational-studies-and-experiments"><i class="fa fa-check"></i><b>10.2</b> Observational Studies and Experiments</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-data.html"><a href="introduction-to-data.html#sampling-strategies-and-experimental-design"><i class="fa fa-check"></i><b>10.3</b> Sampling strategies and experimental design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="11" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>11</b> Foundations of Inference</a><ul>
+<li class="chapter" data-level="11.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>11.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="11.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>11.2</b> Home Ownership by Gender</a></li>
+<li class="chapter" data-level="11.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots-1"><i class="fa fa-check"></i><b>11.3</b> Density Plots</a></li>
+<li class="chapter" data-level="11.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>11.4</b> Gender Discrimination (p-values)</a></li>
+<li class="chapter" data-level="11.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>11.5</b> Opportunity Cost</a></li>
+<li class="chapter" data-level="11.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>11.6</b> Type I and Type II errors</a></li>
+<li class="chapter" data-level="11.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>11.7</b> Bootstrapping</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>12.1</b> Categorical Data</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>12.2</b> Numerical Data</a></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>12.3</b> Numerical Summaries</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#transformations"><i class="fa fa-check"></i><b>12.3.1</b> Transformations</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#outliers"><i class="fa fa-check"></i><b>12.3.2</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#email-case-study"><i class="fa fa-check"></i><b>12.4</b> Email Case Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html"><i class="fa fa-check"></i><b>13</b> Correlation and Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#visualizing-two-variables"><i class="fa fa-check"></i><b>13.1</b> Visualizing two variables</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#transformations-1"><i class="fa fa-check"></i><b>13.1.1</b> Transformations</a></li>
+<li class="chapter" data-level="13.1.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#identifying-outliers"><i class="fa fa-check"></i><b>13.1.2</b> Identifying Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#correlation"><i class="fa fa-check"></i><b>13.2</b> Correlation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#anscombe-dataset"><i class="fa fa-check"></i><b>13.2.1</b> Anscombe Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#linear-regression"><i class="fa fa-check"></i><b>13.3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#regression-to-the-mean"><i class="fa fa-check"></i><b>13.3.1</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="13.3.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#fitting-linear-models"><i class="fa fa-check"></i><b>13.3.2</b> Fitting linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#model-fit"><i class="fa fa-check"></i><b>13.4</b> Model fit</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#unusual-points"><i class="fa fa-check"></i><b>13.4.1</b> Unusual points</a></li>
+<li class="chapter" data-level="13.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>13.4.2</b> High leverage Points</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>14</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="14.1" data-path="supervised-learning.html"><a href="supervised-learning.html#tree-based-models"><i class="fa fa-check"></i><b>14.1</b> Tree Based Models</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="supervised-learning.html"><a href="supervised-learning.html#random-forests"><i class="fa fa-check"></i><b>14.1.1</b> Random Forests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="supervised-learning.html"><a href="supervised-learning.html#one-hot-encoding-categorical-variables"><i class="fa fa-check"></i><b>14.1.2</b> One-Hot-Encoding Categorical Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="supervised-learning.html"><a href="supervised-learning.html#gradient-boosting-machines"><i class="fa fa-check"></i><b>14.2</b> Gradient Boosting Machines</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>15</b> Dimensional Modelling</a><ul>
+<li class="chapter" data-level="15.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>15.1</b> Introduction to Dimensional Data</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>15.1.1</b> Data Modelling levels</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>15.2</b> Architecture considerations</a></li>
+<li class="chapter" data-level="15.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>15.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="15.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>15.4</b> Kimball Approach</a></li>
+<li class="chapter" data-level="15.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>15.5</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="15.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>15.6</b> Tips</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-3.html"><a href="references-3.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Study notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-visualization" class="section level1">
+<h1><span class="header-section-number">7</span> Data Visualization</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Data Visualization in R’ by Ronald Pearson.</p>
+<div id="base-r-graphics" class="section level2">
+<h2><span class="header-section-number">7.1</span> Base R Graphics</h2>
+<p>Two basic types of data visualizations:</p>
+<ul>
+<li>Exploratory visualizations help us understand the data</li>
+<li>Explanatory visualizations help us share ourunderstanding with others</li>
+</ul>
+<p>There are four graphics systems in R:</p>
+<ul>
+<li>Base graphics: Easiest to learn and focus of this course</li>
+<li>Grid graphics: powerful set of modules for building othertools</li>
+<li>Lattice graphics: general purpose system based on grid graphics</li>
+<li>ggplot2: “the grammar of graphics”</li>
+</ul>
+<p>Grid graphics allows more control of the output but is more complex, typically it is used by package developers and both lattice and ggplot2 build on this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load MASS package</span>
+<span class="kw">library</span>(MASS)
+
+<span class="co"># Plot whiteside data</span>
+<span class="kw">plot</span>(whiteside)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot Gas vs. Temp</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp, whiteside<span class="op">$</span>Gas, <span class="dt">ylab =</span> <span class="st">&quot;Heating gas consumption&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Outside temperature&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Apply the plot() function to Insul - R will automatically change the plot type to suit the data (a factor)</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Insul)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<p>Adding additional details to your explanatory plots can help emphasize certain aspects of your data. For example, by specifying the pch and col arguments to the plot() function, you can add different point shapes and colors to show how different variables or subsets of your data relate to each other. In addition, you can add a new set of points to your existing scatterplot with the points() function, and add reference lines with the abline() function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot Max.Price vs. Price as red triangles</span>
+<span class="kw">plot</span>(Cars93<span class="op">$</span>Price, Cars93<span class="op">$</span>Max.Price, <span class="dt">pch =</span> <span class="dv">17</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+
+<span class="co"># Add Min.Price vs. Price as blue circles</span>
+<span class="kw">points</span>(Cars93<span class="op">$</span>Price, Cars93<span class="op">$</span>Min.Price, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)
+
+<span class="co"># Add an equality reference line with abline() - lty=2 makes a dashed line</span>
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>You can plot multiple graphs on a single pane using the par() function with its mfrow parameter. For example, par(mfrow = c(1, 2)) creates a plot array with 1 row and 2 columns, allowing you to view two graphs side-by-side. This way, you can compare and contrast different datasets or different views of the same dataset. This exercise asks you to compare two views of the Animals2 dataset from the robustbase package, differing in how its variables are represented.</p>
+<p>The objective of this exercise is to emphasize that the original representation of the variables that we have in a dataset is not always the best one for visualization or analysis. By representing the original variables in log scale, for example, we can better see and understand the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the robustbase package</span>
+<span class="kw">library</span>(robustbase)
+
+<span class="co"># Set up the side-by-side plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="co"># First plot: brain vs. body in its original form</span>
+<span class="kw">plot</span>(Animals2<span class="op">$</span>body, Animals2<span class="op">$</span>brain)
+
+<span class="co"># Add the first title</span>
+<span class="kw">title</span>(<span class="st">&quot;Original representation&quot;</span>)
+
+<span class="co"># Second plot: log-log plot of brain vs. body</span>
+<span class="kw">plot</span>(Animals2<span class="op">$</span>body, Animals2<span class="op">$</span>brain, <span class="dt">log =</span> <span class="st">&quot;xy&quot;</span>)
+
+<span class="co"># Add the second title</span>
+<span class="kw">title</span>(<span class="st">&quot;Log-log plot&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Sometimes, log-transforming the x and y variables by specifying log = “xy” inside the plot() function can make it a lot easier to see the direct relationship between the two variables. Similarly, you can specify log = “y” to log-transform only the y variable and log = “x” to log-transform only the x variable.</p>
+<div id="avoiding-pie-charts" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Avoiding pie charts</h3>
+<p>The same dataset can be displayed or summarized in many different ways, but some are much more suitable than others.</p>
+<p>Despite their general popularity, pie charts are often a poor choice. Though R allows pie charts with the pie() function, even the help file for this function argues against their use. Specifically, the help file includes a “Note” that begins with the words: “Pie charts are a very bad way of displaying information.”</p>
+<p>Bar charts are a recommended alternative.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the insuranceData package</span>
+<span class="kw">library</span>(insuranceData)
+
+<span class="co"># Use the data() function to get the dataCar data frame</span>
+<span class="kw">data</span>(dataCar)
+
+<span class="co"># Set up a side-by-side plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="co"># Create a table of veh_body record counts and sort</span>
+tbl &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">table</span>(dataCar<span class="op">$</span>veh_body),
+            <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># Create the pie chart and give it a title</span>
+<span class="kw">pie</span>(tbl) <span class="op">+</span><span class="st"> </span><span class="kw">title</span>(<span class="st">&quot;Pie chart&quot;</span>)</code></pre></div>
+<pre><code>## integer(0)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the barplot with perpendicular, half-sized labels</span>
+<span class="kw">barplot</span>(tbl, <span class="dt">las =</span> <span class="dv">2</span>, <span class="dt">cex.names =</span> <span class="fl">0.5</span>)
+
+<span class="co"># Add a title</span>
+<span class="kw">title</span>(<span class="st">&quot;Bar chart&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<div id="different-plot-types" class="section level2">
+<h2><span class="header-section-number">7.2</span> Different Plot Types</h2>
+<p>Histograms are probably the best-known way of looking at how the values of a numerical variable are distributed over their range, and R provides several different histogram implementations.</p>
+<p>The purpose of this exercise is to introduce two of these:</p>
+<p>hist() is part of base R and its default option yields a histogram based on the number of times a record falls into each of the bins on which the histogram is based. truehist() is from the MASS package and scales these counts to give an estimate of the probability density.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up a side-by-side plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="co"># Create a histogram of counts with hist()</span>
+<span class="kw">hist</span>(Cars93<span class="op">$</span>Horsepower, <span class="dt">main =</span> <span class="st">&quot;hist() plot&quot;</span>)
+
+<span class="co"># Create a normalized histogram with truehist()</span>
+<span class="kw">truehist</span>(Cars93<span class="op">$</span>Horsepower, <span class="dt">main =</span> <span class="st">&quot;truehist() plot&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>While they are probably not as well known as the histogram, density estimates may be regarded as smoothed histograms, designed to give a better estimate of the density function for a random variable.</p>
+<p>In this exercise, you’ll use the ChickWeight dataset, which contains a collection of chicks’ weights. You will first select for the chicks that are 16 weeks old. Then, you’ll create a histogram using the truehist() function, and add its density plot on top, using the lines() and density() functions with their default options. The density plot of this type of variable is often expected to conform approximately to the bell-shaped curve, otherwise known as the Gaussian distribution. Let’s find out whether that’s the case for this dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create index16, pointing to 16-week chicks</span>
+index16 &lt;-<span class="st"> </span><span class="kw">which</span>(ChickWeight<span class="op">$</span>Time <span class="op">==</span><span class="st"> </span><span class="dv">16</span>)
+
+<span class="co"># Get the 16-week chick weights</span>
+weights &lt;-<span class="st"> </span>ChickWeight<span class="op">$</span>weight[index16]
+
+<span class="co"># Plot the normalized histogram</span>
+<span class="kw">truehist</span>(weights)
+
+<span class="co"># Add the density curve to the histogram</span>
+<span class="kw">lines</span>(<span class="kw">density</span>(weights))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>A practical limitation of both histograms and density estimates is that, if we want to know whether the Gaussian distribution assumption is reasonable for our data, it is difficult to tell.</p>
+<p>The quantile-quantile plot, or QQ-plot, is a useful alternative: we sort our data, plot it against a specially-designed x-axis based on our reference distribution (e.g., the Gaussian “bell curve”), and look to see whether the points lie approximately on a straight line. In R, several QQ-plot implementations are available, but the most convenient one is the qqPlot() function in the car package.</p>
+<p>The first part of this exercise applies this function to the 16-week chick weight data considered in the last exercise, to show that the Gaussian distribution appears to be reasonable here. The second part of the exercise applies this function to another variable where the Gaussian distribution is obviously a poor fit, but the results also show the presence of repeated values (flat stretches in the plot) and portions of the data range where there are no observations (vertical “jumps” in the plot).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the car package to make qqPlot() available</span>
+<span class="kw">library</span>(car)</code></pre></div>
+<pre><code>## Warning: package &#39;car&#39; was built under R version 3.4.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show the normal QQ-plot of the chick weights</span>
+<span class="kw">qqPlot</span>(weights)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Show the normal QQ-plot of the Boston$tax data</span>
+<span class="kw">qqPlot</span>(Boston<span class="op">$</span>tax)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p>The points lie in a relatively straight line only if the data is normally distributed (ie. Its density plot is approximately a Gaussian distribution). So looking at the second QQ-plot, you can see that the tax variable in the Boston data frame is definitely not normally distributed.</p>
+<p>A scatterplot represents each (x, y) pair in a dataset by a single point. If some of these pairs are repeated (i.e. if the same combination of x and y values appears more than once and thus lie on top of each other), we can’t see this in a scatterplot. Several approaches have been developed to deal with this problem, including jittering, which adds small random values to each x and y value, so repeated points will appear as clusters of nearby points.</p>
+<p>A useful alternative that is equally effective in representing repeated data points is the sunflowerplot, which represents each repeated point by a “sunflower,” with one “petal” for each repetition of a data point.</p>
+<p>Note the large cluster in the upper left corner of the plot, indicating that records with the maximum rad value and zero zn value occur many times.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up a side-by-side plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="co"># Create the standard scatterplot</span>
+<span class="kw">plot</span>(rad <span class="op">~</span><span class="st"> </span>zn, <span class="dt">data =</span> Boston)
+
+<span class="co"># Add the title</span>
+<span class="kw">title</span>(<span class="st">&quot;Standard scatterplot&quot;</span>)
+
+<span class="co"># Create the sunflowerplot</span>
+<span class="kw">sunflowerplot</span>(rad <span class="op">~</span><span class="st"> </span>zn, <span class="dt">data =</span> Boston)
+
+<span class="co"># Add the title</span>
+<span class="kw">title</span>(<span class="st">&quot;Sunflower plot&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>The boxplot() function shows how the distribution of a numerical variable y differs across the unique levels of a second variable, x. To be effective, this second variable should not have too many unique levels (e.g., 10 or fewer is good; many more than this makes the plot difficult to interpret).</p>
+<p>The boxplot() function also has a number of optional parameters and this exercise asks you to use three of them to obtain a more informative plot:</p>
+<ul>
+<li>varwidth allows for variable-width boxplots that show the different sizes of the data subsets.</li>
+<li>log allows for log-transformed y-values.</li>
+<li>las allows for more readable axis labels.</li>
+</ul>
+<p>This exercise also illustrates the use of the formula interface: y ~ x indicates that we want a boxplot of the y variable across the different levels of the x variable.</p>
+<p>You can see from the wider boxplots for rad = 4, 5, and 24 how much larger these subsets are than the others.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a variable-width boxplot with log y-axis &amp; horizontal labels</span>
+<span class="kw">boxplot</span>(crim <span class="op">~</span><span class="st"> </span>rad, <span class="dt">data =</span> Boston, <span class="dt">varwidth =</span> <span class="ot">TRUE</span>, <span class="dt">log =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span> )
+
+<span class="co"># Add a title</span>
+<span class="kw">title</span>(<span class="st">&quot;Crime rate vs. radial highway index&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>A mosaic plot may be viewed as a scatterplot between categorical variables and it is supported in R with the mosaicplot() function.</p>
+<p>As this example shows, in addition to categorical variables, this plot can also be useful in understanding the relationship between numerical variables, either integer- or real-valued, that take only a few distinct values.</p>
+<p>More specifically, this exercise asks you to construct a mosaic plot showing the relationship between the numerical carb and cyl variables from the mtcars data frame, variables that exhibit 6 and 3 unique values, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a mosaic plot using the formula interface</span>
+ <span class="kw">mosaicplot</span>(carb <span class="op">~</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>A single box plot gives a graphical representation of the range of variation in a numerical variable, based on five numbers:</p>
+<ul>
+<li>The minimum and maximum values</li>
+<li>The median (or “middle”) value</li>
+<li>Two intermediate values called the lower and upper quartiles</li>
+</ul>
+<p>In addition, the standard box plot computes a nominal data range from three of these numbers and flags points falling outside this range as outliers, representing them as distinct points.</p>
+<p>The bag plot extends this representation to two numerical variables, showing their relationship, both within two-dimensional “bags” corresponding to the “box” in the standard boxplot, and indicating outlying points outside these limits.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a side-by-side boxplot summary</span>
+<span class="kw">boxplot</span>(Cars93<span class="op">$</span>Min.Price, Cars93<span class="op">$</span>Max.Price)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load aplpack to make the bagplot() function available</span>
+<span class="kw">library</span>(aplpack)</code></pre></div>
+<pre><code>## Loading required package: tcltk</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a bagplot for the same two variables</span>
+<span class="kw">bagplot</span>(Cars93<span class="op">$</span>Min.Price, Cars93<span class="op">$</span>Max.Price, <span class="dt">cex =</span> <span class="fl">1.2</span>)
+
+<span class="co"># Add an equality reference line</span>
+<span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<p>Correlation matrices were introduced in the video as a useful tool for obtaining a preliminary view of the relationships between multiple numerical variables.</p>
+<p>This exercise asks you to use the corrplot() function from the corrplot package to visualize this correlation matrix for the numerical variables from the UScereal data frame in the MASS package. Recall that in this version of these plots, ellipses that are thin and elongated indicate a large correlation value between the indicated variables, while ellipses that are nearly circular indicate correlations near zero.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the corrplot library for the corrplot() function</span>
+<span class="kw">library</span>(corrplot)
+
+<span class="co"># Extract the numerical variables from UScereal</span>
+numericalVars &lt;-<span class="st"> </span>UScereal[, <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>]
+
+<span class="co"># Compute the correlation matrix for these variables</span>
+corrMat &lt;-<span class="st"> </span><span class="kw">cor</span>(numericalVars)
+
+<span class="co"># Generate the correlation ellipse plot</span>
+<span class="kw">corrplot</span>(corrMat, <span class="dt">method =</span> <span class="st">&quot;ellipse&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Decision trees represent a popular form of predictive model because they are easy to visualize and explain, rpart package is probably the most popular of several R packages that can be used to build and visualize these models.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the rpart library</span>
+<span class="kw">library</span>(rpart)
+
+<span class="co"># Fit an rpart model to predict medv from all other Boston variables</span>
+tree_model &lt;-<span class="st"> </span><span class="kw">rpart</span>(medv <span class="op">~</span>., <span class="dt">data =</span> Boston)
+
+<span class="co"># Plot the structure of this decision tree model</span>
+<span class="kw">plot</span>(tree_model)
+
+<span class="co"># Add labels to this plot</span>
+<span class="kw">text</span>(tree_model, <span class="dt">cex =</span> <span class="fl">0.7</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="adding-details-to-plots" class="section level2">
+<h2><span class="header-section-number">7.3</span> Adding details to plots</h2>
+<p>You already saw how the mfrow parameter to the par() function could be used to plot multiple graphs in one pane. The par() function also allows you to set many other graphics parameters, whose values will remain in effect until they are reset by a subsequent par() call.</p>
+<p>Specifically, a call to the par() function with no parameters specified will return a list whose element names each specify a graphics parameter and whose element values specify the corresponding default values of these parameters. These parameters may be set by a call in the form par(name = value) where name is the name of the parameter to be set and value is the value to be assigned to this parameter. The following section shows the number of functions contained within the base R par function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Assign the return value from the par() function to plot_pars</span>
+plot_pars &lt;-<span class="st"> </span><span class="kw">par</span>()
+
+<span class="co"># Display the names of the par() function&#39;s list elements</span>
+<span class="kw">names</span>(plot_pars)</code></pre></div>
+<pre><code>##  [1] &quot;xlog&quot;      &quot;ylog&quot;      &quot;adj&quot;       &quot;ann&quot;       &quot;ask&quot;      
+##  [6] &quot;bg&quot;        &quot;bty&quot;       &quot;cex&quot;       &quot;cex.axis&quot;  &quot;cex.lab&quot;  
+## [11] &quot;cex.main&quot;  &quot;cex.sub&quot;   &quot;cin&quot;       &quot;col&quot;       &quot;col.axis&quot; 
+## [16] &quot;col.lab&quot;   &quot;col.main&quot;  &quot;col.sub&quot;   &quot;cra&quot;       &quot;crt&quot;      
+## [21] &quot;csi&quot;       &quot;cxy&quot;       &quot;din&quot;       &quot;err&quot;       &quot;family&quot;   
+## [26] &quot;fg&quot;        &quot;fig&quot;       &quot;fin&quot;       &quot;font&quot;      &quot;font.axis&quot;
+## [31] &quot;font.lab&quot;  &quot;font.main&quot; &quot;font.sub&quot;  &quot;lab&quot;       &quot;las&quot;      
+## [36] &quot;lend&quot;      &quot;lheight&quot;   &quot;ljoin&quot;     &quot;lmitre&quot;    &quot;lty&quot;      
+## [41] &quot;lwd&quot;       &quot;mai&quot;       &quot;mar&quot;       &quot;mex&quot;       &quot;mfcol&quot;    
+## [46] &quot;mfg&quot;       &quot;mfrow&quot;     &quot;mgp&quot;       &quot;mkh&quot;       &quot;new&quot;      
+## [51] &quot;oma&quot;       &quot;omd&quot;       &quot;omi&quot;       &quot;page&quot;      &quot;pch&quot;      
+## [56] &quot;pin&quot;       &quot;plt&quot;       &quot;ps&quot;        &quot;pty&quot;       &quot;smo&quot;      
+## [61] &quot;srt&quot;       &quot;tck&quot;       &quot;tcl&quot;       &quot;usr&quot;       &quot;xaxp&quot;     
+## [66] &quot;xaxs&quot;      &quot;xaxt&quot;      &quot;xpd&quot;       &quot;yaxp&quot;      &quot;yaxs&quot;     
+## [71] &quot;yaxt&quot;      &quot;ylbias&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Display the number of par() function list elements</span>
+<span class="kw">length</span>(plot_pars)</code></pre></div>
+<pre><code>## [1] 72</code></pre>
+<p>One of the important graphics parameters that can be set with the par() function is mfrow, which specifies the numbers of rows and columns in an array of plots. Valid values for this parameter are two-element numerical vectors, whose first element specifies the number of rows in the plot array and the second element specifies the number of rows.</p>
+<p>A more detailed discussion of using the mfrow parameter is given in Chapter 4 of this course. For now, note that to specify a plot array with three rows and one column, the command would be par(mfrow = c(3, 1)).</p>
+<p>The following exercise also introduces the type parameter for the plot() command, which specifies how the plot is drawn. The specific type values used here are:</p>
+<ul>
+<li>“p” for “points”</li>
+<li>“l” for “lines”</li>
+<li>“o” for “overlaid” (i.e., lines overlaid with points)</li>
+<li>“s” for “steps”</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up a 2-by-2 plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+
+<span class="co"># Plot the Animals2 brain weight data as points</span>
+<span class="kw">plot</span>(Animals2<span class="op">$</span>brain, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>)
+
+<span class="co"># Add the title</span>
+<span class="kw">title</span>(<span class="st">&quot;points&quot;</span>)
+
+<span class="co"># Plot the brain weights with lines</span>
+<span class="kw">plot</span>(Animals2<span class="op">$</span>brain, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)
+
+<span class="co"># Add the title</span>
+<span class="kw">title</span>(<span class="st">&quot;lines&quot;</span>)
+
+<span class="co"># Plot the brain weights as lines overlaid with points</span>
+<span class="kw">plot</span>(Animals2<span class="op">$</span>brain, <span class="dt">type =</span> <span class="st">&quot;o&quot;</span>)
+
+<span class="co"># Add the title</span>
+<span class="kw">title</span>(<span class="st">&quot;overlaid&quot;</span>)
+
+<span class="co"># Plot the brain weights as steps</span>
+<span class="kw">plot</span>(Animals2<span class="op">$</span>brain, <span class="dt">type =</span> <span class="st">&quot;s&quot;</span>)
+
+<span class="co"># Add the title</span>
+<span class="kw">title</span>(<span class="st">&quot;steps&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>The type = “n” option was discussed in the video and this exercise provides a simple example. This option is especially useful is when we are plotting data from multiple sources on a common set of axes. In such cases, we can compute ranges for the x- and y-axes so that all data points will appear on the plot, and then add the data with subsequent calls to points() or lines() as appropriate.</p>
+<p>This exercise asks you to generate a plot that compares mileage vs. horsepower data from two different sources: the mtcars data frame in the datasets package and the Cars93 data frame in the MASS package. To distinguish the different results from these data sources, the graphics parameter pch is used to specify point shapes. See ?points for a comprehensive list of some pch values and their corresponding point shapes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute max_hp</span>
+max_hp &lt;-<span class="st"> </span><span class="kw">max</span>(Cars93<span class="op">$</span>Horsepower, mtcars<span class="op">$</span>hp)
+
+<span class="co"># Compute max_mpg</span>
+max_mpg &lt;-<span class="st"> </span><span class="kw">max</span>(Cars93<span class="op">$</span>MPG.city, Cars93<span class="op">$</span>MPG.highway, mtcars<span class="op">$</span>mpg)
+
+<span class="co"># Create plot with type = &quot;n&quot;               </span>
+<span class="kw">plot</span>(max_mpg, max_hp,
+     <span class="dt">type =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, max_hp),
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, max_mpg), <span class="dt">xlab =</span> <span class="st">&quot;Horsepower&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Miles per gallon&quot;</span>)
+
+<span class="co"># Add open circles to plot</span>
+<span class="kw">points</span>(mtcars<span class="op">$</span>hp,mtcars<span class="op">$</span>mpg, <span class="dt">pch =</span> <span class="dv">1</span>)
+
+<span class="co"># Add solid squares to plot</span>
+<span class="kw">points</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city, <span class="dt">pch =</span> <span class="dv">15</span>)
+
+<span class="co"># Add open triangles to plot</span>
+<span class="kw">points</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.highway, <span class="dt">pch =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Numerical data is often assumed to conform approximately to a Gaussian probability distribution, characterized by the bell curve. One point of this exercise is to show what this bell curve looks like for exactly Gaussian data and the other is to show how the lines() function can be used to add lines to an existing plot.</p>
+<p>The curves you are asked to draw here have the same basic shape but differ in their details (specifically, the means and standard deviations of these Gaussian distributions are different). For this reason, it is useful to draw these curves with different line types to help us distinguish them.</p>
+<p>Note that line types are set by the lty argument, with the default value lty = 1 specifying solid lines, lty = 2 specifying dashed lines, and lty = 3 specifying dotted lines. Also note that the lwd argument specifies the relative width.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create the numerical vector x</span>
+x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length =</span> <span class="dv">200</span>)
+
+<span class="co"># Compute the Gaussian density for x with mean 2 and standard deviation 0.2</span>
+gauss1 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="fl">0.2</span>)
+
+<span class="co"># Compute the Gaussian density with mean 4 and standard deviation 0.5</span>
+gauss2 &lt;-<span class="st"> </span><span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">4</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>)
+
+<span class="co"># Plot the first Gaussian density</span>
+<span class="kw">plot</span>(x, gauss1, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Gaussian probability density&quot;</span>)
+
+<span class="co"># Add lines for the second Gaussian density</span>
+<span class="kw">lines</span>(x, gauss2, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>One advantage of specifying the pch argument locally is that, in a call to functions like plot() or points(), local specification allows us to make pch depend on a variable in our dataset. This provides a simple way of indicating different data subsets with different point shapes or symbols.</p>
+<p>The first plot specifies the point shapes using numerical values of the pch argument defined by the cyl variable in the mtcars data frame. The second plot illustrates the fact that pch can also be specified as a vector of single characters, causing each point to be drawn as the corresponding character.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create an empty plot using type = &quot;n&quot;</span>
+<span class="kw">plot</span>(mtcars<span class="op">$</span>hp, mtcars<span class="op">$</span>mpg, <span class="dt">type =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Horsepower&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Gas mileage&quot;</span>)
+
+<span class="co"># Add points with shapes determined by cylinder number</span>
+<span class="kw">points</span>(mtcars<span class="op">$</span>hp, mtcars<span class="op">$</span>mpg, <span class="dt">pch =</span> mtcars<span class="op">$</span>cyl)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a second empty plot</span>
+<span class="kw">plot</span>(mtcars<span class="op">$</span>hp, mtcars<span class="op">$</span>mpg, <span class="dt">type =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Horsepower&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Gas mileage&quot;</span>)
+
+<span class="co"># Add points with shapes as cylinder characters</span>
+<span class="kw">points</span>(mtcars<span class="op">$</span>hp, mtcars<span class="op">$</span>mpg, <span class="dt">pch =</span> <span class="kw">as.character</span>(mtcars<span class="op">$</span>cyl))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
+<p>The low-level plot function abline() adds a straight line to an existing plot. This line is specified by an intercept parameter a and a slope parameter b, and the simplest way to set these parameters is directly. For example, the command abline(a = 0, b = 1) adds an equality reference line with zero intercept and unit (i.e. 1) slope: points for which y = x fall on this reference line, while points with y &gt; x fall above it, and points with y &lt; x fall below it.</p>
+<p>An alternative way of specifying these parameters is through a linear regression model that determines them from data. One common application is to generate a scatterplot of y versus x, then fit a linear model that predicts y from x, and finally call abline() to add this best fit line to the plot.</p>
+<p>The standard R function that fits linear regression models is lm(), which supports the formula interface. Thus, to fit a linear model that predicts y from x in the data frame df, the call would be lm(y ~ x, data = df). This call returns a linear model object, which can then be passed as an argument to the abline() function to draw the desired line on our plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Build a linear regression model for the whiteside data</span>
+linear_model &lt;-<span class="st"> </span><span class="kw">lm</span>(Gas <span class="op">~</span><span class="st"> </span>Temp, <span class="dt">data =</span> whiteside)
+
+<span class="co"># Create a Gas vs. Temp scatterplot from the whiteside data</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp, whiteside<span class="op">$</span>Gas)
+
+<span class="co"># Use abline() to add the linear regression line</span>
+<span class="kw">abline</span>(linear_model, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="adding-text" class="section level2">
+<h2><span class="header-section-number">7.4</span> Adding text</h2>
+<p>One of the main uses of the text() function is to add informative labels to a data plot. The text() function takes three arguments:</p>
+<ul>
+<li>x, which specifies the value for the x variable,</li>
+<li>y, which specifies the value for the y variable, and</li>
+<li>label, which specifies the label for the x-y value pair.</li>
+</ul>
+<p>This exercise asks you to first create a scatterplot of city gas mileage versus horsepower from the Cars93 data, then identify an interesting subset of the data (i.e. the 3-cylinder cars) and label these points. You will find that assigning a vector to the x, y, and label arguments to text() will result in labeling multiple points at once.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create MPG.city vs. Horsepower plot with solid squares</span>
+<span class="kw">plot</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city, <span class="dt">pch =</span> <span class="dv">15</span>)
+
+<span class="co"># Create index3, pointing to 3-cylinder cars</span>
+index3 &lt;-<span class="st"> </span><span class="kw">which</span>(Cars93<span class="op">$</span>Cylinders <span class="op">==</span><span class="st"> &quot;3&quot;</span>)
+
+<span class="co"># Add text giving names of cars next to data points</span>
+<span class="kw">text</span>(<span class="dt">x =</span> Cars93<span class="op">$</span>Horsepower[index3], 
+     <span class="dt">y =</span> Cars93<span class="op">$</span>MPG.city[index3],
+     <span class="dt">labels =</span> Cars93<span class="op">$</span>Make[index3], <span class="dt">adj =</span> <span class="dv">0</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>It was noted that the adj argument to the text() function determines the horizontal placement of the text and it can take any value between 0 and 1. In fact, this argument can take values outside this range. That is, making this value negative causes the text to start to the right of the specified x position. Similarly, making adj greater than 1 causes the text to end to the left of the x position.</p>
+<p>Another useful optional argument for the text() function is cex, which scales the default text size. As a specific example, setting cex = 1.5 increases the text size by 50 percent, relative to the default value. Similarly, specifying cex = 0.8 reduces the text size by 20 percent.</p>
+<p>Finally, the third optional parameter used here is font, which can be used to specify one of four text fonts: font = 1 is the default text font (neither italic nor bold), font = 2 specifies bold face text, font = 3 specifies italic text, and font = 4 specifies both bold and italic text.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot MPG.city vs. Horsepower as open circles</span>
+<span class="kw">plot</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city, <span class="dt">pch =</span> <span class="dv">1</span>)
+
+<span class="co"># Create index3, pointing to 3-cylinder cars</span>
+index3 &lt;-<span class="st"> </span><span class="kw">which</span>(Cars93<span class="op">$</span>Cylinders <span class="op">==</span><span class="st"> </span><span class="dv">3</span>)
+
+<span class="co"># Highlight 3-cylinder cars as solid circles</span>
+<span class="kw">points</span>(Cars93<span class="op">$</span>Horsepower[index3], Cars93<span class="op">$</span>MPG.city[index3], <span class="dt">pch =</span> <span class="dv">16</span>)
+
+<span class="co"># Add car names, offset from points, with larger bold text</span>
+<span class="kw">text</span>(
+  Cars93<span class="op">$</span>Horsepower[index3], 
+  Cars93<span class="op">$</span>MPG.city[index3], 
+  Cars93<span class="op">$</span>Make[index3], 
+  <span class="dt">adj =</span> <span class="op">-</span><span class="fl">0.2</span>,
+  <span class="dt">cex =</span> <span class="fl">1.2</span>,
+  <span class="dt">font =</span> <span class="dv">4</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>In addition to the optional arguments used in the previous exercises, the text() function also supports a number of other optional arguments that can be used to enhance the text. This exercise uses the cex argument to reduce the text size and introduces two new arguments. The first is the col argument that specifies the color used to display the text, and the second is the srt argument that allows us to rotate the text.</p>
+<p>Color has been used in several of the previous exercises to specify point colors, and the effective use of color is discussed further in Chapter 5. One of the points of this exercise is to show that the specification of text color with the text() function is essentially the same as the specification of point color with the plot() function. As a specific example, setting col = “green” in the text() function causes the text to appear in green. If col is not specified, the text appears in the default color set by the par() function, which is typically black.</p>
+<p>The srt parameter allows us to rotate the text through an angle specified in degrees. The typical default value (set by the par() function) is 0, causing the text to appear horizontally, reading from left to right. Specifying srt = 90 causes the text to be rotated 90 degrees counter-clockwise so that it reads from bottom to top instead of left to right.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot Gas vs. Temp as solid triangles</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp, whiteside<span class="op">$</span>Gas, <span class="dt">pch=</span><span class="dv">17</span>)
+
+<span class="co"># Create indexB, pointing to &quot;Before&quot; data</span>
+indexB &lt;-<span class="st"> </span><span class="kw">which</span>(whiteside<span class="op">$</span>Insul <span class="op">==</span><span class="st"> &quot;Before&quot;</span>)
+
+<span class="co"># Create indexA, pointing to &quot;After&quot; data</span>
+indexA &lt;-<span class="st"> </span><span class="kw">which</span>(whiteside<span class="op">$</span>Insul <span class="op">==</span><span class="st"> &quot;After&quot;</span>)
+
+<span class="co"># Add &quot;Before&quot; text in blue, rotated 30 degrees, 80% size</span>
+<span class="kw">text</span>(<span class="dt">x =</span> whiteside<span class="op">$</span>Temp[indexB], <span class="dt">y =</span> whiteside<span class="op">$</span>Gas[indexB],
+     <span class="dt">labels =</span> <span class="st">&quot;Before&quot;</span>, <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">srt =</span> <span class="dv">30</span>, <span class="dt">cex =</span> .<span class="dv">8</span>)
+
+<span class="co"># Add &quot;After&quot; text in red, rotated -20 degrees, 80% size</span>
+<span class="kw">text</span>(<span class="dt">x =</span> whiteside<span class="op">$</span>Temp[indexA], <span class="dt">y =</span> whiteside<span class="op">$</span>Gas[indexA],
+     <span class="dt">labels =</span> <span class="st">&quot;After&quot;</span>, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">srt =</span> <span class="op">-</span><span class="dv">20</span>, <span class="dt">cex =</span> .<span class="dv">8</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div id="adding-details-to-plots-1" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> Adding details to plots</h3>
+<p>It is possible to add your own legend and custom axix, both in terms of scale and positioning i.e. at the top rather than at the bottom. This section gives some examples on how to acheive this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up and label empty plot of Gas vs. Temp</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp, whiteside<span class="op">$</span>Gas,
+     <span class="dt">type =</span> <span class="st">&quot;n&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Outside temperature&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Heating gas consumption&quot;</span>)
+
+<span class="co"># Create indexB, pointing to &quot;Before&quot; data</span>
+indexB &lt;-<span class="st"> </span><span class="kw">which</span>(whiteside<span class="op">$</span>Insul <span class="op">==</span><span class="st"> &quot;Before&quot;</span>)
+
+<span class="co"># Create indexA, pointing to &quot;After&quot; data</span>
+indexA &lt;-<span class="st"> </span><span class="kw">which</span>(whiteside<span class="op">$</span>Insul <span class="op">==</span><span class="st"> &quot;After&quot;</span>)
+
+<span class="co"># Add &quot;Before&quot; data as solid triangles</span>
+<span class="kw">points</span>(whiteside<span class="op">$</span>Temp[indexB], whiteside<span class="op">$</span>Gas[indexB], <span class="dt">pch =</span> <span class="dv">17</span>)
+
+<span class="co"># Add &quot;After&quot; data as open circles</span>
+<span class="kw">points</span>(whiteside<span class="op">$</span>Temp[indexA], whiteside<span class="op">$</span>Gas[indexA], <span class="dt">pch =</span> <span class="dv">1</span>)
+
+<span class="co"># Add legend that identifies points as &quot;Before&quot; and &quot;After&quot;</span>
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">1</span>), <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Before&quot;</span>, <span class="st">&quot;After&quot;</span>))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Typical base graphics functions like boxplot() provide x- and y-axes by default, with a label for the x-axis below the plot and one for the y-axis label to the left of the plot. These labels are generated automatically from the variable names used to generate the plot. Sometimes, we want to provide our own axes labels, and R makes this possible in two steps: first, we suppress the default axes when we create the plot by specifying axes = FALSE; then, we call the low-level graphics function axis() to create the axes we want.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a boxplot of sugars by shelf value, without axes</span>
+<span class="kw">boxplot</span>(sugars <span class="op">~</span><span class="st"> </span>shelf, <span class="dt">data =</span> UScereal, <span class="dt">axes =</span> F)
+
+<span class="co"># Add a default y-axis to the left of the boxplot</span>
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">2</span>)
+
+<span class="co"># Add an x-axis below the plot, labelled 1, 2, and 3</span>
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))
+
+<span class="co"># Add a second x-axis above the plot</span>
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">3</span>, <span class="dt">at =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>),
+     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;floor&quot;</span>,<span class="st">&quot;middle&quot;</span>,<span class="st">&quot;top&quot;</span>))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>We may want to add a curved trend line that highlights this behavior of the data and the supsmu() function represents one way of doing this.</p>
+<p>To use this function, we need to specify values for the required arguments x and y, but it also has a number of optional arguments. Here, we consider the optional bass argument, which controls the degree of smoothness in the resulting trend curve. The default value is 0, but specifying larger values (up to a maximum of 10) results in a smoother curve. This exercise asks you to use the supsmu() function to add two trend lines to a scatterplot, one using the default parameters and the other with increased smoothness.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a scatterplot of MPG.city vs. Horsepower</span>
+<span class="kw">plot</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city)
+
+<span class="co"># Call supsmu() to generate a smooth trend curve, with default bass</span>
+trend1 &lt;-<span class="st"> </span><span class="kw">supsmu</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city)
+
+<span class="co"># Add this trend curve to the plot</span>
+<span class="kw">lines</span>(trend1)
+
+<span class="co"># Call supsmu() for a second trend curve, with bass = 10</span>
+trend2 &lt;-<span class="st"> </span><span class="kw">supsmu</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city, <span class="dt">bass =</span> <span class="dv">10</span>)
+
+<span class="co"># Add this trend curve as a heavy, dotted line</span>
+<span class="kw">lines</span>(trend2, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+</div>
+<div id="how-much-is-too-much" class="section level2">
+<h2><span class="header-section-number">7.5</span> How much is too much</h2>
+<p>The first example presented in this file applied the plot() function to a data frame, yielding an array of scatterplots with one for each pair of columns in the data frame. Thus, the number of plots in this array is equal to the square of the number of columns in the data frame.</p>
+<p>This means that if we apply the plot() function to a data frame with many columns, we will generate an enormous array of scatterplots, each of which will be too small to be useful. The purpose of this exercise is to provide a memorable example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute the number of plots to be displayed</span>
+<span class="kw">ncol</span>(Cars93)<span class="op">^</span><span class="dv">2</span></code></pre></div>
+<pre><code>## [1] 729</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the array of scatterplots</span>
+<span class="kw">plot</span>(Cars93)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>The matplot() function can be used to easily generate a plot with several scatterplots on the same set of axes. By default, the points in these scatterplots are represented by the numbers 1 through n, where n is the total number of scatterplots included, but most of the options available with the plot() function are also possible by specifying the appropriate arguments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Construct the vector keep_vars</span>
+keep_vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;calories&quot;</span>, <span class="st">&quot;protein&quot;</span>, <span class="st">&quot;fat&quot;</span>,
+               <span class="st">&quot;fibre&quot;</span>, <span class="st">&quot;carbo&quot;</span>, <span class="st">&quot;sugars&quot;</span>)
+
+<span class="co"># Use keep_vars to extract the desired subset of UScereal</span>
+df &lt;-<span class="st"> </span>UScereal[, keep_vars]
+
+<span class="co"># Set up a two-by-two plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+
+<span class="co"># Use matplot() to generate an array of two scatterplots</span>
+<span class="kw">matplot</span>(
+  UScereal<span class="op">$</span>calories, 
+  UScereal[,<span class="kw">c</span>(<span class="st">&#39;protein&#39;</span>, <span class="st">&#39;fat&#39;</span>)], 
+  <span class="dt">xlab =</span> <span class="st">&quot;calories&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+
+
+<span class="co"># Add a title</span>
+<span class="kw">title</span>(<span class="st">&quot;Two scatterplots&quot;</span>)
+
+
+<span class="co"># Use matplot() to generate an array of three scatterplots</span>
+<span class="kw">matplot</span>(
+  UScereal<span class="op">$</span>calories, 
+  UScereal[,<span class="kw">c</span>(<span class="st">&#39;protein&#39;</span>, <span class="st">&#39;fat&#39;</span>, <span class="st">&#39;fibre&#39;</span>)], 
+  <span class="dt">xlab =</span> <span class="st">&quot;calories&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+
+<span class="co"># Add a title</span>
+<span class="kw">title</span>(<span class="st">&quot;Three scatterplots&quot;</span>)
+
+<span class="co"># Use matplot() to generate an array of four scatterplots</span>
+<span class="kw">matplot</span>(
+  UScereal<span class="op">$</span>calories, 
+  UScereal[,<span class="kw">c</span>(<span class="st">&#39;protein&#39;</span>, <span class="st">&#39;fat&#39;</span>, <span class="st">&#39;fibre&#39;</span>, <span class="st">&#39;carbo&#39;</span>)], 
+  <span class="dt">xlab =</span> <span class="st">&quot;calories&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+
+<span class="co"># Add a title</span>
+<span class="kw">title</span>(<span class="st">&quot;Four scatterplots&quot;</span>)
+
+<span class="co"># Use matplot() to generate an array of five scatterplots</span>
+<span class="kw">matplot</span>(
+  UScereal<span class="op">$</span>calories, 
+  UScereal[,<span class="kw">c</span>(<span class="st">&#39;protein&#39;</span>, <span class="st">&#39;fat&#39;</span>, <span class="st">&#39;fibre&#39;</span>, <span class="st">&#39;carbo&#39;</span>,<span class="st">&#39;sugars&#39;</span>)], 
+  <span class="dt">xlab =</span> <span class="st">&quot;calories&quot;</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>)
+
+
+<span class="co"># Add a title</span>
+<span class="kw">title</span>(<span class="st">&quot;Five scatterplots&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-27-1.png" width="672" /> Any data visualization loses its utility if it becomes too complex.</p>
+<p>This exercise asks you to consider this problem with wordclouds, displays that present words in varying sizes depending on their frequency. That is, more frequent words appear larger in the display, while rarer words appear in a smaller font.</p>
+<p>In R, wordclouds are easy to generate with the wordcloud() function in the wordcloud package. This function is called with a character vector of words, and a second numerical vector giving the number of times each word appears in the collection used to generate the wordcloud.</p>
+<p>Two other useful arguments for this function are scale and min.freq. The scale argument is a two-component numerical vector giving the relative size of the largest word in the display and that of the smallest word. The wordcloud only includes those words that occur at least min.freq times in the collection and the default value for this argument is 3.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(wordcloud)</code></pre></div>
+<pre><code>## Loading required package: methods</code></pre>
+<pre><code>## Loading required package: RColorBrewer</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mfr_table &lt;-<span class="st"> </span><span class="kw">table</span>(Cars93<span class="op">$</span>Manufacturer)
+
+<span class="co"># Create the default wordcloud from this table</span>
+<span class="kw">wordcloud</span>(
+  <span class="dt">words =</span> <span class="kw">names</span>(mfr_table), 
+  <span class="dt">freq =</span> <span class="kw">as.numeric</span>(mfr_table), 
+  <span class="dt">scale =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.25</span>))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Change the minimum word frequency</span>
+<span class="kw">wordcloud</span>(
+  <span class="dt">words =</span> <span class="kw">names</span>(mfr_table), 
+  <span class="dt">freq =</span> <span class="kw">as.numeric</span>(mfr_table), 
+  <span class="dt">scale =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.25</span>),
+  <span class="dt">min.freq =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-28-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create model_table of model frequencies</span>
+model_table &lt;-<span class="st"> </span><span class="kw">table</span>(Cars93<span class="op">$</span>Model)
+
+<span class="co"># Create the wordcloud of all model names with smaller scaling</span>
+<span class="kw">wordcloud</span>(
+  <span class="dt">words =</span> <span class="kw">names</span>(model_table), 
+  <span class="dt">freq =</span> <span class="kw">as.numeric</span>(model_table), 
+  <span class="dt">scale =</span> <span class="kw">c</span>(.<span class="dv">75</span>, .<span class="dv">25</span>), 
+  <span class="dt">min.freq =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-28-3.png" width="672" /></p>
+<div id="mutiple-plots" class="section level3">
+<h3><span class="header-section-number">7.5.1</span> Mutiple Plots</h3>
+<p>There are a couple of ways to set up multiple plot arrays, one is mfrow.</p>
+<p>This exercise and the next one are based on the Anscombe quartet, a collection of four datasets that appear to be essentially identical on the basis of simple summary statistics like means and standard deviations. For example, the mean x-values for these datasets are identical to three digits, while the mean y-values differ only in the third digit.</p>
+<p>In spite of these apparent similarities, the behavior of the four datasets is quite different and this becomes immediately apparent when we plot them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up a two-by-two plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+
+<span class="co"># Plot y1 vs. x1 </span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x1, anscombe<span class="op">$</span>y1)
+
+<span class="co"># Plot y2 vs. x2</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x2, anscombe<span class="op">$</span>y2)
+
+<span class="co"># Plot y3 vs. x3</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x3, anscombe<span class="op">$</span>y3)
+
+<span class="co"># Plot y4 vs. x4</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x4, anscombe<span class="op">$</span>y4)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>The point of this exercise is to illustrate how much more clearly we can see the differences in these datasets if we plot all of them with the same x and y ranges. This exercise also illustrates the utility of improving the x- and y-axis labels and of adding informative plot titles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define common x and y limits for the four plots</span>
+xmin &lt;-<span class="st"> </span><span class="dv">4</span>
+xmax &lt;-<span class="st"> </span><span class="dv">19</span>
+ymin &lt;-<span class="st"> </span><span class="dv">3</span>
+ymax &lt;-<span class="st"> </span><span class="dv">13</span>
+
+<span class="co"># Set up a two-by-two plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+
+<span class="co"># Plot y1 vs. x1 with common x and y limits, labels &amp; title</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x1, anscombe<span class="op">$</span>y1,
+     <span class="dt">xlim =</span> <span class="kw">c</span>(xmin, xmax),
+     <span class="dt">ylim =</span> <span class="kw">c</span>(ymin, ymax),
+     <span class="dt">xlab =</span> <span class="st">&quot;x value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y value&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;First dataset&quot;</span>)
+
+<span class="co"># Do the same for the y2 vs. x2 plot</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x2, anscombe<span class="op">$</span>y2,
+     <span class="dt">xlim =</span> <span class="kw">c</span>(xmin, xmax),
+     <span class="dt">ylim =</span> <span class="kw">c</span>(ymin, ymax),
+     <span class="dt">xlab =</span> <span class="st">&quot;x value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y value&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Second dataset&quot;</span>)
+
+<span class="co"># Do the same for the y3 vs. x3 plot</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x3, anscombe<span class="op">$</span>y3,
+     <span class="dt">xlim =</span> <span class="kw">c</span>(xmin, xmax),
+     <span class="dt">ylim =</span> <span class="kw">c</span>(ymin, ymax),
+     <span class="dt">xlab =</span> <span class="st">&quot;x value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y value&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Third dataset&quot;</span>)
+
+<span class="co"># Do the same for the y4 vs. x4 plot</span>
+<span class="kw">plot</span>(anscombe<span class="op">$</span>x4, anscombe<span class="op">$</span>y4,
+     <span class="dt">xlim =</span> <span class="kw">c</span>(xmin, xmax),
+     <span class="dt">ylim =</span> <span class="kw">c</span>(ymin, ymax),
+     <span class="dt">xlab =</span> <span class="st">&quot;x value&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;y value&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Fourth dataset&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>This exercise illustrates this idea, giving four views of the same dataset: a plot of the raw data values themselves, a histogram of these data values, a density plot, and a normal QQ-plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up a two-by-two plot array</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+
+<span class="co"># Plot the raw duration data</span>
+<span class="kw">plot</span>(geyser<span class="op">$</span>duration, <span class="dt">main =</span> <span class="st">&quot;Raw data&quot;</span>)
+
+<span class="co"># Plot the normalized histogram of the duration data</span>
+<span class="kw">truehist</span>(geyser<span class="op">$</span>duration, <span class="dt">main =</span> <span class="st">&quot;Histogram&quot;</span>)
+
+<span class="co"># Plot the density of the duration data</span>
+<span class="kw">plot</span>(<span class="kw">density</span>(geyser<span class="op">$</span>duration), <span class="dt">main =</span> <span class="st">&quot;Density&quot;</span>)
+
+<span class="co"># Construct the normal QQ-plot of the duration data</span>
+<span class="kw">qqPlot</span>(geyser<span class="op">$</span>duration, <span class="dt">main =</span> <span class="st">&quot;QQ-plot&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>As well as the par() function, you can also use the layout() function to setup a plot array. You can think of the layout matrix as the plot pane, where a 0 represents empty space and other numbers represent the plot number, which is determined by the sequence of visualization function calls. For example, a 1 in the layout matrix refers to the visualization that was first called, a 2 refers to the plot of the second visualization call, etc. This exercise asks you to create your own 3 x 2 layout matrix, using the c() function to concatenate numbers into vectors that will form the rows of the matrix.</p>
+<p>You will then use the matrix() function to convert these rows into a matrix and apply the layout() function to set up the desired plot array. The convenience function layout.show() can then be used to verify that the plot array has the shape you want.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use the matrix function to create a matrix with three rows and two columns</span>
+layoutMatrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(
+  <span class="kw">c</span>(
+    <span class="dv">0</span>, <span class="dv">1</span>,
+    <span class="dv">2</span>, <span class="dv">0</span>,
+    <span class="dv">0</span>, <span class="dv">3</span>
+  ), 
+  <span class="dt">byrow =</span> T, 
+  <span class="dt">nrow =</span> <span class="dv">3</span>
+)
+
+<span class="co"># Call the layout() function to set up the plot array</span>
+<span class="kw">layout</span>(layoutMatrix)
+
+<span class="co"># Show where the three plots will go </span>
+<span class="kw">layout.show</span>(<span class="dt">n =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set up the plot array</span>
+<span class="kw">layout</span>(layoutMatrix)
+
+<span class="co"># Construct vectors indexB and indexA</span>
+indexB &lt;-<span class="st"> </span><span class="kw">which</span>(whiteside<span class="op">$</span>Insul <span class="op">==</span><span class="st"> &quot;Before&quot;</span>)
+indexA &lt;-<span class="st"> </span><span class="kw">which</span>(whiteside<span class="op">$</span>Insul <span class="op">==</span><span class="st"> &quot;After&quot;</span>)
+
+<span class="co"># Create plot 1 and add title</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp[indexB], whiteside<span class="op">$</span>Gas[indexB],
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">8</span>))
+<span class="kw">title</span>(<span class="st">&quot;Before data only&quot;</span>)
+
+<span class="co"># Create plot 2 and add title</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp, whiteside<span class="op">$</span>Gas,
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">8</span>))
+<span class="kw">title</span>(<span class="st">&quot;Complete dataset&quot;</span>)
+
+<span class="co"># Create plot 3 and add title</span>
+<span class="kw">plot</span>(whiteside<span class="op">$</span>Temp[indexA], whiteside<span class="op">$</span>Gas[indexA],
+     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">8</span>))
+<span class="kw">title</span>(<span class="st">&quot;After data only&quot;</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
+<p>Besides creating non-rectangular arrays, the layout() function can be used to create plot arrays with different sized component plots – something else that is not possible by setting the par() function’s mfrow parameter.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create row1, row2, and layoutVector</span>
+row1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+row2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2</span>)
+layoutVector &lt;-<span class="st"> </span><span class="kw">c</span>(row1,row2, row2)
+
+<span class="co"># Convert layoutVector into layoutMatrix</span>
+layoutMatrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(layoutVector, <span class="dt">byrow =</span> T, <span class="dt">nrow =</span> <span class="dv">3</span>)
+
+<span class="co"># Set up the plot array</span>
+<span class="kw">layout</span>(layoutMatrix)
+
+<span class="co"># Plot scatterplot</span>
+<span class="kw">plot</span>(Boston<span class="op">$</span>rad, Boston<span class="op">$</span>zn)
+
+<span class="co"># Plot sunflower plot</span>
+<span class="kw">sunflowerplot</span>(Boston<span class="op">$</span>rad, Boston<span class="op">$</span>zn)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+</div>
+<div id="advanced-plot-customisation" class="section level2">
+<h2><span class="header-section-number">7.6</span> Advanced Plot Customisation</h2>
+<p>Many functions, including barplot, will return invisible vectors of useful information. For instance, bar plot returns a hdden vector that the centre positions of each bar.</p>
+<p>These return values can be especially useful when we want to overlay text on the bars of a horizontal barplot. Then, we capture the return values and use them as the y parameter in a subsequent call to the text() function, allowing us to place the text at whatever x position we want but overlaid in the middle of each horizontal bar. This exercise asks you to construct a horizontal barplot that exploits these possibilities.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a table of Cylinders frequencies</span>
+tbl &lt;-<span class="st"> </span><span class="kw">table</span>(Cars93<span class="op">$</span>Cylinders)
+
+<span class="co"># Generate a horizontal barplot of these frequencies</span>
+mids &lt;-<span class="st"> </span><span class="kw">barplot</span>(tbl, 
+  <span class="dt">horiz =</span> T,
+  <span class="dt">col =</span> <span class="st">&quot;transparent&quot;</span>,
+  <span class="dt">names.arg =</span> <span class="st">&quot;&quot;</span>)
+
+<span class="co"># Add names labels with text()</span>
+<span class="kw">text</span>(<span class="dv">20</span>, mids, <span class="kw">names</span>(tbl))
+
+<span class="co"># Add count labels with text()</span>
+<span class="kw">text</span>(<span class="dv">35</span>, mids, <span class="kw">as.numeric</span>(tbl))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>The scatterplot allows us to see how one numerical variable changes with the values of a second numerical variable. The symbols() function allows us to extend scatterplots to show the influence of other variables.</p>
+<p>This function is called with the variables x and y that define a scatterplot, along with another argument that specifies one of several possible shapes. Here, you are asked to use the circles argument to create a bubbleplot where each data point is represented by a circle whose radius depends on the third variable specified by the value of this argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Call symbols() to create the default bubbleplot</span>
+<span class="kw">symbols</span>(Cars93<span class="op">$</span>Horsepower,Cars93<span class="op">$</span>MPG.city,
+        <span class="dt">circles =</span> <span class="kw">sqrt</span>(Cars93<span class="op">$</span>Price))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Repeat, with the inches argument specified</span>
+<span class="kw">symbols</span>(Cars93<span class="op">$</span>Horsepower,Cars93<span class="op">$</span>MPG.city,
+        <span class="dt">circles =</span> <span class="kw">sqrt</span>(Cars93<span class="op">$</span>Price),
+        <span class="dt">inches =</span> <span class="fl">0.1</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-35-2.png" width="672" /></p>
+<p>R provides support for saving graphical results in several different external file formats, including jpeg, png, tiff, or pdf files. In addition, we can incorporate graphical results into external documents, using tools like the Sweave() function or the knitr package or using R Markdown.</p>
+<p>The basis for saving outputs/plots is using the png() function, which specifies the name of the png file to be generated and sets up a special environment that captures all graphical output until we exit this environment with the dev.off() command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Call png() with the name of the file we want to create</span>
+<span class="kw">png</span>(<span class="st">&#39;bubbleplot.png&#39;</span>)
+
+<span class="co"># Re-create the plot from the last exercise</span>
+<span class="kw">symbols</span>(Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city,
+        <span class="dt">circles =</span> <span class="kw">sqrt</span>(Cars93<span class="op">$</span>Price),
+        <span class="dt">inches =</span> <span class="fl">0.1</span>)
+
+<span class="co"># Save our file and return to our interactive session</span>
+<span class="kw">dev.off</span>()</code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Verify that we have created the file</span>
+<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;png&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;bubbleplot.png&quot;</code></pre>
+<div id="using-colour-effectively" class="section level3">
+<h3><span class="header-section-number">7.6.1</span> Using colour effectively</h3>
+<p>Colour can be effective but limited - for instance, for those with colour blindness. Black and white documents or prints loose some of the colour dinstinction. Illinsky and Steele suggest ideally using 6 colours, not more than 12 and certaintly no more than 20. They provided a set of recommended 12 colors, in descending order of desirability from the top of the plot to the bottom. Also, the first six “more preferred” colors are displayed with longer bars to visually emphasize their preferred status over the other six.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Iliinsky and Steele color name vector</span>
+IScolors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;blue&quot;</span>,
+              <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;pink&quot;</span>, <span class="st">&quot;cyan&quot;</span>,
+              <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;brown&quot;</span>, <span class="st">&quot;purple&quot;</span>)
+
+<span class="co"># Create the data for the barplot</span>
+barWidths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">6</span>))
+
+<span class="co"># Recreate the horizontal barplot with colored bars</span>
+<span class="kw">barplot</span>(
+  <span class="kw">rev</span>(barWidths), 
+  <span class="dt">horiz =</span> T,
+  <span class="dt">col =</span> <span class="kw">rev</span>(IScolors), 
+  <span class="dt">axes =</span> F,
+  <span class="dt">names.arg =</span> <span class="kw">rev</span>(IScolors), 
+  <span class="dt">las =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>We can use colours to improve our plots, for instance by colouring bubbles in scatter plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Iliinsky and Steele color name vector</span>
+IScolors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;blue&quot;</span>,
+              <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;pink&quot;</span>, <span class="st">&quot;cyan&quot;</span>,
+              <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;brown&quot;</span>, <span class="st">&quot;purple&quot;</span>)
+
+<span class="co"># Create the `cylinderLevel` variable</span>
+cylinderLevel &lt;-<span class="st"> </span>Cars93<span class="op">$</span>Cylinders
+
+<span class="co"># Create the colored bubbleplot</span>
+<span class="kw">symbols</span>(
+  Cars93<span class="op">$</span>Horsepower, Cars93<span class="op">$</span>MPG.city, 
+  <span class="dt">circles =</span> <span class="kw">as.numeric</span>(Cars93<span class="op">$</span>Cylinders), 
+  <span class="dt">inches =</span> <span class="fl">0.2</span>, 
+  <span class="dt">bg =</span> IScolors[cylinderLevel])</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>Or in barcharts, liked this stacked bar.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a table of Cylinders by Origin</span>
+tbl &lt;-<span class="st"> </span><span class="kw">table</span>(Cars93<span class="op">$</span>Cylinders, Cars93<span class="op">$</span>Origin)
+
+<span class="co"># Create the default stacked barplot</span>
+<span class="kw">barplot</span>(tbl)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Enhance this plot with color</span>
+<span class="kw">barplot</span>(tbl, <span class="dt">col =</span> IScolors)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-39-2.png" width="672" /></p>
+</div>
+</div>
+<div id="other-graphics-systems" class="section level2">
+<h2><span class="header-section-number">7.7</span> Other graphics systems</h2>
+<p>Base R used in this chapter is flexible and relatively easy to learn. There are other graphic systems in R, but they typically have to be used instead of one or other - Base, grid lattice, ggplot - they are generally incompatible with each other.</p>
+<ul>
+<li>Grid - provides a lot more control than base graphics, but has a much steeper learning curver and requires a lot more code to produce even simple plots</li>
+<li>Latice - built on grid, again provides more detail than base allows</li>
+<li>ggplot2 - build by Hadley and again provides more graphics than base allows, we can build plots in stages, adding detail as we go</li>
+</ul>
+<p>Grid is often used with another package as a wrapper, to make working with grid easier and not direct. The example below uses tabplot package, which is built on top of grid.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(insuranceData)
+
+<span class="co"># Load the insuranceData package</span>
+<span class="kw">library</span>(insuranceData)
+
+<span class="co"># Use the data() function to load the dataCar data frame</span>
+<span class="kw">data</span>(dataCar)
+<span class="kw">head</span>(dataCar)</code></pre></div>
+<pre><code>##   veh_value  exposure clm numclaims claimcst0 veh_body veh_age gender area
+## 1      1.06 0.3039014   0         0         0    HBACK       3      F    C
+## 2      1.03 0.6488706   0         0         0    HBACK       2      F    A
+## 3      3.26 0.5694730   0         0         0      UTE       2      F    E
+## 4      4.14 0.3175907   0         0         0    STNWG       2      F    D
+## 5      0.72 0.6488706   0         0         0    HBACK       4      F    C
+## 6      2.01 0.8542094   0         0         0    HDTOP       3      M    C
+##   agecat            X_OBSTAT_
+## 1      2 01101    0    0    0
+## 2      4 01101    0    0    0
+## 3      2 01101    0    0    0
+## 4      2 01101    0    0    0
+## 5      2 01101    0    0    0
+## 6      4 01101    0    0    0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the tabplot package</span>
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(tabplot))
+
+<span class="co"># Generate the default tableplot() display</span>
+<span class="kw">tableplot</span>(dataCar)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>Here we used Lattice graphics package, lattice is a general-purpose graphics package that provides alternative implementations of many of the plotting functions available in base graphics. Specific examples include scatterplots with the xyplot() function, bar charts with the barchart() function, and boxplots with the bwplot() function.</p>
+<p>One important difference between lattice graphics and base graphics is that similar functions available in both graphics systems often produce very different results when applied to the same data. As a specific example, the bwplot() function creates horizontal boxplots, while the default result of the boxplot() is a vertical boxplot display.</p>
+<p>Another more important difference between lattice and base graphics is that lattice graphics supports conditional plots that show the separate relationships between variables within different groups. This capability is illustrated in this exercise, where you are asked to construct a plot showing the relationship between the variables calories and sugars from the UScereal data frame, conditional on the value of the shelf variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the lattice package</span>
+<span class="kw">library</span>(lattice)
+
+<span class="co"># Use xyplot() to construct the conditional scatterplot</span>
+<span class="kw">xyplot</span>(calories <span class="op">~</span><span class="st"> </span>sugars <span class="op">|</span><span class="st"> </span>shelf, <span class="dt">data =</span> UScereal)</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>Finally we use ggplot2. Like the lattice package, the ggplot2 package is also based on grid graphics and it also represents a general purpose graphics package.</p>
+<p>The unique feature of the ggplot2 package is that it is based on the grammar of graphics, a systematic approach to building and modifying graphical displays, starting with a basic graphics element and refining it through the addition of successive modifiers.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load the ggplot2 package</span>
+<span class="kw">library</span>(ggplot2)
+
+<span class="co"># Create the basic plot (not displayed): basePlot</span>
+basePlot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(Cars93, <span class="kw">aes</span>(<span class="dt">x =</span> Horsepower, <span class="dt">y =</span> MPG.city))
+
+<span class="co"># Display the basic scatterplot</span>
+basePlot <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Color the points by Cylinders value</span>
+basePlot <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> IScolors[Cars93<span class="op">$</span>Cylinders])</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make the point sizes also vary with Cylinders value</span>
+basePlot <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> IScolors[Cars93<span class="op">$</span>Cylinders], 
+             <span class="dt">size =</span> <span class="kw">as.numeric</span>(Cars93<span class="op">$</span>Cylinders))</code></pre></div>
+<p><img src="DataVis_files/figure-html/unnamed-chunk-42-3.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="importing-cleaning-data-in-r-case-studies.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intermediate-ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["Study-Notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

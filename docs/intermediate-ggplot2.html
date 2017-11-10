@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Study notes</title>
+  <meta name="description" content="Study notes taken from courses and self learning.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Study notes" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://github.com/James-SR/study-notes-master" />
+  
+  <meta property="og:description" content="Study notes taken from courses and self learning." />
+  <meta name="github-repo" content="James-SR/study-notes-master" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Study notes" />
+  
+  <meta name="twitter:description" content="Study notes taken from courses and self learning." />
+  
+
+<meta name="author" content="James Solomon-Rounce">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-visualization.html">
+<link rel="next" href="advanced-ggplot2.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Study Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html"><i class="fa fa-check"></i><b>1</b> Importing data - Part 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+<li class="chapter" data-level="1.2" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-csv-files"><i class="fa fa-check"></i><b>1.2</b> Reading CSV files</a></li>
+<li class="chapter" data-level="1.3" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-tab-deliminated-files-or-other-table-formats"><i class="fa fa-check"></i><b>1.3</b> Reading tab deliminated files or other table formats</a></li>
+<li class="chapter" data-level="1.4" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#readr-and-data.table"><i class="fa fa-check"></i><b>1.4</b> Readr and data.table</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#data.table-fread"><i class="fa fa-check"></i><b>1.4.1</b> data.table fread</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#reading-excel-files"><i class="fa fa-check"></i><b>1.5</b> Reading Excel files</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#alternatives-for-importing-excel-files"><i class="fa fa-check"></i><b>1.5.1</b> Alternatives for importing Excel files</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="importing-data-part-1.html"><a href="importing-data-part-1.html#xlconnect---read-and-write-to-excel"><i class="fa fa-check"></i><b>1.6</b> XLConnect - read and write to excel</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html"><i class="fa fa-check"></i><b>2</b> Importing data - Part 2</a><ul>
+<li class="chapter" data-level="2.1" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-databases---1"><i class="fa fa-check"></i><b>2.1</b> Importing from Databases - 1</a></li>
+<li class="chapter" data-level="2.2" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#sql-queries-inside-r"><i class="fa fa-check"></i><b>2.2</b> SQL Queries Inside R</a></li>
+<li class="chapter" data-level="2.3" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#web-data"><i class="fa fa-check"></i><b>2.3</b> Web Data</a></li>
+<li class="chapter" data-level="2.4" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#json-and-apis"><i class="fa fa-check"></i><b>2.4</b> JSON and APIs</a></li>
+<li class="chapter" data-level="2.5" data-path="importing-data-part-2.html"><a href="importing-data-part-2.html#importing-from-other-statistical-software"><i class="fa fa-check"></i><b>2.5</b> Importing from other statistical software</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html"><i class="fa fa-check"></i><b>3</b> Writing Functions in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#function-overview"><i class="fa fa-check"></i><b>3.1</b> Function overview</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#scoping"><i class="fa fa-check"></i><b>3.1.1</b> Scoping</a></li>
+<li class="chapter" data-level="3.1.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#data-structures"><i class="fa fa-check"></i><b>3.1.2</b> Data Structures</a></li>
+<li class="chapter" data-level="3.1.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#for-loops"><i class="fa fa-check"></i><b>3.1.3</b> For loops</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#when-and-how-you-should-write-a-function"><i class="fa fa-check"></i><b>3.2</b> When and how you should write a function</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#rescale-example"><i class="fa fa-check"></i><b>3.2.1</b> Rescale example</a></li>
+<li class="chapter" data-level="3.2.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#write-a-function-step-by-step"><i class="fa fa-check"></i><b>3.2.2</b> Write a function step by step</a></li>
+<li class="chapter" data-level="3.2.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#how-can-you-write-a-good-function"><i class="fa fa-check"></i><b>3.2.3</b> How can you write a good function?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#functional-programming"><i class="fa fa-check"></i><b>3.3</b> Functional Programming</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#using-purrr"><i class="fa fa-check"></i><b>3.3.1</b> Using purrr</a></li>
+<li class="chapter" data-level="3.3.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#shortcuts"><i class="fa fa-check"></i><b>3.3.2</b> Shortcuts</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#advanced-inputs-and-outputs"><i class="fa fa-check"></i><b>3.4</b> Advanced Inputs and Outputs</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#maps-over-multiple-arguments"><i class="fa fa-check"></i><b>3.4.1</b> Maps over multiple arguments</a></li>
+<li class="chapter" data-level="3.4.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#side-effect-functions"><i class="fa fa-check"></i><b>3.4.2</b> Side effect functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#robust-functions"><i class="fa fa-check"></i><b>3.5</b> Robust Functions</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#unstable-types"><i class="fa fa-check"></i><b>3.5.1</b> Unstable types</a></li>
+<li class="chapter" data-level="3.5.2" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#non-standard-evaluation-nse"><i class="fa fa-check"></i><b>3.5.2</b> Non standard evaluation (NSE)</a></li>
+<li class="chapter" data-level="3.5.3" data-path="writing-functions-in-r.html"><a href="writing-functions-in-r.html#hidden-arguments"><i class="fa fa-check"></i><b>3.5.3</b> Hidden arguments</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html"><i class="fa fa-check"></i><b>4</b> Joining Data in R with dplyr</a><ul>
+<li class="chapter" data-level="4.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#mutating-joins"><i class="fa fa-check"></i><b>4.1</b> Mutating joins</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#keys"><i class="fa fa-check"></i><b>4.1.1</b> Keys</a></li>
+<li class="chapter" data-level="4.1.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>4.1.2</b> Left and right joins</a></li>
+<li class="chapter" data-level="4.1.3" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#inner-and-full-joins"><i class="fa fa-check"></i><b>4.1.3</b> Inner and full joins</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#filtering-joins-and-set-operations"><i class="fa fa-check"></i><b>4.2</b> Filtering joins and set operations</a></li>
+<li class="chapter" data-level="4.3" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#set-operations"><i class="fa fa-check"></i><b>4.3</b> Set Operations</a></li>
+<li class="chapter" data-level="4.4" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#bind-in-dplyr"><i class="fa fa-check"></i><b>4.4</b> Bind in Dplyr</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#data-frames"><i class="fa fa-check"></i><b>4.4.1</b> Data frames</a></li>
+<li class="chapter" data-level="4.4.2" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data Types</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#advanced-joining"><i class="fa fa-check"></i><b>4.5</b> Advanced Joining</a></li>
+<li class="chapter" data-level="4.6" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#joining-mutiple-tables"><i class="fa fa-check"></i><b>4.6</b> Joining mutiple tables</a></li>
+<li class="chapter" data-level="4.7" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#other-implentations"><i class="fa fa-check"></i><b>4.7</b> Other implentations</a></li>
+<li class="chapter" data-level="4.8" data-path="joining-data-in-r-with-dplyr.html"><a href="joining-data-in-r-with-dplyr.html#case-study---lahman-db"><i class="fa fa-check"></i><b>4.8</b> Case Study - Lahman DB</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>5</b> Cleaning Data</a><ul>
+<li class="chapter" data-level="5.1" data-path="cleaning-data.html"><a href="cleaning-data.html#tidying-data"><i class="fa fa-check"></i><b>5.1</b> Tidying data</a></li>
+<li class="chapter" data-level="5.2" data-path="cleaning-data.html"><a href="cleaning-data.html#preparing-data-for-analysis"><i class="fa fa-check"></i><b>5.2</b> Preparing data for analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="cleaning-data.html"><a href="cleaning-data.html#string-manipulation"><i class="fa fa-check"></i><b>5.3</b> String manipulation</a></li>
+<li class="chapter" data-level="5.4" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-specials-and-outliers"><i class="fa fa-check"></i><b>5.4</b> Missing, Specials and Outliers</a></li>
+<li class="chapter" data-level="5.5" data-path="cleaning-data.html"><a href="cleaning-data.html#examples"><i class="fa fa-check"></i><b>5.5</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html"><i class="fa fa-check"></i><b>6</b> Importing &amp; Cleaning Data in R: Case Studies</a><ul>
+<li class="chapter" data-level="6.1" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#ticket-sales-data"><i class="fa fa-check"></i><b>6.1</b> Ticket Sales Data</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#removing-redundant-info"><i class="fa fa-check"></i><b>6.1.1</b> Removing redundant info</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#working-with-dates"><i class="fa fa-check"></i><b>6.2</b> Working with dates</a></li>
+<li class="chapter" data-level="6.3" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#mbta-ridership-data"><i class="fa fa-check"></i><b>6.3</b> MBTA Ridership Data</a></li>
+<li class="chapter" data-level="6.4" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#world-food-facts"><i class="fa fa-check"></i><b>6.4</b> World Food Facts</a></li>
+<li class="chapter" data-level="6.5" data-path="importing-cleaning-data-in-r-case-studies.html"><a href="importing-cleaning-data-in-r-case-studies.html#school-attendance-data"><i class="fa fa-check"></i><b>6.5</b> School Attendance Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-visualization.html"><a href="data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a><ul>
+<li class="chapter" data-level="7.1" data-path="data-visualization.html"><a href="data-visualization.html#base-r-graphics"><i class="fa fa-check"></i><b>7.1</b> Base R Graphics</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="data-visualization.html"><a href="data-visualization.html#avoiding-pie-charts"><i class="fa fa-check"></i><b>7.1.1</b> Avoiding pie charts</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="data-visualization.html"><a href="data-visualization.html#different-plot-types"><i class="fa fa-check"></i><b>7.2</b> Different Plot Types</a></li>
+<li class="chapter" data-level="7.3" data-path="data-visualization.html"><a href="data-visualization.html#adding-details-to-plots"><i class="fa fa-check"></i><b>7.3</b> Adding details to plots</a></li>
+<li class="chapter" data-level="7.4" data-path="data-visualization.html"><a href="data-visualization.html#adding-text"><i class="fa fa-check"></i><b>7.4</b> Adding text</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="data-visualization.html"><a href="data-visualization.html#adding-details-to-plots-1"><i class="fa fa-check"></i><b>7.4.1</b> Adding details to plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="data-visualization.html"><a href="data-visualization.html#how-much-is-too-much"><i class="fa fa-check"></i><b>7.5</b> How much is too much</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="data-visualization.html"><a href="data-visualization.html#mutiple-plots"><i class="fa fa-check"></i><b>7.5.1</b> Mutiple Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="data-visualization.html"><a href="data-visualization.html#advanced-plot-customisation"><i class="fa fa-check"></i><b>7.6</b> Advanced Plot Customisation</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="data-visualization.html"><a href="data-visualization.html#using-colour-effectively"><i class="fa fa-check"></i><b>7.6.1</b> Using colour effectively</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="data-visualization.html"><a href="data-visualization.html#other-graphics-systems"><i class="fa fa-check"></i><b>7.7</b> Other graphics systems</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html"><i class="fa fa-check"></i><b>8</b> Intermediate ggplot2</a><ul>
+<li class="chapter" data-level="8.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#statistics"><i class="fa fa-check"></i><b>8.1</b> Statistics</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#stats-outside-geoms"><i class="fa fa-check"></i><b>8.1.1</b> Stats outside geoms</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#coordinates-layer"><i class="fa fa-check"></i><b>8.2</b> Coordinates Layer</a></li>
+<li class="chapter" data-level="8.3" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#facets"><i class="fa fa-check"></i><b>8.3</b> Facets</a></li>
+<li class="chapter" data-level="8.4" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#themes"><i class="fa fa-check"></i><b>8.4</b> Themes</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#recycling-themes"><i class="fa fa-check"></i><b>8.4.1</b> Recycling themes</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#best-practice"><i class="fa fa-check"></i><b>8.5</b> Best Practice</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#bar-plots"><i class="fa fa-check"></i><b>8.5.1</b> Bar Plots</a></li>
+<li class="chapter" data-level="8.5.2" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#pie-charts"><i class="fa fa-check"></i><b>8.5.2</b> Pie Charts</a></li>
+<li class="chapter" data-level="8.5.3" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#heat-maps"><i class="fa fa-check"></i><b>8.5.3</b> Heat Maps</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#case-study---descriptive-statistics"><i class="fa fa-check"></i><b>8.6</b> Case Study - Descriptive statistics</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="intermediate-ggplot2.html"><a href="intermediate-ggplot2.html#mosaic-plots"><i class="fa fa-check"></i><b>8.6.1</b> Mosaic Plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Advanced ggplot2</a><ul>
+<li class="chapter" data-level="9.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#refresher"><i class="fa fa-check"></i><b>9.1</b> Refresher</a></li>
+<li class="chapter" data-level="9.2" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#statistical-plots"><i class="fa fa-check"></i><b>9.2</b> Statistical plots</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.2.1</b> Box plots</a></li>
+<li class="chapter" data-level="9.2.2" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#density-plots"><i class="fa fa-check"></i><b>9.2.2</b> Density Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#multiple-groups-or-variables"><i class="fa fa-check"></i><b>9.3</b> Multiple groups or variables</a></li>
+<li class="chapter" data-level="9.4" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#plots-for-specific-data-1"><i class="fa fa-check"></i><b>9.4</b> Plots for Specific Data 1</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="advanced-ggplot2.html"><a href="advanced-ggplot2.html#big-data"><i class="fa fa-check"></i><b>9.4.1</b> Big data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-data.html"><a href="introduction-to-data.html"><i class="fa fa-check"></i><b>10</b> Introduction to Data</a><ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-data.html"><a href="introduction-to-data.html#language-of-data"><i class="fa fa-check"></i><b>10.1</b> Language of Data</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-data.html"><a href="introduction-to-data.html#observational-studies-and-experiments"><i class="fa fa-check"></i><b>10.2</b> Observational Studies and Experiments</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-data.html"><a href="introduction-to-data.html#sampling-strategies-and-experimental-design"><i class="fa fa-check"></i><b>10.3</b> Sampling strategies and experimental design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="11" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html"><i class="fa fa-check"></i><b>11</b> Foundations of Inference</a><ul>
+<li class="chapter" data-level="11.1" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#introduction-to-inference"><i class="fa fa-check"></i><b>11.1</b> Introduction to Inference</a></li>
+<li class="chapter" data-level="11.2" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#home-ownership-by-gender"><i class="fa fa-check"></i><b>11.2</b> Home Ownership by Gender</a></li>
+<li class="chapter" data-level="11.3" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#density-plots-1"><i class="fa fa-check"></i><b>11.3</b> Density Plots</a></li>
+<li class="chapter" data-level="11.4" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#gender-discrimination-p-values"><i class="fa fa-check"></i><b>11.4</b> Gender Discrimination (p-values)</a></li>
+<li class="chapter" data-level="11.5" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#opportunity-cost"><i class="fa fa-check"></i><b>11.5</b> Opportunity Cost</a></li>
+<li class="chapter" data-level="11.6" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#type-i-and-type-ii-errors"><i class="fa fa-check"></i><b>11.6</b> Type I and Type II errors</a></li>
+<li class="chapter" data-level="11.7" data-path="foundations-of-inference.html"><a href="foundations-of-inference.html#bootstrapping"><i class="fa fa-check"></i><b>11.7</b> Bootstrapping</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-2.html"><a href="references-2.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="12" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html"><i class="fa fa-check"></i><b>12</b> Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#categorical-data"><i class="fa fa-check"></i><b>12.1</b> Categorical Data</a></li>
+<li class="chapter" data-level="12.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-data"><i class="fa fa-check"></i><b>12.2</b> Numerical Data</a></li>
+<li class="chapter" data-level="12.3" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#numerical-summaries"><i class="fa fa-check"></i><b>12.3</b> Numerical Summaries</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#transformations"><i class="fa fa-check"></i><b>12.3.1</b> Transformations</a></li>
+<li class="chapter" data-level="12.3.2" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#outliers"><i class="fa fa-check"></i><b>12.3.2</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="exploratory-data-analysis.html"><a href="exploratory-data-analysis.html#email-case-study"><i class="fa fa-check"></i><b>12.4</b> Email Case Study</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html"><i class="fa fa-check"></i><b>13</b> Correlation and Regression</a><ul>
+<li class="chapter" data-level="13.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#visualizing-two-variables"><i class="fa fa-check"></i><b>13.1</b> Visualizing two variables</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#transformations-1"><i class="fa fa-check"></i><b>13.1.1</b> Transformations</a></li>
+<li class="chapter" data-level="13.1.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#identifying-outliers"><i class="fa fa-check"></i><b>13.1.2</b> Identifying Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#correlation"><i class="fa fa-check"></i><b>13.2</b> Correlation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#anscombe-dataset"><i class="fa fa-check"></i><b>13.2.1</b> Anscombe Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#linear-regression"><i class="fa fa-check"></i><b>13.3</b> Linear Regression</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#regression-to-the-mean"><i class="fa fa-check"></i><b>13.3.1</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="13.3.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#fitting-linear-models"><i class="fa fa-check"></i><b>13.3.2</b> Fitting linear models</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#model-fit"><i class="fa fa-check"></i><b>13.4</b> Model fit</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#unusual-points"><i class="fa fa-check"></i><b>13.4.1</b> Unusual points</a></li>
+<li class="chapter" data-level="13.4.2" data-path="correlation-and-regression.html"><a href="correlation-and-regression.html#high-leverage-points"><i class="fa fa-check"></i><b>13.4.2</b> High leverage Points</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="supervised-learning.html"><a href="supervised-learning.html"><i class="fa fa-check"></i><b>14</b> Supervised Learning</a><ul>
+<li class="chapter" data-level="14.1" data-path="supervised-learning.html"><a href="supervised-learning.html#tree-based-models"><i class="fa fa-check"></i><b>14.1</b> Tree Based Models</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="supervised-learning.html"><a href="supervised-learning.html#random-forests"><i class="fa fa-check"></i><b>14.1.1</b> Random Forests</a></li>
+<li class="chapter" data-level="14.1.2" data-path="supervised-learning.html"><a href="supervised-learning.html#one-hot-encoding-categorical-variables"><i class="fa fa-check"></i><b>14.1.2</b> One-Hot-Encoding Categorical Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="supervised-learning.html"><a href="supervised-learning.html#gradient-boosting-machines"><i class="fa fa-check"></i><b>14.2</b> Gradient Boosting Machines</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html"><i class="fa fa-check"></i><b>15</b> Dimensional Modelling</a><ul>
+<li class="chapter" data-level="15.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#introduction-to-dimensional-data"><i class="fa fa-check"></i><b>15.1</b> Introduction to Dimensional Data</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#data-modelling-levels"><i class="fa fa-check"></i><b>15.1.1</b> Data Modelling levels</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#architecture-considerations"><i class="fa fa-check"></i><b>15.2</b> Architecture considerations</a></li>
+<li class="chapter" data-level="15.3" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#graphical-representations"><i class="fa fa-check"></i><b>15.3</b> Graphical Representations</a></li>
+<li class="chapter" data-level="15.4" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#kimball-approach"><i class="fa fa-check"></i><b>15.4</b> Kimball Approach</a></li>
+<li class="chapter" data-level="15.5" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#four-step-dimensional-design-process"><i class="fa fa-check"></i><b>15.5</b> Four-Step Dimensional Design Process</a></li>
+<li class="chapter" data-level="15.6" data-path="dimensional-modelling.html"><a href="dimensional-modelling.html#tips"><i class="fa fa-check"></i><b>15.6</b> Tips</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-3.html"><a href="references-3.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Study notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intermediate-ggplot2" class="section level1">
+<h1><span class="header-section-number">8</span> Intermediate ggplot2</h1>
+<hr />
+<p>Notes taken during/inspired by the Datacamp course ‘Data Visualization with ggplot2 (Part 2)’ by Rick Scavetta. This course builds on the first course, which looked at how to build plots, aesthetics, layers and principles. This second part includes topics such as how to build meaningful plots, statistics and practical matters such as themes.</p>
+<p>The focus of this course is onfour layers (statistics, coordinates, facets and themes).</p>
+<p>Course slides: * <a href="https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch1_slides.pdf">Part 1 - Statistics</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch2_slides.pdf">Part 2 - Coordinates and Facets</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch3_slides.pdf">Part 3 - Themes</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch4_slides.pdf">Part 4 - Best Practices</a> * <a href="https://s3.amazonaws.com/assets.datacamp.com/course/ggplot2/course_2/ggplot2_course2_ch5_slides.pdf">Part 5 - Case Study</a></p>
+<div id="statistics" class="section level2">
+<h2><span class="header-section-number">8.1</span> Statistics</h2>
+<p>There are two categories of statistical functions:</p>
+<ul>
+<li>Called from within a geom</li>
+<li>Called independently</li>
+<li>Note geom_FUN &lt;-&gt; stat_FUN</li>
+</ul>
+<p>Typically they are called using stat_ but ggplot will translate commands e.g. geom_histogram will call the histogram function. Often warning messages will appear as stat_FUN such as stat_bin when default bin widths are used.</p>
+<p>The following examples use the mtcars data for 32 cars from Motor Trends magazine from 1973. This dataset is small, intuitive, and contains a variety of continuous and categorical (both nominal and ordinal) variables. Firstly we will add some smoothing lines to the data.</p>
+<ul>
+<li>You can use either stat_smooth() or geom_smooth() to apply a linear model.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+
+<span class="co"># Explore the mtcars data frame with str()</span>
+<span class="kw">str</span>(mtcars)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A scatter plot with LOESS smooth:</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>()</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># A scatter plot with an ordinary Least Squares linear model:</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The previous plot, without CI ribbon:</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The previous plot, without points:</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-1-4.png" width="672" /></p>
+<p>We can also look sub-groups in our dataset. For this we’ll encounter the invisible group aesthetic.</p>
+<ul>
+<li>In the first plot, our smooth is calculated for each subgroup because there is an invisible aesthetic, group which inherits from col.<br />
+</li>
+<li>In the second plot, we use multiple aesthetic layers, just like we can use multiple geom layers. Each aesthetic layer can be mapped onto a specific geom.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define cyl as a factor variable</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Complete the following ggplot command as instructed</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="dv">1</span>), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p>Here we’ll consider the span for LOESS smoothing and we’ll take a look at a nice scenario of how to properly map our different models. LOESS smoothing is a non-parametric form of regression that uses a weighted, sliding-window, average to calculate a line of best fit. We can control the size of this window with the span argument.</p>
+<p>Plot 1: We can control the size of the loess window with the span argument.</p>
+<p>Plot 2: In this plot, we set a linear model for the entire dataset as well as each subgroup, defined by cyl. In the second stat_smooth(), Set method to “loess” Add span, set it to 0.7</p>
+<p>Plot 3: Plot 2 presents a problem because there is a black line on our plot that is not included in the legend. To get this, we need to map something to col as an aesthetic, not just set col as an attribute. Add col to the aes() function in the second stat_smooth(), set it to “All”. This will name the line properly. Remove the col attribute in the second stat_smooth(). Otherwise, it will overwrite the col aesthetic.</p>
+<p>Plot 4: Now we should see our “All” model in the legend, but it’s not black anymore. Add a scale layer: scale_color_manual() with the first argument set to “Cylinders” and values set to the predfined myColors variable</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RColorBrewer)
+
+<span class="co"># Plot 1: change the LOESS span</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="co"># Add span below</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> F, <span class="dt">span =</span> <span class="fl">0.7</span>)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 2: Set the overall model to LOESS and use a span of 0.7</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span>
+<span class="st">  </span><span class="co"># Change method and add span below</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="kw">aes</span>(<span class="dt">group =</span> <span class="dv">1</span>),
+              <span class="dt">se =</span> F, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">span =</span> <span class="fl">0.7</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 3: Set col to &quot;All&quot;, inside the aes layer of stat_smooth()</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>,
+              <span class="co"># Add col inside aes()</span>
+              <span class="kw">aes</span>(<span class="dt">group =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;All&quot;</span>),
+              <span class="co"># Remove the col argument below</span>
+              <span class="dt">se =</span> F, <span class="dt">span =</span> <span class="fl">0.7</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 4: Add scale_color_manual to change the colors</span>
+myColors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">brewer.pal</span>(<span class="dv">3</span>, <span class="st">&quot;Dark2&quot;</span>), <span class="st">&quot;black&quot;</span>)
+
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> <span class="kw">factor</span>(cyl))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F, <span class="dt">span =</span> <span class="fl">0.75</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>,
+              <span class="kw">aes</span>(<span class="dt">group =</span> <span class="dv">1</span>, <span class="dt">col=</span><span class="st">&quot;All&quot;</span>),
+              <span class="dt">se =</span> F, <span class="dt">span =</span> <span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">  </span><span class="co"># Add correct arguments to scale_color_manual</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;Cylinders&quot;</span>, <span class="dt">values =</span> myColors)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-3-4.png" width="672" /></p>
+<p>The next example shows 4 plots</p>
+<p>Plot 1: builds a jittered plot of vocabulary against education of the Vocab data frame. Add a stat_smooth() layer with method set to “lm”. Make sure no CI ribbons are shown by setting se to FALSE.</p>
+<p>Plot 2: We’ll just focus on the linear models from now on. Copy the previous command, remove the geom_jitter() layer. Add the col aesthetic to the ggplot() command. Set it to factor(year).</p>
+<p>Plot 3: The default colors are pretty unintuitive. Since this can be considered an ordinal scale, it would be nice to use a sequential color palette. Copy the previous command, add scale_color_brewer() to use a default ColorBrewer. This should result in an error, since the default palette, “Blues”, only has 9 colors, but we have 16 years here.</p>
+<p>Plot 4: Overcome the error by using year as a numeric vector. You’ll have to specify the invisible group aesthetic which will be factor(year). You are given a scale layer which will fix your coloring, but you’ll need to make the following changes: Add group inside aes(), set it to factor(year). Inside stat_smooth(), set alpha equal to 0.6 and size equal to 2.</p>
+<p>When mapping onto color you can sometimes treat a continuous scale, like year, as an ordinal variable, but only if it is a regular series. The better alternative is to leave it as a continuous variable and use the group aesthetic as a factor to make sure your plot is drawn correctly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the data Vocab from the car package</span>
+<span class="kw">library</span>(car)</code></pre></div>
+<pre><code>## Warning: package &#39;car&#39; was built under R version 3.4.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the RColorBrewer package for plot 4</span>
+<span class="kw">library</span>(RColorBrewer)
+
+<span class="co"># Plot 1: Jittered scatter plot, add a linear model (lm) smooth:</span>
+<span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 2: Only lm, colored by year</span>
+<span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary, <span class="dt">col =</span> <span class="kw">factor</span>(year))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 3: Set a color brewer palette</span>
+<span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary, <span class="dt">col =</span> <span class="kw">factor</span>(year))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>()</code></pre></div>
+<pre><code>## Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Blues is 9
+## Returning the palette you asked for with that many colors</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 4: Add the group, specify alpha and size</span>
+<span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary, <span class="dt">col =</span> year, <span class="dt">group =</span> <span class="kw">factor</span>(year))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_gradientn</span>(<span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;YlOrRd&quot;</span>))</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<p>The previous example used the Vocab dataset and applied linear models describing vocabulary by education for different years. Here we’ll continue with that example by using stat_quantile() to apply a quantile regression (method rq).</p>
+<p>By default, the 1st, 2nd (i.e. median), and 3rd quartiles are modeled as a response to the predictor variable, in this case education. Specific quantiles can be specified with the quantiles argument.</p>
+<p>If you want to specify many quantile and color according to year, then things get too busy. The resulting plot will be a mess, because there are three quartiles drawn by default in the first plot. The second plot takes the code for the previous plot and sets the quantiles argument to 0.5 so that only the median is shown.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use stat_quantile instead of stat_smooth:</span>
+<span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary, <span class="dt">col =</span> year, <span class="dt">group =</span> <span class="kw">factor</span>(year))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_quantile</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_gradientn</span>(<span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;YlOrRd&quot;</span>))</code></pre></div>
+<pre><code>## Loading required package: SparseM</code></pre>
+<pre><code>## Loading required package: methods</code></pre>
+<pre><code>## 
+## Attaching package: &#39;SparseM&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     backsolve</code></pre>
+<pre><code>## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x</code></pre>
+<pre><code>## Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></pre>
+<pre><code>## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x</code></pre>
+<pre><code>## Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique
+
+## Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set quantile to 0.5:</span>
+<span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary, <span class="dt">col =</span> year, <span class="dt">group =</span> <span class="kw">factor</span>(year))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_quantile</span>(<span class="dt">quantiles =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_gradientn</span>(<span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">9</span>,<span class="st">&quot;YlOrRd&quot;</span>))</code></pre></div>
+<pre><code>## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x
+## Smoothing formula not specified. Using: y ~ x</code></pre>
+<pre><code>## Warning in rq.fit.br(wx, wy, tau = tau, ...): Solution may be nonunique</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p>Another useful stat function is stat_sum() which calculates the count for each group. Typically we’d draw our models on top of the dots, but in this case we didn’t so that we could just keep recycling the p object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot with linear and loess model</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(Vocab, <span class="kw">aes</span>(<span class="dt">x =</span> education, <span class="dt">y =</span> vocabulary)) <span class="op">+</span>
+<span class="st">       </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;red&quot;</span>), <span class="dt">se =</span> F) <span class="op">+</span>
+<span class="st">       </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>), <span class="dt">se =</span> F) <span class="op">+</span>
+<span class="st">       </span><span class="kw">scale_color_discrete</span>(<span class="st">&quot;Model&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span> =<span class="st"> &quot;lm&quot;</span>, <span class="st">&quot;red&quot;</span> =<span class="st"> &quot;LOESS&quot;</span>))
+
+<span class="co"># Add stat_sum</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_sum</span>()</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add stat_sum and set size range</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">stat_sum</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">10</span>))</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<div id="stats-outside-geoms" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Stats outside geoms</h3>
+<p>We can use the fun.data = functio_name() which will feed the results in to our plot. In the Hmisc package, we can calculate a 95% CI using the command smean.cl.normal() or within ggplot2 using mean_cl_normal(). We can use any statistical method inside ggplot2, as long as the output format is the same as the required format of the geom that is called. So making sure the data is in the right format and that all the positions that we might use in our plots are defined is an important first step. The following example also sets up some base variables and base graphics.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Display structure of mtcars</span>
+<span class="kw">str</span>(mtcars)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert cyl and am to factors:</span>
+mtcars<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw">as.factor</span>(mtcars<span class="op">$</span>cyl)
+mtcars<span class="op">$</span>am &lt;-<span class="st"> </span><span class="kw">as.factor</span>(mtcars<span class="op">$</span>am)
+
+<span class="co"># Define positions:</span>
+posn.d &lt;-<span class="st"> </span><span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.1</span>)
+posn.jd &lt;-<span class="st"> </span><span class="kw">position_jitterdodge</span>(<span class="dt">jitter.width =</span> <span class="fl">0.1</span>, <span class="dt">dodge.width =</span> <span class="fl">0.2</span>)
+posn.j &lt;-<span class="st"> </span><span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>)
+
+<span class="co"># base layers:</span>
+<span class="co">#wt.cyl.am &lt;- ggplot(mtcars, aex(x = cyl, y = wt, col = am, fill = am, group = am)) # more explicit naming</span>
+wt.cyl.am &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(cyl, wt, <span class="dt">col =</span> am, <span class="dt">fill =</span> am, <span class="dt">group =</span> am))</code></pre></div>
+<p>Plot 2: Add a stat_summary() layer to wt.cyl.am and calculate the mean and standard deviation as we did in the video: set fun.data to mean_sdl and specify fun.args to be list(mult = 1). Set the position argument to posn.d.</p>
+<p>Plot 3: Repeat the previous plot, but use the 95% confidence interval instead of the standard deviation. You can use mean_cl_normal instead of mean_sdl this time. There’s no need to specify fun.args in this case. Again, set position to posn.d.</p>
+<p>The above plots were simple because they implicitly used a default geom, which is geom_pointrange(). For Plot 4, fill in the blanks to calculate the mean and standard deviation separately with two stat_summary() functions: For the mean, use geom = “point” and set fun.y = mean. This time you should use fun.y because the point geom uses the y aesthetic behind the scenes. Add error bars with another stat_summary() function. Set geom = “errorbar” to get the real “T” tips. Set fun.data = mean_sdl.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc) <span class="co"># required for the stat_summary() functions</span></code></pre></div>
+<pre><code>## Warning: package &#39;Hmisc&#39; was built under R version 3.4.2</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## 
+## Attaching package: &#39;survival&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:quantreg&#39;:
+## 
+##     untangle.specials</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:quantreg&#39;:
+## 
+##     latex</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, round.POSIXt, trunc.POSIXt, units</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 1: Jittered, dodged scatter plot with transparent points</span>
+wt.cyl.am <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> posn.jd, <span class="dt">alpha =</span> <span class="fl">0.6</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 2: Mean and SD - the easy way</span>
+wt.cyl.am <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), <span class="dt">position =</span> posn.d)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 3: Mean and 95% CI - the easy way</span>
+wt.cyl.am <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_normal, <span class="dt">position =</span> posn.d)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 4: Mean and SD - with T-tipped error bars - fill in ___</span>
+wt.cyl.am <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">fun.y =</span> mean,
+               <span class="dt">position =</span> posn.d) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">fun.data =</span> mean_sdl,
+               <span class="dt">position =</span> posn.d, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), <span class="dt">width =</span> <span class="fl">0.1</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<p>The only difference between ggplot2::mean_sdl() and Hmisc::smean.sdl() is the naming convention. In order to use the results of a function directly in ggplot2 we need to ensure that the names of the variables match the aesthetics needed for our respective geoms.</p>
+<p>Here we’ll create two new functions. One function will measure the full range of the dataset and the other will measure the interquartile range.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xx &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span> <span class="co"># our data</span>
+
+<span class="co"># Function to save range for use in ggplot</span>
+gg_range &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  <span class="co"># Change x below to return the instructed values</span>
+  <span class="kw">data.frame</span>(<span class="dt">ymin =</span> <span class="kw">min</span>(x), <span class="co"># Min</span>
+             <span class="dt">ymax =</span> <span class="kw">max</span>(x)) <span class="co"># Max</span>
+}
+
+<span class="kw">gg_range</span>(xx)</code></pre></div>
+<pre><code>##   ymin ymax
+## 1    1  100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Required output:</span>
+<span class="co">#   ymin ymax</span>
+<span class="co"># 1    1  100</span>
+
+<span class="co"># Function to Custom function:</span>
+med_IQR &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  <span class="co"># Change x below to return the instructed values</span>
+  <span class="kw">data.frame</span>(<span class="dt">y =</span> <span class="kw">median</span>(x), <span class="co"># Median</span>
+             <span class="dt">ymin =</span> <span class="kw">quantile</span>(x)[<span class="dv">2</span>], <span class="co"># 1st quartile</span>
+             <span class="dt">ymax =</span> <span class="kw">quantile</span>(x)[<span class="dv">4</span>])  <span class="co"># 3rd quartile</span>
+}
+
+<span class="kw">med_IQR</span>(xx)</code></pre></div>
+<pre><code>##        y  ymin  ymax
+## 25% 50.5 25.75 75.25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Required output:</span>
+<span class="co">#        y  ymin  ymax</span>
+<span class="co"># 25% 50.5 25.75 75.25</span></code></pre></div>
+<p>We have now created functions that will allow us to plot the five-number summary (the minimum, 1st quartile, median, 3rd quartile, and the maximum). Here, we’ll implement that into a unique plot type.</p>
+<p>All the functions and objects from the previous exercise are available including the updated mtcars data frame, the position object posn.d, the base layers wt.cyl.am and the functions med_IQR() and gg_range().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add three stat_summary calls to wt.cyl.am</span>
+wt.cyl.am <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">fun.data =</span> med_IQR,
+               <span class="dt">position =</span> posn.d, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">fun.data =</span> gg_range,
+               <span class="dt">position =</span> posn.d, <span class="dt">size =</span> <span class="dv">3</span>,
+               <span class="dt">alpha =</span> <span class="fl">0.4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">fun.y =</span> median,
+               <span class="dt">position =</span> posn.d, <span class="dt">size =</span> <span class="dv">3</span>,
+               <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">shape =</span> <span class="st">&quot;X&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="coordinates-layer" class="section level2">
+<h2><span class="header-section-number">8.2</span> Coordinates Layer</h2>
+<p>The coordinates layer controls the dimensions of the plot using the coord_ such as the coord_cartesian() which controls the x and y elements. You can use the scale_x_continous to effectivly show just a section of the plot if you so desire, but some data will be missed out as it itsn’t on the plot. Conversley the coord_cartesian will draw all the plot, but zoom in to just a section of it. We can also alter the aspect ratio, which can make certain trends in data easier to see, however there is a risk of deceiving the viewer, perhaps by mistake, if we are not careful.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Basic ggplot() command</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> hp, <span class="dt">col =</span> am)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()
+
+<span class="co"># Add scale_x_continuous</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>), <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<pre><code>## Warning: Removed 12 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : span too small. fewer data values than degrees of freedom.</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : at 3.168</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : radius 4e-006</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : all data on boundary of neighborhood. make span bigger</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : pseudoinverse used at 3.168</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : neighborhood radius 0.002</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : reciprocal condition number 1</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : at 3.572</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : radius 4e-006</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : all data on boundary of neighborhood. make span bigger</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : There are other near singularities as well. 4e-006</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : zero-width neighborhood. make span bigger
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : zero-width neighborhood. make span bigger</code></pre>
+<pre><code>## Warning: Computation failed in `stat_smooth()`:
+## NA/NaN/Inf in foreign function call (arg 5)</code></pre>
+<pre><code>## Warning: Removed 12 rows containing missing values (geom_point).</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The proper way to zoom in - shows the data appropriatley</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>))</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<p>We can set the aspect ratio of a plot with coord_fixed() or coord_equal(). Both use aspect = 1 as a default. A 1:1 aspect ratio is most appropriate when two continuous variables are on the same scale, as with the iris dataset.</p>
+<p>All variables are measured in centimeters, so it only makes sense that one unit on the plot should be the same physical distance on each axis. This gives a more truthful depiction of the relationship between the two variables since the aspect ratio can change the angle of our smoothing line. This would give an erroneous impression of the data.</p>
+<p>Of course the underlying linear models don’t change, but our perception can be influenced by the angle drawn. As a rule of thumb you’ll want to use a 1:1 aspect ratio when your axes show the same scales, but there are always exceptions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Complete basic scatter plot function</span>
+base.plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Sepal.Width, <span class="dt">col =</span> Species)) <span class="op">+</span>
+<span class="st">               </span><span class="kw">geom_jitter</span>() <span class="op">+</span>
+<span class="st">               </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F)
+
+<span class="co"># Plot base.plot: default aspect ratio</span>
+base.plot</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fix aspect ratio (1:1) of base.plot</span>
+base.plot <span class="op">+</span><span class="st"> </span><span class="kw">coord_equal</span>()</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p>The coord_polar() function converts a planar x-y cartesian plot to polar coordinates. This can be useful if you are producing pie charts.</p>
+<p>We can imagine two forms for pie charts - the typical filled circle, or a colored ring.</p>
+<p>As an example, consider a stacked bar chart. Imagine that we just take the y axis on the left and bend it until it loops back on itself, while expanding the right side as we go along. We’d end up with a pie chart - it’s simply a bar chart transformed onto a polar coordinate system.</p>
+<p>Typical pie charts omit all of the non-data ink, which we’ll learn about in the next chapter. Pie charts are not really better than stacked bar charts, but we’ll come back to this point in the fourth chapter on best practices.</p>
+<p>This function is particularly useful if you are dealing with a cycle, like yearly data, that you would like to see represented as such.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create stacked bar plot: thin.bar</span>
+thin.bar &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">fill =</span> cyl)) <span class="op">+</span>
+<span class="st">              </span><span class="kw">geom_bar</span>()
+
+<span class="co"># Convert thin.bar to pie chart</span>
+thin.bar <span class="op">+</span><span class="st"> </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create stacked bar plot: wide.bar</span>
+wide.bar &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">fill =</span> cyl)) <span class="op">+</span>
+<span class="st">              </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>)
+
+
+<span class="co"># Convert wide.bar to pie chart</span>
+wide.bar <span class="op">+</span><span class="st"> </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+</div>
+<div id="facets" class="section level2">
+<h2><span class="header-section-number">8.3</span> Facets</h2>
+<p>These are small elements of information, as suggested by Edward Tufte in the Visualisation of Qunatative Information, 1983. The idea is we can split up a larger plot into smaller ones which use the exact same coordinate system.</p>
+<p>The most straightforward way of using facets is facet_grid(). Here we just need to specify the categorical variable to use on rows and columns using formula notation.</p>
+<p>Notice that we can also take advantage of ordinal variables by positioning them in the correct order as columns or rows, as is the case with the number of cylinders.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Basic scatter plot:</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()
+
+<span class="co"># Separate rows according to transmission type, am</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>am)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Separate columns according to cylinders, cyl</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(cyl <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Separate by both columns and rows </span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(cyl <span class="op">~</span><span class="st"> </span>am)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<p>Facets are another way of presenting categorical variables. Sometimes it’s possible to overdo it. Here we’ll present a plot with 6 variables and see if we can add even more.</p>
+<p>Let’s begin by using a trick to map two variables onto two color scales - hue and lightness. We combine cyl and am into a single variable cyl_am. To accommodate this we also make a new color palette with alternating red and blue of increasing darkness. This is saved as myCol. The last plot created here is simply trying to plot too much information.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Code to create the cyl_am col and myCol vector</span>
+mtcars<span class="op">$</span>cyl_am &lt;-<span class="st"> </span><span class="kw">paste</span>(mtcars<span class="op">$</span>cyl, mtcars<span class="op">$</span>am, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)
+myCol &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">brewer.pal</span>(<span class="dv">9</span>, <span class="st">&quot;Blues&quot;</span>)[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">8</span>)],
+               <span class="kw">brewer.pal</span>(<span class="dv">9</span>, <span class="st">&quot;Reds&quot;</span>)[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">8</span>)])
+
+<span class="co"># Basic scatter plot, add color scale:</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> cyl_am)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> myCol)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Facet according on rows and columns.</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> cyl_am)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> myCol) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(vs <span class="op">~</span><span class="st"> </span>gear)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add more variables.  Note, with a denser plot we would need to set an alpha value to see all points</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> wt, <span class="dt">y =</span> mpg, <span class="dt">col =</span> cyl_am, <span class="dt">size =</span> disp)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> myCol) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(vs <span class="op">~</span><span class="st"> </span>gear)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-15-3.png" width="672" /></p>
+<p>When you have a categorical variable with many levels which are not all present in sub-groups of another variable, it may be desirable to drop the unused levels. As an example let’s return to the mammalian sleep dataset, mamsleep. It is available in your workspace.</p>
+<p>The variables of interest here are name, which contains the full popular name of each animal, and vore, the eating behavior. Each animal can only be classified under one eating habit, so if we facet according to vore, we don’t need to repeat the full list in each sub-plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
+
+<span class="co"># Setup the data</span>
+mamsleep &lt;-<span class="st"> </span>msleep[,<span class="kw">c</span>(<span class="st">&quot;vore&quot;</span>, <span class="st">&quot;name&quot;</span>, <span class="st">&quot;sleep_total&quot;</span>, <span class="st">&quot;sleep_rem&quot;</span>)] 
+mamsleep &lt;-<span class="st"> </span>mamsleep[<span class="kw">complete.cases</span>(mamsleep),] 
+mamsleep &lt;-<span class="st"> </span><span class="kw">melt</span>(mamsleep, <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">&quot;vore&quot;</span>,<span class="st">&quot;name&quot;</span>), <span class="dt">variable.name =</span> <span class="st">&quot;sleep&quot;</span>, <span class="dt">value.name =</span> <span class="st">&quot;time&quot;</span>) 
+<span class="kw">levels</span>(mamsleep<span class="op">$</span>sleep) &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;sleep_&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">levels</span>(mamsleep<span class="op">$</span>sleep))
+
+<span class="co"># Basic scatter plot</span>
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mamsleep, <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> name, <span class="dt">col =</span> sleep)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()      
+p</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Facet rows accoding to vore</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(vore <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify scale and space arguments to free up rows</span>
+p <span class="op">+</span><span class="st"> </span><span class="kw">facet_grid</span>(vore <span class="op">~</span><span class="st"> </span>., <span class="dt">scale =</span> <span class="st">&#39;free_y&#39;</span>, <span class="dt">space =</span> <span class="st">&#39;free_y&#39;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+</div>
+<div id="themes" class="section level2">
+<h2><span class="header-section-number">8.4</span> Themes</h2>
+<p>The Themes layer hold all the visual elements not part of the data, there are three types; text, lines and rectangles.</p>
+<ul>
+<li>Text includes things like the axis, legends, plot and axis titles. Headers for individual facets are named as strip text e.g. strip.text.x =</li>
+<li>Lines includes tick marks, axis lines and grid lines.<br />
+</li>
+<li>Rectanges (rect) includes the plot area, legends and so on.</li>
+</ul>
+<p>Elements are in a hierachy so if you change some of the higher components, lower ones will be affected. Text is one instance of this. The diagram below shows the other nested elements.</p>
+<div class="figure">
+<img src="images/ThemeInheritance.png" alt="Inheritance in ggplot2 themes"  />
+<p class="caption">
+(#fig:Theme Inheritance)Inheritance in ggplot2 themes
+</p>
+</div>
+<p>If we want certain items to not appear on the plot we can use the element_blank command e.g. line = element_blank().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define our pink for use</span>
+myPink &lt;-<span class="st"> &quot;#FEE0D2&quot;</span>
+
+<span class="co"># Plot 1: change the plot background color to myPink:</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> myPink))
+
+<span class="co"># Plot 2: adjust the border to be a black line of size 3</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> myPink, 
+      <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">3</span>))
+
+<span class="co"># Plot 3: set panel.background, legend.key, legend.background and strip.background to element_blank()</span>
+uniform_panels &lt;-<span class="st"> </span><span class="kw">theme</span>(<span class="dt">panel.background =</span> <span class="kw">element_blank</span>(), 
+                        <span class="dt">legend.key =</span> <span class="kw">element_blank</span>(), 
+                        <span class="dt">legend.background=</span><span class="kw">element_blank</span>(), 
+                        <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) 
+                        
+z &lt;-<span class="st"> </span>z <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> myPink, 
+      <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">3</span>)) <span class="op">+</span><span class="st"> </span>uniform_panels
+
+<span class="co"># Extend z with theme() function and three arguments to change the appearance of lines</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),
+  <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>),
+  <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>))
+
+<span class="co"># Extend z with theme() function and four arguments to make the text better</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(
+  <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>, <span class="dt">color =</span> myRed),
+  <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">color =</span> myRed, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>),
+  <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">color =</span> myRed, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>),
+  <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)
+)</code></pre></div>
+<p>We can also use similar arguments to change the location and other settings of the legend</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Move legend by position, now top right of third facet</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>))
+
+<span class="co"># Change direction of the legend entries</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span>)
+
+<span class="co"># Change location by name</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
+
+<span class="co"># Remove legend entirely</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
+<p>The different rectangles of your plot have spacing between them. There’s spacing between the facets, between the axis labels and the plot rectangle, between the plot rectangle and the entire panel background, etc.</p>
+<p>Suppose you want to have more spacing between the different facets. You can control this by specifying panel.spacing.x inside a theme() function you add to z. For the argument value, you should pass a unit object. To achieve this, load the grid package with library().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Increase spacing between facets</span>
+<span class="kw">library</span>(grid)
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">panel.spacing.x =</span> <span class="kw">unit</span>(<span class="dv">2</span>, <span class="st">&quot;cm&quot;</span>))
+
+<span class="co"># Add code to remove any excess plot margin space</span>
+z <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">panel.spacing.x =</span> <span class="kw">unit</span>(<span class="dv">2</span>, <span class="st">&quot;cm&quot;</span>),
+  <span class="dt">plot.margin =</span> <span class="kw">unit</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="st">&quot;cm&quot;</span>))</code></pre></div>
+<div id="recycling-themes" class="section level3">
+<h3><span class="header-section-number">8.4.1</span> Recycling themes</h3>
+<p>When using the same themes repeatedly, for instance in a publication or report, we wouldn’t want to repeate the theme instructions every time. To do this, we save our theme element as an R object. If a new chart type or chart element then appears in a later plot, we can reuse the previous theme but just extend with a little more code to account for this new chart or object type, without having to re-type all the theme code.</p>
+<p>If we want all our plots to use the same theme, we can use the theme_set(theme_name()) command and all plots will do this. To return to the default, you can speficy theme_grey().</p>
+<p>There are many themes available by default in ggplot2: theme_bw(), theme_classic(), theme_gray(), etc. In the previous exercise, you saw that you can apply these themes to all following plots, with theme_set():</p>
+<blockquote>
+<p>theme_set(theme_bw())</p>
+</blockquote>
+<p>But you can also apply them on a particular plot, with:</p>
+<blockquote>
+<p>… + theme_bw()</p>
+</blockquote>
+<p>Next, it’s perfectly possible and super-easy to extend these themes with your own modifications. In this exercise, you will experiment with this and use some preset templates available from the ggthemes package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load ggthemes package</span>
+<span class="kw">library</span>(ggthemes)
+
+<span class="co"># Apply theme_tufte</span>
+z2 <span class="op">+</span><span class="st"> </span><span class="kw">theme_tufte</span>()
+
+
+<span class="co"># Apply theme_tufte, modified:</span>
+ z2 <span class="op">+</span><span class="st"> </span><span class="kw">theme_tufte</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>),
+    <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">size =</span> <span class="dv">12</span>),
+    <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">14</span>)
+  )</code></pre></div>
+</div>
+</div>
+<div id="best-practice" class="section level2">
+<h2><span class="header-section-number">8.5</span> Best Practice</h2>
+<p>Knowing how to create the plots is important, but choosing the right chart type is equally important.</p>
+<div id="bar-plots" class="section level3">
+<h3><span class="header-section-number">8.5.1</span> Bar Plots</h3>
+<p>Typically two types</p>
+<ul>
+<li>Absolute values e.g. counts</li>
+<li>Distribution plots</li>
+</ul>
+<p>Problems in interpretation can arise, for instance if a bar plot shows sleep patters, there will be a distribution around a mean, but no values of zero hours, but the plot axies is likely to go to zero. It is equally problematic to see extreme value, such as animals with many hours of sleep, since we typically show a mean and perhaps a standard deviation line.</p>
+<p>A better option would be to use a scatter plot of sleep times, with jitter and some transparency (alpha) to reduce any over plotting.</p>
+<p>The example below shows a bar plot with error bars, sometimes referred to as a dynamite plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Base layers</span>
+m &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> cyl, <span class="dt">y =</span> wt))
+
+<span class="co"># Draw dynamite plot</span>
+m <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;skyblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">width =</span> <span class="fl">0.1</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Base layers, update m so that we split the bars according to transmission type, am</span>
+m &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> cyl,<span class="dt">y =</span> wt, <span class="dt">col =</span> am, <span class="dt">fill =</span> am))
+
+<span class="co"># Plot 1: Draw dynamite plot - error bars overlap</span>
+m <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">width =</span> <span class="fl">0.1</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 2: Set position dodge in each stat function, dodge them, which does not work because the default dodging is different for the different stat_summary() functions</span>
+m <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), 
+               <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Set your dodge posn manually</span>
+posn.d &lt;-<span class="st"> </span><span class="kw">position_dodge</span>(<span class="fl">0.9</span>)
+
+<span class="co"># Plot 3:  Redraw dynamite plot</span>
+m <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">position =</span> posn.d) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_sdl, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">position =</span> posn.d)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-22-3.png" width="672" /></p>
+</div>
+<div id="pie-charts" class="section level3">
+<h3><span class="header-section-number">8.5.2</span> Pie Charts</h3>
+<p>Pie charts are not usually your first choice for plots. Angle, area and length elements are hard to compare, particularly if you are comparing more than one pie chart. Pie charts work based when comparing differences between of around 3 groups. A better alternative is to use bar charts - usually a horizontal bar where two bars can be plotted next to each other and compared.</p>
+<p>In this example we’re going to consider a typical use of pie charts - a categorical variable as the proportion of another categorical variable. For example, the proportion of each transmission type am, in each cylinder, cyl class. We use dummy aesthetic for the x. Changing the aes() function such that factor(1) maps onto x.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Convert bar chart to pie chart</span>
+<span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(<span class="dv">1</span>), <span class="dt">fill =</span> am)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>, <span class="dt">width =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>cyl) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>In the previous example, we looked at the proportions of one categorical variable (am) as a proportion of another (cyl). In this example, we’re interested in two, or possibly many, categorical variables independent of each other.</p>
+<p>The trick is to use a parallel coordinates plot. Each variable is plotted on its own axis and they are plotted as parallel axes. The individual observations are connected with lines, which can be colored according to another variable. This is a surprisingly useful visualization since we can combine many variables, even if they are on entirely different scales.</p>
+<p>A word of caution though: typically it is very taboo to draw lines in this way. It’s the reason why we don’t draw lines across levels of a nominal variable - the order, and thus the slope of the line, is meaningless. Parallel plots are a (very useful) exception to the rule!</p>
+<p>Parallel plots not only allow us to see many different variables at the same time, but because we can apply specific statistics to each axis or the order of the axes, we can derive even more information from these plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Parallel coordinates plot using GGally</span>
+<span class="kw">library</span>(GGally)</code></pre></div>
+<pre><code>## Warning: package &#39;GGally&#39; was built under R version 3.4.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># All columns except am</span>
+group_by_am &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(mtcars) <span class="op">==</span><span class="st"> &#39;am&#39;</span>)
+my_names_am &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="dv">11</span>)[<span class="op">-</span>group_by_am]
+
+<span class="co"># Basic parallel plot - each variable plotted as a z-score transformation</span>
+<span class="kw">ggparcoord</span>(mtcars, my_names_am, <span class="dt">groupColumn =</span> group_by_am, <span class="dt">alpha =</span> <span class="fl">0.8</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>The parallel coordinate plot from the last exercise is an excellent example of an exploratory plot. It presents a massive amount of information and allows the specialist to explore many relationships all at once. Another great example is a plot matrix (a SPLOM, from scatter plot matrix).</p>
+<p>GGally::ggpairs(mtcars2) will produce the plot of a selection of the mtcars dataset, mtcars2. Depending on the nature of the dataset a specific plot type will be produced and if both variables are continuous the correlation (rho) will also be calculated.</p>
+<p>The relationship between the variables drat and mpg is shown in two areas. What is the correlation between these two variables?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars2 &lt;-<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>)]
+<span class="kw">ggpairs</span>(mtcars2)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>The answer is 0.681, this is in the first row, in the first column you can find the scatter plot.</p>
+</div>
+<div id="heat-maps" class="section level3">
+<h3><span class="header-section-number">8.5.3</span> Heat Maps</h3>
+<p>Heat Maps can be difficult to read as the interpretation can change, dependent on the colours around each element. Plotting continous data on comon scales is always the better option.</p>
+<p>You may encounter a case in which you really do want to use one. Luckily, they’re fairly straightforward to produce in ggplot2.</p>
+<p>We begin by specifying two categorical variables for the x and y aesthetics. At the intersection of each category we’ll draw a box, except here we call it a tile, using the geom_tile() layer. Then we will fill each tile with a continuous variable.</p>
+<p>We’ll produce the heat map we saw in the video with the built-in barley dataset. The barley dataset is in the lattice package and has already been loaded for you. Begin by exploring the structure of the data in the console using str().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RColorBrewer)
+<span class="kw">library</span>(lattice)
+<span class="kw">data</span>(barley)
+
+<span class="co"># Create color palette</span>
+myColors &lt;-<span class="st"> </span><span class="kw">brewer.pal</span>(<span class="dv">9</span>, <span class="st">&quot;Reds&quot;</span>)
+
+<span class="co"># Build the heat map from scratch</span>
+<span class="kw">ggplot</span>(barley, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> variety, <span class="dt">fill =</span> yield)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_tile</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>site, <span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="dt">colors =</span> myColors)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>There are several alternatives to heat maps. The best choice really depends on the data and the story you want to tell with this data. If there is a time component, the most obvious choice is a line plot like what we see in the viewer.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Line plots</span>
+<span class="kw">ggplot</span>(barley, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> variety, <span class="dt">col =</span> variety, <span class="dt">group =</span> variety)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>site, <span class="dt">nrow =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>You can use dodged error bars or you can use overlapping transparent ribbons (shown in the viewer). In this exercise we’ll try to recreate the second option, the transparent ribbons.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(barley, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> yield, <span class="dt">colour =</span> site, <span class="dt">group =</span> site, <span class="dt">fill =</span> site)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_summary</span>(
+    <span class="dt">fun.data =</span> mean_sdl, 
+    <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult =</span> <span class="dv">1</span>), 
+    <span class="dt">geom =</span> <span class="st">&quot;ribbon&quot;</span>, 
+    <span class="dt">col =</span> <span class="ot">NA</span>, 
+    <span class="dt">alpha =</span> <span class="fl">0.1</span>
+    )</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+</div>
+<div id="case-study---descriptive-statistics" class="section level2">
+<h2><span class="header-section-number">8.6</span> Case Study - Descriptive statistics</h2>
+<p>Data from from the California Health Interview Survey (CHIS). The original dataset from 2009 has over 47,000 respondents across 536 variables, but we will use a slightly filtered version with around 44,000 responses over 10 variables. The data is filtered to show just the 4 largest ethnicity groups giving the over 44,000 responses.</p>
+<p>In this chapter we’re going to continuously build on our plotting functions and understanding to produce a mosaic plot (aka Merimeko plot). This is a visual representation of a contingency table, comparing two categorical variables. Essentially, our question is which groups are over or under represented in our dataset. To visualize this we’ll color groups according to their pearson residuals from a chi-squared test. At the end of it all we’ll wrap up our script into a flexible function so that we can look at other variables.</p>
+<p>We’ll familiarize ourselves with a small number of variables from the 2009 CHIS adult-response dataset (as opposed to children). We have selected the following variables to explore:</p>
+<ul>
+<li>RBMI: BMI Category description</li>
+<li>BMI_P: BMI value</li>
+<li>RACEHPR2: race</li>
+<li>SRSEX: sex</li>
+<li>SRAGE_P: age</li>
+<li>MARIT2: Marital status</li>
+<li>AB1: General Health Condition</li>
+<li>ASTCUR: Current Asthma Status</li>
+<li>AB51: Type I or Type II Diabetes</li>
+<li>POVLL: Poverty level</li>
+</ul>
+<p>We’ll filter our dataset to plot a more reliable subset (we’ll still retain over 95% of the data).</p>
+<p>Before we get into mosaic plots it’s worthwhile exploring the dataset using simple distribution plots - i.e. histograms.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the data</span>
+<span class="kw">load</span>(<span class="st">&quot;D:/CloudStation/Documents/2017/RData/CHIS2009_reduced_2.Rdata&quot;</span>)
+
+<span class="co"># Explore the dataset with summary and str</span>
+<span class="kw">str</span>(adult)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    44346 obs. of  10 variables:
+##  $ RBMI    : num  3 3 3 2 3 4 3 2 3 3 ...
+##  $ BMI_P   : num  28.9 26.1 25.1 25 25.1 ...
+##  $ RACEHPR2: num  6 6 6 6 6 6 6 6 6 6 ...
+##  $ SRSEX   : num  1 2 1 1 1 2 1 2 1 2 ...
+##  $ SRAGE_P : num  32 80 71 39 75 53 42 33 67 52 ...
+##  $ MARIT2  : num  1 3 1 4 1 1 1 1 3 3 ...
+##  $ AB1     : num  1 1 2 1 2 3 2 2 1 5 ...
+##  $ ASTCUR  : num  2 2 1 2 2 1 2 2 2 2 ...
+##  $ AB51    : num  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+##  $ POVLL   : num  4 4 4 4 4 4 4 3 4 4 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(adult)</code></pre></div>
+<pre><code>##       RBMI           BMI_P          RACEHPR2         SRSEX      
+##  Min.   :1.000   Min.   :12.65   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:22.77   1st Qu.:5.000   1st Qu.:1.000  
+##  Median :3.000   Median :25.72   Median :6.000   Median :2.000  
+##  Mean   :2.748   Mean   :26.64   Mean   :5.088   Mean   :1.591  
+##  3rd Qu.:3.000   3rd Qu.:29.32   3rd Qu.:6.000   3rd Qu.:2.000  
+##  Max.   :4.000   Max.   :93.72   Max.   :6.000   Max.   :2.000  
+##     SRAGE_P          MARIT2           AB1            ASTCUR     
+##  Min.   :18.00   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:44.00   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:2.000  
+##  Median :57.00   Median :1.000   Median :2.000   Median :2.000  
+##  Mean   :56.14   Mean   :2.043   Mean   :2.525   Mean   :1.915  
+##  3rd Qu.:69.00   3rd Qu.:3.000   3rd Qu.:3.000   3rd Qu.:2.000  
+##  Max.   :85.00   Max.   :4.000   Max.   :5.000   Max.   :2.000  
+##       AB51             POVLL      
+##  Min.   :-1.0000   Min.   :1.000  
+##  1st Qu.:-1.0000   1st Qu.:2.000  
+##  Median :-1.0000   Median :4.000  
+##  Mean   :-0.7108   Mean   :3.196  
+##  3rd Qu.:-1.0000   3rd Qu.:4.000  
+##  Max.   : 3.0000   Max.   :4.000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Age histogram</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span>(<span class="dt">x =</span> SRAGE_P)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>() </code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># BMI histogram</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span>(<span class="dt">x =</span> BMI_P)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>() </code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-29-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Age colored by BMI, default binwidth</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span>(<span class="dt">x =</span> SRAGE_P, <span class="dt">fill =</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) </code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-29-3.png" width="672" /></p>
+<p>Next we want to tidy our dateset, we’ll remove some extreme values then provide some better labels to help with plotting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Remove individual aboves 84, as it seems &gt;85 is grouped together</span>
+adult &lt;-<span class="st"> </span>adult[adult<span class="op">$</span>SRAGE_P <span class="op">&lt;=</span><span class="st"> </span><span class="dv">84</span>, ]
+
+<span class="co"># Remove individuals with a BMI below 16 and above or equal to 52</span>
+adult &lt;-<span class="st"> </span>adult[adult<span class="op">$</span>BMI_P <span class="op">&gt;=</span><span class="st"> </span><span class="dv">16</span> <span class="op">&amp;</span><span class="st"> </span>adult<span class="op">$</span>BMI_P <span class="op">&lt;</span><span class="st"> </span><span class="dv">52</span>, ]
+
+<span class="co"># Relabel the race variable to make plotting easier:</span>
+adult<span class="op">$</span>RACEHPR2 &lt;-<span class="st"> </span><span class="kw">factor</span>(adult<span class="op">$</span>RACEHPR2, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Latino&quot;</span>, <span class="st">&quot;Asian&quot;</span>, <span class="st">&quot;African American&quot;</span>, <span class="st">&quot;White&quot;</span>))
+
+<span class="co"># Relabel the BMI categories variable to make plotting easier:</span>
+adult<span class="op">$</span>RBMI &lt;-<span class="st"> </span><span class="kw">factor</span>(adult<span class="op">$</span>RBMI, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Under-weight&quot;</span>, <span class="st">&quot;Normal-weight&quot;</span>, <span class="st">&quot;Over-weight&quot;</span>, <span class="st">&quot;Obese&quot;</span>))</code></pre></div>
+<p>When we introduced histograms we focused on univariate data, which is exactly what we’ve been doing here. However, when we want to explore distributions further there is much more we can do. For example, there are density plots, which you’ll explore in the next course. For now, we’ll look deeper at frequency histograms and begin developing our mosaic plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The color scale used in the plot</span>
+BMI_fill &lt;-<span class="st"> </span><span class="kw">scale_fill_brewer</span>(<span class="st">&quot;BMI Category&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Reds&quot;</span>)
+
+<span class="co"># Theme to fix category display in faceted plot</span>
+fix_strips &lt;-<span class="st"> </span><span class="kw">theme</span>(<span class="dt">strip.text.y =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">0</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">vjust =</span> <span class="fl">0.1</span>, <span class="dt">size =</span> <span class="dv">14</span>),
+                    <span class="dt">strip.background =</span> <span class="kw">element_blank</span>(),
+                    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)
+
+<span class="co"># Histogram, add BMI_fill and customizations</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span>fix_strips <span class="op">+</span>
+<span class="st">  </span>BMI_fill <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_grid</span>(RBMI <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>()</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>In the previous exercise we looked at different ways of showing the absolute count of multiple histograms. This is fine, but density would be more useful measure if we wanted to see how the frequency of one variable changes accross another. However, there are some difficulties here, so let’s take a closer look at different plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 1 - Count histogram</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 2 - Density histogram - odd because we get the density within each BMI category, not within each age group</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density..),<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 3 - Faceted count histogram - if we are interested in the frequency distribution within each BMI category</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_grid</span>(RBMI <span class="op">~</span>.)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-32-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 4 - Faceted density histogram - similat to 3 but density rather than count</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density..),<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_grid</span>(RBMI <span class="op">~</span>.)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-32-4.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 5 - Density histogram with position = &quot;fill&quot; - not an accurate representation, as density calculates the proportion across category, and not across bin</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..density..),<span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-32-5.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot 6 - The accurate histogram</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count..<span class="op">/</span><span class="kw">sum</span>(..count..)),<span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-32-6.png" width="672" /></p>
+<p>In the previous exercise we looked at how to produce a frequency histogram when we have many sub-categories. The problem here is that this can’t be facetted because the calculations occur on the fly inside ggplot2.</p>
+<p>To overcome this we’re going to calculate the proportions outside ggplot2. This is the beginning of our flexible script for a mosaic plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># An attempt to facet the accurate frequency histogram from before (failed)</span>
+<span class="kw">ggplot</span>(adult, <span class="kw">aes</span> (<span class="dt">x =</span> SRAGE_P, <span class="dt">fill=</span> <span class="kw">factor</span>(RBMI))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count..<span class="op">/</span><span class="kw">sum</span>(..count..)), <span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(RBMI <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create DF with table()</span>
+DF &lt;-<span class="st"> </span><span class="kw">table</span>(adult<span class="op">$</span>RBMI, adult<span class="op">$</span>SRAGE_P)
+
+<span class="co"># Use apply on DF to get frequency of each group - the second argument is 2 because we want to do calculations on each column</span>
+DF_freq &lt;-<span class="st"> </span><span class="kw">apply</span>(DF, <span class="dv">2</span>, <span class="cf">function</span>(x) x<span class="op">/</span><span class="kw">sum</span>(x))
+
+<span class="co"># Load reshape2 and use melt on DF to create DF_melted</span>
+<span class="kw">library</span>(reshape2)
+DF_melted &lt;-<span class="st"> </span><span class="kw">melt</span>(DF_freq)
+
+<span class="co"># Change names of DF_melted</span>
+<span class="kw">names</span>(DF_melted) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FILL&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="st">&quot;value&quot;</span>)
+
+<span class="co"># Add code to make this a faceted plot - note we are now using geom_bar</span>
+<span class="kw">ggplot</span>(DF_melted, <span class="kw">aes</span>(<span class="dt">x =</span> X, <span class="dt">y =</span> value, <span class="dt">fill =</span> FILL)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span>
+<span class="st">  </span>BMI_fill <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(FILL <span class="op">~</span><span class="st"> </span>.)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
+<div id="mosaic-plots" class="section level3">
+<h3><span class="header-section-number">8.6.1</span> Mosaic Plots</h3>
+<p>Mosaic plots are similar to the last plot we created, however they show the proportion that the item makes up of the whole dataset, not just a particular year. In effect, we have a large contigency table derived from two categorical variables - BMI category and age (we treat this as an ordinal variable for the mosaic plot). We want to know if the proportions of one variable, such as BMI, within groups of another variable such as age, stray from the null model of equal proportions. This is in effect a visual representation of a chi-squared plot, as developed by Michael Friendly. We can now think about colouring the bars for each group based on it’s residual value.</p>
+<p>Mosaic plots are a bit more involved, because the aim is not to draw bars, but rather rectangles, for which we can control the widths. Whilst bars are simply rectangles, but we don’t have easy access to the xmin and xmax aesthetics, but in geom_rect() we do. Likewise, we also have access to ymin and ymax. So we’re going to draw a box for every one of our 268 distinct groups of BMI category and age.</p>
+<p>In this first section we need to create our data frame, based on our contigency table, but with some more calculations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The initial contingency table</span>
+DF &lt;-<span class="st"> </span><span class="kw">as.data.frame.matrix</span>(<span class="kw">table</span>(adult<span class="op">$</span>SRAGE_P, adult<span class="op">$</span>RBMI))
+
+<span class="co"># Add the columns groupsSum, xmax and xmin. Remove groupSum again.</span>
+DF<span class="op">$</span>groupSum &lt;-<span class="st"> </span><span class="kw">rowSums</span>(DF)
+DF<span class="op">$</span>xmax &lt;-<span class="st"> </span><span class="kw">cumsum</span>(DF<span class="op">$</span>groupSum)
+DF<span class="op">$</span>xmin &lt;-<span class="st"> </span>DF<span class="op">$</span>xmax <span class="op">-</span><span class="st"> </span>DF<span class="op">$</span>groupSum 
+<span class="co"># The groupSum column needs to be removed</span>
+DF<span class="op">$</span>groupSum &lt;-<span class="st"> </span><span class="ot">NULL</span>
+
+<span class="co"># Copy row names to variable X as the names of the x axis groups are stored in the row name</span>
+DF<span class="op">$</span>X &lt;-<span class="st"> </span><span class="kw">row.names</span>(DF)
+
+<span class="co"># Melt the dataset</span>
+<span class="kw">library</span>(reshape2)
+DF_melted &lt;-<span class="st"> </span><span class="kw">melt</span>(DF, <span class="dt">id.vars =</span> <span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;xmin&quot;</span>, <span class="st">&quot;xmax&quot;</span>), <span class="dt">variable.name =</span> <span class="st">&quot;FILL&quot;</span>)
+
+<span class="co"># dplyr call to calculate ymin and ymax - first groups by X and then calculates cumulative proportions</span>
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:GGally&#39;:
+## 
+##     nasa</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Hmisc&#39;:
+## 
+##     combine, src, summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF_melted &lt;-<span class="st"> </span>DF_melted <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(X) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ymax =</span> <span class="kw">cumsum</span>(value<span class="op">/</span><span class="kw">sum</span>(value)),
+         <span class="dt">ymin =</span> ymax <span class="op">-</span><span class="st"> </span>value<span class="op">/</span><span class="kw">sum</span>(value))
+
+<span class="co"># Plot rectangles - don&#39;t change.</span>
+<span class="kw">library</span>(ggthemes)</code></pre></div>
+<pre><code>## Warning: package &#39;ggthemes&#39; was built under R version 3.4.2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(DF_melted, <span class="kw">aes</span>(<span class="dt">ymin =</span> ymin,
+                 <span class="dt">ymax =</span> ymax,
+                 <span class="dt">xmin =</span> xmin,
+                 <span class="dt">xmax =</span> xmax,
+                 <span class="dt">fill =</span> FILL)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span>BMI_fill <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>Previously we generated a plot where each individual bar was plotted separately using rectangles . This means we have access to each piece and we can apply different fill parameters.</p>
+<p>So let’s make some new parameters. To get the Pearson residuals, we’ll use the chisq.test().</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform chi.sq test (RBMI and SRAGE_P)</span>
+results &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(<span class="kw">table</span>(adult<span class="op">$</span>RBMI, adult<span class="op">$</span>SRAGE_P))
+
+<span class="co"># Melt results$residuals and store as resid</span>
+resid &lt;-<span class="st"> </span><span class="kw">melt</span>(results<span class="op">$</span>residuals)
+
+<span class="co"># Change names of resid - so that we have a consistent naming convention</span>
+<span class="kw">names</span>(resid) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FILL&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="st">&quot;residual&quot;</span>)
+
+<span class="co"># merge the two datasets:</span>
+DF_all &lt;-<span class="st"> </span><span class="kw">merge</span>(DF_melted, resid)
+
+<span class="co"># Update plot command</span>
+<span class="kw">library</span>(ggthemes)
+<span class="kw">ggplot</span>(DF_all, <span class="kw">aes</span>(<span class="dt">ymin =</span> ymin,
+                   <span class="dt">ymax =</span> ymax,
+                   <span class="dt">xmin =</span> xmin,
+                   <span class="dt">xmax =</span> xmax,
+                   <span class="dt">fill =</span> residual)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rect</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradient2</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>()</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Now that we are not coloring according to BMI category, we have to add the group labels manually. Also, we neglected to label the x-axis properly.</p>
+<p>Here we’ll use the label aesthetic inside geom_text(). The actual labels will be the FILL and X columns in the DF data frame. Since we have axes on the left and bottom of our plot, we’ll add information to the top and right inner edges of the plot. We could have also added margin text, but that is a more advanced topic. This will be a suitable solution for the moment.</p>
+<p>To position our labels correctly, we need to calculate the midpoint between each xmax and xmin value. To get this, calculate the half difference between each pair of xmax and xmin then add this value to xmin.</p>
+<p>For the y label positions, we only want to work with the values at the maximum xmax, i.e. at the very end.</p>
+<p>Now that xtext and ytext are available, we can add the labels to our plot. In the two geom_text() functions, separate aesthetics are defined that control the x and y positioning of the labels.</p>
+<p>For the age groups, set the x position with xtext. The y position is fixed since our y axis is always going to end at 1. For the labeling of the y axis, the second geom_text() has three aesthetics since the position on the right will depend on the size of our dataset in the future.</p>
+<p>Some additional attributes have been set inside geom_text(), outside the aes() function. This is just some fine tweaking to get the positioning and angle correct. It’s not perfect, but since this is an exploratory plot, it does a pretty good job.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Position for labels on x axis</span>
+DF_all<span class="op">$</span>xtext &lt;-<span class="st"> </span>DF_all<span class="op">$</span>xmin <span class="op">+</span><span class="st"> </span>(DF_all<span class="op">$</span>xmax <span class="op">-</span><span class="st"> </span>DF_all<span class="op">$</span>xmin)<span class="op">/</span><span class="dv">2</span>
+
+<span class="co"># Position for labels on y axis (don&#39;t change)</span>
+index &lt;-<span class="st"> </span>DF_all<span class="op">$</span>xmax <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(DF_all<span class="op">$</span>xmax)
+DF_all<span class="op">$</span>ytext &lt;-<span class="st"> </span>DF_all<span class="op">$</span>ymin[index] <span class="op">+</span><span class="st"> </span>(DF_all<span class="op">$</span>ymax[index] <span class="op">-</span><span class="st"> </span>DF_all<span class="op">$</span>ymin[index])<span class="op">/</span><span class="dv">2</span>
+
+<span class="co"># Plot</span>
+<span class="kw">ggplot</span>(DF_all, <span class="kw">aes</span>(<span class="dt">ymin =</span> ymin, <span class="dt">ymax =</span> ymax, <span class="dt">xmin =</span> xmin,
+                   <span class="dt">xmax =</span> xmax, <span class="dt">fill =</span> residual)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="co"># geom_text for ages (i.e. the x axis)</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> xtext,
+                <span class="dt">label =</span> X),
+            <span class="dt">y =</span> <span class="dv">1</span>,
+            <span class="dt">size =</span> <span class="dv">3</span>,
+            <span class="dt">angle =</span> <span class="dv">90</span>,
+            <span class="dt">hjust =</span> <span class="dv">1</span>,
+            <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="co"># geom_text for BMI (i.e. the fill axis)</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">max</span>(xmax),
+                <span class="dt">y =</span> ytext,
+                <span class="dt">label =</span> FILL),
+            <span class="dt">size =</span> <span class="dv">3</span>,
+            <span class="dt">hjust =</span> <span class="dv">1</span>,
+            <span class="dt">show.legend  =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradient2</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>We can now wrap all the steps into a single function that we can use to examine any two variables of interest in our data frame (or in any other data frame for that matter).</p>
+<p>Notice that the function takes multiple arguments, such as the data frame of interest and the variables that you want to create the mosaic plot for. None of the arguments have default values, so you’ll have to specify all three if you want the mosaicGG() function to work.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load all packages</span>
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(reshape2)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggthemes)
+
+<span class="co"># Script generalized into a function</span>
+mosaicGG &lt;-<span class="st"> </span><span class="cf">function</span>(data, X, FILL) {
+
+  <span class="co"># Proportions in raw data</span>
+  DF &lt;-<span class="st"> </span><span class="kw">as.data.frame.matrix</span>(<span class="kw">table</span>(data[[X]], data[[FILL]]))
+  DF<span class="op">$</span>groupSum &lt;-<span class="st"> </span><span class="kw">rowSums</span>(DF)
+  DF<span class="op">$</span>xmax &lt;-<span class="st"> </span><span class="kw">cumsum</span>(DF<span class="op">$</span>groupSum)
+  DF<span class="op">$</span>xmin &lt;-<span class="st"> </span>DF<span class="op">$</span>xmax <span class="op">-</span><span class="st"> </span>DF<span class="op">$</span>groupSum
+  DF<span class="op">$</span>X &lt;-<span class="st"> </span><span class="kw">row.names</span>(DF)
+  DF<span class="op">$</span>groupSum &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  DF_melted &lt;-<span class="st"> </span><span class="kw">melt</span>(DF, <span class="dt">id =</span> <span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;xmin&quot;</span>, <span class="st">&quot;xmax&quot;</span>), <span class="dt">variable.name =</span> <span class="st">&quot;FILL&quot;</span>)
+  <span class="kw">library</span>(dplyr)
+  DF_melted &lt;-<span class="st"> </span>DF_melted <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(X) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ymax =</span> <span class="kw">cumsum</span>(value<span class="op">/</span><span class="kw">sum</span>(value)),
+           <span class="dt">ymin =</span> ymax <span class="op">-</span><span class="st"> </span>value<span class="op">/</span><span class="kw">sum</span>(value))
+
+  <span class="co"># Chi-sq test</span>
+  results &lt;-<span class="st"> </span><span class="kw">chisq.test</span>(<span class="kw">table</span>(data[[FILL]], data[[X]])) <span class="co"># fill and then x</span>
+  resid &lt;-<span class="st"> </span><span class="kw">melt</span>(results<span class="op">$</span>residuals)
+  <span class="kw">names</span>(resid) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;FILL&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="st">&quot;residual&quot;</span>)
+
+  <span class="co"># Merge data</span>
+  DF_all &lt;-<span class="st"> </span><span class="kw">merge</span>(DF_melted, resid)
+
+  <span class="co"># Positions for labels</span>
+  DF_all<span class="op">$</span>xtext &lt;-<span class="st"> </span>DF_all<span class="op">$</span>xmin <span class="op">+</span><span class="st"> </span>(DF_all<span class="op">$</span>xmax <span class="op">-</span><span class="st"> </span>DF_all<span class="op">$</span>xmin)<span class="op">/</span><span class="dv">2</span>
+  index &lt;-<span class="st"> </span>DF_all<span class="op">$</span>xmax <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(DF_all<span class="op">$</span>xmax)
+  DF_all<span class="op">$</span>ytext &lt;-<span class="st"> </span>DF_all<span class="op">$</span>ymin[index] <span class="op">+</span><span class="st"> </span>(DF_all<span class="op">$</span>ymax[index] <span class="op">-</span><span class="st"> </span>DF_all<span class="op">$</span>ymin[index])<span class="op">/</span><span class="dv">2</span>
+
+  <span class="co"># plot:</span>
+  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(DF_all, <span class="kw">aes</span>(<span class="dt">ymin =</span> ymin,  <span class="dt">ymax =</span> ymax, <span class="dt">xmin =</span> xmin,
+                          <span class="dt">xmax =</span> xmax, <span class="dt">fill =</span> residual)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_rect</span>(<span class="dt">col =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> xtext, <span class="dt">label =</span> X),
+            <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">max</span>(xmax),  <span class="dt">y =</span> ytext, <span class="dt">label =</span> FILL),
+            <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="st">&quot;Residuals&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="st">&quot;Individuals&quot;</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="st">&quot;Proportion&quot;</span>, <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_tufte</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)
+  <span class="kw">print</span>(g)
+}
+
+<span class="co"># BMI described by age</span>
+<span class="kw">mosaicGG</span>(adult, <span class="st">&quot;SRAGE_P&quot;</span>,<span class="st">&quot;RBMI&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Poverty described by age</span>
+<span class="kw">mosaicGG</span>(adult, <span class="st">&quot;SRAGE_P&quot;</span>,<span class="st">&quot;POVLL&quot;</span>)</code></pre></div>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-37-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mtcars: am described by cyl</span>
+<span class="kw">mosaicGG</span>(mtcars, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;am&quot;</span>) </code></pre></div>
+<pre><code>## Warning in chisq.test(table(data[[FILL]], data[[X]])): Chi-squared
+## approximation may be incorrect</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-37-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Vocab: vocabulary described by education</span>
+<span class="kw">library</span>(car)
+<span class="kw">mosaicGG</span>(Vocab, <span class="st">&quot;education&quot;</span>, <span class="st">&quot;vocabulary&quot;</span>)</code></pre></div>
+<pre><code>## Warning in chisq.test(table(data[[FILL]], data[[X]])): Chi-squared
+## approximation may be incorrect</code></pre>
+<p><img src="ggplot2Part2_files/figure-html/unnamed-chunk-37-4.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-visualization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="advanced-ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["Study-Notes.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

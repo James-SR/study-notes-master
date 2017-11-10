@@ -177,8 +177,8 @@ For instance we can count the number of unique songs in two data tables.
 
 ```r
 # Import files
-aerosmith <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/aerosmith.csv", stringsAsFactors = FALSE)
-greatest_hits <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/greatest_hits.csv", stringsAsFactors = FALSE)
+aerosmith <- read.csv("D:/CloudStation/Documents/2017/RData/aerosmith.csv", stringsAsFactors = FALSE)
+greatest_hits <- read.csv("D:/CloudStation/Documents/2017/RData/greatest_hits.csv", stringsAsFactors = FALSE)
 
 aerosmith %>% 
   # Create the new dataset using a set operation
@@ -210,7 +210,7 @@ Or use it to identify which are in one dataset but not the other.  Here, we also
 
 ```r
 # Import file
-live <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/live.csv", stringsAsFactors = FALSE)
+live <- read.csv("D:/CloudStation/Documents/2017/RData/live.csv", stringsAsFactors = FALSE)
 
 # Select the song names from live
 live_songs <- live %>% select(song)
@@ -251,23 +251,23 @@ live_songs %>%
 
 ```
 ##                                           song
-## 1                                Sick as a Dog
-## 2                            Seasons of Winter
-## 3                      Same Old Song and Dance
-## 4                            Toys in the Attic
-## 5                              I Ain't Got You
-## 6                 Mother Popcorn/Draw the Line
-## 7                           Lord of the Thighs
-## 8                            Lightning Strikes
+## 1                             S.O.S. (Too Bad)
+## 2                                Draw the Line
+## 3               Remember (Walking in the Sand)
+## 4                          Sight for Sore Eyes
+## 5                             Kings and Queens
+## 6                            Seasons of Winter
+## 7                          Big Ten Inch Record
+## 8                      Same Old Song and Dance
 ## 9                        One Way Street (live)
-## 10 Train Kept A-Rollin'/Strangers in the Night
-## 11              Remember (Walking in the Sand)
-## 12                       Sweet Emotion (remix)
-## 13                            S.O.S. (Too Bad)
-## 14                            Kings and Queens
-## 15                         Sight for Sore Eyes
-## 16                         Big Ten Inch Record
-## 17                               Draw the Line
+## 10                           Toys in the Attic
+## 11                       Sweet Emotion (remix)
+## 12                          Lord of the Thighs
+## 13 Train Kept A-Rollin'/Strangers in the Night
+## 14                               Sick as a Dog
+## 15                             I Ain't Got You
+## 16                           Lightning Strikes
+## 17                Mother Popcorn/Draw the Line
 ```
 
 **Note**: The union() function removes duplicate rows, even if a duplicate is desired (perhaps a different record such as someone with the same name).
@@ -299,8 +299,8 @@ Both anthologies claim to contain the complete studio recordings of Led Zeppelin
 
 ```r
 # Import files
-complete <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/complete.csv", stringsAsFactors = FALSE)
-definitive <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/definitive.csv", stringsAsFactors = FALSE)
+complete <- read.csv("D:/CloudStation/Documents/2017/RData/complete.csv", stringsAsFactors = FALSE)
+definitive <- read.csv("D:/CloudStation/Documents/2017/RData/definitive.csv", stringsAsFactors = FALSE)
 
 # Check if same order: definitive and complete
 identical(definitive, complete)
@@ -398,7 +398,7 @@ It appears that The Definitive Collection contains songs from the soundtrack of 
 
 ```r
 # Import file sounddtrack
-soundtrack <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/soundtrack.csv", stringsAsFactors = FALSE)
+soundtrack <- read.csv("D:/CloudStation/Documents/2017/RData/soundtrack.csv", stringsAsFactors = FALSE)
 
 # Check if same order: definitive and union of complete and soundtrack
 complete %>%
@@ -467,8 +467,8 @@ jimi %>%
 
 ```r
 # Import file sounddtrack
-hank_years <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/hank_years.csv", stringsAsFactors = FALSE)
-hank_charts <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/hank_charts.csv", stringsAsFactors = FALSE)
+hank_years <- read.csv("D:/CloudStation/Documents/2017/RData/hank_years.csv", stringsAsFactors = FALSE)
+hank_charts <- read.csv("D:/CloudStation/Documents/2017/RData/hank_charts.csv", stringsAsFactors = FALSE)
 
 # Examine hank_years and hank_charts
 hank_years
@@ -804,8 +804,8 @@ One way to remedy this problem is to use the function rownames_to_column() from 
 
 ```r
 # Import the data
-stage_songs <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/stage_songs.csv", stringsAsFactors = FALSE)
-stage_writers <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/stage_writers.csv", stringsAsFactors = FALSE)
+stage_songs <- read.csv("D:/CloudStation/Documents/2017/RData/stage_songs.csv", stringsAsFactors = FALSE)
+stage_writers <- read.csv("D:/CloudStation/Documents/2017/RData/stage_writers.csv", stringsAsFactors = FALSE)
 
 # And view
 stage_songs
@@ -871,8 +871,8 @@ It is not always needed to add the by = argument when joining, dplyr when compar
 
 ```r
 # Import the data
-movie_studios <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/movie_studios.csv", stringsAsFactors = FALSE)
-movie_years <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/movie_years.csv", stringsAsFactors = FALSE)
+movie_studios <- read.csv("D:/CloudStation/Documents/2017/RData/movie_studios.csv", stringsAsFactors = FALSE)
+movie_years <- read.csv("D:/CloudStation/Documents/2017/RData/movie_years.csv", stringsAsFactors = FALSE)
 
 # View the data
 movie_studios
@@ -942,8 +942,8 @@ In the next example, name refers to different objects. To make the join, set by 
 
 ```r
 # Import the data
-elvis_songs <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/elvis_songs.csv", stringsAsFactors = FALSE)
-elvis_movies <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/elvis_movies.csv", stringsAsFactors = FALSE)
+elvis_songs <- read.csv("D:/CloudStation/Documents/2017/RData/elvis_songs.csv", stringsAsFactors = FALSE)
+elvis_movies <- read.csv("D:/CloudStation/Documents/2017/RData/elvis_movies.csv", stringsAsFactors = FALSE)
 
 # And view
 elvis_songs
@@ -992,7 +992,7 @@ In the following example, the two datasets in question have the same key variabl
 
 ```r
 # Import the data
-movie_directors <- read.csv("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/movie_directors.csv", stringsAsFactors = FALSE)
+movie_directors <- read.csv("D:/CloudStation/Documents/2017/RData/movie_directors.csv", stringsAsFactors = FALSE)
 
 # Identify the key columns
 movie_directors
@@ -1113,7 +1113,7 @@ In this seciton we will use the Sean Lahman baseball statistics data.
 
 ```r
 # Load names and the package
-lahmanNames <- readRDS("C:/Users/DEsktop/Nextcloud/Documents/2017/RData/lahmanNames.rds")
+lahmanNames <- readRDS("D:/CloudStation/Documents/2017/RData/lahmanNames.rds")
 library(purrr)
 library(Lahman)
 

@@ -22,12 +22,6 @@ library(ggplot2)
 #load the data
 movies_small <- readRDS("D:/CloudStation/Documents/2017/RData/ch1_movies_small.RDS")
 
-# Create movies_small
-#library(ggplot2movies)
-#set.seed(123)
-#movies_small <- movies[sample(nrow(movies), 1000), ]
-#movies_small$rating <- factor(round(movies_small$rating))
-
 # Explore movies_small with str()
 str(movies_small)
 
