@@ -452,3 +452,71 @@ ggplot(xx, aes(x = Var1, y = Var2)) +
         strip.background = element_blank())
 ```
 
+### Ternary Plots
+
+Sometimes called triangle plots, these are useful for 'compositional trivariate data' - three variables that add up to 100%.  A classic example is soil - sand, silt and clay.  One typically option might be a stacked bar, but a ternary plot is an alternative.    
+
+The data frame for the African Soil Profiles Database can be found in the GSIF package. It contains three columns: Sand, Silt and Clay. A smaller version, containing only 50 observations is stored in africa_sample.
+
+In the first course we mentioned that in the data layer, the structure of the data should reflect how you wish to plot it. For a ternary plot, you need to have three separate variables, for example, Sand, Silt and Clay in africa. However, for a proportional/stacked bar plot, you just need two. The type should be defined as three levels within a single factor variable. That is, you want tidy data.
+
+It's also useful to maintain the site IDs as a variable within the data frame, currently, they are stored at row names, which is poor style and not useful.
+```{r}
+#load the data
+load("D:/CloudStation/Documents/2017/RData/africa.RData")
+africa_sample <- africa[sample(1:nrow(africa), 50, replace=FALSE),]
+
+# Explore africa
+str(africa)
+str(africa_sample)
+
+# Add an ID column from the row.names
+africa_sample$ID <- row.names(africa_sample)
+
+# Gather africa_sample
+library(tidyr)
+africa_sample_tidy <- gather(africa_sample, key, value, -ID)
+head(africa_sample_tidy)
+
+# Finish the ggplot command
+ggplot(africa_sample_tidy, aes(x = factor(ID), y = value, fill = key)) +
+  geom_col() +
+  coord_flip()
+
+```
+
+Here we wil use ternary plots.  For this you'll use the ggtern package, which provides the ggtern() function.
+
+In contrast to what you just saw in africa_small_tidy, the three soil properties, Sand, Silt and Clay, are not going to be located in a single variable. The distinction between wide and tidy format is here in action. Sometimes you need to rearrange your data for the desired plot type.
+
+Here, we use the complete dataset, africa, containing three separate variables for the measures of interest: that format is perfect for a ternary plot.  For this many points, other geoms might be more appropriate.
+
+```{r}
+# Load ggtern
+library(ggtern)
+
+# Build ternary plot
+ggtern(africa, aes(x = Sand, y = Silt, z = Clay)) +
+  geom_point(shape = 16, alpha = 0.2)
+```
+
+Ternary plots have been around for a while in R; you could achieve the same thing with the vcd package authored by Michael Friendly. If you just need a quick and dirty ternary plot, that may suit you just fine. However, since ggtern is built on ggplot2, you can take advantage of all the tools available therein.
+
+ggtern is authored by Nicholas Hamilton, more information can be found on his package website: www.ggtern.com.
+
+```{r}
+# ggtern and ggplot2 are loaded
+# Original plot:
+ggtern(africa, aes(x = Sand, y = Silt, z = Clay)) +
+  geom_point(shape = 16, alpha = 0.2)
+
+# Plot 1 - contour plot
+ggtern(africa, aes(x = Sand, y = Silt, z = Clay)) +
+  geom_density_tern()
+  
+# Plot 2 - filled density plot
+ggtern(africa, aes(x = Sand, y = Silt, z = Clay)) +
+  stat_density_tern(geom = 'polygon', aes(fill = ..level.., alpha = ..level..)) +
+  guides(fill = FALSE)
+```
+
