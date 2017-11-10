@@ -363,3 +363,98 @@ ggplot(faithful, aes(x = waiting, y = eruptions)) +
   scale_fill_viridis()
 ```
 
+## Plots for Specific Data 1
+
+In this and the next section, we cover a lot of different plot types which are meant for specific use cases.  They give an overview of the different plots so you can remember them when you have appropriate data, even if that isn't very often.  
+
+### Big data
+
+This could be in the form of many observations, or it could be many variables (multidimensional data) or some combination thereof.  
+
+In the case of many observations (big n) there are some techniques we can use:
+
+* Reducing overplotting
+* Reducing the amount of information that is plotted
+* Aggregating data
+
+In the case of multidimensional or hign  data (big p) there are other techniques we can use:
+
+* Data Reduction methods (e.g. PCA)
+* Use facets in plots
+* Use a SPLOM - Scatter PLOt Matrix, a nice example is the chart.Correlation fun in PerformanceAnalytics package
+* Use a parallel coordinate plot, which can be used for continous and discreet data, inluding those on different scales
+
+First we will look at SPLOMs. Base R features two useful quick-and-dirty pairs plots functions. They both only take continuous variables.  There are two datasets - iris dataset and mtcars_fact, a version of mtcars where categorical variables have been converted into actual factor columns.
+
+*S*catter *PLO*t *M*atrices.
+
+```{r, warning = FALSE, message = FALSE}
+# Convert nums to factors where needed for mtcars
+mtcars_fact <- mtcars
+mtcars_fact[c(2, 8:11)] <- lapply(mtcars_fact[c(2, 8:11)], as.factor)
+
+# pairs
+pairs(iris[1:4])
+
+# chart.Correlation
+library(PerformanceAnalytics)
+chart.Correlation(iris[1:4])
+
+# ggpairs
+library(GGally)
+ggpairs(mtcars_fact[1:3])
+```
+
+Instead of using an off-the-shelf correlation matrix function, you can of course create your own plot. For starters, a correlation matrix can be calculated using, for example, cor(dataframe) (if all variables are numerical). Before you can use your data frame to create your own correlation matrix plot, you'll need to get it in the right format.
+
+There is a definition of cor_list(), a function that re-formats the data frame x. Here, L is used to add the points to the lower triangle of the matrix, and M is used to add the numerical values as text to the upper triangle of the matrix. With reshape2::melt(), the correlation matrices L and M are each converted into a three-column data frame: the x and y axes of the correlation matrix make up the first two columns and the corresponding correlation coefficient makes up the third column. These become the new variables "points" and "labels", which can be mapped onto the size aesthetic for the points in the lower triangle and onto the label aesthetic for the text in the upper triangle, respectively. Their values will be the same, but their positions on the plot will be symmetrical about the diagonal! Merging L and M, you have everything you need.
+
+We use reshape2 instead of tidyr is that reshape2::melt() can handle a matrix, whereas tidyr::gather() requires a data frame. At this point you just need to understand how to use the output from cor_list().
+
+First use dplyr to execute this function on the continuous variables in the iris data frame (the first four columns), but separately for each species. Next, you'll actually plot the resulting data frame with ggplot2 functions.
+
+```{r}
+library(reshape2)
+
+cor_list <- function(x) {
+  L <- M <- cor(x)
+  
+  M[lower.tri(M, diag = TRUE)] <- NA
+  M <- melt(M)
+  names(M)[3] <- "points"
+  
+  L[upper.tri(L, diag = TRUE)] <- NA
+  L <- melt(L)
+  names(L)[3] <- "labels"
+  
+  merge(M, L)
+}
+
+# Calculate xx with cor_list
+library(dplyr)
+xx <- iris %>%
+  group_by(Species) %>%
+  do(cor_list(.[1:4])) 
+
+# Finish the plot
+ggplot(xx, aes(x = Var1, y = Var2)) +
+  geom_point(
+    aes(col = points, size = abs(points)), 
+    shape = 16
+    ) +
+  geom_text(
+    aes(col = labels, size = abs(labels), label = round(labels, 2))
+    ) +
+  scale_size(range = c(0, 6)) +
+  scale_color_gradient2("r", limits = c(-1, 1)) +
+  scale_y_discrete("", limits = rev(levels(xx$Var1))) +
+  scale_x_discrete("") +
+  guides(size = FALSE) +
+  geom_abline(slope = -1, intercept = nlevels(xx$Var1) + 1) +
+  coord_fixed() +
+  facet_grid(. ~ Species) +
+  theme(axis.text.y = element_text(angle = 45, hjust = 1),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.background = element_blank())
+```
+
