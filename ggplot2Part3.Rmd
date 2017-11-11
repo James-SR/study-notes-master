@@ -520,3 +520,136 @@ ggtern(africa, aes(x = Sand, y = Silt, z = Clay)) +
   guides(fill = FALSE)
 ```
 
+### Network Plots
+
+Sometimes called relationship data.  In a network diagram each observation is a vertex, the location of the vertices can alter our perception of the relationship.  The connection between the observations is called an edge.  Network data may be stored in a variety of ways.
+
+For this example, you'll use an undirected network of romantic relationships in the TV show Mad Men: geomnet::madmen.
+
+```{r}
+# Load geomnet & examine structure of madmen
+library(geomnet)
+str(madmen)
+
+# Merge edges and vertices
+mmnet <- merge(madmen$edges, madmen$vertices,
+               by.x = "Name1", by.y = "label",
+               all = TRUE)
+
+# Examine structure of mmnet
+str(mmnet)
+
+```
+
+Now the data is re-structured we can create our plot.
+
+```{r}
+# Merge edges and vertices
+mmnet <- merge(madmen$edges, madmen$vertices,
+               by.x = "Name1", by.y = "label",
+               all = TRUE)
+
+# Finish the ggplot command
+ggplot(data = mmnet, aes(from_id = Name1, to_id = Name2)) +
+  geom_net(
+    aes(col = Gender),
+    size = 6,
+    linewidth = 1,
+    labelon = T,
+    fontsize = 3,
+    labelcolour = "black")
+```
+
+Next we can clean it up, since this is in the ggplot2 framework, you can manually adjust the scales like you have always done.
+
+```{r}
+# Merge edges and vertices
+mmnet <- merge(madmen$edges, madmen$vertices,
+               by.x = "Name1", by.y = "label",
+               all = TRUE)
+
+# Tweak the network plot
+ggplot(data = mmnet, aes(from_id = Name1, to_id = Name2)) +
+  geom_net(
+        aes(col = Gender),
+        size = 6,
+        linewidth = 1,
+        labelon = TRUE,
+        fontsize = 3,
+        labelcolour = "black",
+        directed = T) +
+  scale_color_manual(values = c("#FF69B4", "#0099ff")) +
+  xlim(c(-0.05, 1.05)) +
+  theme(legend.key = element_blank())
+```
+
+### Diagnostic Plots
+
+Such plots often use diagnostics from other outputs or models, for instance how well as OLS fits the data. R has several plotting methods for specific objects. For example using plot() on the results of an lm() call results in four plots that give you insight into how well the assigned model fits the data.
+
+The ggfortify package is an all-purpose plot converter between base graphics and ggplot2 grid graphics.
+
+```{r}
+# Create linear model: res
+res <- lm(Volume ~ Girth, data = trees)
+
+# Plot res
+plot(res)
+
+# Import ggfortify and use autoplot()
+library(ggfortify)
+autoplot(res, ncol = 2)
+```
+
+Time series objects (class mts or ts) also have their own methods for plot(). The time-series and multiple time-series class objets are flexible and common formats.  ggfortify can also take advantage of this functionality.
+
+Here we will look at the variable Canada (it comes from the vars package): an mts class object with four series: prod is a measure of labour productivity, e is employment, U is the unemployment rate, and rw the real wage. They are each plotted as separate series by default.
+
+```{r}
+library(vars)
+data(Canada)
+
+# Inspect structure of Canada
+str(Canada)
+
+# Call plot() on Canada
+plot(Canada)
+
+# Call autoplot() on Canada
+autoplot(Canada)
+```
+
+Distance matrices (class dist) contain the measured distance between all pair-wise combinations of many points. For this xample, the eurodist dataset contains the distances between major European cities. dist objects lend themselves well to autoplot().
+
+The cmdscale() function from the stats package performs Classical Multi-Dimensional Scaling and returns point coodinates as a matrix. Although autoplot() will work on this object, it will produce a heatmap, and not a scatter plot. However, if either eig = TRUE, add = TRUE or x.ret = TRUE is specified, cmdscale() will return a list instead of matrix. In these cases, the list method for autoplot() in the ggfortify package can deal with the output. Specifics on multi-dimensional scaling is beyond the scope of this course, however details on the method and these arguments can be found in the help pages ?cmdscale.
+
+```{r}
+
+# Autoplot + ggplot2 tweaking
+autoplot(eurodist) + 
+  coord_fixed()
+
+# Autoplot of MDS
+autoplot(cmdscale(eurodist, eig = TRUE), 
+         label = TRUE, 
+         label.size = 3, 
+         size = 0)
+```
+
+### K means clustering
+
+ggfortify also supports stats::kmeans class objects. You must explicitly pass the original data to the autoplot function via the data argument, since kmeans objects don't contain the original data. The result will be automatically colored according to cluster.
+
+Here we use the iris dataset and just look at K-means clustering, although this works on many clustering methods, including cluster::clara(), cluster::fanny(), cluster::pam() and stats::prcomp(). 
+
+```{r}
+# Perform clustering
+iris_k <- kmeans(iris[-5], 3)
+
+# Autoplot: color according to cluster
+autoplot(iris_k, data = iris, frame = TRUE)
+
+# Autoplot: above, plus shape according to species
+autoplot(iris_k, data = iris, frame = TRUE, shape = 'Species')
+```
+
