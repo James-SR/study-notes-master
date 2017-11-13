@@ -949,7 +949,82 @@ p <- ggplot(Vocab, aes(x = education, y = vocabulary,
                        frame = year, cumulative = TRUE)) +
   stat_smooth(method = "lm", se = FALSE, size = 3)
 
-# Call gg_animate on p
-"vocab.gif" <- gg_animate(p, interval = 1.0)
+# Call gganimate on p
+"vocab.gif" <- gganimate(p, interval = 1.0)
+```
+
+## ggplot2 Internals
+
+We will look at how graphics work not just in ggplot2 but also how they work in R.  There are two plotting systems in R, base graphics and grid graphics.  Grid graphics was developed to overcome some of the problems in base graphic, ggplot2 is built on top of grid graphics, which is more like a set of low level elements that have to be assembled together.  There are two main parts
+
+* Create graphic outputs
+* Layer and composition outputs with viewports - a viewport is a window on to which we draw a graphics output
+
+With grid graphics you are also able to save your item and then later edit or customise that item.  
+
+To get familiar with grid graphics, you'll begin with using some grid. functions. 
+
+```{r}
+library(grid)
+
+#Sample viewport
+grid.show.viewport(viewport(x=0.6, y=0.6,
+                   w=unit(1, "inches"), h=unit(1, "inches")))
+
+# Draw rectangle
+grid.rect(gp = gpar(fill = "grey90"))
+
+
+# Write text in null viewport
+grid.text("null viewport")
+
+# Draw a line
+grid.lines(x = c(0, 0.75), y = c(0.25, 1),
+          gp = gpar(lty = 2, col = "red"))
+```
+
+Or we can stack viewports in top of each other.
+
+```{r}
+# Populate null viewport
+grid.rect(gp = gpar(fill = "grey90"))
+grid.text("null viewport")
+grid.lines(x = c(0,0.75), y = c(0.25, 1),
+           gp = gpar(lty = 2, col = "red"))
+
+# Create new viewport: vp
+vp <- viewport(x = 0.5, y = 0.5, width = 0.5, height = 0.5, just = "center")
+
+# Push vp
+pushViewport(vp)
+
+# Populate new viewport with rectangle
+grid.rect(gp = gpar(fill = "blue"))
+```
+
+Using the viewports, you can create plots, manipulating the space as needed.
+
+Here we establish a grid viewport and in the following exercise you'll populate it with values.
+
+```{r}
+# 1 - Create plot viewport: pvp
+mar <- c(5, 4, 2, 2)
+pvp <- plotViewport(mar)
+
+# 2 - Push pvp
+pushViewport(pvp)
+
+# 3 - Add rectangle
+grid.rect(gp = gpar(fill = "grey80"))
+
+# Create data viewport: dvp
+dvp <- dataViewport(xData = mtcars$wt, yData = mtcars$mpg)
+
+# 4 - Push dvp
+pushViewport(dvp)
+
+# Add two axes
+grid.xaxis()
+grid.yaxis()
 ```
 
