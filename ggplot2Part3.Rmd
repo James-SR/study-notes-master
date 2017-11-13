@@ -829,3 +829,127 @@ london_map_13 <- get_map("London, England", zoom = 13, source = "stamen", maptyp
 ggmap(london_map_13)
 ```
 
+```{r}
+# List our sites of interest
+london_sites <- c("Tower of London, London", "Buckingham Palace, London", "Tower Bridge, London", "Westminster Abbey, London", "Queen Elizabeth Olympic Park, London")
+
+# Use geocode() to create xx
+xx <- geocode(london_sites)
+
+# Add a location column to xx
+xx$location <- sub(", London", "", london_sites)
+
+# Get map data
+london_ton_13 <- get_map(location = "London, England", zoom = 13,
+                         source = "stamen", maptype = "toner")
+
+# Add a geom_points layer
+ggmap(london_ton_13) + 
+  geom_point(data = xx, aes(col = location), size = 6)
+
+
+```
+
+Notice the warning message; one location is missing: Queen Elizabeth Olympic Park.  That's because your map data was fetched before you knew what you wanted to plot.
+
+Instead of defining your cartographic map based on a general location, you can define a bounding box around specific coordinates. You have these coordinates already since you used geocode() to find the latitude and longitude of the sites in London. Everything you need to build the bounding box is inside xx.
+
+```{r, message=FALSE}
+# Build xx
+xx <- geocode(london_sites)
+xx$location <- sub(", London", "", london_sites)
+xx$location[5] <- "Queen Elizabeth\nOlympic Park"
+
+# Create bounding box: bbox, f is the buffer
+bbox <- make_bbox(lon = xx$lon, lat = xx$lat, f = 0.3)
+
+# Re-run get_map to use bbox
+london_ton_13 <- get_map(location = bbox, zoom = 13,
+                         source = "stamen", maptype = "toner")
+
+# Map from previous exercise
+ggmap(london_ton_13) +
+  geom_point(data = xx, aes(col = location), size = 6)
+
+# New map with labels
+ggmap(london_ton_13) +
+  geom_label(data = xx, aes(label = location), size = 4, 
+             fontface = "bold", fill = "grey90", 
+             col = "#E41A1C")
+```
+
+Instead of plotting points on a cartographic map, you can also draw polygons, similar to what you saw earlier in this chapter.
+
+The polygons come from the shapefile for the German states that you used previously. You'll use the data frame version, bundes, because it's more flexible. 
+
+```{r, message = FALSE}
+# Get the map data of "Germany"
+germany_06 <- get_map(location = "Germany", zoom = 6)
+
+# Plot map and polygon on top:
+ggmap(germany_06) +
+  geom_polygon(data = bundes,
+               aes(x = long, y = lat, group = group),
+               fill = NA, col = "red") +
+  coord_map()
+```
+
+### Animations
+
+This is good for exploring temporal data or as an explantory tool.  We could use a for loop then use an external piece of software to make an animated gif, but we can do this inside R using the animation package, and the gganimate which acts as a wrapper when using ggplot arguments.  To do this, we are going to use Hans Rosling's Gapminder data.  These images can then be embedded in a website, report, or in a viewer with some controls.  
+
+Animations are particularly useful for temporal or geospatial data, and they are surprisingly easy to make! Here, you simply loop over the time variable in your dataset, composing a new plot for each subset in the data. These individual images are then cataloged in an animated GIF file.
+
+To show this you'll use a great animated population pyramid that was presented on the [Revolutions blog](http://blog.revolutionanalytics.com/2016/02/japans-ageing-population-animated-with-r.html). There are many more adjustments you could have made to the plot, but we'll just make a barebones version here.
+
+```{r}
+library(animation)
+
+# Load the population data
+japan <- read.delim("D:/CloudStation/Documents/2017/RData/japanPOP.txt")
+
+# Inspect structure of japan
+str(japan)
+
+# Finish the code inside saveGIF
+saveGIF({
+
+  # Loop through all time points
+  for (i in unique(japan$time)) {
+
+    # Subset japan: data
+    data <- subset(japan, time == i)
+
+    # Finish the ggplot command
+    p <- ggplot(data, aes(x = AGE, y = POP, fill = SEX, width = 1)) +
+      coord_flip() +
+      geom_bar(data = data[data$SEX == "Female",], stat = "identity") +
+      geom_bar(data = data[data$SEX == "Male",], stat = "identity") +
+      ggtitle(i)
+
+    print(p)
+
+  }
+
+}, movie.name = "pyramid.gif", interval = 0.1)
+
+```
+
+Another method of making animations is to use the gganimate package. This provides the gg_animate() function, which is basically a convenient wrapper for the functions in the animation package, so it's pretty useful for straight-forward plots. gg_animate() provides a new aesthetic argument, frame, that allows you to side-step having to establish a for loop for each time point, like you did in the previous example.
+
+Here you'll see another example of making an animation, to cycle through years and look at changing linear models. The dataset is the Vocab data frame from the car package.
+
+```{r}
+library(gganimate)
+library(car)
+
+# Update the static plot
+p <- ggplot(Vocab, aes(x = education, y = vocabulary,
+                       color = year, group = year,
+                       frame = year, cumulative = TRUE)) +
+  stat_smooth(method = "lm", se = FALSE, size = 3)
+
+# Call gg_animate on p
+"vocab.gif" <- gg_animate(p, interval = 1.0)
+```
+
