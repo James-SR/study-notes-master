@@ -771,3 +771,61 @@ ggplot(bundes, aes(x = long, y = lat, group = group)) +
     theme_nothing()
 ```
 
+Now that you have the shape data a neatly formatted data frame called bundes, you can easily merge it with state-level data. 
+
+If you check out bundes, you'll see that you've lost the state names, so merging isn't going to work out of box so we will need to resolve that.  
+```{r}
+# Load the unemployment data
+unemp <- read.delim("D:/CloudStation/Documents/2017/RData/germany_unemployment.txt")
+
+# re-add state names to bundes
+bundes$state <- factor(as.numeric(bundes$id))
+levels(bundes$state) <- germany$NAME_1
+
+# Merge bundes and unemp: bundes_unemp
+bundes_unemp <- merge(bundes, unemp)
+
+# Update the ggplot call
+ggplot(bundes_unemp, aes(x = long, y = lat, group = group, fill = unemployment)) +
+  geom_polygon() +
+  coord_map() +
+  theme_map()
+```
+
+There are only 14 states shown. The reason is that Berlin and Bremen are city-states located within the shape definitions of other states. You can solve this by reording the data (like you did before), or by adding two specific layers as shown below.
+
+```{r}
+# Update the ggplot call
+ggplot(bundes_unemp, aes(x = long, y = lat, group = group, fill = unemployment)) +
+  geom_polygon() +
+  geom_polygon(data = subset(bundes_unemp, id == "Berlin")) +
+  geom_polygon(data = subset(bundes_unemp, id == "Bremen")) +
+  coord_map() +
+  theme_map()
+
+```
+
+### Cartographic Maps
+
+Whereas before we were interested in plotting variables, in cartographic maps we are interested in plotting some type of image, be it topographical, altitude, aerial imagery or some combination.  We can use the ggmpa library to create some standard map types. We can also add features and labels to our map, define the bounding boxes and make calls to things like the Google Api to geocode a list of places.  
+
+ggmap provides the get_map() function to access google maps. Only one argument, location is essential. Other than that, there are a bunch of arguments you can set, such as zoom, maptype (how do you want your map to look?) and source (where to get your data from?).
+
+There are several default map types you can use for cartographic maps. For example, "toner" is a black and white theme, but you can also ask for pure satellite images or a hybrid image, showing the major roads and cities.
+
+```{r, message = FALSE}
+# Make sure ggmap is loaded
+library(ggmap)
+
+# Create london_map_13 with get_map
+london_map_13 <- get_map("London, England", zoom = 13)
+
+# Create the map of london
+ggmap(london_map_13)
+
+# Experiment with get_map() and use ggmap() to plot it!
+london_map_13 <- get_map("London, England", zoom = 13, source = "stamen", maptype = "toner")
+# Create the map of london
+ggmap(london_map_13)
+```
+
