@@ -1028,3 +1028,73 @@ grid.xaxis()
 grid.yaxis()
 ```
 
+Now you're ready to add the points and the appropriate labels.
+
+```{r}
+# Work from before
+pushViewport(plotViewport(c(5, 4, 2, 2)))
+grid.rect(gp = gpar())
+pushViewport(dataViewport(xData = mtcars$wt, yData = mtcars$mpg))
+grid.xaxis()
+grid.yaxis()
+
+# 1 - Add text to x axis 
+grid.text("Weight", y = unit(-3, "lines"))
+
+# 2 - Add text to y axis
+grid.text("MPG", x = unit(-3, "lines"), rot = 90)
+
+# 3 - Add points
+grid.points(x = mtcars$wt, y = mtcars$mpg, pch = 16)
+```
+
+The great thing about grid, in comparison to base, is that you can name the different plot elements, so that you can access them and change them later on. You can do this with the grid.edit() function. 
+
+```{r}
+# Work from before
+pushViewport(plotViewport(c(5, 4, 2, 2)))
+grid.rect(gp = gpar())
+pushViewport(dataViewport(xData = mtcars$wt, yData = mtcars$mpg))
+grid.xaxis()
+grid.yaxis()
+
+# Work from before - add names
+grid.text("Weight", y = unit(-3, "lines"), name = "xaxis")
+grid.text("MPG", x = unit(-3, "lines"), rot = 90, name = "yaxis")
+grid.points(x = mtcars$wt, y = mtcars$mpg, pch = 16, name = "datapoints")
+
+# Edit "xaxis"
+grid.edit("xaxis", label = "Weight (1000 lbs)")
+
+# Edit "yaxis"
+grid.edit("yaxis", label = "Miles/(US) gallon")
+
+# Edit "datapoints"
+grid.edit("datapoints", gp = gpar(col = "#C3212766", cex = 2))
+```
+
+### Grid and ggplot2
+
+In addition to Graphic outputs, we can also produce Graphic Objects or 'grobs'. Using a standard ggplot plot, we can access the internal grobs using ggplotgrob() from the grid package.  We can use the dollar notation to retrieve the list of rows e.g. >g$grob if we only wish to view and individual plot we can use g$grob[[8]] or view it using grid.draw(g$grob[[8]]). 
+
+Graphical Objects, aka Grobs, are the object form of these items and can be found in your ggplot2 plots. Let's take a look at how these grobs are stored in ggplot objects.
+
+```{r}
+# A simple plot p
+p <- ggplot(mtcars, aes(x = wt, y = mpg, col = factor(cyl))) + geom_point()
+
+# Create gtab with ggplotGrob()
+gtab <- ggplotGrob(p)
+
+# Print out gtab
+gtab
+
+# Extract the grobs from gtab: gtab
+g <- gtab$grobs
+
+# Draw only the legend
+legend_index <- which(vapply(g, inherits, what = "gtable", logical(1)))
+grid.draw(g[[legend_index]])
+```
+
+
