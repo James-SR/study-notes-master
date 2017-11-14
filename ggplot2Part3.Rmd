@@ -1097,4 +1097,89 @@ legend_index <- which(vapply(g, inherits, what = "gtable", logical(1)))
 grid.draw(g[[legend_index]])
 ```
 
+You can visualize the layout of a gTable object with gtable_show_layout(). In the layout plot, each segment is labelled with its position.
+
+The legend, that you can access with g[[8]], is a gTable itself, so you can also show its layout. It's perfectly possible to update this layout by adding new graphical objects.
+
+```{r}
+# Code from before
+p <- ggplot(mtcars, aes(x = wt, y = mpg, col = factor(cyl))) + geom_point()
+gtab <- ggplotGrob(p)
+g <- gtab$grobs
+legend_index <- which(vapply(g, inherits, what = "gtable", logical(1)))
+grid.draw(g[[legend_index]])
+
+# 1 - Show layout of legend grob
+gtable_show_layout(g[[legend_index]])
+
+# Create text grob
+my_text <- textGrob(label = "Motor Trend, 1974", gp = gpar(fontsize = 7, col = "gray25"))
+
+# 2 - Use gtable_add_grob to modify original gtab
+new_legend <- gtable_add_grob(gtab$grobs[[legend_index]], my_text, 3, 2)
+
+# 3 - Update in gtab
+gtab$grobs[[legend_index]] <- new_legend
+
+# 4 - Draw gtab
+grid.draw(gtab)
+```
+
+### ggplot Objects
+
+We can access other objects such as the panel, which is a grobtree which can become complicated.  When you create a ggplot, there are 9 objects created that hold all the different parts of the plot.  Some objects contain functions rather than data, when you run a ggplot, it will go through those functions using the ggplot_build() command.  This object will only contain three items;
+
+* data - a list of data frames, one for each layer
+* panel - all information about the axis, such as limits and breaks
+* plot - items which are not found in the original data, but are used in the plots, such as histograms and other visual elements
+
+If we have a grid table (gtab) we can use the function grid.draw(gtab).
+
+It is important to remeber that ggplot objects are basically just a named list that contains the information to make the actual plot.
+
+```{r}
+# Simple plot p
+p <- ggplot(mtcars, aes(x = wt, y = mpg, col = factor(cyl))) + geom_point()
+
+# Examine class() and names()
+class(p)
+names(p)
+
+# Print the scales sub-list
+p$scales$scales
+
+# Update p
+p <- p +
+  scale_x_continuous("Length", limits = c(4, 8), expand = c(0, 0)) +
+  scale_y_continuous("Width", limits = c(2, 4.5), expand = c(0, 0))
+
+# Print the scales sub-list
+p$scales$scales
+```
+
+This is pretty detailed, but the more we can access out objects the more custom our visualisations become.
+
+```{r}
+# Box plot of mtcars: p
+p <- ggplot(mtcars, aes(x = factor(cyl), y = wt)) + geom_boxplot()
+
+# Create pbuild
+pbuild <- ggplot_build(p)
+
+# a list of 3 elements
+names(pbuild)
+
+# Print out each element in pbuild
+pbuild$data
+pbuild$panel
+pbuild$plot
+
+# Create gtab from pbuild
+gtab <- ggplot_gtable(pbuild)
+
+# Draw gtab
+grid.draw(gtab)
+```
+
+Many geoms are associated with underlying descriptive statistics which are calculated and then plotted. In these cases you actually don't have the actual values that were plotted. Of course, these values are stored under the hood and you can access them in the results from ggplot_build(). This can be particularly useful for box plots. For example, since there are many methods for calculating Q1 and Q3, if you calculate your IQR and outliers outside of ggplot2 you may end up using a different method and get different results. Sometimes you want to have exactly the values that were plotted.
 
