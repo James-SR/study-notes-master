@@ -1181,5 +1181,35 @@ gtab <- ggplot_gtable(pbuild)
 grid.draw(gtab)
 ```
 
-Many geoms are associated with underlying descriptive statistics which are calculated and then plotted. In these cases you actually don't have the actual values that were plotted. Of course, these values are stored under the hood and you can access them in the results from ggplot_build(). This can be particularly useful for box plots. For example, since there are many methods for calculating Q1 and Q3, if you calculate your IQR and outliers outside of ggplot2 you may end up using a different method and get different results. Sometimes you want to have exactly the values that were plotted.
+Many geoms are associated with underlying descriptive statistics which are calculated and then plotted. In these cases you actually don't have the actual values that were plotted. Of course, these values are stored under the hood and you can access them in the results from ggplot_build(). This can be particularly useful for box plots. For example, since there are many methods for calculating Q1 and Q3, if you calculate your IQR and outliers outside of ggplot2 you may end up using a different method and get different results. Sometimes you want to have exactly the values that were plotted.  Sometimes you want to get specific information that was used to create a plot.
+
+```{r}
+# Box plot of mtcars: p
+p <- ggplot(mtcars, aes(x = factor(cyl), y = wt)) + geom_boxplot()
+
+# Build pdata -  a list with one element, which is a data frame
+pdata <- ggplot_build(p)$data
+
+# confirm that the first element of the list is a data frame
+class(pdata[[1]])
+
+# Isolate this data frame
+my_df <- pdata[[1]]
+
+# The x labels - changes from simply a numeric group to represent the data, the # of cylinders instead
+my_df$group <- c("4", "6", "8")
+
+# Print out specific variables - which selects the first through the sixth and the 11th variable. 
+# This contains everything you need to know: the 5 quartiles (Q0 up to Q4) and the outliers for each separate group
+my_df[c(1:6, 11)]
+```
+
+### gridExtra
+
+This allows us to manage multiple plotting objects - perhaps to avoid a large facet plot or to specfically arrange our plots in a layout, or make a mutiple page PDF of our plots.  We can use the plyr package and dlply or the apply family of functions to first create our list of plots. The result becomes a list, which you can then just reference as you would any other list[[n]] or list[["object_name""]].  We can use the grid.arrange function to arrange thse plots together, perhaps with just some of the list rather than all of it.  You also have the ability to then combine diferent types of objects together, like different plots, tables, different source data etc.  
+
+You can use gird arrange for automated reports, websites/pages or dashboard type displays.  
+
+
+
 
