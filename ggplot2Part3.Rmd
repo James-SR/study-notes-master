@@ -1269,7 +1269,8 @@ Since ggplot2 2.0 you can now write your own extensions, meaning we can combine 
 ```{r}
 # Load the library and test data
 library(aplpack)
-test_data <- ch5_test_data
+test_data  <- ch5_test_data
+test_data2 <- ch5_test_data2
 
 # Call bagplot() on test_data
 bagplot(test_data)
@@ -1306,5 +1307,91 @@ ggplot(test_data, aes(x = x,  y = y)) +
   geom_polygon(data = hull.bag, fill = "orange") +
   geom_point(data = pxy.outlier, col = "purple", pch = 16, cex = 1.5)
 
+```
+
+Now that we know where to find the statistics and how to use them in ggplot2, let's put them into the functions that will make them easier to use.
+
+For this you'll use the ggproto object-oriented programming system - the basis of creating a new layer in ggplot2. There are four arguments for a ggproto object. The first two arguments are its name and what it inherits from (in this case Stat). Next come the required aesthetics, and then, most importantly, what the stat should do. For each group of data it receives from the data layer, what should be computed? This will simply be the calculations from before.
+
+```{r}
+# ggproto for StatLoop (hull.loop)
+StatLoop <- ggproto("StatLoop", Stat,
+                    required_aes = c("x", "y"),
+                    compute_group = function(data, scales) {
+                      bag <- compute.bagplot(x = data$x, y = data$y)
+                      data.frame(x = bag$hull.loop[,1], y = bag$hull.loop[,2])
+                    })
+
+# ggproto for StatBag (hull.bag)
+StatBag <- ggproto("StatBag", Stat,
+                   required_aes = c("x", "y"),
+                   compute_group = function(data, scales) {
+                     bag <- compute.bagplot(x = data$x, y = data$y)
+                     data.frame(x = bag$hull.bag[,1], y = bag$hull.bag[,2])
+                   })
+
+# ggproto for StatOut (pxy.outlier)
+StatOut <- ggproto("StatOut", Stat,
+                   required_aes = c("x", "y"),
+                   compute_group = function(data, scales) {
+                     bag <- compute.bagplot(x = data$x, y = data$y)
+                     data.frame(x = bag$pxy.outlier[,1], y = bag$pxy.outlier[,2])
+                   })
+```
+
+Now we need to combine them under a new ggplot2 function that you'll call stat_bag().
+
+Adding a stat_bag() layer will execute each of the three ggproto objects that you just created.
+
+Your three objects are called StatLoop, StatBag, StatOut, so you'll need three layers in your stat_bag() function, which you'll make with the layer() function. When you have multiple layers, you can combine them in a list by simply calling list().
+
+For each layer, you'll also need to specify the approrpiate geom: "polygon" or "point".
+
+```{r}
+# StatLoop, StatBag and StatOut are available
+
+# Combine ggproto objects in layers to build stat_bag()
+stat_bag <- function(mapping = NULL, data = NULL, geom = "polygon",
+                     position = "identity", na.rm = FALSE, show.legend = NA,
+                     inherit.aes = TRUE, loop = FALSE, ...) {
+  list(
+    # StatLoop layer
+    layer(
+      stat = StatLoop, data = data, mapping = mapping, geom = geom, 
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = list(na.rm = na.rm, alpha = 0.35, col = NA, ...)
+    ),
+    # StatBag layer
+    layer(
+      stat = StatBag, data = data, mapping = mapping, geom = geom, 
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = list(na.rm = na.rm, alpha = 0.35, col = NA, ...)
+    ),
+    # StatOut layer
+    layer(
+      stat = StatOut, data = data, mapping = mapping, geom = "point", 
+      position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+      params = list(na.rm = na.rm, alpha = 0.7, col = NA, shape = 21, ...)
+    )
+  )
+}
+```
+
+Now, let's make a plot :-)
+
+```{r}
+# Previous method
+ggplot(test_data, aes(x = x,  y = y)) +
+  geom_polygon(data = hull.loop, fill = "green") +
+  geom_polygon(data = hull.bag, fill = "orange") +
+  geom_point(data = pxy.outlier, col = "purple", pch = 16, cex = 1.5)
+
+# stat_bag
+ggplot(test_data, aes(x = x, y = y)) +
+  stat_bag(fill = 'black')
+
+# stat_bag on test_data2
+ggplot(test_data2, aes(x = x, y = y, fill = treatment)) +
+  stat_bag()
 ```
 
