@@ -1210,6 +1210,101 @@ This allows us to manage multiple plotting objects - perhaps to avoid a large fa
 
 You can use gird arrange for automated reports, websites/pages or dashboard type displays.  
 
+The functions in gridExtra allow you to arrange any number of plots in a variety of ways. Since you can access the legend as a separate object, that means you can also arrange multiple plots with a single legend. This is a good alternative to faceting, since with facets it's not possible to set a different geom for each sub-plot. Here, you can combine any variety of plots and use a consistent color scale with only one legend to unify the whole image.
 
+To do this you'll create a new arrange graphical object, using grid.arrange(), which will combine several pre-existing grobs. Just like with grid.rect() and rectGrob() there are two versions of the arrange grob, one grid.arrange() produces a graphics output, which means you just draw the item to the viewer, and arrangeGrob() which returns a graphical object, aka grob which can be further manipulated.
 
+In this exercise, you'll just create your objects and arrange them using grid.arrange()
+
+```{r}
+# Add a theme (legend at the bottom)
+g1 <- ggplot(mtcars, aes(wt, mpg, col = cyl)) +
+  geom_point(alpha = 0.5) +
+  theme(legend.position = "bottom")
+
+# Add a theme (no legend)
+g2 <- ggplot(mtcars, aes(disp, fill = cyl)) +
+  geom_histogram(position = "identity", alpha = 0.5, binwidth = 20) +
+  theme(legend.position = "none")
+
+# Load gridExtra
+library(gridExtra)
+
+# Call grid.arrange()
+grid.arrange(g1, g2, ncol = 2)
+```
+
+Next we want to extract and better locate the legend.  
+
+```{r}
+# Definitions of g1 and g2
+g1 <- ggplot(mtcars, aes(wt, mpg, col = cyl)) +
+  geom_point() +
+  theme(legend.position = "bottom")
+
+g2 <- ggplot(mtcars, aes(disp, fill = cyl)) +
+  geom_histogram(binwidth = 20) +
+  theme(legend.position = "none")
+
+# Extract the legend from g1
+my_legend <- ggplotGrob(g1)$grobs[[legend_index]]  
+
+# Create g1_noleg
+g1_noleg <- g1 + 
+    theme(legend.position = "none")
+
+# Calculate the height: legend_height
+legend_height <- sum(my_legend$heights)
+
+# Arrange g1_noleg, g2 and my_legend
+grid.arrange(g1_noleg, g2, my_legend,
+             layout_matrix = matrix(c(1, 3, 2, 3), ncol = 2),
+             heights = unit.c(unit(1, "npc") - legend_height, legend_height))
+```
+
+## Case Study
+
+Since ggplot2 2.0 you can now write your own extensions, meaning we can combine statistics and plotting.  Here we will create a bag plot in ggplot2, which is like a 2 dimensional box plot when dealing with 2 variables.  To calculate the elements required for the bag plot we will use the aplpack package.  Using the extensions means that we can then use this new function for other data.  First we will explore what a bag plot is.  
+
+```{r}
+# Load the library and test data
+library(aplpack)
+test_data <- ch5_test_data
+
+# Call bagplot() on test_data
+bagplot(test_data)
+
+# Call compute.bagplot on test_data, assign to bag
+bag <- compute.bagplot(test_data)
+
+# Display information
+bag$hull.loop
+bag$hull.bag
+bag$pxy.outlier
+
+# Highlight components
+points(bag$hull.loop, col = "green", pch = 16)
+points(bag$hull.bag, col = "orange", pch = 16)
+points(bag$pxy.outlier, col = "purple", pch = 16)
+
+```
+With our current understanding, if we wanted to make a bag plot in ggplot2, we'd take the three data frames (for the loop, bag and outliers) and add them using three separate geom layers.
+
+Let's see how this simple solution works and in the next exercises you'll expand on this topic to make a real stats layer. We will build the plot up incrementally, so it might not be the best looking plot to begin with.
+
+```{r}
+str(test_data)
+
+# Create data frames from matrices
+hull.loop <- data.frame(x = bag$hull.loop[,1], y = bag$hull.loop[,2])
+hull.bag <- data.frame(x = bag$hull.bag[,1], y = bag$hull.bag[,2])
+pxy.outlier <- data.frame(x = bag$pxy.outlier[,1], y = bag$pxy.outlier[,2])
+
+# Finish the ggplot command
+ggplot(test_data, aes(x = x,  y = y)) +
+  geom_polygon(data = hull.loop, fill = "green") +
+  geom_polygon(data = hull.bag, fill = "orange") +
+  geom_point(data = pxy.outlier, col = "purple", pch = 16, cex = 1.5)
+
+```
 
