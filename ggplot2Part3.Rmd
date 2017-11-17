@@ -1395,3 +1395,107 @@ ggplot(test_data2, aes(x = x, y = y, fill = treatment)) +
   stat_bag()
 ```
 
+### Weather Case Study
+
+In this exercise we will be looking at creating something similar to the Edward Tufte weather plot created for the New York Times.  WE want to look at the current year's daily high and lows compared to historical averages for any particular day.  In this case, we can use a 95% CI for historical records.  
+
+Before you can begin with your visualization you need to obtain and clean up the data. The data you're using comes from the University of Dayton.
+
+In this exercise you'll read in our data and clean it up. To start, you'll focus on the weather data from New York. It is available as a fixed-width format file called NYNEWYOR.txt.
+
+Since leap years mean that dates don't line up perfectly, you're just going to remove all occurrences of February 29.
+
+In addition, you're going to split your data in two pieces: one for the historical record, and one for 2016. You'll see how to avoid doing this later on.
+
+```{r}
+# Import weather data
+weather <- read.fwf("D:/CloudStation/Documents/2017/RData/NYNEWYOR.txt",
+                    header = FALSE,
+                    col.names = c("month", "day", "year", "temp"),
+                    widths = c(14,14,13,4))
+
+# Check structure of weather
+str(weather)
+
+# Create past with two filter() calls
+past <- weather %>%
+  filter(!(month == 2 & day == 29)) %>%
+  filter(year != max(year))
+  
+# Check structure of past
+str(past)
+```
+
+We could already think about making our script more dynamic by using lubridate::year(Sys.Date()) to extract the current year, but since our dataset ends in 2016, we can just take the max value in the year column.
+
+Using the past data frame, you'll calculate the 95% CI for the temperatures on each date. To do this, you'll assign a unique ID, called yearday to each date. This way, you can group according to yearday, then calculate aggregrate statistics on the correct values, over all years. You could group according to month and year, but yearday will make plotting on the x axis easier later on.
+
+```{r}
+# Create new version of past
+past_summ <- past %>%
+  group_by(year) %>%
+  mutate(yearday = 1:length(day)) %>%
+  ungroup() %>%
+  filter(temp != -99) %>%
+  group_by(yearday) %>%
+  mutate(max = max(temp),
+         min = min(temp),
+         avg = mean(temp),
+         CI_lower = Hmisc::smean.cl.normal(temp)[2],
+         CI_upper = Hmisc::smean.cl.normal(temp)[3]) %>%
+  ungroup()
+
+# Structure of past_summ
+str(past_summ)
+```
+Now we can create our historical plot
+
+```{r}
+# Hhistorical plot
+ggplot(past_summ, aes(x = yearday, y = temp)) +
+  geom_point(col = "#EED8AE", alpha = 0.3, shape = 16) +
+  geom_linerange(aes(ymin = CI_lower, ymax = CI_upper), col = "#8B7E66")
+```
+
+Next we want to create our data frame for the latest lear and add this as a new layer on to out plot.
+
+```{r}
+# Create present
+present <- weather %>%
+  filter(!(month == 2 & day == 29)) %>%
+  filter(year == max(year)) %>%
+  group_by(year) %>%
+  mutate(yearday = 1:length(day)) %>%
+  ungroup() %>%
+  filter(temp != -99)
+
+# Add geom_line to ggplot command
+ggplot(past_summ, aes(x = yearday, y = temp)) + 
+  geom_point(col = "#EED8AE", alpha = 0.3, shape = 16) +
+  geom_linerange(aes(ymin = CI_lower, ymax = CI_upper), col = "#8B7E66") +
+  geom_line(data = present, aes(x = yearday, y = temp))
+```
+
+You're going to look at a couple ways of detecting interesting features in your dataset. In this case, the interesting features are going to be which dates in the current year exceed the historical record (either a new record high or low for each yearday).
+
+The first method, which you'll use here and in the next exercise, works fine, but you'll explore how to make it more efficient later.
+
+```{r}
+# Create past_highs
+past_highs <- past_summ %>%
+  group_by(yearday) %>%
+  summarise(past_high = max(temp))
+
+# Create record_high
+record_high <- present %>%
+  left_join(past_highs) %>%
+  filter(temp > past_high)
+
+# Add record_high information to plot
+ggplot(past_summ, aes(x = yearday, y = temp)) + 
+  geom_point(col = "#EED8AE", alpha = 0.3, shape = 16) +
+  geom_linerange(aes(ymin = CI_lower, ymax = CI_upper), col = "#8B7E66") +
+  geom_line(data = present) +
+  geom_point(data = record_high, col = "#CD2626")
+```
+
