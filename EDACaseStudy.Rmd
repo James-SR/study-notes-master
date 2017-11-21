@@ -1,0 +1,67 @@
+# EDA Case Studies
+***
+Notes taken during/inspired by the Datacamp course 'Exploratory Data Analysis in R: Case Study' by David Robinson. We use a number of common packages - ggplot2, dplyr and broom - to explore a real world dataset.  The dataset contains the historical voting behaviour of the United Nations.  
+Course slides:
+* [Part 1 - Cleaning and Summarising with dplyr]()
+* [Part 2 - Visualising with ggplot2]()
+* [Part 3 - Tidying modelling with broom]()
+* [Part 4 - Joining and tidying]()
+
+## Cleaning and Summarising with dplyr
+
+We will be working with voting behaviour from the UN General Assembly.  Generally we will be using dplyr verbs in this section.  The data contains voting from alternate years, due to the size of the dataset.  The vote column in the dataset has a number that represents that country's vote:
+
+* 1 = Yes
+* 2 = Abstain
+* 3 = No
+* 8 = Not present
+* 9 = Not a member
+
+One step of data cleaning is removing observations (rows) that you're not interested in. In this case, you want to remove "Not present" and "Not a member".
+
+```{r}
+# Load the dplyr package
+library(dplyr)
+
+# Load the data
+votes <- readRDS("D:/CloudStation/Documents/2017/RData/votes.rds")
+
+# Print the votes dataset
+head(votes, n =20)
+
+# Filter for votes that are "yes", "abstain", or "no"
+votes %>%
+  filter(vote <= 3)
+
+```
+
+The next step of data cleaning is manipulating your variables (columns) to make them more informative.
+
+In this case, you have a session column that is hard to interpret intuitively. But since the UN started voting in 1946, and holds one session per year, you can get the year of a UN resolution by adding 1945 to the session number.
+
+```{r}
+# Add another %>% step to add a year column
+votes %>%
+  filter(vote <= 3) %>%
+  mutate(year = session + 1945)
+```
+
+The country codes in the ccode column are what's called Correlates of War codes. This isn't ideal for an analysis, since you'd like to work with recognizable country names.  You can use the countrycode package to translate.
+
+```{r}
+# Load the countrycode package
+library(countrycode)
+
+# Convert country code 100
+countrycode(100, "cown", "country.name")
+
+# Add a country column within the mutate: votes_processed
+votes_processed <- votes %>%
+  filter(vote <= 3) %>%
+  mutate(year = session + 1945,
+        country = countrycode(ccode, "cown", "country.name")) 
+```
+
+### Grouping and summarising
+
+
