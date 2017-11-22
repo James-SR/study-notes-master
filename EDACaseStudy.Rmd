@@ -64,4 +64,53 @@ votes_processed <- votes %>%
 
 ### Grouping and summarising
 
+There are too many observations in the dataset for it to be meaningful to us, so we need to summarise the data. We can do this using the summarise function from dplyr.  We can then combine this with the group_by function to then calculate figures for different years or countries for instance.  
+First let's look at the percent that were yes votes then group by year. The group_by() function must go before your call to summarize() when you're trying to perform your summary within groups.
+
+```{r}
+
+# Find total and fraction of "yes" votes
+votes_processed %>%
+  summarise(total = n(),
+      percent_yes = mean(vote == 1))  
+
+# Change this code to summarize by year
+votes_processed %>%
+  group_by(year) %>%
+  summarize(total = n(),
+            percent_yes = mean(vote == 1))
+```
+
+Then by country
+
+```{r}
+# Summarize by country: by_country
+by_country <- votes_processed %>%
+  group_by(country) %>%
+  summarize(total = n(),
+            percent_yes = mean(vote == 1))
+
+head(by_country, n = 10)
+```
+
+Next, we can look at sorting our data.  To do so we use the arrange() function.  
+
+```{r}
+# Sort in ascending order of percent_yes
+by_country %>% 
+  arrange(percent_yes)
+
+# Now sort in descending order
+by_country %>% 
+  arrange(desc(percent_yes))
+```
+
+Then we can filter out only those who had a small number of votes (less than 100).
+
+```{r}
+# Filter out countries with fewer than 100 votes
+by_country %>%
+  arrange(percent_yes) %>%
+  filter(total >= 100) 
+```
 
