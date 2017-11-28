@@ -437,3 +437,103 @@ votes_gathered <- votes_joined %>%
  filter(has_topic == 1)
 ```
 
+Recoding the topics
+
+There's one more step of data cleaning to make this more interpretable. Right now, topics are represented by two-letter codes, e.g. 
+
+* me: Palestinian conflict
+
+So that you can interpret the data more easily, recode the data to replace these codes with their full name.
+
+```{r}
+# Replace the two-letter codes in topic: votes_tidied
+votes_tidied <- votes_gathered %>%
+  mutate(topic = recode(topic,
+                        me = "Palestinian conflict",
+                        nu = "Nuclear weapons and nuclear material",
+                        di = "Arms control and disarmament",
+                        hr = "Human rights",
+                        co = "Colonialism",
+                        ec = "Economic development"))
+```
+
+Now that you have topic as an additional variable, you can summarize the votes for each combination of country, year, and topic (e.g. for the United States in 2013 on the topic of nuclear weapons.)
+
+```{r}
+# Summarize the percentage "yes" per country-year-topic
+by_country_year_topic <- votes_tidied %>%
+  group_by(country, year, topic) %>%
+  summarize(total = n(),
+    percent_yes = mean(vote == 1)) %>%
+  ungroup()
+
+# Print by_country_year_topic
+by_country_year_topic
+```
+
+Now we can visualize the trends in percentage "yes" over time for all six topics side-by-side. Here, you'll visualize them just for the UK.
+
+```{r}
+# Filter by_country_year_topic for just the US
+UK_by_country_year_topic <- by_country_year_topic %>% 
+  filter(country == "United Kingdom of Great Britain and Northern Ireland")
+
+# Plot % yes over time for the US, faceting by topic
+ggplot(UK_by_country_year_topic, aes(x = year, y = percent_yes)) +
+  geom_line() +
+  facet_wrap(~ topic)
+```
+
+As we saw before, we added a regresion line by country, however we can now add one by country and topic.  
+
+```{r}
+# Load purrr, tidyr, and broom
+library(purrr)
+library(tidyr)
+library(broom)
+
+# Print by_country_year_topic
+by_country_year_topic
+
+# Fit model on the by_country_year_topic dataset
+country_topic_coefficients <-  by_country_year_topic %>%
+ nest(-country, -topic) %>%
+ mutate(model = map(data, ~ lm(percent_yes ~ year, data = .)),
+ tidied = map(model, tidy)) %>%
+ unnest(tidied)
+
+# Print country_topic_coefficients
+country_topic_coefficients
+```
+
+Now you have both the slope and intercept terms for each model. Just as you did in the last chapter with the tidied coefficients, you'll need to filter for only the slope terms.
+
+You'll also have to extract only cases that are statistically significant, which means adjusting the p-value for the number of models, and then filtering to include only significant changes.
+
+```{r}
+# Create country_topic_filtered
+country_topic_filtered <- country_topic_coefficients %>%
+  filter(term == "year") %>%
+  mutate(p.adjusted = p.adjust(p.value)) %>%
+  filter(p.adjusted < .05)
+```
+
+We can then see which has the steepest downward trend
+
+```{r}
+country_topic_filtered %>% arrange(estimate)
+```
+
+Vanuatu looks like it ranks highly, so we can then look at that individually.
+
+```{r}
+# Create vanuatu_by_country_year_topic
+vanuatu_by_country_year_topic <- by_country_year_topic %>% 
+  filter(country == "Vanuatu")
+
+# Plot of percentage "yes" over time, faceted by topic
+ggplot(vanuatu_by_country_year_topic, aes(x = year, y = percent_yes)) +
+  geom_line() +
+  facet_wrap(~ topic)
+```
+
