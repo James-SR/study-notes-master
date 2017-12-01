@@ -1,6 +1,6 @@
 book_filename: "Study-Notes"
 repo: https://github.com/James-SR/study-notes-master
 output_dir: docs
-rmd_files: ["index.Rmd", "Data-import-1.Rmd", "Data-import-2.Rmd", "WritingFunctionsInR.Rmd", "JoiningDataWithDplyr.Rmd",  "CleaningData.Rmd", "CleaningDataCaseStudies.Rmd", "DataVis.Rmd", "ggplot2Part2.Rmd", "ggplot2Part3.Rmd", "IntroToData.Rmd", "Foundations-of-Inference.Rmd", "EDA.Rmd", "CorrelationAndRegression.Rmd", "SupervisedLearning.Rmd",  "DimensionalModelling.Rmd"]
+rmd_files: ["index.Rmd", "Data-import-1.Rmd", "Data-import-2.Rmd", "WritingFunctionsInR.Rmd", "JoiningDataWithDplyr.Rmd",  "CleaningData.Rmd", "CleaningDataCaseStudies.Rmd", "DataVis.Rmd", "ggplot2Part2.Rmd", "ggplot2Part3.Rmd", "IntroToData.Rmd", "Foundations-of-Inference.Rmd", "EDA.Rmd", "CorrelationAndRegression.Rmd", "UnsupervisedLearning. Rmd", "SupervisedLearning.Rmd",  "DimensionalModelling.Rmd"]
 clean: [packages.bib, bookdown.bbl]
 new_session: yes

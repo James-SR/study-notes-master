@@ -1,0 +1,63 @@
+Unsupervised Learning in R
+***
+Notes taken during/inspired by the Datacamp course 'Unsupervised Learning in R' by Hank Roark. 
+
+Course slides:
+* [Part 1 - Unsupervised learning in R](https://s3.amazonaws.com/assets.datacamp.com/production/course_1815/slides/ch1.pdf)
+* [Part 2 - Hierarchical clustering]()
+* [Part 3 - Dimensionality reduction with PCA]()
+* [Part 4 - Putting it all together with a case study]()
+* [Additional - 10 Algorithms in Plan English](https://hackerbits.com/data/top-10-data-mining-algorithms-in-plain-english/)
+
+## Unsupervised learning
+
+Often we are presented with trying to find 'patterns in the data' where there is perhaps no single goal.  This requires more cereativity but this can also be where unsupervised learning helps.  
+
+We start with k means, which starts by randomly assigning points to a cluster, then is run multiple times with the besxt solution ebing selected from multiple runs.  The k means algorithm needs a measure of quality to determine the 'best' of these multiple runs.  This measure is the total sum of squares within that measurement.  This is done by measuring the distance from each observation to the centre of each cluster, determining the squared distance from the observation to the centre (squared eclidean distance).  Running the model mulitple times helps to find the global minium within cluster sum of squares.  
+
+If the number of clusters or groups within your data is not known, the best approach is to run the number of clusters from 1 to n, then record the total within cluster some of squares (TSS) for each number of clusters as a scree plot, we are trying to find an 'elbow' or sometimes referred to as a 'dog leg' in the data so that for the additional cluster the reduction in TSS is very small.  We then use this elbow point to approximate the number of clusters.  
+
+```{r}
+# Set up 2 x 3 plotting grid
+par(mfrow = c(2, 3))
+
+# Set seed
+set.seed(1)
+
+for(i in 1:6) {
+  # Run kmeans() on x with three clusters and one start
+  km.out <- kmeans(x, centers = 3, nstart = 1)
+  
+  # Plot clusters
+  plot(x, col = km.out$cluster, 
+       main = km.out$tot.withinss, 
+       xlab = "", ylab = "")
+}
+```
+
+The k-means algorithm assumes the number of clusters as part of the input. If you know the number of clusters in advance (e.g. due to certain business constraints) this makes setting the number of clusters easy. However, as you saw in the video, if you do not know the number of clusters and need to determine it, you will need to run the algorithm multiple times, each time with a different number of clusters. From this, you can observe how a measure of model quality changes with the number of clusters.
+
+In this exercise, you will run kmeans() multiple times to see how model quality changes as the number of clusters changes. Plots displaying this information help to determine the number of clusters and are often referred to as scree plots.
+
+The ideal plot will have an elbow where the quality measure improves more slowly as the number of clusters increases. This indicates that the quality of the model is no longer improving substantially as the model complexity (i.e. number of clusters) increases. In other words, the elbow indicates the number of clusters inherent in the data.
+
+```{r}
+# Initialize total within sum of squares error: wss
+wss <- 0
+
+# For 1 to 15 cluster centers
+for (i in 1:15) {
+  km.out <- kmeans(x, centers = i, nstart = 20)
+  # Save total within sum of squares to wss variable
+  wss[i] <- km.out$tot.withinss
+}
+
+# Plot total within sum of squares vs. number of clusters
+plot(1:15, wss, type = "b", 
+     xlab = "Number of Clusters", 
+     ylab = "Within groups sum of squares")
+
+# Set k equal to the number of clusters corresponding to the elbow location
+k <- 2
+```
+
