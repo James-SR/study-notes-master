@@ -105,3 +105,36 @@ plot(pokemon[, c("Defense", "Speed")],
 ```
 
 ## Heirachical Clustering
+
+This is useful when the number of clusters is now known ahead of time, whereas k means requies you to specificy a number of clusters.  We could do bottom up ot top down, here we look at bottom up.  In bottom up, we assign each point to their own cluster initially, then find the closest two clusters and join these together in to a single cluster.  We then continue by combining the next two closest clusters together and repeating until there is only a single cluster with all points.  
+
+To create a hierarchical clustering model of x, the first step to hierarchical clustering is determining the similarity between observations, which you will do with the dist() function.
+
+```{r, eval = FALSE}
+# Create hierarchical clustering model: hclust.out
+hclust.out <- hclust(dist(x))
+
+# Inspect the result
+summary(hclust.out)
+```
+
+The easiest way to interpret the results is to use the dendogram function in R which also allows us to visually see the results.  We can the add a line, which is specifying that you want clusters together that are no further apart than that height/line.  Distance could be calculated by diferent measures, but we just look at euclidean distance.  
+
+The cutree() is the R function that cuts a hierarchical model. The h and k arguments to cutree() allow you to cut the tree based on a certain height h or a certain number of clusters k.
+
+Here we use cutree() to cut the hierarchical model you created earlier based on each of these two criteria. The output of each cutree() call represents the cluster assignments for each observation in the original dataset. 
+
+```{r, eval = FALSE}
+# Cut by height
+cutree(hclust.out, h = 7)
+
+# Cut by number of clusters
+cutree(hclust.out, k = 3)
+```
+
+Four methods to determine which cluster should be linked:
+* Complete: pairwise similarity between all observations in cluster 1 and cluster 2, and uses largest of similarities
+* Single: same as above but uses smallest of similarities
+* Average: same as above but uses average of similarities
+* Centroid: finds centroid of cluster 1 and centroid of cluster 2, and uses similarity between two centroids
+
