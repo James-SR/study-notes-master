@@ -92,14 +92,15 @@ plot(1:15, wss, type = "b",
 k <- 3
 
 # Build model with k clusters: km.out
-km.out <- kmeans(pokemon, centers = k, nstart = 20, iter.max = 50)
+km.pokemon <- kmeans(pokemon, centers = k, nstart = 20, iter.max = 50)
+
 
 # View the resulting model
-km.out
+km.pokemon
 
 # Plot of Defense vs. Speed by cluster membership
 plot(pokemon[, c("Defense", "Speed")],
-     col = km.out$cluster,
+     col = km.pokemon$cluster,
      main = paste("k-means clustering of Pokemon with", k, "clusters"),
      xlab = "Defense", ylab = "Speed")
 ```
@@ -138,3 +139,60 @@ Four methods to determine which cluster should be linked:
 * Average: same as above but uses average of similarities
 * Centroid: finds centroid of cluster 1 and centroid of cluster 2, and uses similarity between two centroids
 
+Generally, complete and average tend to produce more balanced trees and are the most commonly used.  Single tends to produce unbalanced trees, centroids can created inverted trees so can be undesirable.  We specifiy the cluster linkage method in the hclust function using the method = <linkage method>.   
+
+Whether you want balanced or unbalanced trees for your hierarchical clustering model depends on the context of the problem you're trying to solve. Balanced trees are essential if you want an even number of observations assigned to each cluster. On the other hand, if you want to detect outliers, for example, an unbalanced tree is more desirable because pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.
+
+```{r, eval = FALSE}
+# Cluster using complete linkage: hclust.complete
+hclust.complete <- hclust(dist(x), method = "complete")
+
+# Cluster using average linkage: hclust.average
+hclust.average <- hclust(dist(x), method = "average")
+
+# Cluster using single linkage: hclust.single
+hclust.single <- hclust(dist(x), method = "single")
+
+# Plot dendrogram of hclust.complete
+plot(hclust.complete, main = "Complete")
+
+# Plot dendrogram of hclust.average
+plot(hclust.average, main = "Average")
+
+# Plot dendrogram of hclust.single
+plot(hclust.single, main = "Single")
+```
+
+### Pokemon Data
+
+Clustering real data may require scaling the features if they have different distributions. So far we have been working with synthetic data that did not need scaling.
+
+Here you will go back to working with "real" data, the pokemon dataset introduced in the first chapter. You will observe the distribution (mean and standard deviation) of each feature, scale the data accordingly, then produce a hierarchical clustering model using the complete linkage method.
+
+You first check to see if the column means and standard deviations vary. If they do, you scale the data, convert the scaled data to a similarity matrix and passed it into the hclust() function.
+
+```{r}
+# View column means
+colMeans(pokemon)
+
+# View column standard deviations
+apply(pokemon, 2, sd)
+
+# Scale the data
+pokemon.scaled <- scale(pokemon)
+
+# Create hierarchical clustering model: hclust.pokemon
+hclust.pokemon <- hclust(dist(pokemon.scaled), method = "complete")
+```
+
+Comparing k-means and hierarchical clustering, you'll see the two methods produce different cluster memberships. This is because the two algorithms make different assumptions about how the data is generated. Here we compare results from the two models on the pokemon dataset to see how they differ.
+
+```{r}
+# Apply cutree() to hclust.pokemon: cut.pokemon
+cut.pokemon <- cutree(hclust.pokemon, k = 3)
+
+# Compare methods
+table(km.pokemon$cluster, cut.pokemon)
+```
+
+Looking at the table, it looks like the hierarchical clustering model assigns most of the observations to cluster 1, while the k-means algorithm distributes the observations more among all clusters. It's important to note that there's no consensus on which method produces better clusters. The job of the analyst in unsupervised clustering is to observe the cluster assignments and make a judgment call as to which method provides more insights into the data.
