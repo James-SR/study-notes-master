@@ -256,3 +256,64 @@ pve <- pr.var / sum(pr.var)
 Now we create a scree plot showing the proportion of variance explained by each principal component, as well as the cumulative proportion of variance explained.
 
 These plots can help to determine the number of principal components to retain. One way to determine the number of principal components to retain is by looking for an elbow in the scree plot showing that as the number of principal components increases, the rate at which variance is explained decreases substantially. In the absence of a clear elbow, you can use the scree plot as a guide for setting a threshold.
+
+When the number of principal components is equal to the number of original features in the data, the cumulative proportion of variance explained is 1.
+
+```{r}
+# Plot variance explained for each principal component
+plot(pve, xlab = "Principal Component",
+     ylab = "Proportion of Variance Explained",
+     ylim = c(0, 1), type = "b")
+
+# Plot cumulative proportion of variance explained
+plot(cumsum(pve), xlab = "Principal Component",
+     ylab = "Cumulative Proportion of Variance Explained",
+     ylim = c(0, 1), type = "b")
+```
+
+When using PCA we should consider that scaling the data may be neccessary.  In addition, we should decide how we deal with missing data - are we going to impute the data or drop observations with missing items?  How are we going to handle categorical features - not include them or encode categorical variables by using dummy vars / one hot encoding?
+
+Sometimes scaling is appropriate when the variances of the variables are substantially different. This is commonly the case when variables have different units of measurement, for example, degrees Fahrenheit (temperature) and miles (distance). Making the decision to use scaling is an important step in performing a principal component analysis.  Here we see the differences between applying the results with and without scaling.
+
+```{r}
+# Mean of each variable
+colMeans(pokemon)
+
+# Standard deviation of each variable
+apply(pokemon, 2, sd)
+
+# PCA model with scaling: pr.with.scaling
+pr.with.scaling <- prcomp(x = pokemon, scale = TRUE) 
+
+# PCA model without scaling: pr.without.scaling
+pr.without.scaling <- prcomp(x = pokemon, scale = FALSE)
+
+# Create biplots of both for comparison
+biplot(pr.with.scaling)
+biplot(pr.without.scaling)
+```
+
+The new Total column contains much more variation, on average, than the other four columns, so it has a disproportionate effect on the PCA model when scaling is not performed. After scaling the data, there's a much more even distribution of the loading vectors.
+
+## Case Study - Breast Cancer
+
+We will be looking at data from K. P. Benne! and O. L. Mangasarian: "Robust Linear Programming Discrimination of Two Linearly Inseparable Sets" which contains data for nuclei measurements for human breast cells.  Each row is a nuclei and each column or feature is a measurement, we also have atarget variable or label in the dataset in the form of whether the cancer is benign or malignant.  
+
+```{r}
+# Load the data
+wisc.df <- read.csv("D:/CloudStation/Documents/2017/RData/WisconsinCancer.csv")
+
+# Convert the features of the data: wisc.data
+wisc.data <- as.matrix(wisc.df[, 3:32])
+
+# Set the row names of wisc.data to help keep track of the data
+row.names(wisc.data) <- wisc.df$id
+
+# Create diagnosis vector - 1 if malignant
+diagnosis <- as.numeric(wisc.df$diagnosis == "M")
+
+# View the data
+head(wisc.data, n = 10)
+
+```
+
