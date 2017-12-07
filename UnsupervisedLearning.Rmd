@@ -314,6 +314,20 @@ diagnosis <- as.numeric(wisc.df$diagnosis == "M")
 
 # View the data
 head(wisc.data, n = 10)
+str(wisc.data)
+
 
 ```
 
+We can see there are a few variables with mean in the title, but how many?
+
+```{r}
+# Load the library
+library(stringr)
+
+# Look for all instances of _mean, sum the value as TRUE = 1, removing any NA values
+sum(str_detect(dimnames(wisc.data)[[2]],"_mean"), na.rm = TRUE)
+
+```
+
+So we have 569 observations, 30 features in total of which 10 features are mean measurements.  
