@@ -4,9 +4,9 @@ Notes taken during/inspired by the Datacamp course 'Unsupervised Learning in R' 
 
 Course slides:
 * [Part 1 - Unsupervised learning in R](https://s3.amazonaws.com/assets.datacamp.com/production/course_1815/slides/ch1.pdf)
-* [Part 2 - Hierarchical clustering]()
-* [Part 3 - Dimensionality reduction with PCA]()
-* [Part 4 - Putting it all together with a case study]()
+* [Part 2 - Hierarchical clustering](https://s3.amazonaws.com/assets.datacamp.com/production/course_1815/slides/ch2.pdf)
+* [Part 3 - Dimensionality reduction with PCA](https://s3.amazonaws.com/assets.datacamp.com/production/course_1815/slides/ch3.pdf)
+* [Part 4 - Putting it all together with a case study](https://s3.amazonaws.com/assets.datacamp.com/production/course_1815/slides/ch4.pdf)
 * [Additional - 10 Algorithms in Plan English](https://hackerbits.com/data/top-10-data-mining-algorithms-in-plain-english/)
 
 ## Unsupervised learning
@@ -18,6 +18,19 @@ We start with k means, which starts by randomly assigning points to a cluster, t
 If the number of clusters or groups within your data is not known, the best approach is to run the number of clusters from 1 to n, then record the total within cluster some of squares (TSS) for each number of clusters as a scree plot, we are trying to find an 'elbow' or sometimes referred to as a 'dog leg' in the data so that for the additional cluster the reduction in TSS is very small.  We then use this elbow point to approximate the number of clusters.  
 
 ```{r}
+# Create the data - x
+
+set.seed(42)
+x <- matrix(rnorm(600), ncol=2)
+l1 <- 100
+l2 <- 250
+x[1:l1,1] <- x[1:l1,1]+2
+x[1:l1,2] <- x[1:l1,2]+2
+x[(l1+1):l2,1] <- x[(l1+1):l2,1]-5
+x[(l1+1):l2,2] <- x[(l1+1):l2,2]+2
+x[(l2+1):nrow(x),1] <- x[(l2+1):nrow(x),1]+1
+x[(l2+1):nrow(x),2] <- x[(l2+1):nrow(x),2]+0
+
 # Set up 2 x 3 plotting grid
 par(mfrow = c(2, 3))
 
@@ -111,7 +124,7 @@ This is useful when the number of clusters is now known ahead of time, whereas k
 
 To create a hierarchical clustering model of x, the first step to hierarchical clustering is determining the similarity between observations, which you will do with the dist() function.
 
-```{r, eval = FALSE}
+```{r}
 # Create hierarchical clustering model: hclust.out
 hclust.out <- hclust(dist(x))
 
@@ -125,7 +138,7 @@ The cutree() is the R function that cuts a hierarchical model. The h and k argum
 
 Here we use cutree() to cut the hierarchical model you created earlier based on each of these two criteria. The output of each cutree() call represents the cluster assignments for each observation in the original dataset. 
 
-```{r, eval = FALSE}
+```{r}
 # Cut by height
 cutree(hclust.out, h = 7)
 
@@ -143,7 +156,7 @@ Generally, complete and average tend to produce more balanced trees and are the 
 
 Whether you want balanced or unbalanced trees for your hierarchical clustering model depends on the context of the problem you're trying to solve. Balanced trees are essential if you want an even number of observations assigned to each cluster. On the other hand, if you want to detect outliers, for example, an unbalanced tree is more desirable because pruning an unbalanced tree can result in most observations assigned to one cluster and only a few observations assigned to other clusters.
 
-```{r, eval = FALSE}
+```{r}
 # Cluster using complete linkage: hclust.complete
 hclust.complete <- hclust(dist(x), method = "complete")
 
@@ -331,3 +344,135 @@ sum(str_detect(dimnames(wisc.data)[[2]],"_mean"), na.rm = TRUE)
 ```
 
 So we have 569 observations, 30 features in total of which 10 features are mean measurements.  
+
+The next step in the analysis is to perform PCA on wisc.data.
+
+It's important to check if the data need to be scaled before performing PCA. Recall two common reasons for scaling data:
+
+The input variables use different units of measurement.
+The input variables have significantly different variances.
+
+```{r}
+# Check column means and standard deviations
+colMeans(wisc.data)
+apply(wisc.data, 2, sd)
+
+# Execute PCA, scaling if appropriate: wisc.pr - it is here as the data is orders of magnitude different
+wisc.pr <- prcomp(x = wisc.data, scale = TRUE) 
+
+# Look at summary of results
+summary(wisc.pr)
+```
+
+Next we can chart the PCA results as bi plots and scree plots.
+
+
+```{r}
+# Create a biplot of wisc.pr
+biplot(wisc.pr)
+
+# Scatter plot observations by components 1 and 2
+plot(wisc.pr$x[, c(1, 2)], col = (diagnosis + 1), 
+     xlab = "PC1", ylab = "PC2")
+
+# Repeat for components 1 and 3
+plot(wisc.pr$x[, c(1, 3)], col = (diagnosis + 1), 
+     xlab = "PC1", ylab = "PC3")
+
+# Next we produce scree and cumulative plots by principle components
+
+# Variability of each principal component: pr.var
+pr.var <- wisc.pr$sdev^2
+
+# Variance explained by each principal component: pve
+pve <- pr.var / sum(pr.var)
+
+# Plot variance explained for each principal component
+plot(pve, xlab = "Principal Component",
+     ylab = "Proportion of Variance Explained",
+     ylim = c(0, 1), type = "b")
+
+# Plot cumulative proportion of variance explained
+plot(cumsum(pve), xlab = "Principal Component",
+     ylab = "Cumulative Proportion of Variance Explained",
+     ylim = c(0, 1), type = "b")
+```
+
+Because principal component 2 explains more variance in the original data than principal component 3, you can see that the first plot has a cleaner cut separating the two subgroups.  From the previous table and the cumulative proprtion of variance chart, nearly 80% of the variance is explained by just the first 4 components, and 91% by the first 7, 98.9% by the first 16 meaning the last 14 only explain 1.1% of the variance.
+
+### Clustering
+
+Here our goal is to do hierarchical clustering of the observations. This type of clustering does not assume in advance the number of natural groups that exist in the data.
+
+As part of the preparation for hierarchical clustering, distance between all pairs of observations are computed. Furthermore, there are different ways to link clusters together, with single, complete, and average being the most common linkage methods.
+
+```{r}
+# Scale the wisc.data data: data.scaled
+data.scaled <- scale(wisc.data)
+
+# Calculate the (Euclidean) distances: data.dist
+data.dist <- dist(data.scaled)
+
+# Create a hierarchical clustering model: wisc.hclust
+wisc.hclust <- hclust(data.dist, method = "complete")
+```
+
+Next we can visualise the results
+
+```{r}
+plot(wisc.hclust)
+```
+
+If we cut at 20, this will produce 4 clusters.
+
+Next we compare the outputs from your hierarchical clustering model to the actual diagnoses. Normally when performing unsupervised learning like this, a target variable isn't available. We do have it with this dataset, however, so it can be used to check the performance of the clustering model.
+
+When performing supervised learning — that is, when you're trying to predict some target variable of interest and that target variable is available in the original data — using clustering to create new features may or may not improve the performance of the final model. This exercise will help you determine if, in this case, hierarchical clustering provides a promising new feature.  
+
+_A confusion matrix would be useful here_
+
+```{r}
+# Cut tree so that it has 4 clusters: wisc.hclust.clusters
+wisc.hclust.clusters <- cutree(wisc.hclust, k = 4)
+
+# Compare cluster membership to actual diagnoses
+table(wisc.hclust.clusters, diagnosis)
+
+```
+
+### K-means
+
+As there are two main types of clustering: hierarchical and k-meansm, here we create a k-means clustering model on the Wisconsin breast cancer data and compare the results to the actual diagnoses and the results of your hierarchical clustering model. Take some time to see how each clustering model performs in terms of separating the two diagnoses and how the clustering models compare to each other.
+
+```{r}
+# Create a k-means model on wisc.data: wisc.km
+wisc.km <- kmeans(scale(wisc.data), centers = 2, nstart = 20)
+
+# Compare k-means to actual diagnoses
+table(wisc.km$cluster, diagnosis)
+
+# Compare k-means to hierarchical clustering
+table(wisc.hclust.clusters, wisc.km$cluster)
+```
+
+Here we put together several steps you used earlier and, in doing so, you will experience some of the creativity that is typical in unsupervised learning.
+
+Recall from earlier exercises that the PCA model required significantly fewer features to describe 80% and 95% of the variability of the data. In addition to normalizing data and potentially avoiding overfitting, PCA also uncorrelates the variables, sometimes improving the performance of other modeling techniques.
+
+Let's see if PCA improves or degrades the performance of hierarchical clustering.
+
+```{r}
+# Create a hierarchical clustering model: wisc.pr.hclust
+wisc.pr.hclust <- hclust(dist(wisc.pr$x[, 1:7]), method = "complete")
+
+# Cut model into 4 clusters: wisc.pr.hclust.clusters
+wisc.pr.hclust.clusters <- cutree(wisc.pr.hclust, k = 4)
+
+# Compare to actual diagnoses
+table(wisc.pr.hclust.clusters, diagnosis)
+
+# Compare to k-means and hierarchical
+table(diagnosis, wisc.hclust.clusters)
+table(diagnosis, wisc.km$cluster)
+```
+
