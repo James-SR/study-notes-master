@@ -1,0 +1,52 @@
+Text Mining in R
+***
+Notes taken during/inspired by the Datacamp course 'Text Mining: Bag of Words' by Ted Kwartler. 
+
+Course slides:
+* [Part 1 - Jumping into text mining with bag of words]()
+* [Part 2 - Word clouds and more interesting visuals]()
+* [Part 3 - Addining to your skills]()
+* [Part 4 - Case Study]()
+* [Additional - Dendextend package](https://cran.r-project.org/web/packages/dendextend/vignettes/introduction.html)
+
+## Text Mining Intro
+
+Ted mkaes the definition of Text Mining as 'The process of distilling actionable insights from text'.  We can use Text Mining to reduce the information space in to something more manageable and draw out the important features.  The steps we take are:
+
+* 1 - Problem definition and goals
+* 2 - Identify text to be collected
+* 3 - Text organisation
+* 4 - Feature extraction
+* 5 - Aanlysis
+* 6 - Reach and insight or make a reccomendation
+
+In this course we look at the bag of words approach, we don't care about word type or order.  The alternative is semantic parsing, which does and looks at word type breaks the elements in to nouns and verb elements, but results in many features for analysis.  
+
+Sometimes we can find out the author's intent and main ideas just by looking at the most common words.
+
+At its heart, bag of words text mining represents a way to count terms, or n-grams, across a collection of documents. 
+
+Manually counting words in the sentences is a pain! Fortunately, the qdap package offers a better alternative. You can easily find the top 4 most frequent terms (including ties) in text by calling the freq_terms function and specifying 4.
+
+> frequent_terms <- freq_terms(text, 4)
+
+The frequent_terms object stores all unique words and their count. You can then make a bar chart simply by calling the plot function on the frequent_terms object.
+
+> plot(frequent_terms)
+
+```{r}
+new_text <- "DataCamp is the first online learning platform that focuses on building the best learning experience specifically for Data Science. We have offices in Boston and Belgium and to date, we trained over 250,000 (aspiring) data scientists in over 150 countries. These data science enthusiasts completed more than 9 million exercises. You can take free beginner courses, or subscribe for $25/month to get access to all premium courses."
+
+# Load qdap
+library(qdap)
+
+# Print new_text to the console
+new_text
+
+# Find the 10 most frequent terms: term_count
+term_count <- freq_terms(new_text, 10)
+
+# Plot term_count
+plot(term_count)
+```
+
