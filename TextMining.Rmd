@@ -50,3 +50,94 @@ term_count <- freq_terms(new_text, 10)
 plot(term_count)
 ```
 
+Next we are going to build our first corpus of text using tweets.  A corpus is a collection of documents, specifying it as a text source for the tm package.  
+
+Text mining begins with loading some text data into R, which we'll do with the read.csv() function. By default, read.csv() treats character strings as factor levels like Male/Female. To prevent this from happening, it's very important to use the argument stringsAsFactors = FALSE.
+
+Best practice is to examine the object you read in to make sure you know which column(s) are important. The str() function provides an efficient way of doing this. You can also count the number of documents using the nrow() function on the new object. In this example, it will tell you how many coffee tweets are in the vector.
+
+If the data frame contains columns that are not text, you may want to make a new object using only the correct column of text (e.g. some_object$column_name).
+
+```{r}
+# Import text data
+tweets <-  read.csv("D:/CloudStation/Documents/2017/RData/coffee.csv", stringsAsFactors = FALSE) 
+
+# View the structure of tweets
+str(tweets)
+
+# Print out the number of rows in tweets
+nrow(tweets)
+
+# Isolate text from tweets: coffee_tweets
+coffee_tweets <- tweets$text
+```
+
+Your next step is to convert this vector containing the text data to a corpus, a corpus is a collection of documents, but it's also important to know that in the tm domain, R recognizes it as a data type.
+
+There are two kinds of the corpus data type, the permanent corpus, PCorpus, and the volatile corpus, VCorpus. In essence, the difference between the two has to do with how the collection of documents is stored in your computer. In this course, we will use the volatile corpus, which is held in your computer's RAM rather than saved to disk, just to be more memory efficient.
+
+To make a volatile corpus, R needs to interpret each element in our vector of text, coffee_tweets, as a document. And the tm package provides what are called Source functions to do just that! In this exercise, we'll use a Source function called VectorSource() because our text data is contained in a vector. The output of this function is called a Source object.
+
+```{r}
+# Load tm
+library(tm)
+
+# Make a vector source: coffee_source
+coffee_source <- VectorSource(coffee_tweets)
+```
+
+Now that we've converted our vector to a Source object, we pass it to another tm function, VCorpus(), to create our volatile corpus. 
+
+The VCorpus object is a nested list, or list of lists. At each index of the VCorpus object, there is a PlainTextDocument object, which is essentially a list that contains the actual text data (content), as well as some corresponding metadata (meta). It can help to visualize a VCorpus object to conceptualize the whole thing.
+
+For example, to examine the contents of the second tweet in coffee_corpus, you'd subset twice. Once to specify the second PlainTextDocument corresponding to the second tweet and again to extract the first (or content) element of that PlainTextDocument:
+
+> coffee_corpus[[15]][1]
+
+```{r}
+# Make a volatile corpus: coffee_corpus
+coffee_corpus <- VCorpus(coffee_source)
+
+# Print out coffee_corpus
+coffee_corpus
+
+# Print data on the 15th tweet in coffee_corpus
+coffee_corpus[[15]]
+
+# Print the content of the 15th tweet in coffee_corpus
+coffee_corpus[[15]]$content
+```
+
+Because another common text source is a data frame, there is a Source function called DataframeSource(). The DataframeSource() function treats the entire row as a complete document, so be careful you don't pick up non-text data like customer IDs when sourcing a document this way.
+
+```{r}
+# Setup the example text
+num <- 1:3
+Author1 <- c("Text mining is a great time.","Text analysis provides insights" , "qdap and tm are used in text mining")
+Author2 <- c("R is a great language" , "R has many uses" , "DataCamp is cool!")
+example_text <- cbind(num, Author1, Author2)
+example_text <- as.data.frame(example_text, stringsAsFactors = FALSE)
+
+# Print example_text to the console
+example_text
+
+# Create a DataframeSource on columns 2 and 3: df_source
+df_source <- DataframeSource(example_text[, 2:3])
+
+# Convert df_source to a corpus: df_corpus
+df_corpus <- VCorpus(df_source)
+
+# Examine df_corpus
+df_corpus
+
+# Create a VectorSource on column 3: vec_source
+vec_source <- VectorSource(example_text$Author2)
+
+# Convert vec_source to a corpus: vec_corpus
+vec_corpus <- VCorpus(vec_source)
+
+# Examine vec_corpus
+vec_corpus
+
+```
+
