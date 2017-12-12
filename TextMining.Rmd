@@ -281,3 +281,80 @@ complete_doc <- stemCompletion(stem_doc, comp_dict)
 complete_doc
 ```
 
+The tm package provides a special function tm_map() to apply cleaning functions to a corpus. Mapping these functions to an entire corpus makes scaling the cleaning steps very easy.
+
+To save time (and lines of code) it's a good idea to use a custom function, since you may be applying the same functions over multiple corpora. Here we use the clean_corpus() function. It takes one argument, corpus, and applies a series of cleaning functions to it in order, then returns the final result.
+
+Notice how the tm package functions do not need content_transformer(), but base R and qdap functions do.
+
+Be sure to test your function's results. If you want to draw out currency amounts, then removeNumbers() shouldn't be used. Plus, the order of cleaning steps makes a difference. For example, if you removeNumbers() and then replace_number(), the second function won't find anything to change.
+
+```{r}
+# Alter the function code to match the instructions
+clean_corpus <- function(corpus){
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeWords, c(stopwords("en"), "coffee", "mug"))
+  return(corpus)
+}
+
+# Apply your customized function to the tweet_corp: clean_corp
+clean_corp <- clean_corpus(coffee_corpus)
+
+# Print out a cleaned up tweet
+clean_corp[[227]][1]
+
+# Print out the same tweet in original form
+tweets$text[227]
+```
+
+In bag of words analysis, either we have a Term Document Matrix (TDM) or a Document Term Matrix (DTM).  One is a transposition of the other, 
+
+* TDM - rows are terms/words, columns are tweets/documents
+* DTM - rows are tweets/documents, columns are terms/words
+
+Let's revisit the coffee tweets to build a document-term matrix.
+
+Beginning with the coffee.csv file, we have used common transformations to produce a clean corpus called clean_corp.
+
+The document-term matrix is used when you want to have each document represented as a row. This can be useful if you are comparing authors within rows, or the data is arranged chronologically and you want to preserve the time series.
+
+```{r}
+# Create the dtm from the corpus: coffee_dtm
+coffee_dtm <- DocumentTermMatrix(clean_corp)
+
+# Print out coffee_dtm data
+coffee_dtm
+
+# Convert coffee_dtm to a matrix: coffee_m
+coffee_m <- as.matrix(coffee_dtm) 
+
+# Print the dimensions of coffee_m
+dim(coffee_m)
+
+# Review a portion of the matrix
+coffee_m[148:150, 2587:2590]
+```
+
+Next we are performing a similar process but taking the transpose of the document-term matrix. In this case, the term-document matrix has terms in the first column and documents across the top as individual column names.
+
+The TDM is often the matrix used for language analysis. This is because you likely have more terms than authors or documents and life is generally easier when you have more rows than columns. An easy way to start analyzing the information is to change the matrix into a simple matrix using as.matrix() on the TDM.
+
+```{r}
+# Create a TDM from clean_corp: coffee_tdm
+coffee_tdm <- TermDocumentMatrix(clean_corp)
+
+# Print coffee_tdm data
+coffee_tdm
+
+# Convert coffee_tdm to a matrix: coffee_m
+coffee_m <- as.matrix(coffee_tdm)
+
+# Print the dimensions of the matrix
+dim(coffee_m)
+
+# Review a portion of the matrix
+coffee_m[2587:2590, 148:150]
+```
+
