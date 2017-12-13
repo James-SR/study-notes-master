@@ -2,6 +2,77 @@
 ***
 Notes taken during/inspired by the Datacamp course 'Supervised Learning in R: Regression' by Nina Zumel and John Mount.
 
+
+## Issues to Consider
+
+For categorical variables we want to convert the data to dummy or binary variables (1s and 0s) - this is also somtimes called One Hot Encoding.  Some functions/models do this automatically 'under the hood' whereas others need more pre-procesing prior to modelling.  We want to leave one level out of the model and is considered the reference level.  
+
+However, we have to be cautious for two reasons - too many variables can cause computational problems (like including postcodes as a variable) and too many variables can lead to over fitting, meaning our models won't generalise well.  
+
+
+For some variables we can leave them as nominal e.g. 1,2 and 3.  BUT this won't work where the data/calculations are geometric, such as linear regression (geometric), PCA and some clustering methods (eigen space calculations).
+
+```{r}
+# Load the data from Sleuth and modify for the purposes of demostration
+library(Sleuth3)
+flowers <- print(case0901)
+flowers$Time[flowers$Time==1] <- "Late"
+flowers$Time[flowers$Time==2] <- "Early"
+
+# Call str on flowers to see the types of each column
+str(flowers)
+
+# Use unique() to see how many possible values Time takes
+unique(flowers$Time)
+
+# Build a formula to express Flowers as a function of Intensity and Time: fmla. Print it
+(fmla <- as.formula("Flowers ~ Intensity + Time"))
+
+# Use fmla and model.matrix to see how the data is represented for modeling
+mmat <- model.matrix(fmla, flowers)
+
+# Examine the first 20 lines of flowers
+head(flowers, n = 20)
+
+# Examine the first 20 lines of mmat
+head(mmat, n = 20)
+
+```
+
+Here we see the late and early are changed to 1 and 0 for the purposes of modelling.
+
+Next we will fit a linear model to the flowers data, to predict Flowers as a function of Time and Intensity.
+
+```{r}
+# flowers in is the workspace
+str(flowers)
+library(ggplot2)
+
+# fmla is in the workspace
+fmla
+
+# Fit a model to predict Flowers from Intensity and Time : flower_model
+flower_model <- lm(fmla, flowers)
+
+# Use summary on mmat to remind yourself of its structure
+summary(mmat)
+
+# Use summary to examine flower_model 
+summary(flower_model)
+
+# Predict the number of flowers on each plant
+flowers$predictions <- predict(flower_model, flowers)
+
+# Plot predictions vs actual flowers (predictions on x-axis)
+ggplot(flowers, aes(x = predictions, y = Flowers)) + 
+  geom_point() +
+  geom_abline(color = "blue") 
+```
+
+### Interactions
+
+
+
 ## Tree Based Models
 
 Tree based models can be used for both regression and classification models.  Decision Trees say 'if a AND b AND c THEN y'.  We can therefore model non-linear models and multiplicative relationships - what is the affect of this AND that when combined together.  We can use RMSE as a measure of accuracy of the model.  The challenge with tree models is that they are interested in the model space as a whole, splitting this in to regions.  Linear models can be better for linear relationships.  We can adjust the tree depth, but there is a risk of overfitting (too deep/complex) or underfitting (to shallow/coarse).
@@ -71,7 +142,6 @@ The predict() function for a ranger model produces a list. One of the elements o
 
 ```{r}
 library(dplyr)
-library(ggplot2)
 
 # bikesAugust is in the workspace
 str(bikesAugust)
