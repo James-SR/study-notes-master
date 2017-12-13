@@ -358,3 +358,114 @@ dim(coffee_m)
 coffee_m[2587:2590, 148:150]
 ```
 
+## Word Clouds and other visuals
+
+Visual information is quickly processed so using visuals helps.  Here we are going to look at two corpora - one for coffee tweets and the other for chardonnay tweets.  
+
+Calling rowSums() on your newly made matrix aggregates all the terms used in a passage. Once you have the rowSums(), you can sort() them with decreasing = TRUE, so you can focus on the most common terms.
+
+Lastly, you can make a barplot() of the top 5 terms of term_frequency with the following code.
+
+> barplot(term_frequency[1:5], col = "#C0DE25")
+
+```{r}
+# Create a matrix: coffee_m
+coffee_m <- as.matrix(coffee_tdm)
+
+# Calculate the rowSums: term_frequency
+term_frequency <- rowSums(coffee_m) 
+
+# Sort term_frequency in descending order
+term_frequency <- sort(term_frequency,
+ decreasing = TRUE) 
+
+# View the top 10 most common words
+term_frequency[1:10]
+
+# Plot a barchart of the 10 most common words
+barplot(term_frequency[1:10],
+ col = "tan", las = 2)
+```
+
+A fast way to get frequent terms is with freq_terms() from qdap, although you loose some control.  The function accepts a text variable, which in our case is the tweets$text vector. You can specify the top number of terms to show with the top argument, a vector of stop words to remove with the stopwords argument, and the minimum character length of a word to be included with the at.least argument. qdap has its own list of stop words that differ from those in tm. Our exercise will show you how to use either and compare their results.
+
+Making a basic plot of the results is easy. Just call plot() on the freq_terms() object.
+
+Note that using different lists of stop words can produce different results, as shown here.
+
+```{r}
+# Create frequency
+frequency <- freq_terms(
+ tweets$text,
+ top = 10,
+ at.least = 3,
+ stopwords = "Top200Words"
+ ) 
+
+# Make a frequency barchart
+plot(frequency)
+
+# Create frequency2
+frequency2 <- freq_terms(
+ tweets$text,
+ top = 10,
+ at.least = 3,
+ stopwords = tm::stopwords("english")
+ ) 
+
+# Make a frequency2 barchart
+plot(frequency2)
+```
+
+### Word Clouds
+
+n celebration of making it this far, let's try our hand on another batch of 1000 tweets. For now, you won't know what they have in common, but let's see if you can figure it out using a word cloud. The tweets' term-document matrix, matrix, and frequency values are preloaded in your workspace.
+
+A word cloud is a visualization of terms. In a word cloud, size is often scaled to frequency and in some cases the colors may indicate another measurement. For now, we're keeping it simple: size is related to individual word frequency and we are just selecting a single color.
+
+As you saw in the video, the wordcloud() function works like this:
+
+> wordcloud(words, frequencies, max.words = 500, colors = "blue")
+
+Text mining analyses often include simple word clouds. In fact, they are probably over used, but can still be useful for quickly understanding a body of text.
+
+```{r}
+# Load the data
+tweets2 <-  read.csv("D:/CloudStation/Documents/2017/RData/chardonnay.csv", stringsAsFactors = FALSE) 
+
+# Isolate text from tweets: chard_tweets
+chard_tweets <- tweets2$text
+
+# Make a vector source: coffee_source
+chard_source <- VectorSource(chard_tweets)
+
+# Make a volatile corpus: coffee_corpus
+chard_corpus <- VCorpus(chard_source)
+
+# Alter the function code to match the instructions
+clean_corpus <- function(corpus){
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeWords, c(stopwords("en"),  "amp",
+ "chardonnay", "wine", "glass"))
+  return(corpus)
+}
+
+# Apply your customized function to the tweet_corp: clean_chardonnay
+clean_chardonnay <- clean_corpus(chard_corpus)
+
+# Create a TDM from clean_corp: chardonnay_tdm
+chardonnay_tdm <- TermDocumentMatrix(clean_chardonnay)
+
+# Create a matrix: chardonnay_m
+chardonnay_m <- as.matrix(chardonnay_tdm)
+
+# Sum rows and sort by frequency
+term_frequency <- rowSums(chardonnay_m)
+word_freqs <- data.frame(term = names(term_frequency),
+ num = term_frequency)
+
+
+```
+
