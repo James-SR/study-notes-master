@@ -720,3 +720,66 @@ word_associate(coffee_tweets$text, match.string = c("barista"),
 title(main = "Barista Coffee Tweet Associations")
 ```
 
+## More text minig skills
+
+One way we can visualse similarity and group items together is by using a hierarchical clustering method, which we can visualse using a dendogram.  We can use the dendextend package to give us more control over the dendograms.  Using this package we can colour specific branches of the dendogram.
+
+A simple way to do word cluster analysis is with a dendrogram on your term-document matrix. Once you have a TDM, you can call dist() to compute the differences between each row of the matrix.
+
+Next, you call hclust() to perform cluster analysis on the dissimilarities of the distance matrix. Lastly, you can visualize the word frequency distances using a dendrogram and plot(). Often in text mining, you can tease out some interesting insights or word clusters based on a dendrogram.
+
+Consider the table of annual rainfall below. Cleveland and Portland have the same amount of rainfall, so their distance is 0. You might expect the two cities to be a cluster and for New Orleans to be on its own since it gets vastly more rain.
+
+Table: (\#tab:simple-table) City Rainfall
+
+City        Rainfall
+___________ _____     
+  Cleveland 39.14
+   Portland 39.14
+     Boston 43.77
+New Orleans 62.45
+
+```{r}
+# Create the datarame
+rain <- data.frame(city = factor(c("Cleveland", "Portland", "Boston", "New Orleans")),
+                  rainfall = as.numeric(c(39.14, 39.14, 43.77, 62.45)))
+              
+# Create dist_rain
+dist_rain <- dist(rain$rainfall)
+
+# View the distance matrix
+dist_rain
+
+# Create hc
+hc <- hclust(dist_rain)
+
+# Plot hc
+plot(hc, labels = rain$city)
+```
+
+Next we can apply them to text. But first, you have to limit the number of words in your TDM using removeSparseTerms() from tm. 
+
+TDMs and DTMs are sparse, meaning they contain mostly zeros. Remember that 1000 tweets can become a TDM with over 3000 terms. You won't be able to easily interpret a dendrogram that is so cluttered, especially if you are working on more text.
+
+A good TDM has between 25 and 70 terms. The lower the sparse value, the more terms are kept. The closer it is to 1, the fewer are kept. This value is a percentage cutoff of zeros for each term in the TDM and is defined using the sparse = element within the removeSparseTerms() command.
+
+```{r}
+# Create tweets_tdm from chardonnay tweets tdm
+tweets_tdm <- chardonnay_tdm
+
+# Print the dimensions of tweets_tdm
+dim(tweets_tdm)
+
+# Create tdm1
+tdm1 <- removeSparseTerms(tweets_tdm, sparse = 0.95)
+
+# Create tdm2
+tdm2 <- removeSparseTerms(tweets_tdm, sparse = 0.975)
+
+# Print tdm1
+tdm1
+
+# Print tdm2
+tdm2
+```
+
