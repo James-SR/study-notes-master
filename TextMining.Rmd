@@ -783,3 +783,118 @@ tdm1
 tdm2
 ```
 
+Now we can make a text-based dendrogram. Dendrograms reduce information to help you make sense of the data. This is much like how an average tells you something, but not everything, about a population. Both can be misleading. With text, there are often a lot of nonsensical clusters, but some valuable clusters may also appear.
+
+A peculiarity of TDM and DTM objects is that you have to convert them first to matrices (with as.matrix()), then to data frames (with as.data.frame()), before using them with the dist() function.
+
+```{r}
+# Create tweets_tdm2
+tweets_tdm2 <- removeSparseTerms(tweets_tdm, sparse = 0.975)
+
+# Create tdm_m
+tdm_m <- as.matrix(tweets_tdm2)
+
+# Create tdm_df
+tdm_df <- as.data.frame(tdm_m)
+
+# Create tweets_dist
+tweets_dist <- dist(tdm_df)
+
+# Create hc
+hc <- hclust(tweets_dist)
+
+# Plot the dendrogram
+plot(hc)
+```
+
+The dendextend package can help your audience by coloring branches and outlining clusters. dendextend is designed to operate on dendrogram objects, so you'll have to change the hierarchical cluster from hclust using as.dendrogram().
+
+A good way to review the terms in your dendrogram is with the labels() function. It will print all terms of the dendrogram. To highlight specific branches, use branches_attr_by_labels(). First, pass in the dendrogram object, then a vector of terms as in c("data", "camp"). Lastly add a color such as "blue".
+
+After you make your plot, you can call out clusters with rect.dendrogram(). This adds rectangles for each cluster. The first argument to rect.dendrogram() is the dendrogram, followed by the number of clusters (k). You can also pass a border argument specifying what color you want the rectangles to be (e.g. "green").
+
+```{r}
+# Load dendextend
+library(dendextend)
+
+# Create hc
+hc <- hclust(tweets_dist)
+
+# Create hcd
+hcd <- as.dendrogram(hc)
+
+# Print the labels in hcd
+labels(hcd)
+
+# Change the branch color to red for "marvin" and "gaye"
+hcd <- branches_attr_by_labels(hcd, c("marvin", "gaye"), color = "red")
+
+# Plot hcd
+plot(hcd, main = "Better Dendrogram")
+
+# Add cluster rectangles 
+rect.dendrogram(hcd, k = 2, border = "grey50")
+```
+
+Another way to think about word relationships is with the findAssocs() function in the tm package. For any given word, findAssocs() calculates its correlation with every other word in a TDM or DTM. Scores range from 0 to 1. A score of 1 means that two words always appear together, while a score of 0 means that they never appear together.
+
+To use findAssocs() pass in a TDM or DTM, the search term, and a minimum correlation. The function will return a list of all other terms that meet or exceed the minimum threshold.
+
+> findAssocs(tdm, "word", 0.25)
+
+Minimum correlation values are often relatively low because of word diversity. Don't be surprised if 0.10 demonstrates a strong pairwise term association.
+
+```{r}
+# Create associations
+associations <- findAssocs(tweets_tdm, "venti", 0.2)
+
+# View the venti associations
+associations
+
+# Create associations_df
+associations_df <- list_vect2df(associations)[, 2:3]
+
+# Plot the associations_df values (don't change this)
+ggplot(associations_df, aes(y = associations_df[, 1])) + 
+  geom_point(aes(x = associations_df[, 2]), 
+             data = associations_df, size = 3) + 
+  theme_gdocs()
+```
+
+The context of words is often important, for instance the words and not and good individually have a different context to not good.  We can therefore look to increase the 'tokenisation' of our words, which increases the size of the dtm and tdm.  The default is to make tdm and dtms with unigrams, but you can also focus on tokens containing two or more words. This can help extract useful phrases which lead to some additional insights or provide improved predictive attributes for a machine learning algorithm.
+
+The function below uses the RWeka package to create trigram (three word) tokens: min and max are both set to 3.
+
+> tokenizer <- function(x) 
+    NGramTokenizer(x, Weka_control(min = 3, max = 3))
+
+Then the customized tokenizer() function can be passed into the TermDocumentMatrix or DocumentTermMatrix functions as an additional parameter:
+
+> tdm <- TermDocumentMatrix(
+    corpus, 
+    control = list(tokenize = tokenizer)
+  )
+  
+```{r, eval = F}
+library(RWeka)
+
+# Make tokenizer function 
+tokenizer <- function(x) 
+  NGramTokenizer(x, Weka_control(min = 2, max = 2))
+
+# Create unigram_dtm
+unigram_dtm <- DocumentTermMatrix(text_corp)
+
+# Create bigram_dtm
+bigram_dtm <- DocumentTermMatrix(
+  text_corp,
+  control = list(tokenize = tokenizer))
+
+# Examine unigram_dtm
+unigram_dtm
+
+# Examine bigram_dtm
+bigram_dtm
+
+```
+  
