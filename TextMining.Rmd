@@ -898,3 +898,195 @@ bigram_dtm
 
 ```
   
+Now we have a bigram DTM, we can examine it and remake a word cloud. The new tokenization method affects not only the matrices, but also any visuals or modeling based on the matrices.
+
+
+```{r}
+# Create bigram_dtm_m
+bigram_dtm_m <- as.matrix(bigram_dtm)
+
+# Create freq
+freq <- colSums(bigram_dtm_m)
+
+# Create bi_words
+bi_words <- names(freq)
+
+# Examine part of bi_words
+bi_words[2577:2587]
+
+# Plot a wordcloud
+wordcloud(bi_words, freq, max.words = 15)
+```
+
+We can also do more useful approaches, such as penalising words that appear in many documents.  If such words appear in most documents, the idea is that they must convey little informational value.  This is the tfIdf which stands for term frequency-inverse document frequency.
+
+If a term appears often it must be important. This attribute is represented by term frequency (i.e. Tf), which is normalized by the length of the document. However, if the term appears in all documents, it is not likely to be insightful. This is captured in the inverse document frequency (i.e. Idf).
+
+The [wiki page](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) on TfIdf contains the mathematical explanation behind the score, but this code will demonstrate the practical difference.
+
+```{r}
+
+# Import text data
+tweets <-  read.csv("D:/CloudStation/Documents/2017/RData/coffee.csv", stringsAsFactors = FALSE) 
+
+# Isolate text from tweets: coffee_tweets
+coffee_tweets <- tweets$text
+
+# Make a vector source: coffee_source
+coffee_source <- VectorSource(coffee_tweets)
+
+# Make a volatile corpus: coffee_corpus
+coffee_corpus <- VCorpus(coffee_source)
+
+# Clean the Corpuse
+clean_corpus <- function(corpus){
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeWords, c(stopwords("en")))
+  return(corpus)
+}
+coffee_clean_corpus <- clean_corpus(coffee_corpus)
+
+# Create tdm and matrix with normal weighting
+tf_tdm <- TermDocumentMatrix(coffee_clean_corpus)
+tf_tdm_m <- as.matrix(tf_tdm)
+tf_tdm_m[510:520, 5:10]
+
+# Create tdm and matrix with tf-idf weighting
+tf_idf_tdm <- TermDocumentMatrix(
+  coffee_clean_corpus, 
+  control = list(weighting = weightTfIdf)
+  )
+tf_idf_tdm_m <- as.matrix(tf_idf_tdm)
+tf_idf_tdm_m[510:520, 5:10]
+```
+
+Coffee is now a much lower weight.
+
+Depending on what you are trying to accomplish, you may want to keep metadata about the document when you create a TDM or DTM. This metadata can be incorporated into the corpus fairly easily by creating a readerControl list and applying it to a DataframeSource when calling VCorpus().
+
+You will need to know the column names of the data frame containing the metadata to be captured. The names() function is helpful for this.
+
+To capture the text column of the coffee tweets text along with a metadata column of unique numbers called num you would use the code below.
+
+>custom_reader <- readTabular(
+  mapping = list(content = "text", id = "num")
+)
+text_corpus <- VCorpus(
+  DataframeSource(tweets), 
+  readerControl = list(reader = custom_reader)
+)
+
+```{r}
+# Add author to custom reading list
+custom_reader <- readTabular(mapping = list(content = "text", 
+                                            id = "num",
+                                            author = "screenName",
+                                            date = "created"
+                                            ))
+
+# Make corpus with custom reading
+text_corpus <- text_corpus <- VCorpus(DataframeSource(tweets),
+  readerControl = list(reader = custom_reader))
+
+# Clean corpus
+text_corpus <- clean_corpus(text_corpus)
+
+# Print data
+text_corpus[[1]][1]
+
+# Print metadata
+text_corpus[[1]][2]
+```
+
+## 
+
+We have a typical Text Mining workflow as shown below
+
+```{r TMWorkflow, echo = FALSE, fig.cap='Workflow outline'}
+knitr::include_graphics("images/TMWorkflow.png")
+```
+
+Now we are going to look at this process but trying to understand how external people may understand your company compared to another company - in this case Amazon vs Google based on emloyer reviews.  Our problem, as defined by the workflow, becomes:
+
+* 1 - Does Amazon or Gloogle have better work life balance?  And which has better perceived pay according to online reviews?
+* 2 - Identify the sources - this has already been done and provided as text corpora, there are 2,000 online reviews in total.  There are positive and negative sets for both Amazon and Google.
+
+```{r TMWorkflow, echo = FALSE, fig.cap='Workflow outline'}
+knitr::include_graphics("images/TMWorkflow.png")
+```
+
+First, lets setup our data for analysis.
+
+```{r}
+# Import text data 
+amzn <-  read.csv("D:/CloudStation/Documents/2017/RData/500_amzn.csv", stringsAsFactors = FALSE) 
+goog <-  read.csv("D:/CloudStation/Documents/2017/RData/500_goog.csv", stringsAsFactors = FALSE) 
+
+# Print the structure of amzn
+str(amzn)
+
+# Create amzn_pros
+amzn_pros <- amzn$pros
+
+# Create amzn_cons
+amzn_cons <- amzn$cons
+
+# Print the structure of goog
+str(goog)
+
+# Create goog_pros
+goog_pros <- goog$pros
+
+# Create goog_cons
+goog_cons <- goog$cons
+```
+
+Next we more on to cleaning our data
+
+3. Organise text and clean
+
+We will do this using a custom qdap clean function, qdap functions can be directly applied to a text vector object rather than a text corpus.  Before we used a tm based clean, which was performed on a VCorpus.  
+
+```{r}
+# qdap cleaning function
+qdap_clean <- function(x) {
+x <- replace_abbreviation(x)
+x <- replace_contraction(x)
+x <- replace_number(x)
+x <- replace_ordinal(x)
+x <- replace_symbol(x)
+x <- tolower(x)
+return(x)
+}
+
+# tm cleaning function
+tm_clean <- function(corpus) {
+tm_clean <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords,
+ c(stopwords("en"), "Google", "Amazon", "company"))
+return(corpus)
+}
+
+# Alter amzn_pros
+amzn_pros <- qdap_clean(amzn_pros)
+
+# Alter amzn_cons
+amzn_cons <- qdap_clean(amzn_cons)
+
+# Create az_p_corp 
+az_p_corp <- VCorpus(VectorSource(amzn_pros))
+
+# Create az_c_corp
+az_c_corp <- VCorpus(VectorSource(amzn_cons))
+
+# Create amzn_pros_corp
+amzn_pros_corp <- tm_clean(az_p_corp)
+
+# Create amzn_cons_corp
+amzn_cons_corp <- tm_clean(az_c_corp)
+
+```
+
