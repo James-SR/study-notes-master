@@ -1191,3 +1191,143 @@ term_frequency[1:5]
 findAssocs(amzn_p_tdm, "fast paced", 0.2)
 ```
 
+Next we can look at both positive and negative reviews to look for any areas of commonality.
+
+```{r}
+# Examine our original data and determine what columns we need
+str(goog)
+
+# Create out VCorpus for pro and con reviews
+all_goog_corpus<- VCorpus(VectorSource(goog[,3:4]))
+
+# Create all_goog_corp
+all_goog_corp <- tm_clean(all_goog_corpus)
+
+# Create all_tdm
+all_tdm <- TermDocumentMatrix(all_goog_corp)
+
+# Name the columns of all_tdm
+colnames(all_tdm) <- c("Goog_Pros", "Goog_Cons")
+
+# Create all_m
+all_m <- as.matrix(all_tdm)
+
+# Build a comparison cloud
+comparison.cloud(
+  all_m,
+  max.words = 100,
+  colors = c("#F44336", "#2196f3"))
+
+```
+
+Next we can see if there are any patterns across the positive reviews, by looking at the bigrams across both Google and Amazon.
+
+```{r}
+# create a data frame of just the positive revies
+pros <- data.frame(
+  amzn_pros = c(as.character(amzn$pros), 'NULL'),
+  goog_pros = as.character(goog$pros),
+  stringsAsFactors = F)
+
+pros[is.na(pros)] <- "NULL"
+pros <- qdap_clean(pros)
+
+# Create a corpus
+all_pros_corp <- VCorpus(VectorSource(pros))
+all_pros_corp <- tm_clean(all_pros_corp)
+
+# Create a tdm with bi-grams
+all_tdm <- TermDocumentMatrix(
+  all_pros_corp,
+  control = list(tokenize = tokenizer))
+
+# Create amzn_p_m
+all_tdm_m <- as.matrix(all_tdm)
+
+# Create common_words
+common_words <- subset(all_tdm_m, 
+  all_tdm_m[, 1] > 0 & all_tdm_m[, 2] > 0)
+
+# Create difference
+difference <- abs(common_words[, 1] - common_words[, 2])
+
+# Add difference to common_words
+common_words <- cbind(common_words, difference)
+
+# Order the data frame from most differences to least
+common_words <- common_words[order(common_words[,3], decreasing = T), ]
+
+# Create top15_df
+top15_df <- data.frame(
+  x = common_words[1:15, 1],
+  y = common_words[1:15, 2],
+  labels = rownames(common_words[1:15, ]))
+
+# Create the pyramid plot
+pyramid.plot(top15_df$x, top15_df$y, 
+             labels = top15_df$labels, 
+             gap = 12, 
+             top.labels = c("Amzn", "Pro Words", "Google"), 
+             main = "Words in Common", unit = NULL)
+```
+
+Then the same again but for negative reviews.
+
+```{r}
+# create a data frame of just the positive revies
+
+cons <- data.frame(
+  amzn_cons = c(as.character(amzn$cons), 'NULL'),
+  goog_cons = as.character(goog$cons),
+  stringsAsFactors = F)
+
+cons[is.na(cons)] <- "NULL"
+cons <- qdap_clean(cons)
+
+# Create a corpus
+all_cons_corp <- VCorpus(VectorSource(cons))
+all_cons_corp <- tm_clean(all_cons_corp)
+
+# Create a tdm with bi-grams
+all_tdm <- TermDocumentMatrix(
+  all_cons_corp,
+  control = list(tokenize = tokenizer)
+)
+
+# Create amzn_p_m
+all_tdm_m <- as.matrix(all_tdm)
+
+# Create common_words
+common_words <- subset(
+  all_tdm_m,
+  all_tdm_m[, 1] > 0 & all_tdm_m[, 2] > 0
+)
+
+# Create difference
+difference <- abs(common_words[, 1] - common_words[, 2])
+
+# Bind difference to common_words
+common_words <- cbind(common_words, difference)
+
+# Order the data frame from most differences to least
+common_words <- common_words[order(common_words[, 3], decreasing = T), ]
+
+# Create top15_df
+top15_df <- data.frame(x = common_words[1:15, 1],
+                       y = common_words[1:15, 2],
+                       labels = rownames(common_words[1:15, ]))
+
+# Create the pyramid plot
+pyramid.plot(top15_df$x, top15_df$y,
+             labels = top15_df$labels, 
+             main = "Words in Common",
+             top.labels = c("Amzn",
+                            "Cons Words",
+                            "Google"),
+             gap = 12,
+             unit = NULL)
+```
+
+So - step 6 - what can we conclude?
+
+Looking at our con words, it seems there are a lot more negative bigrams - worklife balance, work life and long hours - appearing in the Amazon con reviews.   In addition, we saw the positive reviews from Amazon tended to suggest a facst paced environment and lots of learning, so perhaps recruiting individuals with such traits may be more beneficial at Amazon.  
