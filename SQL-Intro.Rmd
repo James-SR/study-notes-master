@@ -1,0 +1,16 @@
+SQL for Data Science
+***
+Notes taken during/inspired by the Datacamp course 'Intro to SQL for Data Science' by Nick Carchedi. 
+
+Course slides:
+
+* [Part 1 - Selecting columns]()
+* [Part 2 - Filtering rows]()
+* [Part 3 - Aggregate Functions]()
+* [Part 4 - Sorting, grouping and joins]()
+* [Additional - KD Nuggets Overview and courses](https://www.kdnuggets.com/2016/06/seven-steps-mastering-sql-data-science.html)
+
+
+##
+
+SQL is the native language for interacting with databases (RDBMS).  Many non-SQL systems, such as HAdoop and Spark, will often have a SQL above to make extracting and analysing possible.   
