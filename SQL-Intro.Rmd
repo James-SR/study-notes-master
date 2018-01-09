@@ -13,4 +13,32 @@ Course slides:
 
 ##
 
-SQL is the native language for interacting with databases (RDBMS).  Many non-SQL systems, such as HAdoop and Spark, will often have a SQL above to make extracting and analysing possible.   
+SQL is the native language for interacting with databases (RDBMS).  Many non-SQL systems, such as Hadoop and Spark, will often have a SQL above to make extracting and analysing possible.   
+
+```{r setup}
+library(RPostgreSQL)
+
+# create a connection
+# save the password that we can "hide" it as best as we can by collapsing it
+pw <- {
+  "<password goes here>"
+}
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+# creates a connection to the postgres database
+# note that "con" will be used later in each connection to the database
+con <- dbConnect(drv, dbname = "films",
+                 host = "localhost", port = 5432,
+                 user = "postgres", password = pw)
+rm(pw) # removes the password
+
+# Sets knitr to use this connection as the default so we don't need to specify it for every chunk
+knitr::opts_chunk$set(connection = "con")
+```
+
+
+```{sql}
+
+```
+
