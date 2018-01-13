@@ -1,0 +1,112 @@
+```{r}
+library(RPostgreSQL)
+
+# create a connection
+# save the password that we can "hide" it as best as we can by collapsing it
+pw <- {
+  "<password goes here>"
+}
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+# creates a connection to the postgres database
+# note that "con" will be used later in each connection to the database
+con <- dbConnect(drv, dbname = "films",
+                 host = "localhost", port = 5432,
+                 user = "postgres", password = pw)
+rm(pw) # removes the password
+
+```
+
+Next we create the empty tables.
+
+```{sql connection=con}
+CREATE TABLE films (
+    id integer NOT NULL,
+    title character varying,
+    release_year integer,
+    country character varying,
+    duration integer,
+    language character varying,
+    certification character varying,
+    gross bigint,
+    budget bigint
+);
+
+CREATE TABLE people (
+    id integer NOT NULL,
+    name character varying,
+    birthdate date,
+    deathdate date
+);
+
+CREATE TABLE reviews (
+    id integer NOT NULL,
+    film_id integer,
+    num_user integer,
+    num_critic integer,
+    imdb_score real,
+    num_votes integer,
+    facebook_likes integer
+);
+
+CREATE TABLE roles (
+    id integer NOT NULL,
+    film_id integer,
+    person_id integer,
+    role character varying
+);
+
+
+```
+
+
+Then copy in the data to those tables.
+
+If we need to check the encoding of the data source, we can use the readr package guess_encoding e.g.
+
+> readr::guess_encoding("C:/Users/DEsktop/Documents/study-notes-master/films_db/films.sql")
+
+```{sql connection=con}
+
+--Full file path is needed since it is postgress/psql rather than r that is reading the file
+
+COPY films (id, title, release_year, country, duration, language, certification, gross, budget) 
+  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\films.sql'
+  ENCODING 'ISO-8859-1';
+  
+COPY people (id, name, birthdate, deathdate) 
+  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\people.sql';
+  --ENCODING 'UTF-8';  
+
+COPY reviews (id, film_id, num_user, num_critic, imdb_score, num_votes, facebook_likes) 
+  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\reviews.sql'
+  ENCODING 'ASCII';
+  
+COPY roles (id, film_id, person_id, role) 
+  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\roles.sql'
+  ENCODING 'ASCII';
+```
+
+
+Set the primary keys
+
+```{sql connection=con}
+ALTER TABLE ONLY films
+    ADD CONSTRAINT films_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY people
+    ADD CONSTRAINT people_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY reviews
+    ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+```
+
