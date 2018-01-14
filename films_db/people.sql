@@ -1,4 +1,4 @@
-﻿1	50 Cent	1975-07-06	\N
+1	50 Cent	1975-07-06	\N
 2	A. Michael Baldwin	1963-04-04	\N
 3	A. Raven Cruz	\N	\N
 4	A.J. Buckley	1978-02-09	\N
@@ -8395,4 +8395,3 @@
 8395	Zoran Lisinac	\N	\N
 8396	Zubaida Sahar	\N	\N
 8397	Zuhair Haddad	\N	\N
-\.

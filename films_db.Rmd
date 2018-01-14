@@ -67,6 +67,8 @@ If we need to check the encoding of the data source, we can use the readr packag
 
 > readr::guess_encoding("C:/Users/DEsktop/Documents/study-notes-master/films_db/films.sql")
 
+Remember to [remove Byte Order Mark (BOM)](https://stackoverflow.com/questions/48253089/copy-from-file-error-invalid-input-syntax-for-integer-%C3%AF-1) if files are downloaded from the internet
+
 ```{sql connection=con}
 
 --Full file path is needed since it is postgress/psql rather than r that is reading the file
@@ -76,16 +78,14 @@ COPY films (id, title, release_year, country, duration, language, certification,
   ENCODING 'ISO-8859-1';
   
 COPY people (id, name, birthdate, deathdate) 
-  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\people.sql';
-  --ENCODING 'UTF-8';  
+ FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\people.sql'
+  ENCODING 'UTF-8';  
 
 COPY reviews (id, film_id, num_user, num_critic, imdb_score, num_votes, facebook_likes) 
-  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\reviews.sql'
-  ENCODING 'ASCII';
+ FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\reviews.sql';
   
 COPY roles (id, film_id, person_id, role) 
-  FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\roles.sql'
-  ENCODING 'ASCII';
+ FROM 'C:\Users\DEsktop\Documents\study-notes-master\films_db\roles.sql';
 ```
 
 
