@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="generator" content="bookdown <!--bookdown:version--> and GitBook 2.6.7">
+
+  <meta property="og:title" content="" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+<!--bookdown:title:start-->
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+<ul>
+<li><a href="#section"><span class="toc-section-number">0.1</span> </a></li>
+</ul>
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<p>SQL for Data Science *** Notes taken during/inspired by the Datacamp course ‘Intro to SQL for Data Science’ by Nick Carchedi.</p>
+<p>Course slides:</p>
+<ul>
+<li><a href="">Part 1 - Selecting columns</a></li>
+<li><a href="">Part 2 - Filtering rows</a></li>
+<li><a href="">Part 3 - Aggregate Functions</a></li>
+<li><a href="">Part 4 - Sorting, grouping and joins</a></li>
+<li><a href="https://www.kdnuggets.com/2016/06/seven-steps-mastering-sql-data-science.html">Additional - KD Nuggets Overview and courses</a></li>
+</ul>
+<div id="section" class="section level2">
+<h2><span class="header-section-number">0.1</span> </h2>
+<p>SQL is the native language for interacting with databases (RDBMS). Many non-SQL systems, such as Hadoop and Spark, will often have a SQL above to make extracting and analysing possible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RPostgreSQL)</code></pre></div>
+<pre><code>## Warning: package &#39;RPostgreSQL&#39; was built under R version 3.4.3</code></pre>
+<pre><code>## Loading required package: DBI</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a connection</span>
+<span class="co"># save the password that we can &quot;hide&quot; it as best as we can by collapsing it</span>
+pw &lt;-<span class="st"> </span>{<span class="st">&quot;PASSWORD&quot;</span>}
+
+<span class="co"># loads the PostgreSQL driver</span>
+drv &lt;-<span class="st"> </span><span class="kw">dbDriver</span>(<span class="st">&quot;PostgreSQL&quot;</span>)
+<span class="co"># creates a connection to the postgres database</span>
+<span class="co"># note that &quot;con&quot; will be used later in each connection to the database</span>
+con &lt;-<span class="st"> </span><span class="kw">dbConnect</span>(drv, <span class="dt">dbname =</span> <span class="st">&quot;films&quot;</span>,
+                 <span class="dt">host =</span> <span class="st">&quot;localhost&quot;</span>, <span class="dt">port =</span> <span class="dv">5432</span>,
+                 <span class="dt">user =</span> <span class="st">&quot;postgres&quot;</span>, <span class="dt">password =</span> pw)
+<span class="kw">rm</span>(pw) <span class="co"># removes the password</span>
+
+<span class="co"># Sets knitr to use this connection as the default so we don&#39;t need to specify it for every chunk</span>
+knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">connection =</span> <span class="st">&quot;con&quot;</span>)</code></pre></div>
+<p>We can take a look at the first ten rows using - note that SQL is NOT case sensitive, however it is good practice to make SQL keywords uppercase to distinguish them from other parts of your query, like column and table names.</p>
+<p>It’s also good practice (but not necessary for the exercises in this course) to include a semicolon at the end of your query. This tells SQL where the end of your query is.</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span> name <span class="kw">FROM</span> people
+<span class="kw">LIMIT</span> <span class="dv">10</span>;</code></pre></div>
+<div class="knitsql-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">50 Cent</td>
+</tr>
+<tr class="even">
+<td align="left">A. Michael Baldwin</td>
+</tr>
+<tr class="odd">
+<td align="left">A. Raven Cruz</td>
+</tr>
+<tr class="even">
+<td align="left">A.J. Buckley</td>
+</tr>
+<tr class="odd">
+<td align="left">A.J. DeLucia</td>
+</tr>
+<tr class="even">
+<td align="left">A.J. Langer</td>
+</tr>
+<tr class="odd">
+<td align="left">Aaliyah</td>
+</tr>
+<tr class="even">
+<td align="left">Aaron Ashmore</td>
+</tr>
+<tr class="odd">
+<td align="left">Aaron Hann</td>
+</tr>
+<tr class="even">
+<td align="left">Aaron Hill</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If multiple columns are needed we use a comma after each field, or if all columns are needed we use SELECT *</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span> title, release_year, country
+<span class="kw">FROM</span> films
+<span class="kw">LIMIT</span> <span class="dv">10</span>;
+
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> films
+<span class="kw">LIMIT</span> <span class="dv">10</span>;</code></pre></div>
+<div class="knitsql-table">
+<table>
+<caption>(#tab:unnamed-chunk-2)Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">title</th>
+<th align="right">release_year</th>
+<th align="left">country</th>
+<th align="right">duration</th>
+<th align="left">language</th>
+<th align="left">certification</th>
+<th align="right">gross</th>
+<th align="right">budget</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">Intolerance: Love’s Struggle Throughout the Ages</td>
+<td align="right">1916</td>
+<td align="left">USA</td>
+<td align="right">123</td>
+<td align="left">NA</td>
+<td align="left">Not Rated</td>
+<td align="right">NA</td>
+<td align="right">385907</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">Over the Hill to the Poorhouse</td>
+<td align="right">1920</td>
+<td align="left">USA</td>
+<td align="right">110</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">3000000</td>
+<td align="right">100000</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">The Big Parade</td>
+<td align="right">1925</td>
+<td align="left">USA</td>
+<td align="right">151</td>
+<td align="left">NA</td>
+<td align="left">Not Rated</td>
+<td align="right">NA</td>
+<td align="right">245000</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">Metropolis</td>
+<td align="right">1927</td>
+<td align="left">Germany</td>
+<td align="right">145</td>
+<td align="left">German</td>
+<td align="left">Not Rated</td>
+<td align="right">26435</td>
+<td align="right">6000000</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">Pandora’s Box</td>
+<td align="right">1929</td>
+<td align="left">Germany</td>
+<td align="right">110</td>
+<td align="left">German</td>
+<td align="left">Not Rated</td>
+<td align="right">9950</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">The Broadway Melody</td>
+<td align="right">1929</td>
+<td align="left">USA</td>
+<td align="right">100</td>
+<td align="left">English</td>
+<td align="left">Passed</td>
+<td align="right">2808000</td>
+<td align="right">379000</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">Hell’s Angels</td>
+<td align="right">1930</td>
+<td align="left">USA</td>
+<td align="right">96</td>
+<td align="left">English</td>
+<td align="left">Passed</td>
+<td align="right">NA</td>
+<td align="right">3950000</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">A Farewell to Arms</td>
+<td align="right">1932</td>
+<td align="left">USA</td>
+<td align="right">79</td>
+<td align="left">English</td>
+<td align="left">Unrated</td>
+<td align="right">NA</td>
+<td align="right">800000</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">42nd Street</td>
+<td align="right">1933</td>
+<td align="left">USA</td>
+<td align="right">89</td>
+<td align="left">English</td>
+<td align="left">Unrated</td>
+<td align="right">2300000</td>
+<td align="right">439000</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">She Done Him Wrong</td>
+<td align="right">1933</td>
+<td align="left">USA</td>
+<td align="right">66</td>
+<td align="left">English</td>
+<td align="left">Approved</td>
+<td align="right">NA</td>
+<td align="right">200000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Often your results will include many duplicate values. If you want to select all the unique values from a column, you can use the DISTINCT keyword.</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> certification
+<span class="kw">FROM</span> films;</code></pre></div>
+<div class="knitsql-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">certification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">X</td>
+</tr>
+<tr class="even">
+<td align="left">Not Rated</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Approved</td>
+</tr>
+<tr class="odd">
+<td align="left">Unrated</td>
+</tr>
+<tr class="even">
+<td align="left">R</td>
+</tr>
+<tr class="odd">
+<td align="left">NC-17</td>
+</tr>
+<tr class="even">
+<td align="left">PG-13</td>
+</tr>
+<tr class="odd">
+<td align="left">PG</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can also use the count function to determine the number of rows in one or more columns.</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span> <span class="fu">COUNT</span>(*)
+<span class="kw">FROM</span> reviews;</code></pre></div>
+<div class="knitsql-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">4968</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We often want to count the number of non-missing values in a column, which we do by specifying the column to count. We can then combine this with DISTINCT to determine the number of distinct or unique values in the column.</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">SELECT</span> <span class="fu">COUNT</span>(*)
+<span class="kw">FROM</span> people;
+
+<span class="kw">SELECT</span> <span class="fu">COUNT</span>(birthdate)
+<span class="kw">FROM</span> people;
+
+<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> birthdate)
+<span class="kw">FROM</span> people;</code></pre></div>
+<div class="knitsql-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">5398</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+    </div>
+  </div>
+<!--bookdown:config-->
+
+</body>
+
+</html>

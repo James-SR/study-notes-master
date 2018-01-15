@@ -1,17 +1,17 @@
-SQL for Data Science
+# SQL for Data Science
 ***
 Notes taken during/inspired by the Datacamp course 'Intro to SQL for Data Science' by Nick Carchedi. 
 
-Course slides:
+Course sections:
 
-* [Part 1 - Selecting columns]()
-* [Part 2 - Filtering rows]()
-* [Part 3 - Aggregate Functions]()
-* [Part 4 - Sorting, grouping and joins]()
+* Part 1 - Selecting columns
+* Part 2 - Filtering rows
+* Part 3 - Aggregate Functions
+* Part 4 - Sorting, grouping and joins
 * [Additional - KD Nuggets Overview and courses](https://www.kdnuggets.com/2016/06/seven-steps-mastering-sql-data-science.html)
 
 
-##
+## Selecting columns
 
 SQL is the native language for interacting with databases (RDBMS).  Many non-SQL systems, such as Hadoop and Spark, will often have a SQL above to make extracting and analysing possible.   
 
@@ -20,9 +20,7 @@ library(RPostgreSQL)
 
 # create a connection
 # save the password that we can "hide" it as best as we can by collapsing it
-pw <- {
-  "<password goes here>"
-}
+pw <- {"PASSWORD"}
 
 # loads the PostgreSQL driver
 drv <- dbDriver("PostgreSQL")
@@ -37,8 +35,59 @@ rm(pw) # removes the password
 knitr::opts_chunk$set(connection = "con")
 ```
 
+We can take a look at the first ten rows using - note that SQL is NOT case sensitive, however it is good practice to make SQL keywords uppercase to distinguish them from other parts of your query, like column and table names.
+
+It's also good practice (but not necessary for the exercises in this course) to include a semicolon at the end of your query. This tells SQL where the end of your query is.
+
+```{sql}
+SELECT name FROM people
+LIMIT 10;
+```
+
+If multiple columns are needed we use a comma after each field, or if all columns are needed we use SELECT *
+
+```{sql}
+SELECT title, release_year, country
+FROM films
+LIMIT 10;
+
+SELECT *
+FROM films
+LIMIT 10;
+```
+
+Often your results will include many duplicate values. If you want to select all the unique values from a column, you can use the DISTINCT keyword.
+
+```{sql}
+SELECT DISTINCT certification
+FROM films;
+```
+
+We can also use the count function to determine the number of rows in one or more columns.
+
+```{sql}
+SELECT COUNT(*)
+FROM reviews;
+```
+
+We often want to count the number of non-missing values in a column, which we do by specifying the column to count.  We can then combine this with DISTINCT to determine the number of distinct or unique values in the column.
+
+```{sql}
+SELECT COUNT(*)
+FROM people;
+```
+
 
 ```{sql}
 
+SELECT COUNT(birthdate)
+FROM people;
 ```
 
+```{sql}
+SELECT COUNT(DISTINCT birthdate)
+FROM people;
+```
+
+
+## Filtering
