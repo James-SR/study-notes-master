@@ -147,11 +147,89 @@ AND (language = 'Spanish' OR language = 'French')
 
 We can also use the between command to select values within a range
 
-```{sql }
+```{sql}
 SELECT title, release_year
 FROM films
 WHERE release_year BETWEEN 1990 AND 2000
 AND budget > 100000000
 AND (language = 'Spanish' OR language = 'French');
+```
+
+Stringing together multiple WHERE and OR statements can become complex, and there is a function - IN - to make this easier
+
+```{sql}
+SELECT title, release_year
+FROM films
+WHERE release_year IN (1990, 2000)
+AND duration > 120
+LIMIT 25;
+```
+
+In SQL, NULL represents a missing or unknown value. You can check for NULL values using the expression IS NULL.  This can be useful for checking for valid nulls as show in the next example, or for checking invalid (missing) data.
+
+If we wanted to list all the people without a death date, who presumbably are still alive (assuming 100% completeness) we would run:
+
+```{sql}
+SELECT name
+FROM people
+WHERE deathdate IS NULL
+ORDER BY random() -- will cause a random selection to be made
+LIMIT 15;
+```
+
+Or to count the number of films which don't have a language associated with them, we would have
+
+```{sql}
+SELECT count(*)
+FROM films
+WHERE language IS NULL;
+```
+
+We often have instances where we need to search within a column for a string of text.  There are two options
+
+1. the LIKE operator can be used in a WHERE clause to search for a pattern in a column. To accomplish this, you use something called a wildcard as a placeholder for some other values. There are two wildcards you can use with LIKE:
+
+The % wildcard will match zero, one, or many characters in text. For example, the following query matches companies like 'Data', 'DataC' 'DataCamp', 'DataMind', and so on:
+
+> SELECT name
+  FROM companies
+  WHERE name LIKE 'Data%';
+
+
+2. the _ wildcard will match a single character. For example, the following query matches companies like 'DataCamp', 'DataComp', and so on:
+
+> SELECT name
+  FROM companies
+  WHERE name LIKE 'DataC_mp';
+  
+You can also use the NOT LIKE operator to find records that don't match the pattern you specify.
+
+So for people whose names starts with a B we have
+
+```{sql}
+SELECT name 
+FROM people
+WHERE name LIKE 'B%'
+LIMIT 10;
+```
+
+Or to get the names of people whose second letter is an r
+
+```{sql}
+SELECT name 
+FROM people
+WHERE name LIKE '_r%'
+ORDER BY random()
+LIMIT 10;
+```
+
+Or whose name does not start with an A
+
+```{sql}
+SELECT name 
+FROM people
+WHERE name NOT LIKE 'A%'
+ORDER BY random()
+LIMIT 10;
 ```
 
