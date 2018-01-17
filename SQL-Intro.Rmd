@@ -91,3 +91,67 @@ FROM people;
 
 
 ## Filtering
+
+In SQL, the WHERE keyword allows you to filter based on both text and numeric values in a table. There are a few different comparison operators you can use:
+
+* = equal
+* <> not equal
+* < less than
+* > greater than
+* <= less than or equal to
+* >= greater than or equal to
+
+So for instance, to select all films from 2016, we would use
+
+```{sql}
+SELECT *
+FROM films
+WHERE release_year = 2016 
+LIMIT 10;
+```
+Or to count
+
+```{sql}
+SELECT COUNT(*)
+FROM films
+WHERE release_year < 2000; 
+```
+
+We can search for French lanaguage films
+
+```{sql}
+SELECT *
+FROM films
+WHERE language = 'French';
+```
+
+We can also add multiple conditions using the AND operator, which needs to be used for each new condition e.g.
+
+```{sql}
+SELECT *
+FROM films
+WHERE language = 'Spanish'
+AND release_year > 2000
+AND release_year < 2010;
+```
+
+In a similar way we can use the OR command.  If we have mutiple conditions we should use brackets e.g.
+
+```{sql}
+SELECT title, release_year
+FROM films
+WHERE release_year > 1989
+AND release_year < 2000
+AND (language = 'Spanish' OR language = 'French')
+```
+
+We can also use the between command to select values within a range
+
+```{sql }
+SELECT title, release_year
+FROM films
+WHERE release_year BETWEEN 1990 AND 2000
+AND budget > 100000000
+AND (language = 'Spanish' OR language = 'French');
+```
+
