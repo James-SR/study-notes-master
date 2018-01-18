@@ -233,3 +233,124 @@ ORDER BY random()
 LIMIT 10;
 ```
 
+## Aggregate Functions
+
+Often, you will want to perform some calculation on the data in a database. SQL provides a few functions, called aggregate functions, to help you out with this.  Some examples are:
+
+* AVG() 
+* MAX() 
+* MIN()
+* SUM()
+
+```{sql}
+SELECT SUM(duration)
+FROM films;
+```
+
+```{sql}
+SELECT AVG(duration)
+FROM films;
+```
+
+```{sql}
+SELECT MIN(duration)
+FROM films;
+```
+
+```{sql}
+SELECT MAX(duration)
+FROM films;
+```
+
+Aggregate functions can be combined with the WHERE clause to gain further insights from your data.
+
+```{sql}
+SELECT SUM(gross)
+FROM films
+WHERE release_year >= 2000;
+```
+
+Or to get the average amount by all films starting with A
+
+```{sql}
+SELECT AVG(gross)
+FROM films
+WHERE title LIKE 'A%';
+```
+
+Or to get the amount grossed by the worst performing film in 1994.
+
+```{sql}
+SELECT MIN(gross)
+FROM films
+WHERE release_year = 1994;
+```
+
+Or get the amount grossed by the best performing film between 2000 and 2012, inclusive.
+
+```{sql}
+SELECT MAX(gross)
+FROM films
+WHERE release_year BETWEEN 2000 AND 2012;
+```
+
+In addition to using aggregate functions, you can perform basic arithmetic with symbols like +, -, *, and /.
+
+NOTE: That if you use an integer as a value in a calculation, SQL will assume you want an integer back e.g.
+
+> SELECT (4 / 3);
+
+Will return 1
+
+Where as adding decimal places
+
+> SELECT (4.0 / 3.0);
+
+Will result in a value of 1.33333r
+
+Also, when you have multiple columns with similar functions things can get confusing e.g. 
+
+> SELECT MAX(budget), MAX(duration)
+  FROM films;
+
+You'd end up with two columns named max.
+
+To avoid situations like this, SQL allows you to do something called aliasing. Aliasing simply means you assign a temporary name to something. To alias, you use the AS keyword.
+
+> SELECT MAX(budget) AS max_budget,
+         MAX(duration) AS max_duration
+  FROM films;
+
+```{sql}
+SELECT title, (gross - budget) AS net_profit
+FROM films
+LIMIT 10;
+```
+
+```{sql}
+SELECT title, (duration / 60.0) AS duration_hours
+FROM films
+LIMIT 10;
+```
+
+```{sql}
+SELECT AVG (duration / 60.0) AS avg_duration_hours
+FROM films;
+```
+
+Note that in a culculation, only one of the numbers needs to have a decimal place, for the result to occur with a decimal place.
+
+So if we are to calculate the death rate or percent, we would have
+
+```{sql}
+SELECT COUNT(deathdate) * 100.0 / COUNT(*) AS percentage_dead
+FROM people;
+```
+
+Or to calculate the number of decades the film table covers
+
+```{sql}
+SELECT (MAX(release_year) - MIN(release_year)) / 10.0 AS number_of_decades
+FROM films;
+```
+
