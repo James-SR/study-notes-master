@@ -354,3 +354,92 @@ SELECT (MAX(release_year) - MIN(release_year)) / 10.0 AS number_of_decades
 FROM films;
 ```
 
+## Sorting, grouping and joins
+
+In SQL, the ORDER BY keyword is used to sort results in ascending or descending order according to the values of one or more columns.
+
+By default ORDER BY will sort in ascending order. If you want to sort the results in descending order, you can use the DESC keyword.
+
+```{sql}
+SELECT name
+FROM people
+ORDER BY name
+LIMIT 10;
+```
+
+Or to order by birthdate
+
+```{sql}
+SELECT name, birthdate -- note you don't have to select birthdate to have the results ordered by it
+FROM people
+ORDER BY birthdate
+LIMIT 10;
+```
+
+We can select certain years then order
+
+```{sql}
+SELECT title
+FROM films
+WHERE (release_year = 2000 OR release_year = 2012)
+ORDER BY release_year
+LIMIT 20;
+```
+
+We can also order in descening order
+
+```{sql}
+SELECT title, duration
+FROM films
+WHERE duration IS NOT NULL
+ORDER BY duration DESC
+LIMIT 10;
+```
+
+ORDER BY can also be used to sort on multiple columns. It will sort by the first column specified, then sort by the next, then the next, and so on. For example,
+
+> SELECT birthdate, name
+  FROM people
+  ORDER BY birthdate, name;
+
+sorts on birth dates first (oldest to newest) and then sorts on the names in alphabetical order. The order of columns is important!
+
+```{sql}
+SELECT release_year, duration, title
+FROM films
+ORDER BY release_year, duration
+LIMIT 20;
+```
+
+Often you'll need to aggregate results. For example, you might want to get count the number of male and female employees in your company. Here, what you want is to group all the males together and count them, and group all the females together and count them. In SQL, GROUP BY allows you to group a result by one or more columns, like so:
+
+> SELECT sex, count(*)
+  FROM employees
+  GROUP BY sex;
+  
+Commonly, GROUP BY is used with aggregate functions like COUNT() or MAX(). Note that GROUP BY always goes after the FROM clause.
+
+A word of warning: SQL will return an error if you try to SELECT a field that is not in your GROUP BY clause without using it to calculate some kind of value about the entire group.
+
+Note that you can combine GROUP BY with ORDER BY to group your results, calculate something about them, and then order your results.
+
+So to get the release year and average duration of all films, grouped by release year:
+
+```{sql}
+SELECT release_year, AVG(duration), COUNT(*)
+FROM films
+GROUP BY release_year
+ORDER BY release_year DESC
+LIMIT 20; 
+```
+
+Or to get the IMDB score and count of film reviews grouped by IMDB score in the reviews table.
+
+```{sql}
+SELECT imdb_score, COUNT(*)
+FROM reviews
+GROUP BY imdb_score
+ORDER BY Imdb_score DESC
+LIMIT 10;
+```
+
