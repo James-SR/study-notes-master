@@ -1,0 +1,14 @@
+# Joining Data in PostgreSQL
+***
+Notes taken during/inspired by the Datacamp course 'Joining Data in PostgreSQL' by Chester Ismay. 
+
+Course sections:
+
+* Part 1 - Introduction to joins
+* Part 2 - Outer joins and cross joins
+* Part 3 - Set theory clauses
+* Part 4 - Subqueries
+* [Additional - Join Cheat Sheet](http://stevestedman.com/vzAph)
+
+
+## Introduction to joins

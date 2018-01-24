@@ -1,0 +1,140 @@
+```{r}
+library(RPostgreSQL)
+
+# create a connection
+# save the password that we can "hide" it as best as we can by collapsing it
+pw <- {
+  "PASSWORD"
+}
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+# creates a connection to the postgres database
+# note that "con" will be used later in each connection to the database
+con <- dbConnect(drv, dbname = "countries",
+                 host = "localhost", port = 5432,
+                 user = "postgres", password = pw)
+rm(pw) # removes the password
+
+```
+
+Next we create the empty tables.
+
+```{sql connection=con}
+
+
+CREATE TABLE cities (
+  name                    VARCHAR   PRIMARY KEY,
+  country_code            VARCHAR,
+  city_proper_pop         REAL,
+  metroarea_pop           REAL,
+  urbanarea_pop           REAL
+);
+
+CREATE TABLE countries (
+  code                  VARCHAR     PRIMARY KEY,
+  name                  VARCHAR,
+  continent             VARCHAR,
+  region                VARCHAR,
+  surface_area          REAL,
+  indep_year            INTEGER,
+  local_name            VARCHAR,
+  gov_form              VARCHAR,
+  capital               VARCHAR,
+  cap_long              REAL,
+  cap_lat               REAL
+);
+
+CREATE TABLE languages (
+  lang_id               INTEGER     PRIMARY KEY,
+  code                  VARCHAR,
+  name                  VARCHAR,
+  percent               REAL,
+  official              BOOLEAN
+);
+
+CREATE TABLE economies (
+  econ_id               INTEGER     PRIMARY KEY,
+  code                  VARCHAR,
+  year                  INTEGER,
+  income_group          VARCHAR,
+  gdp_percapita         REAL,
+  gross_savings         REAL,
+  inflation_rate        REAL,
+  total_investment      REAL,
+  unemployment_rate     REAL,
+  exports               REAL,
+  imports               REAL
+);
+
+CREATE TABLE currencies (
+  curr_id               INTEGER     PRIMARY KEY,
+  code                  VARCHAR,
+  basic_unit            VARCHAR,
+  curr_code             VARCHAR,
+  frac_unit             VARCHAR,
+  frac_perbasic         REAL
+);
+
+CREATE TABLE populations (
+  pop_id                INTEGER     PRIMARY KEY,
+  country_code          VARCHAR,
+  year                  INTEGER,
+  fertility_rate        REAL,
+  life_expectancy       REAL,
+  size                  REAL
+);
+
+CREATE TABLE countries_plus (
+  name                  VARCHAR,
+  continent             VARCHAR,
+  code                  VARCHAR     PRIMARY KEY,
+  surface_area          REAL,
+  geosize_group         VARCHAR
+);
+
+CREATE TABLE economies2010 (
+  code                  VARCHAR     PRIMARY KEY,
+  year                  INTEGER,
+  income_group          VARCHAR,
+  gross_savings         REAL
+);
+
+CREATE TABLE economies2015 (
+  code                  VARCHAR     PRIMARY KEY,
+  year                  INTEGER,
+  income_group          VARCHAR,
+  gross_savings         REAL
+);
+
+```
+
+
+Then copy in the data to those tables.
+
+If we need to check the encoding of the data source, we can use the readr package guess_encoding e.g.
+
+> readr::guess_encoding("C:/Users/DEsktop/Documents/study-notes-master/films_db/films.sql")
+
+Remember to [remove Byte Order Mark (BOM)](https://stackoverflow.com/questions/48253089/copy-from-file-error-invalid-input-syntax-for-integer-%C3%AF-1) if files are downloaded from the internet
+
+```{sql connection=con}
+
+--Full file path is needed since it is postgress/psql rather than r that is reading the file
+
+ -- Copy over data from CSVs
+copy cities FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/cities.csv' DELIMITER ',' CSV HEADER;
+copy countries FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/countries.csv' DELIMITER ',' CSV HEADER;
+copy languages FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/languages.csv' DELIMITER ',' CSV HEADER;
+copy economies FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/economies.csv' DELIMITER ',' CSV HEADER;
+copy economies2010 FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/economies2010.csv' DELIMITER ',' CSV HEADER;
+copy economies2015 FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/economies2015.csv' DELIMITER ',' CSV HEADER;
+copy currencies FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/currencies.csv' DELIMITER ',' CSV HEADER;
+copy populations FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/populations.csv' DELIMITER ',' CSV HEADER;
+copy countries_plus FROM 'C:/Users/DEsktop/Documents/study-notes-master/countries_db/countries_plus.csv' DELIMITER ',' CSV HEADER;
+
+/*
+createdb countries
+*/
+```
+
