@@ -10,5 +10,74 @@ Course sections:
 * Part 4 - Subqueries
 * [Additional - Join Cheat Sheet](http://stevestedman.com/vzAph)
 
+```{r setup}
+library(RPostgreSQL)
+
+# create a connection
+# save the password that we can "hide" it as best as we can by collapsing it
+pw <- {"PASSWORD"}
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+# creates a connection to the postgres database
+# note that "con" will be used later in each connection to the database
+con <- dbConnect(drv, dbname = "countries",
+                 host = "localhost", port = 5432,
+                 user = "postgres", password = pw)
+rm(pw) # removes the password
+
+# Sets knitr to use this connection as the default so we don't need to specify it for every chunk
+knitr::opts_chunk$set(connection = "con")
+```
+
 
 ## Introduction to joins
+
+Throughout this course, we will be working with the countries database containing information about the most populous world cities as well as country-level economic data, population data, and geographic data. This countries database also contains information on languages spoken in each country.  OUr basic syntax for joins is:
+
+> SELECT *
+  FROM left_table
+  INNER JOIN right_table
+  ON left_table.id = right_table.id;
+  
+So to (inner) join cities (left) and countries (right) together we have 
+
+```{sql connection=con}
+SELECT * 
+FROM cities
+INNER JOIN countries
+ON cities.country_code = countries.code
+LIMIT 10;
+```
+
+Or to just select the columns you are interested in and alias the names in to something more useful
+
+```{sql connection=con}
+SELECT cities.name AS city, countries.name AS country, countries.region 
+FROM cities
+INNER JOIN countries
+ON cities.country_code = countries.code
+LIMIT 10;
+
+
+```
+
+Instead of writing the full table name, you can use table aliasing as a shortcut. For tables you also use AS to add the alias immediately after the table name with a space. Check out the aliasing of cities and countries below.
+
+> SELECT c1.name AS city, c2.name AS country
+  FROM cities AS c1
+  INNER JOIN countries AS c2
+  ON c1.country_code = c2.code;
+
+Notice that to select a field in your query that appears in multiple tables, you'll need to identify which table/table alias you're referring to by using a . in your SELECT statement.
+
+Now we look at how to get data from both the countries and economies tables to examine the inflation rate for both 2010 and 2015.
+
+```{sql connection=con}
+SELECT c.code AS country_code, c.name, e.year, e.inflation_rate
+FROM countries AS c
+INNER JOIN economies AS e
+ON c.code = e.code
+LIMIT 20;
+```
+
