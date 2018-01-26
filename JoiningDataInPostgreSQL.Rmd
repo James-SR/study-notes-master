@@ -58,8 +58,6 @@ FROM cities
 INNER JOIN countries
 ON cities.country_code = countries.code
 LIMIT 10;
-
-
 ```
 
 Instead of writing the full table name, you can use table aliasing as a shortcut. For tables you also use AS to add the alias immediately after the table name with a space. Check out the aliasing of cities and countries below.
@@ -80,4 +78,39 @@ INNER JOIN economies AS e
 ON c.code = e.code
 LIMIT 20;
 ```
+
+To get the fertility rate over time
+
+```{sql connection=con}
+SELECT c.code, c.name, c.region, p.year, p.fertility_rate, p.country_code
+FROM countries AS c
+INNER JOIN populations AS p
+ON c.code = p.country_code
+LIMIT 20;
+```
+
+Then to add in the unemployment rate
+
+```{sql connection=con}
+SELECT c.code, c.name, c.region, p.year, p.fertility_rate, p.country_code, e.year, e.unemployment_rate
+FROM countries AS c
+INNER JOIN populations AS p
+ON c.code = p.country_code
+INNER JOIN economies AS e
+ON c.code = e.code
+LIMIT 20;
+```
+
+The results are not correct here, as the join on c.code = e.code whilst not also including year causes a cross join e.g. the 2010 value for fertility_rate is also paired with the 2015 value for unemployment_rate. Let's correct that by joining on CODE and YEAR.
+
+```{sql connection=con}
+SELECT c.code, c.name, c.region, p.year, p.fertility_rate, p.country_code, e.year, e.unemployment_rate
+FROM countries AS c
+INNER JOIN populations AS p
+ON c.code = p.country_code
+INNER JOIN economies AS e
+ON c.code = e.code AND p.year = e.year
+LIMIT 20;
+```
+
 
