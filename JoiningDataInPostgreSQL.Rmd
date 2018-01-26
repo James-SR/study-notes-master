@@ -113,4 +113,59 @@ ON c.code = e.code AND p.year = e.year
 LIMIT 20;
 ```
 
+When two tables contain the same field, it is possible to use the USING command rather than ON to join the two tables.  
+
+```{sql}
+SELECT c.name AS country, continent, l.name AS language, official
+FROM countries AS c
+INNER JOIN languages AS l
+USING (code)
+LIMIT 20;
+```
+
+Sometimes we want to join a table to iself, to see different permeatations of columns and variables, which is called a self-join.
+
+Now we will use the populations table to perform a self-join to calculate the percentage increase in population from 2010 to 2015 for each country code.
+
+As we will be joining the populations table to itself, we can alias populations as p1 and also populations as p2. This is good practice whenever you are aliasing and your tables have the same first letter. Note that you are required to alias the tables with self-joins.
+
+```{sql connection=con}
+SELECT p1.country_code, 
+       p1.size AS size2010,
+       p2.size AS size2015
+FROM populations AS p1
+INNER JOIN populations AS p2
+ON  p1.country_code = p2.country_code
+LIMIT 30;
+```
+
+Notice from the result that for each country_code you have four entries laying out all combinations of 2010 and 2015.  This is similar to a cross join or cartesian join where every combination of variables is made.  
+
+To remedy this, we add to the ON to the query to include only those records where the p1.year (2010) matches with p2.year - 5 (2015 - 5 = 2010).
+
+```{sql connection=con}
+SELECT p1.country_code, 
+       p1.size AS size2010,
+       p2.size AS size2015
+FROM populations AS p1
+INNER JOIN populations AS p2
+ON  p1.country_code = p2.country_code AND p1.year = p2.year - 5
+LIMIT 30;
+```
+
+Next we can calculate the change over time by calculating a new field.
+
+```{sql connection=con}
+SELECT p1.country_code, 
+       p1.size AS size2010,
+       p2.size AS size2015,
+       (p2.size - p1.size) / p1.size * 100 AS growth_perc 
+FROM populations AS p1
+INNER JOIN populations AS p2
+ON  p1.country_code = p2.country_code AND p1.year = p2.year - 5
+LIMIT 30;
+```
+
+
+Another scenario is when we want to create a group or category within our data.  We can do this using the CASE function, which is similar to a series of IF then functions, where if a condition is met, a variable (column) is assigned a value or name.  This process is then iterated until we remain with our final ELSE component.
 
