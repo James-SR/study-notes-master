@@ -233,3 +233,61 @@ ORDER BY geosize_group
 LIMIT 25;
 ```
 
+## Outer joins and cross joins
+
+Outer joins can be thought of as 'reaching out' to another tables, whilst keeping all of the records from the original table.  Inner joins only keep the records IN both tables.  
+
+* A left join will add data from the right table, to that on the left (the original) and mark and variables not in the right table as missing
+* A right join is much less common than the left join.  We add fields from the left table to that on the right, leaving missing values where needed
+
+In the next examples we will compare an inner join to a left join
+
+```{sql connection=con}
+SELECT c1.name AS city, code, c2.name AS country,
+       region, city_proper_pop
+-- specify left table
+FROM cities AS c1
+-- specify right table and type of join
+INNER JOIN countries AS c2
+-- how should the tables be matched
+ON c1.country_code = c2.code
+-- sort based on descending country code
+ORDER BY code DESC;
+```
+
+There are 230 rows here.  Next, we will use a left join
+
+```{sql connection=con}
+SELECT c1.name AS city, code, c2.name AS country,
+       region, city_proper_pop
+-- specify left table
+FROM cities AS c1
+-- specify right table and type of join
+LEFT JOIN countries AS c2
+-- how should the tables be matched?
+ON c1.country_code = c2.code
+-- sort based on descending country code
+ORDER BY code DESC;
+```
+
+We now have 236 rows and we can see that there are some cities  which are not matching corresponding results in the countries table.
+
+Now we will use the use of the AVG() function introduced in our Intro to SQL for Data Science course. we will use it in combination with left join to determine the average gross domestic product (GDP) per capita by region in 2010, grouped by region/
+
+```{sql connection=con}
+-- select name, region, and gdp_percapita
+SELECT region, AVG(gdp_percapita) AS avg_gdp
+-- countries (alias c) on the left
+FROM countries AS c
+-- join with economies (alias e)
+LEFT JOIN economies AS e
+-- match on code fields
+ON c.code = e.code
+-- focus on 2010 entries
+WHERE year = 2010
+GROUP BY region
+ORDER BY avg_gdp DESC;
+```
+
+
+
