@@ -289,5 +289,36 @@ GROUP BY region
 ORDER BY avg_gdp DESC;
 ```
 
+Right joins are not as common as left joins, because in part, a right join can always be written as a left join.
 
+```{sql connection=con}
+-- Right Join
+SELECT cities.name AS city, urbanarea_pop, countries.name AS country,
+       indep_year, languages.name AS language, percent
+FROM languages
+RIGHT JOIN countries
+ON languages.code = countries.code
+RIGHT JOIN cities
+ON countries.code = cities.country_code
+ORDER BY city, language
+LIMIT 20;
 
+/*
+The Left Join would look like
+SELECT cities.name AS city, urbanarea_pop, countries.name AS country,
+       indep_year, languages.name AS language, percent
+FROM cities
+LEFT JOIN countries
+ON cities.country_code = countries.code
+LEFT JOIN languages
+ON countries.code = languages.code
+ORDER BY city, language
+LIMIT 20;
+*/
+```
+
+So far we have encountered 3 join types, now we look at Full Joins, which is similar to combining a LEFT and a RIGHT join together.
+
+```{r JoinTypes, echo = FALSE, fig.cap='Inner, Left, Right and Full Joins'}
+knitr::include_graphics("images/JoinTYpes.png")
+```
