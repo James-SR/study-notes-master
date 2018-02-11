@@ -438,4 +438,43 @@ ON c.country_code = l.code
 WHERE c.name LIKE 'Hyder%';
 ```
 
+To select the five countries with the lowest average life expectancy
 
+```{sql connection=con}
+SELECT c.name AS country, c.region, life_expectancy AS life_exp
+FROM countries AS c
+LEFT JOIN populations AS p
+ON c.code = p.country_code
+WHERE year = 2010 AND life_expectancy IS NOT NULL
+ORDER BY life_exp
+LIMIT 5;
+```
+
+And the five highest
+
+```{sql connection=con}
+SELECT c.name AS country, c.region, life_expectancy AS life_exp
+FROM countries AS c
+LEFT JOIN populations AS p
+ON c.code = p.country_code
+WHERE year = 2010 AND life_expectancy IS NOT NULL
+ORDER BY life_exp DESC
+LIMIT 5;
+```
+
+## Set theory clauses
+
+```{r Venn, echo = FALSE, fig.cap='Set Theory Venn Diagrams'}
+knitr::include_graphics("images/Venn.png")
+```
+
+* UNION includes every record in both tables, without double counting
+* UNION ALL includes those records in both tables and does replicate those that are in both tables
+* INTERSECT results in only those records found in both tables
+* EXCEPT results in only those records in one table and not the other
+
+Unlike joins, unions do not lookup values across tables, they simply stack records on top of each other.  These record stacks must also be of the same data type e.g. numeric on numeric, char on char.
+
+```{r Venn, echo = FALSE, fig.cap='Union set types'}
+knitr::include_graphics("images/VennUnion.png")
+```
