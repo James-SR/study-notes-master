@@ -478,3 +478,67 @@ Unlike joins, unions do not lookup values across tables, they simply stack recor
 ```{r Venn, echo = FALSE, fig.cap='Union set types'}
 knitr::include_graphics("images/VennUnion.png")
 ```
+
+So to add all the fields of one table to another, we use
+
+```{sql connection=con}
+-- pick specified columns from 2010 table
+SELECT *
+-- 2010 table will be on top
+FROM economies2010
+-- which set theory clause?
+UNION
+-- pick specified columns from 2015 table
+SELECT *
+-- 2015 table on the bottom
+FROM economies2015
+-- order accordingly
+ORDER BY code, year
+LIMIT 20;
+```
+
+We can also use the UNION command to check for occurrances of a field across multiple tables (excluding duplicates).
+
+```{sql connection=con}
+SELECT code AS country_code
+FROM currencies
+UNION 
+SELECT country_code
+FROM cities
+ORDER BY country_code
+LIMIT 20;
+```
+
+We can use the UNION ALL command to check for all possible combinatons across tables (including duplicates).
+
+```{sql connection=con}
+SELECT country_code AS code, year
+FROM populations
+UNION ALL
+SELECT code, year
+FROM economies
+ORDER BY code, year
+LIMIT 30;
+```
+
+### INTERSECT
+
+UNION and UNION ALL are not the same as a join, they bind fields on top of each either in the two tables.  INTERSECT will work in a similar fashion to UNION and UNION ALL but onyl includes those records in common to both tables and fields selected.   
+
+```{r Intersect, echo = FALSE, fig.cap='Intersect'}
+knitr::include_graphics("images/Intersect.png")
+```
+
+If we run the same query as before (the last union all) but with intersect
+
+```{sql connection=con}
+SELECT country_code AS code, year
+FROM populations
+INTERSECT
+SELECT code, year
+FROM economies
+ORDER BY code, year
+LIMIT 30;
+```
+
+The total number of records for union all was 814, with intersect it is now 380.
