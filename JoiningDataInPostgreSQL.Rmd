@@ -542,3 +542,76 @@ LIMIT 30;
 ```
 
 The total number of records for union all was 814, with intersect it is now 380.
+
+As you think about major world cities and their corresponding country, which countries also have a city with the same name as their country name?
+
+```{sql connection=con}
+SELECT name
+FROM countries
+INTERSECT
+SELECT name
+FROM cities;
+```
+
+Another type of join is the EXCEPT join, that includes records from the left table that do appear in the right table.  An example might be all job titles held by males but not female employees.  In the following example we will get the names of cities in cities which are not noted as capital cities in countries as a single field result.
+
+NOTE there are some countries in the world that are not included in the countries table, which will result in some cities not being labeled as capital cities when in fact they are.
+
+```{sql connection=con}
+SELECT name
+FROM cities
+EXCEPT
+SELECT capital
+FROM countries
+ORDER BY name;
+```
+
+Or we could have the REVERSE of the previous query - the names of capital cities that are not listed in the cities table.
+
+```{sql connection=con}
+SELECT capital
+FROM countries
+EXCEPT
+SELECT name
+FROM cities
+ORDER BY capital;
+```
+
+### Semi-joins and Anti-joins
+
+So far we have looked at six joins which add columns to the original (usually left) table.  These last two join types will keep records similar to using a WHERE clause, depending on the values of the second table. A semi-join includes records where a condition is met in the second table, an anti-join will include records where a condition is not met from the second table.
+
+```{r Semi, echo = FALSE, fig.cap='Semi and Anti Joins'}
+knitr::include_graphics("images/SemiAnti.png")
+```
+
+Now we will look at using a semi-join to identify languages spoken in the Middle East.  First we will build up a query from a select statement. We will begin by selecting all country codes in the Middle East as a single field result using SELECT, FROM, and WHERE.
+
+```{sql connection=con}
+SELECT code
+FROM countries
+WHERE region = 'Middle East'
+LIMIT 20;
+```
+
+Then identify the languages spoken in the Middle East
+
+```{sql connection=con}
+SELECT DISTINCT name
+FROM languages
+ORDER BY name
+LIMIT 20;
+```
+
+Then combine together into a nested subquery
+
+```{sql connection=con}
+SELECT DISTINCT name
+FROM languages
+WHERE code IN
+    (SELECT code
+    FROM countries
+    WHERE region = 'Middle East')
+ORDER BY name;
+```
+
