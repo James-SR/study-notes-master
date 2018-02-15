@@ -615,3 +615,32 @@ WHERE code IN
 ORDER BY name;
 ```
 
+We will now look at anti-joins, which are useful for identifying which records are causing the incorrect number of records to appear in join queries.   First, the number of countries appearing in Oceania;
+
+```{sql connection=con}
+SELECT count(*)
+FROM countries
+WHERE continent = 'Oceania';
+```
+
+Next, let's get get the different currencies used in the countries of Oceania.
+
+```{sql connection=con}
+SELECT c1.code, c1.name, c2.basic_unit AS currency
+FROM countries AS c1
+INNER JOIN currencies AS c2
+USING (code)
+WHERE continent = 'Oceania';
+```
+
+Note that not all countries in Oceania were listed in the resulting inner join with currencies. We will use an anti-join to determine which countries were not included.
+
+```{sql connection=con}
+SELECT code, name
+FROM countries 
+WHERE continent = 'Oceania'
+    AND code NOT IN
+        (SELECT code 
+         FROM currencies);
+```
+
