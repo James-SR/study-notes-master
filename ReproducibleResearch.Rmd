@@ -1,0 +1,27 @@
+# Reproducible Templates for Analysis
+***
+Notes taken during/inspired by the Coursera course 'Reproducible Templates for Analysis and Dissemination' by Melinda Higgins. 
+
+Course sections:
+
+* Part 1 - Introduction to Reproducible Research and Dynamic Documentation
+* Part 2 - R Markdown: Syntax, Document, and Presentation Formats
+* Part 3 - R Markdown Templates: Processing and Customizing
+* Part 4 - Leveraging Custom Templates from Leading Scientific Journals
+* Part 5 - Working in Teams and Disseminating Templates and Reports
+
+## Introduction to Reproducible Research and Dynamic Documentation
+
+Useful links:
+
+[Implementing Reproducible Research](https://osf.io/s9tya/) - Victoria Stodden, Friedrich Leisch, Roger Peng
+[bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/introduction.html) - Yihui Xie
+[ModernDive: An Introduction to Statistical and Data Sciences via R](http://moderndive.com/) - Chester Ismay
+[Getting Used to R, RStudio, and R Markdown](https://ismayc.github.io/rbasics-book/) - Chester Ismay
+[Bookdown.org. Books](https://bookdown.org/) are all free and readily accessible
+
+The idea of literate programming is that the software computer programs are written in a language that humans can understand, embedded within the documentation, rather than the documentation being embedded in the computer code.  The code follows the structure of the documentation. This idea was introduced by Donald Knuth around 1981 with the program WEB.  Juypter Notebooks and R Markdown documents are examples of literate programs.  
+
+Dynamic documentation means that the reports are up to date, automatically updated, with the analyis up to date if the underlying data is changed.  SWEAVE was introduced for R in 2002.  KnitR was inspired by SWEAVE and launched in 2012 but also works with RMarkdown and is used for the course and for dynamic documents.  
+
+Note it is possible to edit files directly on GitHub using the pencil icon within each document, where possible.
