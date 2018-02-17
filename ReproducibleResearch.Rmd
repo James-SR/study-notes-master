@@ -25,3 +25,32 @@ The idea of literate programming is that the software computer programs are writ
 Dynamic documentation means that the reports are up to date, automatically updated, with the analyis up to date if the underlying data is changed.  SWEAVE was introduced for R in 2002.  KnitR was inspired by SWEAVE and launched in 2012 but also works with RMarkdown and is used for the course and for dynamic documents.  
 
 Note it is possible to edit files directly on GitHub using the pencil icon within each document, where possible.
+
+## R Markdown: Syntax, Document, and Presentation Formats
+
+Information on RMArkdown is available from the [Rmarkdown site by R Studio](https://rmarkdown.rstudio.com/)
+
+A typical workflow looks like: (image from site link above)
+
+```{r R Markdown, echo = FALSE, fig.cap='R Markdown - How it works'}
+knitr::include_graphics("images/rmarkdownflow.png")
+```
+
+In an R Markdown document, most of the main body of the document is in plain text including the content, with some syntax.  Formatting options and metadata are usually within the YAML header.  More informaiton about about syntax - R Markdown and Pandoc appropriate code - is available at the [Pandoc Markdown Syntax website](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html) and the [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).  
+
+There are [various table options](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#tables)
+
+It is possible to do inline images (not just as code chunks) using ![alt text](figures/img)
+
+It is also possible to embed videos, such as YouTube clips, using the [vebmedr](https://ijlyttle.github.io/vembedr/) package.
+
+Note that if using a presentation format as an output, currently only beamer (PDF) supports footnotes, although it is possible to do a bit of a manaul workaround to get something that looks like a footnote using the other options, it's just more manual.  
+
+*Slidy* - works well with other visualtion tools, inc htmlwidgets, but looks dated out of the box
+*ioslides* - looks more professional and nice out of the box, but changing the style requires CSS and some thinkgs (like htmlwidgets) don't work as well
+*Beamer* - best for static slides, supports LaTex, not html (only PDF)
+*revealJS* - a new format, not built in to RStudio yet so the package needs to be installed first.  Once installed, it will be selectable under the 'templates' option from File -> New File -> R Markdown.  You can apply themes within revealjs.
+
+You can create a new template, which would appear in the same location as the revealjs template, with a package which will be covered later.
+
+
