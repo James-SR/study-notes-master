@@ -339,7 +339,6 @@ ORDER BY region;
 Then with a LEFT join
 
 ```{sql connection=con}
-```{sql connection=con}
 SELECT name AS country, code, region, basic_unit
 FROM countries
 LEFT JOIN currencies
@@ -644,3 +643,51 @@ WHERE continent = 'Oceania'
          FROM currencies);
 ```
 
+Now we are going to use multiple sub-clauses to identify the country codes that are included in either economies or currencies but not in populations.
+
+```{sql connection=con}
+-- select the city name
+SELECT name
+-- alias the table where city name resides
+FROM cities AS c1
+-- choose only records matching the result of multiple set theory clauses
+WHERE country_code IN
+(
+    -- select appropriate field from economies AS e
+    SELECT e.code
+    FROM economies AS e
+    -- get all additional (unique) values of the field from currencies AS c2  
+    UNION
+    SELECT c2.code
+    FROM currencies AS c2
+    -- exclude those appearing in populations AS p
+    EXCEPT
+    SELECT p.country_code
+    FROM populations AS p
+);
+```
+
+## Subqueries
+
+This last part is focues on embedding queries inside of queries, which are called nested or subqueries.  What is inside of a WHERE statement, as shown previously, is the most common kind.  You can use subqueries to select items where an item meets a numerical condition, for instance where an area (state) is below the average (fertility rate) e.g.
+
+```{sql connection=con, eval = FALSE}
+SELECT name, fert_rate
+FROM states
+WHERE continent = 'Asia'
+  AND fert_rate <
+    (SELECT AVG(fert_rate)
+    FROM states);
+```
+
+The second most common type of subquery is inside of a SELECT clause.  e.g. if we wanted to count the number of countries listed in the state table versus each continet in the prime ministers table, we use a COUNT and WHERE statement matching the continent field.  As we are doing the subquery inside the SELECT statement you need to give the subquery an alias like countries_num.
+
+```{sql connection=con, eval = FALSE}
+SELECT DISTINCT continet,
+  (SELECT COUNT(*)
+  FROM states
+  WHERE prime_ministers.continet = states.continet) AS countries_num
+FROM prime_minsters;
+```
+
+NOTE that in the above example it could be possible to use join(s) to achieve the same result, often there is more than one way to achieve a desired outcome in SQL.
