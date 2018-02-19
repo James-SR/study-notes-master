@@ -691,3 +691,38 @@ FROM prime_minsters;
 ```
 
 NOTE that in the above example it could be possible to use join(s) to achieve the same result, often there is more than one way to achieve a desired outcome in SQL.
+
+Let's say we wanted to select all countries where the life expectancy is 1.15 times the average:
+
+```{sql connection=con}
+    
+SELECT *
+FROM populations
+WHERE life_expectancy > 
+    1.15 * (SELECT AVG(life_expectancy)
+    FROM populations
+    WHERE year = 2015) AND
+    year = 2015
+ORDER BY life_expectancy DESC;   
+```
+
+NOTE that a double year = 2015 condition is needed, once for the calculation and one for the results.  If we calculate the 2015 average:
+
+```{sql connection=con}
+SELECT AVG(life_expectancy)
+FROM populations
+WHERE year = 2015;
+```
+
+1.15 * 71.67 = 82.42, meaning for 2015 there are just the ten areas previously listed.  If we instead run the following code:
+
+```{sql connection=con}
+SELECT *
+FROM populations
+WHERE year = 2015 
+    AND life_expectancy > 1.15 *
+    (SELECT AVG(life_expectancy)
+    FROM populations)
+ORDER BY life_expectancy DESC;
+```
+The 1.15 * avg(life_expectancy) is calculated over both 2010 and 2015, however just the resulting 2015 life expectancy rates are shown, for instance Luxemberg is below the 2015 average threshold of 82.42. 
