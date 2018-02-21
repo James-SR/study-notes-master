@@ -816,3 +816,87 @@ FROM (
 GROUP BY continent;
 ```
 
+Now we add the name, continet and actual inflation rate to our query.
+
+```{sql connection=con}
+SELECT countries.name, continent, inflation_rate
+FROM countries
+INNER JOIN economies
+USING (code)
+WHERE year = 2015
+    AND inflation_rate IN (
+    SELECT max(inflation_rate) as max_inf
+    FROM (
+        SELECT countries.name, continent, inflation_rate
+        FROM countries
+        INNER JOIN economies
+        ON countries.code = economies.code
+        WHERE year = 2015) as subquery
+        GROUP BY continent)
+```
+
+Next we will use a subquery to get 2015 economic data for countries that do not have gov_form of "Constitutional Monarchy" or 'Republic' in their gov_form.
+
+```{sql connection=con}
+SELECT code, inflation_rate, unemployment_rate
+FROM economies
+WHERE year = 2015 AND code NOT IN (
+    SELECT code
+    FROM countries
+    WHERE (gov_form = 'Constitutional Monarchy' OR gov_form LIKE '%Republic'))
+ORDER BY inflation_rate
+LIMIT 10;
+```
+
+Now in the next exercise we will get the country names and other 2015 data in the economies table and the countries table for Central American countries with an official language.
+
+```{sql connection=con}
+SELECT DISTINCT c.name, total_investment, imports
+FROM countries as c
+LEFT JOIN economies as e
+ON (
+    c.code = e.code
+    AND c.code IN (
+  	  SELECT l.code
+      FROM languages as l
+      WHERE official = 'true'))
+WHERE year = 2015 AND c.region = 'Central America'
+ORDER BY name;
+```
+
+Another challenge - calculate the average fertility rate for each region in 2015.
+
+```{sql connection=con}
+-- choose fields
+SELECT region, continent, AVG(fertility_rate) AS avg_fert_rate
+-- left table
+FROM countries
+-- right table
+INNER JOIN populations
+-- join conditions
+ON countries.code = populations.country_code
+-- specific records matching a condition
+WHERE year = 2015
+-- aggregated for each what?
+GROUP BY region, continent
+-- how should we sort?
+ORDER BY avg_fert_rate DESC
+LIMIT 10;
+```
+
+Final challenge - we are now tasked with determining the top 10 capital cities in Europe and the Americas in terms of a calculated percentage using city_proper_pop and metroarea_pop in cities.
+
+```{sql connection=con}
+SELECT name, country_code, city_proper_pop, metroarea_pop,  
+      city_proper_pop / metroarea_pop * 100 AS city_perc
+FROM cities
+WHERE name IN
+  (SELECT capital
+   FROM countries
+   WHERE (continent = 'Europe'
+      OR continent LIKE '%America'))
+     AND metroarea_pop IS NOT NULL
+ORDER BY city_perc DESC
+LIMIT 10;
+```
+
